@@ -5,7 +5,7 @@ import {FaGithub, FaLinkedin} from 'react-icons/fa'
 const Main = () => {
     return (
         <div id='main'>
-            <img className='w-full h-screen object-cover' src="./src/images/waves.jpg" alt="" />
+            <img className='w-full h-screen object-cover' src="src/images/waves.jpg" alt="" />
             <div className='w-full h-screen absolute top-0 left-0 bg-white/50'>
                 <div className='max-w-[700px] m-auto h-full w-full flex flex-col justify-center lg:items-start items-center'>
                 <h1 className='sm:text-5xl text-4xl font-bold text-gray-800'>Hi, I'm Cody </h1>
