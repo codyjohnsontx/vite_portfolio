@@ -10,7 +10,7 @@ const Projects = () => {
         <div id="projects" className="max-w-[1040px] m-auto md:pl-20 p-4 py-16">
             <h1 className="text-4xl font-bold text-center text-[#001b5e]">Projects</h1>
             <p className="text-center p-10 text-gray-500">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel consequatur illum sed suscipit nesciunt ea explicabo corrupti libero, hic, maiores repudiandae voluptate enim nobis totam incidunt dolores quae quisquam atque?
+                {/*Caption space below Projects heading goes here */}
             </p>
             <section className="grid sm:grid-cols-2 gap-12">
                 <ProjectItem img={Currency_converter} title='Currency Converter' url="https://currencyconverter-johnson.netlify.app/" />
