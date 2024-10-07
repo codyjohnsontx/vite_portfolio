@@ -31,7 +31,7 @@ The Crazy 8 Grappling Club website serves as a digital hub for members, instruct
 
 ## Tech Stack
 
-- **Frontend:** React, Tailwind CSS (soon to be implemented)
+- **Frontend:** React/Vite, Tailwind CSS (soon to be implemented)
 - **Hosting:** Vercel
 - **Tools:** Figma (for design specifications), Git, GitHub
 
