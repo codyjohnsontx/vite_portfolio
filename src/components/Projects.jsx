@@ -1,9 +1,10 @@
 import React from "react";
 import ProjectItem from './ProjectItem'
-import AMD_graph from '../assets/AMD_graph.png'
+// import AMD_graph from '../assets/AMD_graph.png'
 import Currency_converter from '../assets/Currency_converter.png'
 import QR_generator from '../assets/QR_generator.png'
 import pipBoy from '../assets/pipBoy.png'
+import crazy8 from '../assets/crazy8logo.jpeg'
 
 const Projects = () => {
     return (
@@ -16,7 +17,7 @@ const Projects = () => {
                 <ProjectItem img={Currency_converter} title='Currency Converter' url="https://currencyconverter-johnson.netlify.app/" />
                 <ProjectItem img={pipBoy} title='Pip Boy Terminal' url="https://stupendous-babka-93ba5a.netlify.app/" />
                 <ProjectItem img={QR_generator} title='QR Generator' url="https://qrcodegenerator-jonhnson.netlify.app/" />
-                <ProjectItem img={AMD_graph} title='Insider-Outsider Project' url="https://github.com/codyjohnsontx/insideroutsider" />
+                <ProjectItem img={crazy8} title='Crazy8s Grappling Club' url="https://github.com/codyjohnsontx/crazy8site" />
             </section>
         </div>
     );
