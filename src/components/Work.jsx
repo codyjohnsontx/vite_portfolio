@@ -3,35 +3,35 @@ import WorkItem from './WorkItem'
 // WorkItem above might need to change to just Work
 const data = [
     {
-        year: "Jul 2024 - Present",
+        year: "Apr 2024 - Present",
         company: "Diaz Martial Arts",
         title: 'Software Engineer/Brazilian Jiu-Jitsu Instructor',
-        details: "Developed instructional and management skills by leading classes and managing administrative tasks, while building a SPA for Crazy8's Grappling Club using React/Vite, which increased attendance by 14% in 3 months. Currently prototyping and wireframing an educational VOD app to deliver content for affiliate schools."
+        details: "Optimized Brazilian Jiu-Jitsu program operations by enhancing instruction and managing schedules, developed a SPA for Crazy 8s Grappling Club with React/Vite, and designed a VOD app to improve content delivery and engagement for affiliate schools."
     },
     {
-        year: "Aug 2023 - Present",
-        company: "Ducati Austin",
-        title: 'Software Engineer',
-        details: 'Pioneered the ongoing transition to a more dynamic and responsive website platform utilizing Shopify and later a custom built React site. Played a pivotal role in designing and constructing innovative website mock-ups, setting the stage for a comprehensive website overhaul aimed at enhancing user experience and optimizing operational efficiency.',
+        year: "Apr 2024 - Present",
+        company: "HSNBA",
+        title: 'Data Engineer/SQL Developer',
+        details: 'Automated data management for shelter records with Python, streamlining SQL database updates and reducing data entry time by 40%, while collaborating on foster dog socialization, adoption readiness, and high-risk rehabilitation.',
     },
     {
         year: "Jan 2023 - Present",
         company: '100 Devs',
         title: 'Software Engineer',
-        details: 'Collaborated with developers and designers to build modern, responsive web applications, applying industry best practices and agile methodologies. Leveraged full-stack expertise to design scalable, maintainable solutions and contributed to educational open-source projects that make technical knowledge accessible to aspiring developers.'
+        details: 'Built modern, responsive web applications with developers and designers, using scalable architecture and agile practices to reduce deployment times by 30%, and enhanced open-source education projects, benefiting 10,000+ aspiring developers.'
     },
     {
         year: "Apr 2021 - Present",
         company: "Texas Malibu",
         title: 'Sales Associate',
-        details: "Implemented digital inventory management processes across three stores, boosting efficiency and customer retention while expanding Malibu boat's market share in central Texas from 30% to 40.1%. Trained junior sales associates during onboarding, providing guidance on procedures, product knowledge, and sales techniques for seamless integration and success.",
+        details: "Digitized inventory management for three stores, grew Malibu Boats' market share in central Texas from 30% to 40.1%, and mentored junior associates to ensure seamless team integration and improved performance.",
     },
 
     {
         year: "Nov 2019 - Apr 2021",
         company: "Motovation USA",
-        title: 'CMS/E-commerce Specialist',
-        details: "Led digital marketing initiatives, including social media campaigns and order fulfillment, to enhance customer experience and drive sales growth. Implemented dropshipping strategies for efficient inventory management, expanded product offerings, and optimized social media content to boost engagement and sales. Additionally, strategically maintained the company's website and inventory for seamless operations, while capturing high-quality product photography to increase website traffic and improve conversion rates.",
+        title: 'E-commerce Solutions Specialist',
+        details: "Expanded product offerings with dropshipping, automated order processing and stock monitoring using Python, and optimized content for social media, driving 125%+ organic growth and improved operational efficiency.",
     },
 ]
 
