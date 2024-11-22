@@ -3,35 +3,35 @@ import WorkItem from './WorkItem'
 // WorkItem above might need to change to just Work
 const data = [
     {
-        year: "Apr 2024 - Present",
-        company: "Diaz Martial Arts",
-        title: 'Software Engineer/Brazilian Jiu-Jitsu Instructor',
-        details: "Optimized Brazilian Jiu-Jitsu program operations by enhancing instruction and managing schedules, developed a SPA for Crazy 8s Grappling Club with React/Vite, and designed a VOD app to improve content delivery and engagement for affiliate schools."
+        year: 'Oct 2024 - Present',
+        company: 'Hack for LA',
+        title: 'Software Engineer',
+        details: 'Maintain and enhance the Hack for LA website using JavaScript, React, SCSS, and Docker to optimize performance, review pull requests, create and track issues, provide on-call code review coverage, and contribute to technical decisions and project alignment during weekly Agile meetings and standups.'
     },
     {
-        year: "Apr 2024 - Present",
-        company: "HSNBA",
+        year: 'Apr 2024 - Present',
+        company: 'HSNBA',
         title: 'Data Engineer/SQL Developer',
-        details: 'Automated data management for shelter records with Python, streamlining SQL database updates and reducing data entry time by 40%, while collaborating on foster dog socialization, adoption readiness, and high-risk rehabilitation.',
+        details: 'Develop Python scripts to automate data management for shelter records in SQL databases, implement error handling and data validation protocols to ensure accurate tracking of health records and adoption history, and collaborate on foster dog socialization, adoption readiness, and high-risk rehabilitation during medical treatments.',
     },
     {
-        year: "Jan 2023 - Present",
+        year: 'Jan 2023 - Present',
         company: '100 Devs',
         title: 'Software Engineer',
-        details: 'Built modern, responsive web applications with developers and designers, using scalable architecture and agile practices to reduce deployment times by 30%, and enhanced open-source education projects, benefiting 10,000+ aspiring developers.'
+        details: 'Collaborate with developers and designers to create responsive, scalable web applications with clean architecture, improving deployment times by 30% through agile methodologies, and develop key features for open-source education projects, enhancing access to technical knowledge for over 10,000 aspiring developers.'
     },
     {
-        year: "Apr 2021 - Present",
-        company: "Texas Malibu",
+        year: 'Apr 2021 - Present',
+        company: 'Texas Malibu',
         title: 'Sales Associate',
-        details: "Digitized inventory management for three stores, grew Malibu Boats' market share in central Texas from 30% to 40.1%, and mentored junior associates to ensure seamless team integration and improved performance.",
+        details: 'Digitalized inventory management across three stores to boost efficiency, analyzed market trends and customer behavior to drive decisions contributing to a 10.1% market share increase in central Texas, and mentored four junior associates to enhance performance and ensure seamless team integration.'
     },
 
     {
-        year: "Nov 2019 - Apr 2021",
-        company: "Motovation USA",
+        year: 'Nov 2019 - Apr 2021',
+        company: 'Motovation USA',
         title: 'E-commerce Solutions Specialist',
-        details: "Expanded product offerings with dropshipping, automated order processing and stock monitoring using Python, and optimized content for social media, driving 125%+ organic growth and improved operational efficiency.",
+        details: 'Expanded product offerings with dropshipping, automated order processing and stock monitoring using Python, and optimized content for social media, driving 125%+ organic growth and improved operational efficiency.',
     },
 ]
 
