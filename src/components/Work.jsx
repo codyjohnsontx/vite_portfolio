@@ -31,7 +31,7 @@ const data = [
         year: 'Nov 2019 - Apr 2021',
         company: 'Motovation USA',
         title: 'E-commerce Solutions Specialist',
-        details: 'Expanded product offerings with dropshipping, automated order processing and stock monitoring using Python, and optimized content for social media, driving 125%+ organic growth and improved operational efficiency.',
+        details: 'Implemented dropshipping strategies to expand product offerings without added overhead, automated order processing and stock monitoring with Python scripts to boost efficiency and accuracy, and crafted targeted social media and newsletter content, driving 125%+ organic follower growth and enhancing customer satisfaction.',
     },
 ]
 
