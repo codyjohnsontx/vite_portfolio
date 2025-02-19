@@ -13,7 +13,7 @@ const Projects = () => {
             <p className="text-center p-10 text-gray-500">
             </p>
             <section className="grid sm:grid-cols-2 gap-12">
-                <ProjectItem img={pythonPortfolio} title='Humane Society Data Engineering and SQL development' url="https://github.com/codyjohnsontx/jpeg_unnamed" />
+                <ProjectItem img={pythonPortfolio} title='Humane Society Data Engineering and SQL development' url="https://www.hsnba.org/" />
                 <ProjectItem img={pipBoy} title='Pip Boy Terminal' url="https://stupendous-babka-93ba5a.netlify.app/" />
                 <ProjectItem img={HfLA} title='Hack for LA' url="https://www.hackforla.org/projects/" />
                 {/* <ProjectItem img={crazy8} title='Crazy8s Grappling Club' url="https://github.com/codyjohnsontx/crazy8site" /> */}
