@@ -12,7 +12,7 @@ const data = [
         year: 'Dec 2024 - Present',
         company: 'Ducati Austin',
         title: 'Software Engineer / E-commerce',
-        details: 'Built and managed Ducati Austin\'s Shopify platform for parts / accessories, implementing responsive design that boosted mobile conversions 25%.Customized themes and maintained inventory systems to enhance customer experience.'
+        details: 'Developed and maintained Ducati Austin\'s Shopify e-commerce platform for parts/accessories, implementing responsive design that boosted mobile conversions 25%. Enhanced user experience through premium theme customization and automated inventory tracking to minimize customer support needs.'
     },
     {
         year: 'Apr 2024 - Present',
