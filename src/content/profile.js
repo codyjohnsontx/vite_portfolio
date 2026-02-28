@@ -2,13 +2,14 @@ export const profile = {
   name: 'Cody Johnson',
   targetRole: 'Product Manager / Product Owner',
   location: 'Austin, Texas',
-  headline: 'Product owner with engineering depth, automation instincts, and a bias toward shipping the right next thing.',
+  headline:
+    'Building product systems with engineering depth, operational range, and a bias toward shipping useful things.',
   heroSupport:
-    'I own backlogs, reduce delivery risk, and turn stakeholder requests into clear requirements, scoped releases, and measurable product outcomes.',
+    'I am building Trackday Tuner and Diaz on Demand while drawing on prior product ownership, automation, and operations work across client delivery, nonprofits, and commerce.',
   summary:
-    'Currently serving as a Product Owner at Lambda Curry, I manage concurrent client work, monitor scope drift across Jira and Linear, and partner with engineering, design, and operations to ship product changes that hold up in the real world.',
+    'My work sits at the intersection of product definition, technical execution, and real-world operations. I do my best work when messy workflows need clearer requirements, practical release decisions, and outcomes that hold up outside a roadmap deck.',
   footerNote:
-    'Built as a recruiter-first product portfolio: direct positioning, selective proof, and a resume path designed for fast hiring conversations.',
+    'Built as a focused portfolio for active products, selected case studies, and supporting execution proof.',
   contactLinks: [
     { label: 'Email', href: 'mailto:codyjohnsontx@gmail.com', external: false },
     {
@@ -19,30 +20,30 @@ export const profile = {
     { label: 'GitHub', href: 'https://github.com/codyjohnsontx', external: true },
   ],
   quickFacts: [
-    'Current Product Owner managing multiple concurrent client projects',
-    'Writes PRDs, defines launch metrics, and prioritizes based on impact and risk',
-    'Blend of client delivery, automation, analytics, and commercial ops',
+    'Building Trackday Tuner and Diaz on Demand',
+    'Product, systems, and operations experience across software and real-world workflows',
+    'Comfortable owning requirements, launches, tooling, and product iteration',
   ],
   proofThemes: [
     {
-      stat: '12%',
-      title: 'First-week sales lift',
-      body: 'Led a Lambda Curry client launch tied to revenue, then used funnel and behavior data to drive follow-on iterations.',
+      stat: 'Trackday Tuner',
+      title: 'Active build toward beta',
+      body: 'Working auth, CRUD flows, session logging, compare views, trackside tools, billing code, and tests already make it a real product build, not a concept.',
     },
     {
-      stat: '$90K',
-      title: 'Monthly service revenue gain',
-      body: 'Built a throughput model at CTX Motoworks to set weekly priorities and improve service flow.',
+      stat: 'Diaz on Demand',
+      title: 'Cross-platform MVP slices',
+      body: 'The product already spans web, API, mobile, billing, and admin workflows for structured premium training delivery outside the gym.',
+    },
+    {
+      stat: '12%',
+      title: 'Launch-backed product proof',
+      body: 'Previous Lambda Curry product ownership work covered backlog control, PRDs, launch metrics, and a release tied to a 12 percent first-week sales lift.',
     },
     {
       stat: '65% / 95%',
-      title: 'Operational automation impact',
-      body: 'Reduced manual entry and data errors at HSNBA through scoped Python and SQL tooling built around staff constraints.',
-    },
-    {
-      stat: '$20K',
-      title: 'Inventory liquidation cash generated',
-      body: 'Launched an aged-inventory eBay program with pricing rules and SKU prioritization to improve turnover.',
+      title: 'Systems and ops impact',
+      body: 'HSNBA and CTX work show the same operating style applied to automation, data trust, throughput, and revenue decisions in live environments.',
     },
   ],
   toolkit: [

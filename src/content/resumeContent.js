@@ -1,12 +1,13 @@
 export const resumeContent = {
-  headline: 'Product owner with software engineering depth, delivery discipline, and a strong bias toward measurable outcomes.',
+  headline:
+    'Building product systems with software engineering depth, delivery discipline, and real-world operating experience.',
   summary: [
-    'Current Product Owner at Lambda Curry owning multiple client backlogs, writing higher-risk product definitions, and setting weekly priorities based on impact, risk, and team capacity.',
-    'Brings a blend of product delivery, operations systems thinking, and technical fluency that translates well to PM, technical PM, and product-owner-heavy roles.',
+    'Currently building Trackday Tuner and Diaz on Demand while bringing prior product ownership experience from Lambda Curry and systems-focused work across operations, automation, and commerce.',
+    'I do my best work where product definition, technical fluency, and execution discipline all matter: shaping requirements, clarifying tradeoffs, and shipping toward measurable outcomes.',
   ],
   strengths: [
     {
-      label: 'Product',
+      label: 'Product building',
       items: ['Backlog ownership', 'Prioritization', 'Requirements writing', 'Acceptance criteria'],
     },
     {
@@ -26,7 +27,7 @@ export const resumeContent = {
     {
       company: 'Lambda Curry',
       role: 'Product Owner',
-      dates: 'May 2025 - Present',
+      dates: 'Previous role',
       bullets: [
         'Owned backlogs across multiple client projects and set weekly priority based on impact, risk, and team capacity.',
         'Turned vague tasks into buildable tickets with user stories, acceptance criteria, edge cases, and launch constraints, cutting back-and-forth during implementation.',
@@ -51,7 +52,7 @@ export const resumeContent = {
     {
       company: 'HSNBA',
       role: 'Software Engineer (Volunteer, part time)',
-      dates: 'Apr 2024 - Present',
+      dates: 'Apr 2024 - May 2025',
       bullets: [
         'Owned requirements and delivery for internal automation tools built in Python and SQL, reducing manual entry by 65 percent and cutting data errors by 95 percent.',
         'Worked with the municipal GIS department to deliver a geospatial classification workflow that processed more than 19,000 records.',
@@ -70,10 +71,14 @@ export const resumeContent = {
     },
   ],
   selectedProjects: [
-    'Lambda Curry launch planning and PRD workflow',
-    'CTX Motoworks service throughput model',
     'Trackday Tuner',
     'Diaz on Demand',
+    'Lambda Curry launch planning and scope-control workflow',
+    'CTX Motoworks service throughput model',
+  ],
+  activeBuilds: [
+    'Trackday Tuner: mobile-first setup notebook with garage management, session logging, comparison, tracks, and trackside tools.',
+    'Diaz on Demand: members-only training library with lesson playback, progress tracking, subscription gating, and admin publishing workflows.',
   ],
   credentials: [
     'PSPO I',
@@ -82,12 +87,5 @@ export const resumeContent = {
     '100 Devs Bootcamp',
     'React ATX member',
     'Remix Austin member',
-  ],
-  tailoringChecklist: [
-    'Adjust the headline to match the role title when the posting leans technical PM, platform PM, or product owner hybrid.',
-    'Rewrite the summary so the first sentence mirrors the company problem space and customer context.',
-    'Swap the top two experience bullets to foreground the most relevant outcomes for the target job.',
-    'Add role-specific keywords only where they are supported by real experience and evidence.',
-    'Leave at least one metric or concrete outcome in the top half of the resume.',
   ],
 };

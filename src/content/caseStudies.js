@@ -2,12 +2,12 @@ export const caseStudies = [
   {
     slug: 'lambda-curry-scope-monitoring',
     company: 'Lambda Curry',
-    timeframe: 'May 2025 - Present',
+    timeframe: 'Previous product work',
     role: 'Product Owner',
     team: 'Client stakeholders, engineering, design, and operations',
     title: 'Owning concurrent client backlogs without letting scope drift break delivery',
     tagline:
-      'Managed multiple active client engagements while building tighter systems for prioritization, change monitoring, and delivery confidence.',
+      'Managed multiple client engagements while building tighter systems for prioritization, change monitoring, and delivery confidence.',
     challenge:
       'Multiple projects were moving at once, and the real risk was not just shipping slower. It was losing alignment between what clients requested, what internal teams were building, and what had actually changed across tools and releases.',
     featuredOutcome:

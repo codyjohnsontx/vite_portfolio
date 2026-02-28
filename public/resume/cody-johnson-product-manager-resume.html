@@ -71,6 +71,11 @@
         font-weight: 600;
         text-decoration: none;
       }
+      .meta a {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 0.16em;
+      }
       .summary { margin-top: 18px; }
       .grid {
         display: grid;
@@ -83,23 +88,12 @@
         border-radius: 22px;
         padding: 18px 20px;
       }
-      .chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .chip {
-        display: inline-flex;
-        padding: 6px 10px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        color: var(--ink);
-        font-size: 12px;
-        font-weight: 600;
-      }
       .stack {
         display: grid;
         gap: 16px;
+      }
+      .copy-list {
+        margin-top: 12px;
       }
       .role-head {
         display: flex;
@@ -152,42 +146,38 @@
     <main class="page">
       <section class="card">
         <span class="eyebrow">Product resume</span>
-        <h1>Product owner with software engineering depth, delivery discipline, and a strong bias toward measurable outcomes.</h1>
+        <h1>Building product systems with software engineering depth, delivery discipline, and real-world operating experience.</h1>
         <div class="meta">
           <span>Austin, Texas</span>
-          <a href="mailto:codyjohnsontx@gmail.com">codyjohnsontx@gmail.com</a>
-          <a href="https://www.linkedin.com/in/cody-johnson-92460b124/">LinkedIn</a>
-          <a href="https://github.com/codyjohnsontx">GitHub</a>
+          <a href="https://www.linkedin.com/in/cody-johnson-92460b124/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          <a href="https://github.com/codyjohnsontx" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
         <div class="summary">
-          <p>Current Product Owner at Lambda Curry owning multiple client backlogs, writing higher-risk product definitions, and setting weekly priorities based on impact, risk, and team capacity.</p>
-          <p>Brings a blend of product delivery, operations systems thinking, and technical fluency that translates well to PM, technical PM, and product-owner-heavy roles.</p>
+          <p>Currently building Trackday Tuner and Diaz on Demand while bringing prior product ownership experience from Lambda Curry and systems-focused work across operations, automation, and commerce.</p>
+          <p>I do my best work where product definition, technical fluency, and execution discipline all matter: shaping requirements, clarifying tradeoffs, and shipping toward measurable outcomes.</p>
         </div>
 
         <div class="grid two">
           <section class="panel">
             <h2>Core strengths</h2>
-            <div class="chips">
-              <span class="chip">Backlog ownership</span>
-              <span class="chip">Prioritization</span>
-              <span class="chip">Requirements writing</span>
-              <span class="chip">Acceptance criteria</span>
-              <span class="chip">Sprint ceremonies</span>
-              <span class="chip">Dependency management</span>
-            </div>
+            <p class="copy-list">Backlog ownership, prioritization, requirements writing, acceptance criteria, sprint ceremonies, dependency management.</p>
           </section>
           <section class="panel">
             <h2>Systems and technical range</h2>
-            <div class="chips">
-              <span class="chip">Jira</span>
-              <span class="chip">Linear</span>
-              <span class="chip">Google Analytics</span>
-              <span class="chip">GTM</span>
-              <span class="chip">SQL</span>
-              <span class="chip">Python</span>
-              <span class="chip">React</span>
-              <span class="chip">TypeScript</span>
-            </div>
+            <p class="copy-list">Jira, Linear, Google Analytics, GTM, SQL, MCP monitoring, Python, Bash, React, TypeScript, Node.js, PostgreSQL.</p>
+          </section>
+        </div>
+
+        <div class="grid two">
+          <section class="panel">
+            <h2>Active builds</h2>
+            <p class="copy-list">Trackday Tuner is a mobile-first setup notebook for track day riders and racers, with garage management, session logging, comparison, tracks, and trackside tools.</p>
+            <p class="copy-list">Diaz on Demand is a members-only training platform with lesson playback, progress tracking, subscription gating, and admin publishing workflows.</p>
+          </section>
+          <section class="panel">
+            <h2>Selected product proof</h2>
+            <p class="copy-list">Previous Lambda Curry product ownership work included PRDs, launch metrics, backlog control, and a release tied to a 12 percent first-week sales lift.</p>
+            <p class="copy-list">HSNBA and CTX Motoworks work add measurable systems and operations proof across automation, throughput, reporting, and revenue decisions.</p>
           </section>
         </div>
 
@@ -200,7 +190,7 @@
                   <strong>Lambda Curry</strong>
                   <p style="margin: 4px 0 0;">Product Owner</p>
                 </div>
-                <span>May 2025 - Present</span>
+                <span>Previous role</span>
               </div>
               <ul>
                 <li>Owned backlogs across multiple client projects and set weekly priority based on impact, risk, and team capacity.</li>
@@ -235,7 +225,7 @@
                   <strong>HSNBA</strong>
                   <p style="margin: 4px 0 0;">Software Engineer (Volunteer, part time)</p>
                 </div>
-                <span>Apr 2024 - Present</span>
+                <span>Apr 2024 - May 2025</span>
               </div>
               <ul>
                 <li>Owned requirements and delivery for internal automation tools built in Python and SQL, reducing manual entry by 65 percent and cutting data errors by 95 percent.</li>
@@ -265,10 +255,10 @@
           <section class="panel">
             <h2>Selected project themes</h2>
             <ul>
-              <li>Lambda Curry launch planning and PRD workflow</li>
-              <li>CTX Motoworks service throughput model</li>
               <li>Trackday Tuner</li>
               <li>Diaz on Demand</li>
+              <li>Lambda Curry launch planning and scope-control workflow</li>
+              <li>CTX Motoworks service throughput model</li>
             </ul>
           </section>
           <section class="panel">

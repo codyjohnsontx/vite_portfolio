@@ -2,13 +2,13 @@
 
 ## Purpose
 
-This file consolidates the strongest PM-relevant evidence currently reflected in the portfolio rebuild. It is meant to serve as a working source of truth when tailoring the resume, updating case studies, or preparing for interviews.
+This file consolidates the strongest product-relevant evidence currently reflected in the portfolio. It is meant to serve as a working source of truth when updating the public site, adjusting the resume, or preparing for interviews.
 
 ## Ranked case study shortlist
 
 1. Lambda Curry
-   - Best current PM-shaped story because it includes backlog ownership, PRDs, launch metrics, cross-functional execution, and a measurable client outcome.
-   - Strongest narrative for current-state credibility in Product Owner and PM conversations.
+   - Best past product-ownership story because it includes backlog ownership, PRDs, launch metrics, cross-functional execution, and a measurable client outcome.
+   - Strongest narrative for launch discipline and stakeholder alignment in PM conversations.
    - The strongest proof points are clearer scope definition, launch planning, and post-launch iteration tied to a 12 percent revenue lift.
 
 2. CTX Motoworks
@@ -64,9 +64,13 @@ This file consolidates the strongest PM-relevant evidence currently reflected in
 - CTX Motoworks: direct ownership of service, inventory, and e-commerce operating decisions.
 - HSNBA: mission-driven operational constraints and reporting needs.
 
+## Active builds to keep product-first
+
+- Trackday Tuner: audience, problem, and feature set are now strong enough for homepage-level detail, but it is still too early for a full polished case study.
+- Diaz on Demand: working MVP slices across web, API, mobile, billing, and admin make it credible publicly, but production hardening details should stay selective.
+
 ## Weak spots to handle carefully
 
-- Trackday Tuner and Diaz on Demand should appear on the site, but details are still too thin for full case studies.
 - Lambda Curry client specifics should remain selective to protect confidentiality.
 - HSNBA outcomes are operationally meaningful, but the public narrative should avoid claiming unverified downstream business impact.
 

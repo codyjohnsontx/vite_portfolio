@@ -2,9 +2,9 @@ export const experience = [
   {
     company: 'Lambda Curry',
     role: 'Product Owner',
-    dates: 'May 2025 - Present',
+    dates: 'Previous product work',
     summary:
-      'Owns multiple client backlogs while setting weekly priorities, defining higher-risk work up front, and running delivery cadence across engineering, design, and operations.',
+      'Owned multiple client backlogs while setting weekly priorities, defining higher-risk work up front, and running delivery cadence across engineering, design, and operations.',
     evidence: [
       'Turned vague requests into buildable tickets with user stories, acceptance criteria, edge cases, and launch constraints.',
       'Wrote PRDs for higher-risk features and defined launch success metrics before release.',
@@ -28,7 +28,7 @@ export const experience = [
   {
     company: 'Humane Society (HSNBA)',
     role: 'Software Engineer',
-    dates: 'Apr 2024 - Present',
+    dates: 'Apr 2024 - May 2025',
     summary:
       'Architected automation and geospatial workflows that reduced manual operational overhead and improved the quality of reporting and grant-supporting analysis.',
     evidence: [

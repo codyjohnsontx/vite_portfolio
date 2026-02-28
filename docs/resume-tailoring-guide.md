@@ -22,7 +22,7 @@ Tailor the master PM resume in 15 to 20 minutes without rewriting it from scratc
 
 ## What should stay stable
 
-- Core transition story
+- Core product story
 - Metrics and verified outcomes
 - Company names, dates, and job titles
 - Featured case studies in the public portfolio
@@ -42,7 +42,7 @@ Tailor the master PM resume in 15 to 20 minutes without rewriting it from scratc
 ### For product owner or hybrid roles
 
 - Stress backlog refinement, agile ceremonies, issue shaping, and stakeholder alignment.
-- Use Lambda Curry and HSNBA higher in the story.
+- Use Lambda Curry and HSNBA higher in the story after the active builds.
 
 ## Final check before sending
 

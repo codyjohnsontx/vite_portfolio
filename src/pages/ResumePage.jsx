@@ -1,6 +1,8 @@
 import { HiArrowDownTray } from 'react-icons/hi2';
+import ctxMotoWorksLogo from '../assets/ctxmotoworks-logo-v2.png';
 import hsnbaLogo from '../assets/hsnba-logo-100x250 (1).png';
 import lambdaCurryLogo from '../assets/Icon 144x144-1718828587039.webp';
+import texasMalibuLogo from '../assets/texasmalibu-logo.png';
 import { resumeContent } from '../content/resumeContent';
 import { resumeMeta } from '../content/resumeMeta';
 
@@ -12,6 +14,14 @@ function ResumePage() {
 
     if (company === 'HSNBA') {
       return { src: hsnbaLogo, alt: 'HSNBA logo' };
+    }
+
+    if (company === 'CTX Motoworks') {
+      return { src: ctxMotoWorksLogo, alt: 'CTX Motoworks logo' };
+    }
+
+    if (company === 'Texas Malibu') {
+      return { src: texasMalibuLogo, alt: 'Texas Malibu logo' };
     }
 
     return null;
@@ -129,11 +139,11 @@ function ResumePage() {
           </article>
 
           <article className="surface-card p-7">
-            <span className="eyebrow">Tailoring checklist</span>
+            <span className="eyebrow">Active builds</span>
             <ul className="mt-4 space-y-3">
-              {resumeContent.tailoringChecklist.map((step) => (
-                <li key={step} className="rounded-2xl border border-[color:var(--line)] bg-white/60 px-4 py-4 text-sm leading-6">
-                  {step}
+              {resumeContent.activeBuilds.map((item) => (
+                <li key={item} className="rounded-2xl border border-[color:var(--line)] bg-white/60 px-4 py-4 text-sm leading-6">
+                  {item}
                 </li>
               ))}
             </ul>
@@ -142,7 +152,7 @@ function ResumePage() {
           <article className="surface-card p-7">
             <span className="eyebrow">Version note</span>
             <p className="text-base leading-7 text-[color:var(--ink-muted)]">
-              Master PM resume aligned with the public site. Last updated {resumeMeta.lastUpdated}.
+              Public resume aligned with the portfolio. Last updated {resumeMeta.lastUpdated}.
             </p>
           </article>
         </aside>

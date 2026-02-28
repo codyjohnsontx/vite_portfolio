@@ -1,18 +1,17 @@
 Cody Johnson
 Austin, Texas
-codyjohnsontx@gmail.com
 LinkedIn: https://www.linkedin.com/in/cody-johnson-92460b124/
 GitHub: https://github.com/codyjohnsontx
 
 PRODUCT OWNER / PRODUCT MANAGER
-Product owner with software engineering depth, delivery discipline, and a strong bias toward measurable outcomes.
+Building product systems with software engineering depth, delivery discipline, and real-world operating experience.
 
 SUMMARY
-Current Product Owner at Lambda Curry owning multiple client backlogs, writing higher-risk
-product definitions, and setting weekly priorities based on impact, risk, and team capacity.
+Currently building Trackday Tuner and Diaz on Demand while bringing prior product ownership
+experience from Lambda Curry and systems-focused work across operations, automation, and commerce.
 
-Brings a blend of product delivery, operations systems thinking, and technical fluency that
-translates well to PM, technical PM, and product-owner-heavy roles.
+I do my best work where product definition, technical fluency, and execution discipline all
+matter: shaping requirements, clarifying tradeoffs, and shipping toward measurable outcomes.
 
 CORE STRENGTHS
 - Backlog ownership
@@ -24,9 +23,15 @@ CORE STRENGTHS
 - Jira, Linear, Google Analytics, GTM, SQL, MCP monitoring
 - Python, Bash, React, TypeScript, Node.js, PostgreSQL
 
+ACTIVE BUILDS
+- Trackday Tuner: mobile-first setup notebook for track day riders and racers, with garage
+  management, session logging, comparison, tracks, and trackside tools.
+- Diaz on Demand: members-only training platform with lesson playback, progress tracking,
+  subscription gating, and admin publishing workflows.
+
 EXPERIENCE
 
-Lambda Curry | Product Owner | May 2025 - Present
+Lambda Curry | Product Owner | Previous role
 - Owned backlogs across multiple client projects and set weekly priority based on impact,
   risk, and team capacity.
 - Turned vague tasks into buildable tickets with user stories, acceptance criteria, edge
@@ -53,7 +58,7 @@ CTX Motoworks | Assistant General Manager, Operations & E-commerce (Part time) |
 - Driving e-commerce buildout and apparel line as a new revenue stream through catalog,
   operations, and platform definition.
 
-HSNBA | Software Engineer (Volunteer, part time) | Apr 2024 - Present
+HSNBA | Software Engineer (Volunteer, part time) | Apr 2024 - May 2025
 - Owned requirements and delivery for internal automation tools built in Python and SQL,
   reducing manual entry by 65 percent and cutting data errors by 95 percent.
 - Worked with the municipal GIS department to deliver a geospatial classification workflow
@@ -70,10 +75,10 @@ Texas Malibu | Sales Lead | Apr 2021 - May 2025
   15 percent within six months.
 
 SELECTED PROJECT THEMES
-- Lambda Curry launch planning and PRD workflow
-- CTX Motoworks service throughput model
 - Trackday Tuner
 - Diaz on Demand
+- Lambda Curry launch planning and scope-control workflow
+- CTX Motoworks service throughput model
 
 CREDENTIALS AND COMMUNITY
 - PSPO I
@@ -82,8 +87,3 @@ CREDENTIALS AND COMMUNITY
 - 100 Devs Bootcamp
 - React ATX member
 - Remix Austin member
-
-TAILORING NOTES
-- Shift the headline toward technical PM or product owner language when the role requires it.
-- Mirror the employer's product problem space in the opening summary sentence.
-- Keep at least one concrete metric above the fold.

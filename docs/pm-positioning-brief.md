@@ -2,28 +2,28 @@
 
 ## Core positioning
 
-Cody Johnson is a Product Owner and PM candidate with software engineering depth, automation instincts, and hands-on business execution experience. The transition story is not "engineer trying product." It is "operator already owning PM-shaped work and expanding into broader PM scope."
+Cody Johnson is a product operator with software engineering depth, automation instincts, and hands-on business execution experience. The public portfolio should read as product-led and build-focused, supported by past shipped work.
 
 ## Audience
 
 - Recruiters screening for PM, technical PM, or product-owner-adjacent roles
 - Hiring managers looking for execution strength and cross-functional judgment
-- Interviewers who need fast proof that the transition is credible
+- Interviewers who need fast proof that the product story is credible
 
 ## Narrative spine
 
-1. Start with product outcomes, not coding language.
+1. Start with active products, not employment chronology.
 2. Frame engineering experience as an execution advantage.
 3. Highlight business-side work to show customer and commercial fluency.
-4. Use Lambda Curry and HSNBA as the lead case studies because they show both measurable impact and judgment under ambiguity.
+4. Use Trackday Tuner and Diaz on Demand as the lead story, with Lambda Curry and HSNBA as selected proof.
 
 ## Messaging rules
 
-- Lead with current Product Owner credibility and PM target alignment.
+- Lead with products in active build and the operator mindset behind them.
 - Avoid opening with "software engineer" unless it directly supports a product execution point.
 - Prefer "clarified the problem," "aligned stakeholders," and "improved the customer path" over tool-by-tool descriptions.
 - Use metrics where available, but do not manufacture them.
-- Keep the site selective and recruiter-first.
+- Keep the site selective and product-first.
 
 ## Proof themes
 
