@@ -1,50 +1,57 @@
-# Crazy 8 Grappling Club
+# Cody Johnson PM Portfolio
 
-Welcome to the official repository for the **Crazy 8 Grappling Club** website.
+This repository contains a recruiter-first portfolio and resume system for Cody Johnson's transition into Product Manager roles.
 
-The website is currently under development, and features are being added as I research and decide on the best solutions moving forward.
+The site is built with Vite, React, React Router, and Tailwind CSS. The implementation is intentionally content-driven so messaging, case studies, and resume details can be updated without rewriting the UI.
 
-The goal is to showcase the club's activities, events, and information about Brazilian Jiu-Jitsu training sessions. It’s built using React + Vite with a focus on a responsive and user-friendly design.
+## What is in scope
 
-## Table of Contents (coming soon)
-- [About](#about)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [To-Do List](#to-do-list)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
+- A PM-positioned homepage
+- Two public case studies
+- A web resume view
+- A downloadable resume asset
+- Structured content files for profile, case studies, experience, projects, and resume metadata
+- Supporting docs for positioning, evidence capture, and resume tailoring
 
-## About
+## Project structure
 
-The Crazy 8 Grappling Club website serves as a digital hub for members, instructors, and enthusiasts of Brazilian Jiu-Jitsu. It provides information about training schedules, club events, instructor profiles, and a gallery of past events. The website also allows users to contact the club and stay updated with the latest news.
+- `src/content/`
+  Source-of-truth content objects for the public site and resume page.
+- `src/pages/`
+  Route-level pages for the homepage, case studies, and resume.
+- `src/components/`
+  Shared layout and navigation components.
+- `public/resume/`
+  Printable and downloadable resume assets.
+- `docs/`
+  PM transition planning artifacts, including the positioning brief, evidence inventory, and tailoring guide.
 
-## Features
+## Local development
 
-- **Responsive Design:** Optimized for both mobile and desktop devices.
-- **Dynamic Navigation:** Intuitive navigation with smooth page transitions.
-- **Event Listings:** Display upcoming training sessions and events.
-- **Instructor Profiles:** Information about the instructors and their experience.
-- **Contact Form:** Reach out to the club for inquiries or registration.
+```bash
+npm install
+npm run dev
+```
 
-## Tech Stack
+## Build
 
-- **Frontend:** React/Vite, Tailwind CSS (soon to be implemented)
-- **Hosting:** Vercel
-- **Tools:** Figma (for design specifications), Git, GitHub
+```bash
+npm run build
+```
 
-## To-Do List
+## Content workflow
 
-- Implement a headless CMS so the instructor can easily make updates.
-- Continue building out the CSS and eventually transition to MUI or Tailwind CSS.
-- Add content such as photos and videos. High-resolution photos from a training seminar need to be converted to smaller resolutions/formats for use on the site.
+Update the files in `src/content/` when changing:
 
-## Installation
+- hero positioning
+- case study copy
+- experience framing
+- supporting project links
+- resume metadata
 
-To get a local copy up and running, follow these steps:
+Use the supporting docs in `docs/` when refining the PM narrative for new applications.
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/crazy8grapplingsite.git
+## Notes
+
+- The public portfolio is intentionally selective. It is designed to start interviews, not to publish every project artifact.
+- The downloadable resume asset should stay aligned with both the `/resume` route and the tailoring workflow documented in `docs/resume-tailoring-guide.md`.

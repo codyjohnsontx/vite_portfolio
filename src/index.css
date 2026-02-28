@@ -2,6 +2,108 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+:root {
+  color-scheme: light;
+  --canvas: #edf3f7;
+  --canvas-deep: #dbe6ef;
+  --ink: #10233b;
+  --ink-muted: #52657c;
+  --line: rgba(16, 35, 59, 0.12);
+  --accent: #0d8fb5;
+  --accent-soft: rgba(13, 143, 181, 0.12);
+  --card: rgba(255, 255, 255, 0.82);
+}
+
+html {
   scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(16, 35, 59, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 35, 59, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at top left, rgba(13, 143, 181, 0.16), transparent 24%),
+    radial-gradient(circle at top right, rgba(53, 90, 145, 0.12), transparent 22%),
+    linear-gradient(180deg, #f7fbfd 0%, #eef4f8 58%, #e5edf4 100%);
+  background-size: 32px 32px, 32px 32px, auto, auto, auto;
+  color: var(--ink);
+  font-family: 'Avenir Next', 'Segoe UI', sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(157, 92, 47, 0.2);
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply mx-auto w-full max-w-6xl px-5 md:px-8;
+  }
+
+  .eyebrow {
+    @apply mb-4 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em];
+    border-color: var(--line);
+    background: rgba(255, 255, 255, 0.74);
+    color: var(--accent);
+  }
+
+  .surface-card {
+    @apply rounded-[28px] border backdrop-blur-sm;
+    border-color: var(--line);
+    background: var(--card);
+    box-shadow: 0 18px 70px rgba(16, 35, 59, 0.08);
+  }
+
+  .section-title {
+    @apply text-3xl font-semibold md:text-5xl;
+  }
+
+  .section-copy {
+    @apply max-w-3xl text-base leading-7 md:text-lg;
+    color: var(--ink-muted);
+  }
+
+  .meta-line {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] md:text-sm;
+    color: var(--accent);
+  }
+
+  .detail-line {
+    @apply text-sm leading-7 md:text-[15px];
+    color: var(--ink-muted);
+  }
+
+  .detail-label {
+    @apply mr-2 font-semibold uppercase tracking-[0.14em];
+    color: var(--ink);
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
 }

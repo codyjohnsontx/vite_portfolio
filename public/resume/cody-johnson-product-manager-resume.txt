@@ -1,0 +1,89 @@
+Cody Johnson
+Austin, Texas
+codyjohnsontx@gmail.com
+LinkedIn: https://www.linkedin.com/in/cody-johnson-92460b124/
+GitHub: https://github.com/codyjohnsontx
+
+PRODUCT OWNER / PRODUCT MANAGER
+Product owner with software engineering depth, delivery discipline, and a strong bias toward measurable outcomes.
+
+SUMMARY
+Current Product Owner at Lambda Curry owning multiple client backlogs, writing higher-risk
+product definitions, and setting weekly priorities based on impact, risk, and team capacity.
+
+Brings a blend of product delivery, operations systems thinking, and technical fluency that
+translates well to PM, technical PM, and product-owner-heavy roles.
+
+CORE STRENGTHS
+- Backlog ownership
+- Prioritization
+- Requirements writing
+- Acceptance criteria
+- Sprint ceremonies
+- Dependency management
+- Jira, Linear, Google Analytics, GTM, SQL, MCP monitoring
+- Python, Bash, React, TypeScript, Node.js, PostgreSQL
+
+EXPERIENCE
+
+Lambda Curry | Product Owner | May 2025 - Present
+- Owned backlogs across multiple client projects and set weekly priority based on impact,
+  risk, and team capacity.
+- Turned vague tasks into buildable tickets with user stories, acceptance criteria, edge
+  cases, and launch constraints, cutting back-and-forth during implementation.
+- Wrote PRDs for higher-risk features to lock scope early and get stakeholder sign-off before
+  engineering started.
+- Defined launch success metrics and the tracking plan before release, then reviewed
+  post-launch results to feed the next sprint.
+- Led a client launch tied to revenue; first-week sales increased 12 percent, then iterated
+  using funnel and behavior data.
+- Ran delivery cadence end to end through planning, mid-sprint adjustments, dependency
+  tracking, and release communication.
+
+CTX Motoworks | Assistant General Manager, Operations & E-commerce (Part time) | Jul 2025 - Present
+- Treated service and inventory as a product problem, mapped the workflow from intake through
+  billing, and changed process to hit the highest monthly sales results in at least five years
+  within three months.
+- Built a service throughput model using capacity, queue age, and cycle time; increased
+  service revenue by $90K in one month.
+- Improved customer satisfaction scores by 11 percent for Ducati and 13 percent for Triumph
+  through better prioritization and service flow.
+- Launched an aged-inventory liquidation program on eBay with pricing rules, listing cadence,
+  and SKU prioritization, generating $20K cash in three months.
+- Driving e-commerce buildout and apparel line as a new revenue stream through catalog,
+  operations, and platform definition.
+
+HSNBA | Software Engineer (Volunteer, part time) | Apr 2024 - Present
+- Owned requirements and delivery for internal automation tools built in Python and SQL,
+  reducing manual entry by 65 percent and cutting data errors by 95 percent.
+- Worked with the municipal GIS department to deliver a geospatial classification workflow
+  that processed more than 19,000 records.
+- Scoped work around staff time, data quality, and system limitations, then shipped in small
+  releases.
+
+Texas Malibu | Sales Lead | Apr 2021 - May 2025
+- Collected customer and market feedback daily and used it to inform inventory and
+  merchandising decisions that contributed to market share growth in Central Texas.
+- Standardized inventory processes across three stores by moving tracking into digital
+  tooling, improving consistency and reducing reconciliation time.
+- Led weekly training on CRM usage and sales workflow, improving client satisfaction by
+  15 percent within six months.
+
+SELECTED PROJECT THEMES
+- Lambda Curry launch planning and PRD workflow
+- CTX Motoworks service throughput model
+- Trackday Tuner
+- Diaz on Demand
+
+CREDENTIALS AND COMMUNITY
+- PSPO I
+- Texas State University - BS in Advertising and Business Management
+- Harvard CS50
+- 100 Devs Bootcamp
+- React ATX member
+- Remix Austin member
+
+TAILORING NOTES
+- Shift the headline toward technical PM or product owner language when the role requires it.
+- Mirror the employer's product problem space in the opening summary sentence.
+- Keep at least one concrete metric above the fold.
