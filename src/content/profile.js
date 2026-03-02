@@ -1,13 +1,13 @@
 export const profile = {
   name: 'Cody Johnson',
-  targetRole: 'Product Manager / Product Owner',
+  targetRole: 'Product Manager',
   location: 'Austin, Texas',
   headline:
     'Building product systems with engineering depth, operational range, and a bias toward shipping useful things.',
   heroSupport:
     'I am building Trackday Tuner and Diaz on Demand while drawing on prior product ownership, automation, and operations work across client delivery, nonprofits, and commerce.',
   summary:
-    'My work sits at the intersection of product definition, technical execution, and real-world operations. I do my best work when messy workflows need clearer requirements, practical release decisions, and outcomes that hold up outside a roadmap deck.',
+    'I do my best work when a team needs to turn vague requests into clear requirements, make practical release decisions, and keep execution moving until the result holds up in the real world.',
   footerNote:
     'Built as a focused portfolio for active products, selected case studies, and supporting execution proof.',
   contactLinks: [
@@ -18,11 +18,6 @@ export const profile = {
       external: true,
     },
     { label: 'GitHub', href: 'https://github.com/codyjohnsontx', external: true },
-  ],
-  quickFacts: [
-    'Building Trackday Tuner and Diaz on Demand',
-    'Product, systems, and operations experience across software and real-world workflows',
-    'Comfortable owning requirements, launches, tooling, and product iteration',
   ],
   proofThemes: [
     {

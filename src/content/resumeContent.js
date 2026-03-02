@@ -3,7 +3,7 @@ export const resumeContent = {
     'Building product systems with software engineering depth, delivery discipline, and real-world operating experience.',
   summary: [
     'Currently building Trackday Tuner and Diaz on Demand while bringing prior product ownership experience from Lambda Curry and systems-focused work across operations, automation, and commerce.',
-    'I do my best work where product definition, technical fluency, and execution discipline all matter: shaping requirements, clarifying tradeoffs, and shipping toward measurable outcomes.',
+    'I do my best work when a team needs to turn vague requests into clear requirements, make practical release decisions, and keep execution moving.',
   ],
   strengths: [
     {

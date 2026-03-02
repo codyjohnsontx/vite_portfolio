@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { HiArrowDownTray, HiArrowUpRight, HiEnvelope } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import ctxMotoWorksLogo from '../assets/ctxmotoworks-logo-v2.png';
@@ -11,6 +12,96 @@ import { featuredProducts } from '../content/projects';
 import { resumeMeta } from '../content/resumeMeta';
 
 function HomePage() {
+  const homePageRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return undefined;
+    }
+
+    const root = homePageRef.current;
+    if (!root) {
+      return undefined;
+    }
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const coarsePointer = window.matchMedia('(pointer: coarse)');
+
+    if (reduceMotion.matches || coarsePointer.matches) {
+      return undefined;
+    }
+
+    let frameId = 0;
+    let targetX = 50;
+    let targetY = 18;
+    let currentX = 50;
+    let currentY = 18;
+
+    const writePoint = (x, y) => {
+      root.style.setProperty('--mouse-x', `${x}%`);
+      root.style.setProperty('--mouse-y', `${y}%`);
+    };
+
+    const animatePointer = () => {
+      currentX += (targetX - currentX) * 0.14;
+      currentY += (targetY - currentY) * 0.14;
+
+      writePoint(currentX, currentY);
+
+      const deltaX = Math.abs(targetX - currentX);
+      const deltaY = Math.abs(targetY - currentY);
+
+      if (deltaX <= 0.1 && deltaY <= 0.1) {
+        currentX = targetX;
+        currentY = targetY;
+        writePoint(currentX, currentY);
+        frameId = 0;
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(animatePointer);
+    };
+
+    const scheduleAnimation = () => {
+      if (!frameId) {
+        frameId = window.requestAnimationFrame(animatePointer);
+      }
+    };
+
+    const handlePointerMove = (event) => {
+      const bounds = root.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) {
+        return;
+      }
+
+      const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+      const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+
+      targetX = Math.min(Math.max(x, 0), 100);
+      targetY = Math.min(Math.max(y, 0), 100);
+
+      scheduleAnimation();
+    };
+
+    const handlePointerLeave = () => {
+      targetX = 50;
+      targetY = 18;
+      scheduleAnimation();
+    };
+
+    root.addEventListener('pointermove', handlePointerMove);
+    root.addEventListener('pointerleave', handlePointerLeave);
+
+    return () => {
+      root.removeEventListener('pointermove', handlePointerMove);
+      root.removeEventListener('pointerleave', handlePointerLeave);
+
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
+      }
+    };
+  }, []);
+
   const getCompanyLogo = (company) => {
     if (company === 'Lambda Curry') {
       return { src: lambdaCurryLogo, alt: 'Lambda Curry logo' };
@@ -32,9 +123,12 @@ function HomePage() {
   };
 
   return (
-    <div className="pb-16">
-      <section className="section-shell grid gap-8 py-16 md:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.7fr)] md:py-24">
-        <div className="surface-card overflow-hidden bg-[linear-gradient(135deg,rgba(14,26,43,0.96),rgba(23,50,82,0.92))] p-8 text-white md:p-12">
+    <div ref={homePageRef} className="home-page pb-16">
+      <section className="section-shell glass-stage py-16 md:py-24">
+        <div className="surface-card glass-panel-strong max-w-5xl overflow-hidden p-8 text-white md:p-12">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/72">
+            Product Manager
+          </p>
           <h1 className="max-w-4xl text-4xl font-semibold leading-tight md:text-6xl">
             {profile.headline}
           </h1>
@@ -55,58 +149,19 @@ function HomePage() {
             </a>
             <Link
               to="/#case-studies"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/10"
+              className="glass-cta-secondary inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition"
             >
               Read case studies
               <HiArrowUpRight className="text-base" />
             </Link>
           </div>
         </div>
-
-        <aside className="grid gap-4">
-          {featuredProducts.map((product) => (
-            <article key={product.slug} className="surface-card p-7">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <span className="eyebrow">Currently building</span>
-                  <p className="mt-2 text-3xl font-semibold">{product.name}</p>
-                  <p className="meta-line mt-2">{product.stage}</p>
-                </div>
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[color:var(--accent-soft)] text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)] shadow-sm">
-                  {product.mark}
-                </div>
-              </div>
-              <p className="mt-4 text-sm leading-6 text-[color:var(--ink-muted)]">{product.problem}</p>
-            </article>
-          ))}
-
-          <div className="surface-card flex flex-col justify-between p-8">
-            <div>
-              <span className="eyebrow">At a glance</span>
-              <ul className="space-y-4">
-                {profile.quickFacts.map((fact) => (
-                  <li key={fact} className="rounded-2xl border border-[color:var(--line)] bg-white/55 px-4 py-4 text-sm leading-6 text-[color:var(--ink)]">
-                    {fact}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="mt-8 rounded-[24px] bg-[color:var(--ink)] p-6 text-white">
-              <p className="text-sm uppercase tracking-[0.2em] text-white/70">Target roles</p>
-              <p className="mt-3 text-2xl font-semibold">PM / Technical PM</p>
-              <p className="mt-3 text-sm leading-6 text-white/75">
-                Best fit for teams that value product definition, technical fluency, and disciplined execution.
-              </p>
-            </div>
-          </div>
-        </aside>
       </section>
 
-      <section className="section-shell py-8 md:py-12">
-        <span className="eyebrow">Featured products</span>
+      <section className="section-shell glass-stage py-8 md:py-12">
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="section-title">Products in active build.</h2>
+            <h2 className="section-title">Featured products.</h2>
             <p className="section-copy mt-4">
               These are the products doing the heaviest lifting on the homepage because they show what I am actively building now, not just what I have shipped before.
             </p>
@@ -114,16 +169,8 @@ function HomePage() {
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
           {featuredProducts.map((product) => (
-            <article key={product.slug} className="surface-card p-7 md:p-8">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="meta-line">{product.stage}</p>
-                  <h3 className="mt-3 text-3xl font-semibold">{product.name}</h3>
-                </div>
-                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[color:var(--accent-soft)] text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)] shadow-sm">
-                  {product.mark}
-                </div>
-              </div>
+            <article key={product.slug} className="surface-card glass-panel p-7 md:p-8">
+              <h3 className="text-3xl font-semibold">{product.name}</h3>
               <p className="mt-4 text-base leading-7 text-[color:var(--ink-muted)]">{product.summary}</p>
               <p className="detail-line mt-5">
                 <span className="detail-label">Audience:</span>
@@ -137,7 +184,7 @@ function HomePage() {
                 <span className="detail-label">Features:</span>
                 {product.featureThemes.join(', ')}
               </p>
-              <p className="mt-5 rounded-3xl bg-[color:var(--accent-soft)] px-5 py-4 text-sm leading-6 text-[color:var(--ink)]">
+              <p className="glass-panel-soft mt-5 rounded-3xl px-5 py-4 text-sm leading-6 text-[color:var(--ink)]">
                 {product.statusNote}
               </p>
               <p className="mt-4 text-sm font-medium text-[color:var(--accent)]">{product.whyItMatters}</p>
@@ -146,7 +193,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="section-shell py-12 md:py-16">
+      <section className="section-shell glass-stage py-12 md:py-16">
         <span className="eyebrow">Build signals</span>
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -158,7 +205,7 @@ function HomePage() {
         </div>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {profile.proofThemes.map((theme) => (
-            <article key={theme.title} className="surface-card p-6">
+            <article key={theme.title} className="surface-card glass-panel-soft p-6">
               <p className="text-sm uppercase tracking-[0.18em] text-[color:var(--accent)]">{theme.stat}</p>
               <h3 className="mt-3 text-2xl font-semibold">{theme.title}</h3>
               <p className="mt-4 text-sm leading-7 text-[color:var(--ink-muted)]">{theme.body}</p>
@@ -167,7 +214,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="case-studies" className="section-shell py-12 md:py-16">
+      <section id="case-studies" className="section-shell glass-stage py-12 md:py-16">
         <span className="eyebrow">Selected case studies</span>
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -186,7 +233,7 @@ function HomePage() {
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
           {caseStudies.map((study) => (
-            <article key={study.slug} className="surface-card p-7 md:p-8">
+            <article key={study.slug} className="surface-card glass-panel p-7 md:p-8">
               {(() => {
                 const logo = getCompanyLogo(study.company);
 
@@ -196,7 +243,7 @@ function HomePage() {
                       {study.company} • {study.timeframe}
                     </p>
                     {logo ? (
-                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/80 p-3 shadow-sm">
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/50 bg-white/76 p-3 shadow-sm">
                         <img src={logo.src} alt={logo.alt} className="h-full w-full object-contain" />
                       </div>
                     ) : null}
@@ -205,7 +252,7 @@ function HomePage() {
               })()}
               <h3 className="mt-5 text-3xl font-semibold">{study.title}</h3>
               <p className="mt-4 text-base leading-7 text-[color:var(--ink-muted)]">{study.tagline}</p>
-              <p className="mt-6 rounded-3xl bg-[color:var(--accent-soft)] px-5 py-4 text-sm leading-6 text-[color:var(--ink)]">
+              <p className="glass-panel-soft mt-6 rounded-3xl px-5 py-4 text-sm leading-6 text-[color:var(--ink)]">
                 {study.featuredOutcome}
               </p>
               <ul className="mt-6 space-y-3">
@@ -227,7 +274,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="experience" className="section-shell py-12 md:py-16">
+      <section id="experience" className="section-shell glass-stage py-12 md:py-16">
         <span className="eyebrow">Selected experience</span>
         <h2 className="section-title">Prior product and systems work that supports the products above.</h2>
         <p className="section-copy mt-4">
@@ -235,7 +282,7 @@ function HomePage() {
         </p>
         <div className="mt-8 space-y-5">
           {experience.map((item) => (
-            <article key={`${item.company}-${item.role}`} className="surface-card p-6 md:p-8">
+            <article key={`${item.company}-${item.role}`} className="surface-card glass-panel-soft p-6 md:p-8">
               {(() => {
                 const logo = getCompanyLogo(item.company);
 
@@ -247,7 +294,7 @@ function HomePage() {
                   <p className="mt-1 text-sm font-semibold text-[color:var(--ink-muted)]">{item.role}</p>
                 </div>
                 {logo ? (
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/80 p-3 shadow-sm">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/50 bg-white/76 p-3 shadow-sm">
                     <img src={logo.src} alt={logo.alt} className="h-full w-full object-contain" />
                   </div>
                 ) : null}
@@ -271,9 +318,9 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="section-shell py-12 md:py-16">
+      <section className="section-shell glass-stage py-12 md:py-16">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.9fr)]">
-          <div className="surface-card p-7 md:p-8">
+          <div className="surface-card glass-panel-soft p-7 md:p-8">
             <span className="eyebrow">PM toolkit</span>
             <h2 className="section-title">What I bring into product conversations.</h2>
             <div className="mt-8 grid gap-5 md:grid-cols-2">
@@ -285,7 +332,7 @@ function HomePage() {
               ))}
             </div>
           </div>
-          <div className="surface-card p-7 md:p-8">
+          <div className="surface-card glass-panel-soft p-7 md:p-8">
             <span className="eyebrow">Operating style</span>
             <h2 className="text-3xl font-semibold">How I work when the stakes are real.</h2>
             <div className="mt-6 space-y-4">
@@ -304,8 +351,8 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="section-shell py-12 md:py-16">
-        <div className="surface-card overflow-hidden p-8 md:p-10">
+      <section className="section-shell glass-stage py-12 md:py-16">
+        <div className="surface-card glass-panel overflow-hidden p-8 md:p-10">
           <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <div>
               <span className="eyebrow">Resume</span>
@@ -328,7 +375,7 @@ function HomePage() {
               </a>
               <Link
                 to="/resume"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-[color:var(--line)] px-6 py-3 text-sm font-semibold"
+                className="glass-cta-secondary inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--ink)]"
               >
                 Open resume page
                 <HiArrowUpRight className="text-base" />
@@ -338,8 +385,8 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="contact" className="section-shell py-12 md:py-16">
-        <div className="surface-card grid gap-8 p-8 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.75fr)] md:p-10">
+      <section id="contact" className="section-shell glass-stage py-12 md:py-16">
+        <div className="surface-card glass-panel grid gap-8 p-8 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.75fr)] md:p-10">
           <div>
             <span className="eyebrow">Contact</span>
             <h2 className="section-title">Make the next conversation easy to start.</h2>

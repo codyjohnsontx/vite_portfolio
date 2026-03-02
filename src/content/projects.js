@@ -6,8 +6,6 @@ export const featuredProducts = [
   {
     name: 'Trackday Tuner',
     slug: 'trackday-tuner',
-    mark: 'TT',
-    stage: 'Active build',
     audience:
       'Track day riders, HPDE and time-attack drivers, club racers, and anyone who needs trustworthy setup history at the track.',
     problem:
@@ -29,8 +27,6 @@ export const featuredProducts = [
   {
     name: 'Diaz on Demand',
     slug: 'diaz-on-demand',
-    mark: 'DoD',
-    stage: 'Active build',
     audience:
       'Diaz Martial Arts members who want structured training outside the gym, plus coaches and admins publishing premium content.',
     problem:

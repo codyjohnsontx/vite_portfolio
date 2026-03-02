@@ -16,7 +16,7 @@ function SiteLayout() {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-50 border-b border-[color:var(--line)] bg-[rgba(251,246,236,0.82)] backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-[color:var(--line)] bg-[rgba(234,241,246,0.78)] backdrop-blur-xl">
         <div className="section-shell flex items-center justify-between py-4">
           <Link to="/" className="min-w-0">
             <div className="text-lg font-semibold text-[color:var(--ink)] md:text-xl">
@@ -59,7 +59,7 @@ function SiteLayout() {
         </div>
 
         {menuOpen ? (
-          <div className="border-t border-[color:var(--line)] bg-[rgba(251,246,236,0.96)] md:hidden">
+          <div className="border-t border-[color:var(--line)] bg-[rgba(234,241,246,0.94)] md:hidden">
             <div className="section-shell flex flex-col gap-3 py-4">
               {navItems.map((item) => (
                 <Link
