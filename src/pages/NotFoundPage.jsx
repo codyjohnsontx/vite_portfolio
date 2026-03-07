@@ -10,10 +10,10 @@ function NotFoundPage() {
           The rebuild is intentionally small and recruiter-focused. Head back to the homepage or open the resume directly.
         </p>
         <div className="mt-8 flex gap-3">
-          <Link to="/" className="rounded-full bg-[color:var(--ink)] px-5 py-3 text-sm font-semibold text-white">
+          <Link to="/" className="cta-primary">
             Go home
           </Link>
-          <Link to="/resume" className="rounded-full border border-[color:var(--line)] px-5 py-3 text-sm font-semibold">
+          <Link to="/resume" className="glass-cta-secondary">
             Open resume
           </Link>
         </div>

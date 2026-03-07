@@ -1,4 +1,4 @@
-import { HiArrowDownTray } from 'react-icons/hi2';
+import { HiArrowDownTray, HiArrowUpRight } from 'react-icons/hi2';
 import ctxMotoWorksLogo from '../assets/ctxmotoworks-logo-v2.png';
 import hsnbaLogo from '../assets/hsnba-logo-100x250 (1).png';
 import lambdaCurryLogo from '../assets/Icon 144x144-1718828587039.webp';
@@ -45,7 +45,7 @@ function ResumePage() {
           <div className="no-print flex flex-col gap-3">
             <a
               href={resumeMeta.downloadPath}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[color:var(--accent)]"
+              className="cta-primary"
               download
             >
               <HiArrowDownTray className="text-base" />
@@ -53,11 +53,12 @@ function ResumePage() {
             </a>
             <a
               href={resumeMeta.htmlSourcePath}
-              className="inline-flex items-center justify-center rounded-full border border-[color:var(--line)] px-6 py-3 text-sm font-semibold"
+              className="glass-cta-secondary"
               target="_blank"
               rel="noreferrer"
             >
               Open printable source
+              <HiArrowUpRight className="text-base" />
             </a>
           </div>
         </div>
@@ -91,14 +92,11 @@ function ResumePage() {
                       <h2 className="text-2xl font-semibold">{item.company}</h2>
                       <p className="text-sm font-semibold text-[color:var(--ink-muted)]">{item.role}</p>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <p className="text-sm uppercase tracking-[0.18em] text-[color:var(--accent)]">{item.dates}</p>
-                      {logo ? (
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/80 p-2 shadow-sm">
-                          <img src={logo.src} alt={logo.alt} className="h-full w-full object-contain" />
-                        </div>
-                      ) : null}
-                    </div>
+                    {logo ? (
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/80 p-2 shadow-sm">
+                        <img src={logo.src} alt={logo.alt} className="h-full w-full object-contain" />
+                      </div>
+                    ) : null}
                   </div>
                     );
                   })()}
@@ -147,13 +145,6 @@ function ResumePage() {
                 </li>
               ))}
             </ul>
-          </article>
-
-          <article className="surface-card p-7">
-            <span className="eyebrow">Version note</span>
-            <p className="text-base leading-7 text-[color:var(--ink-muted)]">
-              Public resume aligned with the portfolio. Last updated {resumeMeta.lastUpdated}.
-            </p>
           </article>
         </aside>
       </section>

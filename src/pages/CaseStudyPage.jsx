@@ -21,7 +21,7 @@ function CaseStudyPage() {
   const study = getCaseStudyBySlug(slug);
 
   if (!study) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/not-found" replace />;
   }
 
   const logo =
@@ -145,7 +145,7 @@ function CaseStudyPage() {
             <span className="eyebrow">Next step</span>
             <Link
               to="/resume"
-              className="mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] px-5 py-3 text-sm font-semibold transition hover:border-[color:var(--accent)]"
+              className="glass-cta-secondary mt-4"
             >
               Open the resume
               <HiArrowUpRight className="text-base" />

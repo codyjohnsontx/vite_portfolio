@@ -15,7 +15,7 @@ Cody Johnson is a product operator with software engineering depth, automation i
 1. Start with active products, not employment chronology.
 2. Frame engineering experience as an execution advantage.
 3. Highlight business-side work to show customer and commercial fluency.
-4. Use Trackday Tuner and Diaz on Demand as the lead story, with Lambda Curry and HSNBA as selected proof.
+4. Use Track Tuner and Diaz on Demand as the lead story, with Lambda Curry and HSNBA as selected proof.
 
 ## Messaging rules
 

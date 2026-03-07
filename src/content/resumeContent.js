@@ -2,7 +2,7 @@ export const resumeContent = {
   headline:
     'Building product systems with software engineering depth, delivery discipline, and real-world operating experience.',
   summary: [
-    'Currently building Trackday Tuner and Diaz on Demand while bringing prior product ownership experience from Lambda Curry and systems-focused work across operations, automation, and commerce.',
+    'Currently building Track Tuner and Diaz on Demand, while prototyping Overlap and a Strava component lifecycle concept, and bringing prior product ownership experience from Lambda Curry plus systems-focused work across operations, automation, and commerce.',
     'I do my best work when a team needs to turn vague requests into clear requirements, make practical release decisions, and keep execution moving.',
   ],
   strengths: [
@@ -71,14 +71,16 @@ export const resumeContent = {
     },
   ],
   selectedProjects: [
-    'Trackday Tuner',
+    'Track Tuner',
     'Diaz on Demand',
-    'Lambda Curry launch planning and scope-control workflow',
-    'CTX Motoworks service throughput model',
+    'Overlap (iRacing radar overlay)',
+    'Strava Component Lifecycle',
   ],
   activeBuilds: [
-    'Trackday Tuner: mobile-first setup notebook with garage management, session logging, comparison, tracks, and trackside tools.',
-    'Diaz on Demand: members-only training library with lesson playback, progress tracking, subscription gating, and admin publishing workflows.',
+    'Track Tuner: AI-assisted race setup and telemetry platform with setup logging, condition tracking, rider feedback capture, and RAG recommendation prototypes.',
+    'Diaz on Demand: subscription martial arts platform with memberships, course progression, entitlement controls, Stripe billing, and Mux video delivery.',
+    'Overlap: .NET/WPF iRacing radar overlay with real-time telemetry-driven relative car positioning for close-battle awareness.',
+    'Strava Component Lifecycle: React/Node feature concept for drivetrain wear tracking, replacement alerts, and retailer price comparison.',
   ],
   credentials: [
     'PSPO I',

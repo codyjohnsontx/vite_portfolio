@@ -66,7 +66,7 @@ This file consolidates the strongest product-relevant evidence currently reflect
 
 ## Active builds to keep product-first
 
-- Trackday Tuner: audience, problem, and feature set are now strong enough for homepage-level detail, but it is still too early for a full polished case study.
+- Track Tuner: audience, problem, and feature set are now strong enough for homepage-level detail, but it is still too early for a full polished case study.
 - Diaz on Demand: working MVP slices across web, API, mobile, billing, and admin make it credible publicly, but production hardening details should stay selective.
 
 ## Weak spots to handle carefully

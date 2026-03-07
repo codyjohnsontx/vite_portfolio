@@ -7,7 +7,7 @@ PRODUCT OWNER / PRODUCT MANAGER
 Building product systems with software engineering depth, delivery discipline, and real-world operating experience.
 
 SUMMARY
-Currently building Trackday Tuner and Diaz on Demand while bringing prior product ownership
+Currently building Track Tuner and Diaz on Demand while bringing prior product ownership
 experience from Lambda Curry and systems-focused work across operations, automation, and commerce.
 
 I do my best work when a team needs to turn vague requests into clear requirements, make
@@ -24,7 +24,7 @@ CORE STRENGTHS
 - Python, Bash, React, TypeScript, Node.js, PostgreSQL
 
 ACTIVE BUILDS
-- Trackday Tuner: mobile-first setup notebook for track day riders and racers, with garage
+- Track Tuner: mobile-first setup notebook for track day riders and racers, with garage
   management, session logging, comparison, tracks, and trackside tools.
 - Diaz on Demand: members-only training platform with lesson playback, progress tracking,
   subscription gating, and admin publishing workflows.
@@ -75,7 +75,7 @@ Texas Malibu | Sales Lead | Apr 2021 - May 2025
   15 percent within six months.
 
 SELECTED PROJECT THEMES
-- Trackday Tuner
+- Track Tuner
 - Diaz on Demand
 - Lambda Curry launch planning and scope-control workflow
 - CTX Motoworks service throughput model

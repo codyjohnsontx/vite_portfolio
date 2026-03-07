@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { HiArrowDownTray, HiArrowUpRight, HiEnvelope } from 'react-icons/hi2';
+import { HiArrowDownTray, HiArrowUpRight } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import ctxMotoWorksLogo from '../assets/ctxmotoworks-logo-v2.png';
 import hsnbaLogo from '../assets/hsnba-logo-100x250 (1).png';
@@ -8,7 +8,7 @@ import texasMalibuLogo from '../assets/texasmalibu-logo.png';
 import { caseStudies } from '../content/caseStudies';
 import { experience } from '../content/experience';
 import { profile } from '../content/profile';
-import { featuredProducts } from '../content/projects';
+import { conceptProducts, flagshipProducts } from '../content/projects';
 import { resumeMeta } from '../content/resumeMeta';
 
 function HomePage() {
@@ -126,9 +126,6 @@ function HomePage() {
     <div ref={homePageRef} className="home-page pb-16">
       <section className="section-shell glass-stage py-16 md:py-24">
         <div className="surface-card glass-panel-strong max-w-5xl overflow-hidden p-8 text-white md:p-12">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/72">
-            Product Manager
-          </p>
           <h1 className="max-w-4xl text-4xl font-semibold leading-tight md:text-6xl">
             {profile.headline}
           </h1>
@@ -141,7 +138,7 @@ function HomePage() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
               href={resumeMeta.downloadPath}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[color:var(--accent)]"
+              className="cta-primary"
               download
             >
               <HiArrowDownTray className="text-base" />
@@ -149,7 +146,7 @@ function HomePage() {
             </a>
             <Link
               to="/#case-studies"
-              className="glass-cta-secondary inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition"
+              className="glass-cta-secondary text-white"
             >
               Read case studies
               <HiArrowUpRight className="text-base" />
@@ -159,42 +156,93 @@ function HomePage() {
       </section>
 
       <section className="section-shell glass-stage py-8 md:py-12">
-        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="section-title">Featured products.</h2>
-            <p className="section-copy mt-4">
-              These are the products doing the heaviest lifting on the homepage because they show what I am actively building now, not just what I have shipped before.
+        <div className="mb-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="section-title">Product work in progress.</h2>
+            <p className="section-copy mx-auto mt-4">
+              Flagship builds show what is actively being shipped now. The concept lab shows where new product bets are being framed, tested, and prepared for deeper build cycles.
             </p>
           </div>
         </div>
-        <div className="grid gap-6 lg:grid-cols-2">
-          {featuredProducts.map((product) => (
-            <article key={product.slug} className="surface-card glass-panel p-7 md:p-8">
-              <h3 className="text-3xl font-semibold">{product.name}</h3>
-              <p className="mt-4 text-base leading-7 text-[color:var(--ink-muted)]">{product.summary}</p>
-              <p className="detail-line mt-5">
-                <span className="detail-label">Audience:</span>
-                {product.audience}
-              </p>
-              <p className="detail-line mt-3">
-                <span className="detail-label">Problem:</span>
-                {product.problem}
-              </p>
-              <p className="detail-line mt-3">
-                <span className="detail-label">Features:</span>
-                {product.featureThemes.join(', ')}
-              </p>
-              <p className="glass-panel-soft mt-5 rounded-3xl px-5 py-4 text-sm leading-6 text-[color:var(--ink)]">
-                {product.statusNote}
-              </p>
-              <p className="mt-4 text-sm font-medium text-[color:var(--accent)]">{product.whyItMatters}</p>
-            </article>
-          ))}
+
+        <div>
+          <h3 className="text-2xl font-semibold md:text-3xl">Flagship builds</h3>
+          <div className="mt-5 grid gap-6 lg:grid-cols-2">
+            {flagshipProducts.map((product) => (
+              <article key={product.slug} className="interactive-card surface-card glass-panel product-card-flagship p-7 md:p-8">
+                <p className="product-meta-line">Active build • {product.companyContext}</p>
+                <h4 className="mt-4 text-3xl font-semibold">
+                  <Link to={`/products/${product.slug}`} className="interactive-card-title">
+                    {product.name}
+                  </Link>
+                </h4>
+                <p className="mt-4 text-base leading-7 text-[color:var(--ink-muted)]">{product.oneLiner}</p>
+                <p className="detail-line mt-5">
+                  <span className="detail-label">Audience:</span>
+                  {product.audience}
+                </p>
+                <p className="detail-line mt-3">
+                  <span className="detail-label">Problem:</span>
+                  {product.problem}
+                </p>
+                <ol className="workflow-list mt-5">
+                  {product.coreWorkflow.slice(0, 4).map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
+                </ol>
+                <p className="glass-panel-soft mt-5 rounded-3xl px-5 py-4 text-sm leading-6 text-[color:var(--ink)]">
+                  {product.evidenceSignal}
+                </p>
+                <Link to={`/products/${product.slug}`} className="glass-cta-secondary interactive-card-link mt-6 w-fit">
+                  Open product brief
+                  <HiArrowUpRight className="text-base" />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <h3 className="text-2xl font-semibold md:text-3xl">Concept lab</h3>
+          <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {conceptProducts.map((product) => (
+              <article key={product.slug} className="interactive-card surface-card glass-panel-soft product-card-concept p-6">
+                <p className="product-meta-line">Prototype concept • {product.companyContext}</p>
+                <h4 className="mt-4 text-2xl font-semibold">
+                  <Link to={`/products/${product.slug}`} className="interactive-card-title">
+                    {product.name}
+                  </Link>
+                </h4>
+                <p className="mt-3 text-sm leading-7 text-[color:var(--ink-muted)]">{product.oneLiner}</p>
+                <p className="detail-line mt-4">
+                  <span className="detail-label">Context:</span>
+                  {product.companyContext}
+                </p>
+                {product.brandDisclaimer ? (
+                  <p className="disclaimer-note mt-4">Unofficial concept.</p>
+                ) : null}
+                <Link to={`/products/${product.slug}`} className="glass-cta-secondary interactive-card-link mt-5 w-fit">
+                  Open product brief
+                  <HiArrowUpRight className="text-base" />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+          <Link to="/products" className="cta-primary">
+            View all product briefs
+            <HiArrowUpRight className="text-base" />
+          </Link>
+          <Link to="/#case-studies" className="glass-cta-secondary">
+            See supporting case studies
+            <HiArrowUpRight className="text-base" />
+          </Link>
         </div>
       </section>
 
       <section className="section-shell glass-stage py-12 md:py-16">
-        <span className="eyebrow">Build signals</span>
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="section-title">Why these products are credible, not just ideas.</h2>
@@ -215,7 +263,6 @@ function HomePage() {
       </section>
 
       <section id="case-studies" className="section-shell glass-stage py-12 md:py-16">
-        <span className="eyebrow">Selected case studies</span>
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="section-title">Past work that supports the current build story.</h2>
@@ -289,8 +336,7 @@ function HomePage() {
                 return (
               <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                 <div>
-                  <p className="text-sm uppercase tracking-[0.18em] text-[color:var(--accent)]">{item.dates}</p>
-                  <h3 className="mt-2 text-2xl font-semibold">{item.company}</h3>
+                  <h3 className="text-2xl font-semibold">{item.company}</h3>
                   <p className="mt-1 text-sm font-semibold text-[color:var(--ink-muted)]">{item.role}</p>
                 </div>
                 {logo ? (
@@ -353,21 +399,17 @@ function HomePage() {
 
       <section className="section-shell glass-stage py-12 md:py-16">
         <div className="surface-card glass-panel overflow-hidden p-8 md:p-10">
-          <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+          <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] md:items-center">
             <div>
-              <span className="eyebrow">Resume</span>
               <h2 className="section-title">Resume and selected experience.</h2>
               <p className="section-copy mt-4">
                 The public resume stays aligned with the site: active products first, selected past work second, and enough detail to keep follow-up conversations concrete.
               </p>
-              <p className="mt-4 text-sm font-medium uppercase tracking-[0.18em] text-[color:var(--accent)]">
-                Last updated {resumeMeta.lastUpdated}
-              </p>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
+            <div className="flex w-full flex-col gap-3 md:mx-auto md:max-w-[330px] md:self-center">
               <a
                 href={resumeMeta.downloadPath}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--ink)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[color:var(--accent)]"
+                className="cta-primary"
                 download
               >
                 <HiArrowDownTray className="text-base" />
@@ -375,7 +417,7 @@ function HomePage() {
               </a>
               <Link
                 to="/resume"
-                className="glass-cta-secondary inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-[color:var(--ink)]"
+                className="glass-cta-secondary"
               >
                 Open resume page
                 <HiArrowUpRight className="text-base" />
@@ -386,28 +428,26 @@ function HomePage() {
       </section>
 
       <section id="contact" className="section-shell glass-stage py-12 md:py-16">
-        <div className="surface-card glass-panel grid gap-8 p-8 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.75fr)] md:p-10">
+        <div className="surface-card glass-panel grid gap-8 p-8 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.75fr)] md:items-center md:p-10">
           <div>
-            <span className="eyebrow">Contact</span>
             <h2 className="section-title">Make the next conversation easy to start.</h2>
             <p className="section-copy mt-4">
-              If you want to talk product, operating systems, or the builds in progress, the contact path is intentionally simple: direct email, LinkedIn, and a current resume download.
+              If you want to talk product, operating systems, or the builds in progress, email is the fastest path. LinkedIn and GitHub are here if you want more context first, along with a current resume download.
             </p>
           </div>
-          <div className="space-y-3">
+          <div aria-label="Primary contact links" className="flex w-full flex-col gap-3 md:mx-auto md:max-w-[330px] md:self-center">
             {profile.contactLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noreferrer' : undefined}
-                className="flex items-center justify-between rounded-[24px] border border-[color:var(--line)] bg-white/60 px-5 py-4 text-sm font-semibold transition hover:border-[color:var(--accent)]"
+                className="glass-cta-secondary"
               >
-                <span className="inline-flex items-center gap-3">
-                  <HiEnvelope className={link.label === 'Email' ? 'text-base' : 'hidden'} />
+                <span className="inline-flex items-center justify-center gap-2 text-center">
                   {link.label}
                 </span>
-                <HiArrowUpRight className="text-base text-[color:var(--accent)]" />
+                <HiArrowUpRight className="text-base" />
               </a>
             ))}
           </div>

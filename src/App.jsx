@@ -4,6 +4,8 @@ import SiteLayout from './components/SiteLayout';
 import CaseStudyPage from './pages/CaseStudyPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import ProductsPage from './pages/ProductsPage';
 import ResumePage from './pages/ResumePage';
 
 function App() {
@@ -13,7 +15,10 @@ function App() {
       <Routes>
         <Route element={<SiteLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
+          <Route path="/not-found" element={<NotFoundPage />} />
           <Route path="/resume" element={<ResumePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

@@ -5,8 +5,8 @@ import { profile } from '../content/profile';
 import { resumeMeta } from '../content/resumeMeta';
 
 const navItems = [
+  { label: 'Products', href: '/products' },
   { label: 'Case Studies', href: '/#case-studies' },
-  { label: 'Experience', href: '/#experience' },
   { label: 'Resume', href: '/resume' },
   { label: 'Contact', href: '/#contact' },
 ];
@@ -39,7 +39,7 @@ function SiteLayout() {
             ))}
             <a
               href={resumeMeta.downloadPath}
-              className="inline-flex items-center gap-2 rounded-full bg-[color:var(--ink)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[color:var(--accent)]"
+              className="cta-primary px-4 py-2"
               download
             >
               Download resume
@@ -73,7 +73,7 @@ function SiteLayout() {
               ))}
               <a
                 href={resumeMeta.downloadPath}
-                className="rounded-2xl bg-[color:var(--ink)] px-4 py-3 text-center text-sm font-semibold text-white"
+                className="cta-primary justify-center"
                 onClick={() => setMenuOpen(false)}
                 download
               >

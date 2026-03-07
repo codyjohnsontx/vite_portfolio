@@ -5,7 +5,7 @@ export const profile = {
   headline:
     'Building product systems with engineering depth, operational range, and a bias toward shipping useful things.',
   heroSupport:
-    'I am building Trackday Tuner and Diaz on Demand while drawing on prior product ownership, automation, and operations work across client delivery, nonprofits, and commerce.',
+    'I am building Track Tuner and Diaz on Demand, and prototyping Overlap plus a Strava component lifecycle concept, while drawing on prior product ownership, automation, and operations work across client delivery, nonprofits, and commerce.',
   summary:
     'I do my best work when a team needs to turn vague requests into clear requirements, make practical release decisions, and keep execution moving until the result holds up in the real world.',
   footerNote:
@@ -21,24 +21,24 @@ export const profile = {
   ],
   proofThemes: [
     {
-      stat: 'Trackday Tuner',
-      title: 'Active build toward beta',
-      body: 'Working auth, CRUD flows, session logging, compare views, trackside tools, billing code, and tests already make it a real product build, not a concept.',
+      stat: 'Track Tuner',
+      title: 'AI-assisted setup tuning',
+      body: 'Designed the MVP around setup logging first, then layered in RAG-based recommendations using historical setup, condition, and feedback data.',
     },
     {
       stat: 'Diaz on Demand',
-      title: 'Cross-platform MVP slices',
-      body: 'The product already spans web, API, mobile, billing, and admin workflows for structured premium training delivery outside the gym.',
+      title: 'Subscription training architecture',
+      body: 'Built around memberships, progression, entitlement, Stripe billing, and Mux delivery so structured training scales beyond a single gym.',
     },
     {
-      stat: '12%',
-      title: 'Launch-backed product proof',
-      body: 'Previous Lambda Curry product ownership work covered backlog control, PRDs, launch metrics, and a release tied to a 12 percent first-week sales lift.',
+      stat: 'Overlap',
+      title: 'Real-time race awareness',
+      body: 'Prototyped an always-on-top radar in .NET/WPF with iRacing telemetry integration for quick-glance spatial awareness during close battles.',
     },
     {
-      stat: '65% / 95%',
-      title: 'Systems and ops impact',
-      body: 'HSNBA and CTX work show the same operating style applied to automation, data trust, throughput, and revenue decisions in live environments.',
+      stat: 'Strava concept',
+      title: 'Component lifecycle tracking',
+      body: 'Built a wear-tracking concept that ties ride behavior to component health, replacement alerts, and retailer price comparisons.',
     },
   ],
   toolkit: [
@@ -56,7 +56,7 @@ export const profile = {
     },
     {
       title: 'Technical fluency',
-      items: ['Python', 'Bash', 'React', 'TypeScript', 'Node.js', 'PostgreSQL'],
+      items: ['React', 'TypeScript', 'Node.js', '.NET/WPF', 'SQL', 'RAG prototyping'],
     },
   ],
 };
