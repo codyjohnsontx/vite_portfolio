@@ -11,6 +11,14 @@ import { profile } from '../content/profile';
 import { conceptProducts, flagshipProducts } from '../content/projects';
 import { resumeMeta } from '../content/resumeMeta';
 
+const companyLogos = {
+  'Lambda Curry': { src: lambdaCurryLogo, alt: 'Lambda Curry logo' },
+  'Humane Society (HSNBA)': { src: hsnbaLogo, alt: 'HSNBA logo' },
+  HSNBA: { src: hsnbaLogo, alt: 'HSNBA logo' },
+  'CTX Motoworks': { src: ctxMotoWorksLogo, alt: 'CTX Motoworks logo' },
+  'Texas Malibu': { src: texasMalibuLogo, alt: 'Texas Malibu logo' },
+};
+
 function HomePage() {
   const homePageRef = useRef(null);
 
@@ -102,130 +110,110 @@ function HomePage() {
     };
   }, []);
 
-  const getCompanyLogo = (company) => {
-    if (company === 'Lambda Curry') {
-      return { src: lambdaCurryLogo, alt: 'Lambda Curry logo' };
-    }
-
-    if (company === 'Humane Society (HSNBA)' || company === 'HSNBA') {
-      return { src: hsnbaLogo, alt: 'HSNBA logo' };
-    }
-
-    if (company === 'CTX Motoworks') {
-      return { src: ctxMotoWorksLogo, alt: 'CTX Motoworks logo' };
-    }
-
-    if (company === 'Texas Malibu') {
-      return { src: texasMalibuLogo, alt: 'Texas Malibu logo' };
-    }
-
-    return null;
-  };
-
   return (
     <div ref={homePageRef} className="home-page pb-16">
-      <section className="section-shell glass-stage py-16 md:py-24">
-        <div className="surface-card glass-panel-strong max-w-5xl overflow-hidden p-8 text-white md:p-12">
-          <h1 className="max-w-4xl text-4xl font-semibold leading-tight md:text-6xl">
-            {profile.headline}
-          </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-white/78 md:text-xl">
-            {profile.heroSupport}
-          </p>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-white/72">
-            {profile.summary}
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={resumeMeta.downloadPath}
-              className="cta-primary"
-              download
-            >
-              <HiArrowDownTray className="text-base" />
-              Download resume
-            </a>
-            <Link
-              to="/#case-studies"
-              className="glass-cta-secondary text-white"
-            >
-              Read case studies
-              <HiArrowUpRight className="text-base" />
-            </Link>
-          </div>
+
+      {/* Hero — open text, no container */}
+      <section className="section-shell py-16 md:py-28">
+        <h1 className="max-w-4xl text-4xl font-semibold leading-tight md:text-6xl">
+          {profile.headline}
+        </h1>
+        <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--ink-muted)] md:text-xl">
+          {profile.heroSupport}
+        </p>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-[color:var(--ink-muted)] opacity-80">
+          {profile.summary}
+        </p>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href={resumeMeta.downloadPath}
+            className="cta-primary"
+            download
+          >
+            <HiArrowDownTray className="text-base" />
+            Download resume
+          </a>
+          <Link
+            to="/#case-studies"
+            className="glass-cta-secondary"
+          >
+            Read case studies
+            <HiArrowUpRight className="text-base" />
+          </Link>
         </div>
       </section>
 
-      <section className="section-shell glass-stage py-8 md:py-12">
-        <div className="mb-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="section-title">Product work in progress.</h2>
-            <p className="section-copy mx-auto mt-4">
-              Flagship builds show what is actively being shipped now. The concept lab shows where new product bets are being framed, tested, and prepared for deeper build cycles.
-            </p>
-          </div>
-        </div>
+      {/* Products — structured text, no cards */}
+      <section className="section-shell py-12 md:py-20">
+        <h2 className="section-title">What I'm building now.</h2>
+        <p className="section-copy mt-4">
+          Flagship builds show what is actively being shipped. The concept lab shows where new product bets are being framed.
+        </p>
 
-        <div>
-          <h3 className="text-2xl font-semibold md:text-3xl">Flagship builds</h3>
-          <div className="mt-5 grid gap-6 lg:grid-cols-2">
-            {flagshipProducts.map((product) => (
-              <article key={product.slug} className="interactive-card surface-card glass-panel product-card-flagship p-7 md:p-8">
-                <p className="product-meta-line">Active build • {product.companyContext}</p>
-                <h4 className="mt-4 text-3xl font-semibold">
-                  <Link to={`/products/${product.slug}`} className="interactive-card-title">
-                    {product.name}
-                  </Link>
-                </h4>
-                <p className="mt-4 text-base leading-7 text-[color:var(--ink-muted)]">{product.oneLiner}</p>
-                <p className="detail-line mt-5">
-                  <span className="detail-label">Audience:</span>
-                  {product.audience}
-                </p>
-                <p className="detail-line mt-3">
-                  <span className="detail-label">Problem:</span>
-                  {product.problem}
-                </p>
-                <ol className="workflow-list mt-5">
-                  {product.coreWorkflow.slice(0, 4).map((step) => (
-                    <li key={step}>{step}</li>
-                  ))}
-                </ol>
-                <p className="glass-panel-soft mt-5 rounded-3xl px-5 py-4 text-sm leading-6 text-[color:var(--ink)]">
-                  {product.evidenceSignal}
-                </p>
-                <Link to={`/products/${product.slug}`} className="glass-cta-secondary interactive-card-link mt-6 w-fit">
-                  Open product brief
-                  <HiArrowUpRight className="text-base" />
+        <div className="mt-12 grid gap-16 lg:grid-cols-2">
+          {flagshipProducts.map((product) => (
+            <article key={product.slug}>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
+                Active build
+              </p>
+              <h3 className="mt-3 text-3xl font-semibold">
+                <Link to={`/products/${product.slug}`} className="transition-colors hover:text-[color:var(--accent)]">
+                  {product.name}
                 </Link>
-              </article>
-            ))}
-          </div>
+              </h3>
+              <p className="mt-4 text-base leading-7 text-[color:var(--ink-muted)]">
+                {product.oneLiner}
+              </p>
+              <p className="detail-line mt-5">
+                <span className="detail-label">Audience:</span>
+                {product.audience}
+              </p>
+              <p className="detail-line mt-3">
+                <span className="detail-label">Problem:</span>
+                {product.problem}
+              </p>
+              <ol className="workflow-list mt-5">
+                {product.coreWorkflow.slice(0, 4).map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ol>
+              <p className="mt-6 border-l-2 border-[color:var(--accent)] pl-4 text-sm leading-7 text-[color:var(--ink-muted)]">
+                {product.evidenceSignal}
+              </p>
+              <Link
+                to={`/products/${product.slug}`}
+                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--ink)] transition hover:text-[color:var(--accent)]"
+              >
+                Open product brief
+                <HiArrowUpRight className="text-base" />
+              </Link>
+            </article>
+          ))}
         </div>
 
-        <div className="mt-10">
-          <h3 className="text-2xl font-semibold md:text-3xl">Concept lab</h3>
-          <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        {/* Concept lab — compact list */}
+        <div className="mt-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
+            Concept lab
+          </p>
+          <div className="mt-4 space-y-4">
             {conceptProducts.map((product) => (
-              <article key={product.slug} className="interactive-card surface-card glass-panel-soft product-card-concept p-6">
-                <p className="product-meta-line">Prototype concept • {product.companyContext}</p>
-                <h4 className="mt-4 text-2xl font-semibold">
-                  <Link to={`/products/${product.slug}`} className="interactive-card-title">
-                    {product.name}
-                  </Link>
-                </h4>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--ink-muted)]">{product.oneLiner}</p>
-                <p className="detail-line mt-4">
-                  <span className="detail-label">Context:</span>
-                  {product.companyContext}
-                </p>
-                {product.brandDisclaimer ? (
-                  <p className="disclaimer-note mt-4">Unofficial concept.</p>
-                ) : null}
-                <Link to={`/products/${product.slug}`} className="glass-cta-secondary interactive-card-link mt-5 w-fit">
-                  Open product brief
-                  <HiArrowUpRight className="text-base" />
+              <div key={product.slug} className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3">
+                <Link
+                  to={`/products/${product.slug}`}
+                  className="text-lg font-semibold transition-colors hover:text-[color:var(--accent)]"
+                >
+                  {product.name}
                 </Link>
-              </article>
+                <span className="text-sm leading-7 text-[color:var(--ink-muted)]">
+                  {product.oneLiner}
+                  {product.brandDisclaimer ? (
+                    <span className="ml-2 text-xs font-semibold uppercase tracking-[0.1em] text-[color:var(--accent)]">
+                      Unofficial concept
+                    </span>
+                  ) : null}
+                </span>
+              </div>
             ))}
           </div>
         </div>
@@ -235,39 +223,16 @@ function HomePage() {
             View all product briefs
             <HiArrowUpRight className="text-base" />
           </Link>
-          <Link to="/#case-studies" className="glass-cta-secondary">
-            See supporting case studies
-            <HiArrowUpRight className="text-base" />
-          </Link>
         </div>
       </section>
 
-      <section className="section-shell glass-stage py-12 md:py-16">
-        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      {/* Case Studies — structured text, no cards */}
+      <section id="case-studies" className="section-shell py-12 md:py-20">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="section-title">Why these products are credible, not just ideas.</h2>
+            <h2 className="section-title">Past work that supports the build story.</h2>
             <p className="section-copy mt-4">
-              The active builds matter more when they sit next to working proof: product launches, operating systems, and automation work that shipped in real environments.
-            </p>
-          </div>
-        </div>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {profile.proofThemes.map((theme) => (
-            <article key={theme.title} className="surface-card glass-panel-soft p-6">
-              <p className="text-sm uppercase tracking-[0.18em] text-[color:var(--accent)]">{theme.stat}</p>
-              <h3 className="mt-3 text-2xl font-semibold">{theme.title}</h3>
-              <p className="mt-4 text-sm leading-7 text-[color:var(--ink-muted)]">{theme.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="case-studies" className="section-shell glass-stage py-12 md:py-16">
-        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="section-title">Past work that supports the current build story.</h2>
-            <p className="section-copy mt-4">
-              These two case studies stay selective on purpose: enough depth to show product judgment and execution quality, without oversharing confidential details.
+              Enough depth to show product judgment and execution quality, without oversharing confidential details.
             </p>
           </div>
           <Link
@@ -278,175 +243,121 @@ function HomePage() {
             <HiArrowUpRight className="text-base" />
           </Link>
         </div>
-        <div className="grid gap-6 lg:grid-cols-2">
-          {caseStudies.map((study) => (
-            <article key={study.slug} className="surface-card glass-panel p-7 md:p-8">
-              {(() => {
-                const logo = getCompanyLogo(study.company);
 
-                return (
-                  <div className="flex items-start justify-between gap-4">
-                    <p className="meta-line">
-                      {study.company} • {study.timeframe}
-                    </p>
-                    {logo ? (
-                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/50 bg-white/76 p-3 shadow-sm">
-                        <img src={logo.src} alt={logo.alt} className="h-full w-full object-contain" />
-                      </div>
-                    ) : null}
-                  </div>
-                );
-              })()}
-              <h3 className="mt-5 text-3xl font-semibold">{study.title}</h3>
-              <p className="mt-4 text-base leading-7 text-[color:var(--ink-muted)]">{study.tagline}</p>
-              <p className="glass-panel-soft mt-6 rounded-3xl px-5 py-4 text-sm leading-6 text-[color:var(--ink)]">
-                {study.featuredOutcome}
-              </p>
-              <ul className="mt-6 space-y-3">
-                {study.impactHighlights.map((item) => (
-                  <li key={item} className="text-sm leading-6 text-[color:var(--ink-muted)]">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                to={`/case-studies/${study.slug}`}
-                className="mt-8 inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] px-5 py-3 text-sm font-semibold transition hover:border-[color:var(--accent)] hover:bg-white/70"
-              >
-                Read full case study
-                <HiArrowUpRight className="text-base" />
-              </Link>
-            </article>
-          ))}
+        <div className="mt-12 grid gap-16 lg:grid-cols-2">
+          {caseStudies.map((study) => {
+            const logo = companyLogos[study.company];
+
+            return (
+              <article key={study.slug}>
+                <div className="flex items-center gap-3">
+                  {logo ? (
+                    <img src={logo.src} alt={logo.alt} className="h-6 w-6 object-contain" />
+                  ) : null}
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
+                    {study.company} &middot; {study.timeframe}
+                  </p>
+                </div>
+                <h3 className="mt-4 text-2xl font-semibold md:text-3xl">{study.title}</h3>
+                <p className="mt-4 text-base leading-7 text-[color:var(--ink-muted)]">
+                  {study.tagline}
+                </p>
+                <p className="mt-5 text-[15px] font-medium leading-7 text-[color:var(--ink)]">
+                  {study.featuredOutcome}
+                </p>
+                <ul className="mt-5 space-y-2">
+                  {study.impactHighlights.map((item) => (
+                    <li key={item} className="text-sm leading-6 text-[color:var(--ink-muted)]">
+                      &mdash; {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  to={`/case-studies/${study.slug}`}
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--ink)] transition hover:text-[color:var(--accent)]"
+                >
+                  Read full case study
+                  <HiArrowUpRight className="text-base" />
+                </Link>
+              </article>
+            );
+          })}
         </div>
       </section>
 
-      <section id="experience" className="section-shell glass-stage py-12 md:py-16">
-        <span className="eyebrow">Selected experience</span>
-        <h2 className="section-title">Prior product and systems work that supports the products above.</h2>
+      {/* Experience — clean list with dividers */}
+      <section id="experience" className="section-shell py-12 md:py-20">
+        <h2 className="section-title">Prior product and systems work.</h2>
         <p className="section-copy mt-4">
-          The active builds lead this portfolio. The experience below is the supporting proof: launch work, automation, operations systems, and customer-facing execution that make the product story more credible.
+          Launch work, automation, operations systems, and customer-facing execution that make the product story more credible.
         </p>
-        <div className="mt-8 space-y-5">
-          {experience.map((item) => (
-            <article key={`${item.company}-${item.role}`} className="surface-card glass-panel-soft p-6 md:p-8">
-              {(() => {
-                const logo = getCompanyLogo(item.company);
 
-                return (
-              <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                <div>
-                  <h3 className="text-2xl font-semibold">{item.company}</h3>
-                  <p className="mt-1 text-sm font-semibold text-[color:var(--ink-muted)]">{item.role}</p>
-                </div>
-                {logo ? (
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/50 bg-white/76 p-3 shadow-sm">
-                    <img src={logo.src} alt={logo.alt} className="h-full w-full object-contain" />
+        <div className="mt-10 divide-y divide-[color:var(--line)]">
+          {experience.map((item) => {
+            const logo = companyLogos[item.company];
+
+            return (
+              <article key={`${item.company}-${item.role}`} className="py-8 first:pt-0">
+                <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
+                  <div className="flex items-center gap-3">
+                    {logo ? (
+                      <img src={logo.src} alt={logo.alt} className="h-5 w-5 object-contain" />
+                    ) : null}
+                    <h3 className="text-xl font-semibold">{item.company}</h3>
+                    <span className="text-sm text-[color:var(--ink-muted)]">{item.role}</span>
                   </div>
-                ) : null}
-              </div>
-                );
-              })()}
-              <p className="mt-5 text-base leading-7 text-[color:var(--ink-muted)]">{item.summary}</p>
-              <p className="detail-line mt-3">
-                <span className="detail-label">Focus:</span>
-                {item.tags.join(', ')}
-              </p>
-              <ul className="mt-5 grid gap-3 md:grid-cols-3">
-                {item.evidence.map((detail) => (
-                  <li key={detail} className="rounded-2xl border border-[color:var(--line)] bg-white/60 px-4 py-4 text-sm leading-6 text-[color:var(--ink)]">
-                    {detail}
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-shell glass-stage py-12 md:py-16">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.9fr)]">
-          <div className="surface-card glass-panel-soft p-7 md:p-8">
-            <span className="eyebrow">PM toolkit</span>
-            <h2 className="section-title">What I bring into product conversations.</h2>
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
-              {profile.toolkit.map((group) => (
-                <article key={group.title} className="rounded-[24px] border border-[color:var(--line)] bg-white/60 p-5">
-                  <h3 className="text-xl font-semibold">{group.title}</h3>
-                  <p className="detail-line mt-4">{group.items.join(', ')}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-          <div className="surface-card glass-panel-soft p-7 md:p-8">
-            <span className="eyebrow">Operating style</span>
-            <h2 className="text-3xl font-semibold">How I work when the stakes are real.</h2>
-            <div className="mt-6 space-y-4">
-              {[
-                'Keep scope visible so surprises are rare, not normal.',
-                'Translate vague stakeholder requests into work engineering can actually ship.',
-                'Use analytics, qualitative feedback, and delivery signals together instead of in isolation.',
-                'Treat operations friction as a product problem when it slows customers or teams down.',
-              ].map((item) => (
-                <div key={item} className="rounded-[24px] border border-[color:var(--line)] bg-white/60 px-5 py-4 text-sm leading-7 text-[color:var(--ink-muted)]">
-                  {item}
+                  <span className="text-sm text-[color:var(--ink-muted)]">{item.dates}</span>
                 </div>
-              ))}
-            </div>
-          </div>
+                <p className="mt-3 text-base leading-7 text-[color:var(--ink-muted)]">
+                  {item.summary}
+                </p>
+                <ul className="mt-4 space-y-1 pl-4">
+                  {item.evidence.map((detail) => (
+                    <li key={detail} className="text-sm leading-6 text-[color:var(--ink-muted)]">
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            );
+          })}
         </div>
       </section>
 
-      <section className="section-shell glass-stage py-12 md:py-16">
-        <div className="surface-card glass-panel overflow-hidden p-8 md:p-10">
-          <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] md:items-center">
-            <div>
-              <h2 className="section-title">Resume and selected experience.</h2>
-              <p className="section-copy mt-4">
-                The public resume stays aligned with the site: active products first, selected past work second, and enough detail to keep follow-up conversations concrete.
-              </p>
-            </div>
-            <div className="flex w-full flex-col gap-3 md:mx-auto md:max-w-[330px] md:self-center">
-              <a
-                href={resumeMeta.downloadPath}
-                className="cta-primary"
-                download
-              >
-                <HiArrowDownTray className="text-base" />
-                Download PDF
-              </a>
-              <Link
-                to="/resume"
-                className="glass-cta-secondary"
-              >
-                Open resume page
-                <HiArrowUpRight className="text-base" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="section-shell glass-stage py-12 md:py-16">
-        <div className="surface-card glass-panel grid gap-8 p-8 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.75fr)] md:items-center md:p-10">
+      {/* Closing — resume + contact merged */}
+      <section id="contact" className="section-shell border-t border-[color:var(--line)] py-12 md:py-20">
+        <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.75fr)] md:items-start">
           <div>
-            <h2 className="section-title">Make the next conversation easy to start.</h2>
+            <h2 className="section-title">Want the full picture?</h2>
             <p className="section-copy mt-4">
-              If you want to talk product, operating systems, or the builds in progress, email is the fastest path. LinkedIn and GitHub are here if you want more context first, along with a current resume download.
+              If you want to talk product, operating systems, or the builds in progress, email is the fastest path. LinkedIn and GitHub are here if you want more context first.
             </p>
           </div>
-          <div aria-label="Primary contact links" className="flex w-full flex-col gap-3 md:mx-auto md:max-w-[330px] md:self-center">
+          <div className="flex flex-col gap-3">
+            <a
+              href={resumeMeta.downloadPath}
+              className="cta-primary"
+              download
+            >
+              <HiArrowDownTray className="text-base" />
+              Download PDF
+            </a>
+            <Link
+              to="/resume"
+              className="glass-cta-secondary"
+            >
+              Open resume page
+              <HiArrowUpRight className="text-base" />
+            </Link>
             {profile.contactLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noreferrer' : undefined}
-                className="glass-cta-secondary"
+                className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-[color:var(--ink-muted)] transition hover:text-[color:var(--ink)]"
               >
-                <span className="inline-flex items-center justify-center gap-2 text-center">
-                  {link.label}
-                </span>
+                {link.label}
                 <HiArrowUpRight className="text-base" />
               </a>
             ))}
