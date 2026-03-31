@@ -173,8 +173,8 @@ function HomePage() {
                 {product.problem}
               </p>
               <ol className="workflow-list mt-5">
-                {product.coreWorkflow.slice(0, 4).map((step) => (
-                  <li key={step}>{step}</li>
+                {product.coreWorkflow.slice(0, 4).map((step, idx) => (
+                  <li key={idx}>{step}</li>
                 ))}
               </ol>
               <p className="mt-6 border-l-2 border-[color:var(--accent)] pl-4 text-sm leading-7 text-[color:var(--ink-muted)]">
@@ -266,8 +266,8 @@ function HomePage() {
                   {study.featuredOutcome}
                 </p>
                 <ul className="mt-5 space-y-2">
-                  {study.impactHighlights.map((item) => (
-                    <li key={item} className="text-sm leading-6 text-[color:var(--ink-muted)]">
+                  {study.impactHighlights.map((item, idx) => (
+                    <li key={`${study.slug}-${idx}`} className="text-sm leading-6 text-[color:var(--ink-muted)]">
                       &mdash; {item}
                     </li>
                   ))}
@@ -312,8 +312,8 @@ function HomePage() {
                   {item.summary}
                 </p>
                 <ul className="mt-4 space-y-1 pl-4">
-                  {item.evidence.map((detail) => (
-                    <li key={detail} className="text-sm leading-6 text-[color:var(--ink-muted)]">
+                  {item.evidence.map((detail, idx) => (
+                    <li key={`${item.company}-${idx}`} className="text-sm leading-6 text-[color:var(--ink-muted)]">
                       {detail}
                     </li>
                   ))}
