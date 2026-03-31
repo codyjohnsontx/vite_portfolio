@@ -14,7 +14,6 @@ import { resumeMeta } from '../content/resumeMeta';
 const companyLogos = {
   'Lambda Curry': { src: lambdaCurryLogo, alt: 'Lambda Curry logo' },
   'Humane Society (HSNBA)': { src: hsnbaLogo, alt: 'HSNBA logo' },
-  HSNBA: { src: hsnbaLogo, alt: 'HSNBA logo' },
   'CTX Motoworks': { src: ctxMotoWorksLogo, alt: 'CTX Motoworks logo' },
   'Texas Malibu': { src: texasMalibuLogo, alt: 'Texas Malibu logo' },
 };
