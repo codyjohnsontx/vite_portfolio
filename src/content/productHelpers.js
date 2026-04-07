@@ -3,5 +3,11 @@ export function getStatusLabel(status) {
     return 'Active build';
   }
 
-  return 'Prototype concept';
+  if (status === 'prototype') {
+    return 'Prototype concept';
+  }
+
+  console.warn(`Unknown product status: ${String(status)}`);
+
+  return 'Unknown status';
 }
