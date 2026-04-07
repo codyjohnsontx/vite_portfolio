@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { HiArrowDownTray, HiArrowUpRight } from 'react-icons/hi2';
+import { HiArrowUpRight } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import ctxMotoWorksLogo from '../assets/ctxmotoworks-logo-v2.png';
 import hsnbaLogo from '../assets/hsnba-logo-100x250 (1).png';
@@ -124,18 +124,7 @@ function HomePage() {
           {profile.summary}
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a
-            href={resumeMeta.downloadPath}
-            className="cta-primary"
-            download
-          >
-            <HiArrowDownTray className="text-base" />
-            Download resume
-          </a>
-          <Link
-            to="/#case-studies"
-            className="glass-cta-secondary"
-          >
+          <Link to="/#case-studies" className="glass-cta-secondary">
             Read case studies
             <HiArrowUpRight className="text-base" />
           </Link>
@@ -227,20 +216,11 @@ function HomePage() {
 
       {/* Case Studies — structured text, no cards */}
       <section id="case-studies" className="section-shell py-12 md:py-20">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="section-title">Past work that supports the build story.</h2>
-            <p className="section-copy mt-4">
-              Enough depth to show product judgment and execution quality, without oversharing confidential details.
-            </p>
-          </div>
-          <Link
-            to="/resume"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--ink-muted)] transition hover:text-[color:var(--ink)]"
-          >
-            View resume page
-            <HiArrowUpRight className="text-base" />
-          </Link>
+        <div>
+          <h2 className="section-title">Past work that supports the build story.</h2>
+          <p className="section-copy mt-4">
+            Enough depth to show product judgment and execution quality, without oversharing confidential details.
+          </p>
         </div>
 
         <div className="mt-12 grid gap-16 lg:grid-cols-2">
@@ -251,7 +231,7 @@ function HomePage() {
               <article key={study.slug}>
                 <div className="flex items-center gap-3">
                   {logo ? (
-                    <img src={logo.src} alt={logo.alt} className="h-6 w-6 object-contain" />
+                    <img src={logo.src} alt="" className="h-6 w-6 object-contain" />
                   ) : null}
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
                     {study.company} &middot; {study.timeframe}
@@ -300,7 +280,7 @@ function HomePage() {
                 <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
                   <div className="flex items-center gap-3">
                     {logo ? (
-                      <img src={logo.src} alt={logo.alt} className="h-5 w-5 object-contain" />
+                      <img src={logo.src} alt="" className="h-5 w-5 object-contain" />
                     ) : null}
                     <h3 className="text-xl font-semibold">{item.company}</h3>
                     <span className="text-sm text-[color:var(--ink-muted)]">{item.role}</span>
