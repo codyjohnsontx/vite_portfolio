@@ -33,6 +33,18 @@ describe('portfolio routes and metadata', () => {
     expect(contactLinks.map((link) => link.textContent.trim())).toEqual(['Email', 'LinkedIn', 'GitHub']);
   });
 
+  it('keeps resume actions only in the closing block and renders decorative logos accessibly', () => {
+    const { container } = renderApp('/');
+
+    expect(screen.queryByRole('link', { name: /download resume/i })).toBeNull();
+    expect(screen.queryByRole('link', { name: /view resume page/i })).toBeNull();
+    expect(screen.getByRole('link', { name: /download pdf/i })).toBeTruthy();
+    expect(screen.getByRole('link', { name: /open resume page/i })).toBeTruthy();
+
+    const decorativeLogos = container.querySelectorAll('img[alt=""]');
+    expect(decorativeLogos.length).toBeGreaterThan(0);
+  });
+
   it('removes flagship eyebrow copy from the products page while keeping concept metadata', () => {
     renderApp('/products');
 
