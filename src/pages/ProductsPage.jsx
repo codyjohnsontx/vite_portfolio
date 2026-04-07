@@ -1,14 +1,7 @@
 import { HiArrowUpRight } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
+import { getStatusLabel } from '../content/productHelpers';
 import { conceptProducts, flagshipProducts } from '../content/projects';
-
-function getStatusLabel(status) {
-  if (status === 'active-build') {
-    return 'Active build';
-  }
-
-  return 'Prototype concept';
-}
 
 function ProductsPage() {
   return (
@@ -37,8 +30,7 @@ function ProductsPage() {
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
           {flagshipProducts.map((product) => (
             <article key={product.slug} className="surface-card glass-panel product-card-flagship p-7 md:p-8">
-              <p className="product-meta-line">{getStatusLabel(product.status)} • {product.companyContext}</p>
-              <h3 className="mt-4 text-3xl font-semibold">{product.name}</h3>
+              <h3 className="text-3xl font-semibold">{product.name}</h3>
               <p className="mt-4 text-base leading-7 text-[color:var(--ink-muted)]">{product.oneLiner}</p>
               <p className="detail-line mt-5">
                 <span className="detail-label">Role:</span>

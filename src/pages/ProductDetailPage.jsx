@@ -1,5 +1,6 @@
 import { HiArrowLeft, HiArrowUpRight } from 'react-icons/hi2';
 import { Link, Navigate, useParams } from 'react-router-dom';
+import { getStatusLabel } from '../content/productHelpers';
 import { getProductBySlug } from '../content/projects';
 
 function getTierLabel(tier) {
@@ -8,14 +9,6 @@ function getTierLabel(tier) {
   }
 
   return 'Concept build';
-}
-
-function getStatusLabel(status) {
-  if (status === 'active-build') {
-    return 'Active build';
-  }
-
-  return 'Prototype concept';
 }
 
 function ProductDetailPage() {
