@@ -1,14 +1,7 @@
 import { HiArrowUpRight } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
+import { getStatusLabel } from '../content/productHelpers';
 import { conceptProducts, flagshipProducts } from '../content/projects';
-
-function getStatusLabel(status) {
-  if (status === 'active-build') {
-    return 'Active build';
-  }
-
-  return 'Prototype concept';
-}
 
 function ProductsPage() {
   return (
