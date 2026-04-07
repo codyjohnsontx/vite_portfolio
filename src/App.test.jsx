@@ -33,6 +33,16 @@ describe('portfolio routes and metadata', () => {
     expect(contactLinks.map((link) => link.textContent.trim())).toEqual(['Email', 'LinkedIn', 'GitHub']);
   });
 
+  it('removes flagship eyebrow copy from the products page while keeping concept metadata', () => {
+    renderApp('/products');
+
+    expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
+    expect(screen.queryByText('Active build • Independent build')).toBeNull();
+    expect(screen.queryByText('Active build • Diaz Martial Arts ecosystem')).toBeNull();
+    expect(screen.getByText('Prototype concept • iRacing ecosystem concept')).toBeTruthy();
+  });
+
   products.forEach((product) => {
     it(`renders the product detail page for ${product.slug}`, () => {
       renderApp(`/products/${product.slug}`);
