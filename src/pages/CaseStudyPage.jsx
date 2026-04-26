@@ -1,160 +1,199 @@
-import { HiArrowLeft, HiArrowUpRight } from 'react-icons/hi2';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import hsnbaLogo from '../assets/hsnba-logo-100x250 (1).png';
-import lambdaCurryLogo from '../assets/Icon 144x144-1718828587039.webp';
+import { ArrowGlyph, Eyebrow } from '../components/Editorial';
 import { getCaseStudyBySlug } from '../content/caseStudies';
 
-function renderList(items) {
+function CaseSection({ num, title, body }) {
   return (
-    <ul className="grid gap-3">
-      {items.map((item) => (
-        <li key={item} className="rounded-2xl border border-[color:var(--line)] bg-white/60 px-4 py-4 text-sm leading-6 text-[color:var(--ink)]">
-          {item}
-        </li>
-      ))}
-    </ul>
+    <section className="section section--tight">
+      <div className="container case-section-grid">
+        <div>
+          <span className="numeral" style={{ fontSize: 'clamp(48px, 6vw, 84px)' }}>
+            {num}
+          </span>
+        </div>
+        <div>
+          <h2 className="h2" style={{ margin: '0 0 16px' }}>
+            {title}
+          </h2>
+          <p className="lead" style={{ margin: 0, maxWidth: '60ch', color: 'var(--ink)' }}>
+            {body}
+          </p>
+        </div>
+        <div />
+      </div>
+    </section>
   );
 }
 
-function CaseStudyPage() {
+function CaseListSection({ num, title, items }) {
+  if (!items?.length) return null;
+  return (
+    <section className="section section--tight">
+      <div className="container case-section-grid">
+        <div>
+          <span className="numeral" style={{ fontSize: 'clamp(48px, 6vw, 84px)' }}>
+            {num}
+          </span>
+        </div>
+        <div>
+          <h2 className="h2" style={{ margin: '0 0 24px' }}>
+            {title}
+          </h2>
+          <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+            {items.map((it, i) => (
+              <li
+                key={it}
+                style={{
+                  padding: '18px 0',
+                  borderTop: '1px solid var(--rule-2)',
+                  display: 'flex',
+                  gap: 20,
+                  alignItems: 'baseline',
+                }}
+              >
+                <span
+                  className="mono small"
+                  style={{ color: 'var(--ink-3)', minWidth: 32 }}
+                >
+                  0{i + 1}
+                </span>
+                <span
+                  className="body"
+                  style={{ color: 'var(--ink)', fontSize: 17, lineHeight: 1.5 }}
+                >
+                  {it}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div />
+      </div>
+    </section>
+  );
+}
+
+export default function CaseStudyPage() {
   const { slug } = useParams();
   const study = getCaseStudyBySlug(slug);
 
-  if (!study) {
-    return <Navigate to="/not-found" replace />;
-  }
-
-  const logo =
-    study.company === 'Lambda Curry'
-      ? { src: lambdaCurryLogo, alt: 'Lambda Curry logo' }
-      : study.company === 'Humane Society (HSNBA)'
-        ? { src: hsnbaLogo, alt: 'HSNBA logo' }
-        : null;
+  if (!study) return <Navigate to="/not-found" replace />;
+  const c = study;
+  const s = c.sections;
 
   return (
-    <div className="section-shell py-12 md:py-16">
-      <Link
-        to="/#case-studies"
-        className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--ink-muted)] transition hover:text-[color:var(--ink)]"
-      >
-        <HiArrowLeft className="text-base" />
-        Back to featured case studies
-      </Link>
-
-      <section className="surface-card mt-6 p-8 md:p-12">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="meta-line">{study.company}</p>
-            <p className="detail-line mt-2">{study.timeframe} • {study.role}</p>
+    <div className="fade-in">
+      <section className="page-hero">
+        <div className="container">
+          <div className="crumbs">
+            <Link to="/">Index</Link>
+            <span>/</span>
+            <Link to="/case-studies">Case Studies</Link>
+            <span>/</span>
+            <span>{c.company}</span>
           </div>
-          {logo ? (
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white/80 p-3 shadow-sm">
-              <img src={logo.src} alt={logo.alt} className="h-full w-full object-contain" />
-            </div>
-          ) : null}
-        </div>
-        <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-tight md:text-6xl">{study.title}</h1>
-        <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--ink-muted)]">{study.tagline}</p>
-
-        <div className="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
-          <div className="rounded-[28px] bg-[color:var(--accent-soft)] p-6">
-            <p className="text-sm uppercase tracking-[0.18em] text-[color:var(--accent)]">Challenge</p>
-            <p className="mt-4 text-base leading-7">{study.challenge}</p>
-          </div>
-          <aside className="rounded-[28px] bg-[color:var(--ink)] p-6 text-white">
-            <p className="text-sm uppercase tracking-[0.18em] text-white/65">Featured outcome</p>
-            <p className="mt-4 text-xl font-semibold leading-8">{study.featuredOutcome}</p>
-          </aside>
+          <Eyebrow>
+            {c.company} · {c.timeframe} · {c.role}
+          </Eyebrow>
+          <h1
+            className="display"
+            style={{ margin: '24px 0 0', fontSize: 'clamp(40px, 5.6vw, 84px)' }}
+          >
+            {c.title}
+          </h1>
+          <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
+            {c.tagline}
+          </p>
         </div>
       </section>
 
-      <section className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.85fr)]">
-        <div className="space-y-8">
-          <article className="surface-card p-7 md:p-8">
-            <span className="eyebrow">Context</span>
-            <p className="text-base leading-8 text-[color:var(--ink-muted)]">{study.sections.context}</p>
-          </article>
-
-          <article className="surface-card p-7 md:p-8">
-            <span className="eyebrow">Problem</span>
-            <p className="text-base leading-8 text-[color:var(--ink-muted)]">{study.sections.problem}</p>
-          </article>
-
-          <article className="surface-card p-7 md:p-8">
-            <span className="eyebrow">Users and stakeholders</span>
-            <p className="text-base leading-8 text-[color:var(--ink-muted)]">{study.sections.usersStakeholders}</p>
-          </article>
-
-          <article className="surface-card p-7 md:p-8">
-            <span className="eyebrow">Goal</span>
-            <p className="text-base leading-8 text-[color:var(--ink-muted)]">{study.sections.goal}</p>
-          </article>
-
-          <article className="surface-card p-7 md:p-8">
-            <span className="eyebrow">Decisions and tradeoffs</span>
-            <div className="mt-6 grid gap-5 md:grid-cols-2">
-              <div>
-                <h2 className="text-2xl font-semibold">Key decisions</h2>
-                <div className="mt-4">{renderList(study.sections.decisions)}</div>
-              </div>
-              <div>
-                <h2 className="text-2xl font-semibold">Tradeoffs</h2>
-                <div className="mt-4">{renderList(study.sections.tradeoffs)}</div>
-              </div>
+      <section className="section">
+        <div className="container">
+          <div className="case-stats">
+            <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
+              <Eyebrow>Team</Eyebrow>
+              <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
+                {c.team}
+              </p>
             </div>
-          </article>
-
-          <article className="surface-card p-7 md:p-8">
-            <span className="eyebrow">Execution</span>
-            <div className="mt-4">{renderList(study.sections.execution)}</div>
-          </article>
-
-          <article className="surface-card p-7 md:p-8">
-            <span className="eyebrow">Outcome and evidence</span>
-            <div className="mt-4">{renderList(study.sections.outcomes)}</div>
-            <div className="mt-6">
-              <h2 className="text-2xl font-semibold">Evidence notes</h2>
-              <div className="mt-4">{renderList(study.sections.metrics)}</div>
+            <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
+              <Eyebrow>Role</Eyebrow>
+              <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
+                {c.role}
+              </p>
             </div>
-          </article>
+            <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
+              <Eyebrow>Outcome</Eyebrow>
+              <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
+                {c.featuredOutcome}
+              </p>
+            </div>
+          </div>
 
-          <article className="surface-card p-7 md:p-8">
-            <span className="eyebrow">Reflection</span>
-            <div className="mt-4">{renderList(study.sections.lessons)}</div>
-          </article>
+          <div className="case-grid-2">
+            <div>
+              <Eyebrow>Challenge</Eyebrow>
+              <p className="lead drop-cap" style={{ marginTop: 16, color: 'var(--ink)' }}>
+                {c.challenge}
+              </p>
+            </div>
+            <div>
+              <Eyebrow>Impact highlights</Eyebrow>
+              <ul style={{ marginTop: 16, padding: 0, listStyle: 'none' }}>
+                {c.impactHighlights.map((h, i) => (
+                  <li
+                    key={h}
+                    style={{
+                      padding: '14px 0',
+                      borderTop: '1px solid var(--rule-2)',
+                      display: 'flex',
+                      gap: 16,
+                      alignItems: 'baseline',
+                    }}
+                  >
+                    <span className="mono small" style={{ color: 'var(--ink-3)' }}>
+                      0{i + 1}
+                    </span>
+                    <span className="body" style={{ color: 'var(--ink)' }}>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <aside className="space-y-8">
-          <article className="surface-card p-7">
-            <span className="eyebrow">Role and ownership</span>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">{study.team}</p>
-            <div className="mt-4">{renderList(study.sections.ownership)}</div>
-          </article>
+      <CaseSection num="01" title="Context" body={s.context} />
+      <CaseSection num="02" title="The problem" body={s.problem} />
+      <CaseSection num="03" title="The goal" body={s.goal} />
 
-          <article className="surface-card p-7">
-            <span className="eyebrow">Constraints</span>
-            <div className="mt-4">{renderList(study.sections.constraints)}</div>
-          </article>
+      <CaseListSection num="04" title="Decisions" items={s.decisions} />
+      <CaseListSection num="05" title="Tradeoffs" items={s.tradeoffs} />
+      <CaseListSection num="06" title="Execution" items={s.execution} />
+      <CaseListSection num="07" title="Outcomes" items={s.outcomes} />
+      <CaseListSection num="08" title="Lessons" items={s.lessons} />
 
-          <article className="surface-card p-7">
-            <span className="eyebrow">Confidentiality note</span>
-            <p className="text-base leading-7 text-[color:var(--ink-muted)]">{study.sections.confidentialityNote}</p>
-          </article>
-
-          <article className="surface-card p-7">
-            <span className="eyebrow">Next step</span>
-            <Link
-              to="/resume"
-              className="glass-cta-secondary mt-4"
-            >
-              Open the resume
-              <HiArrowUpRight className="text-base" />
-            </Link>
-          </article>
-        </aside>
+      <section className="section">
+        <div
+          className="container"
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            borderTop: '1px solid var(--rule)',
+            paddingTop: 32,
+            flexWrap: 'wrap',
+            gap: 16,
+          }}
+        >
+          <Link className="link-arrow" to="/case-studies">
+            ← All case studies
+          </Link>
+          <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
+            Discuss this work <ArrowGlyph />
+          </a>
+        </div>
       </section>
     </div>
   );
 }
-
-export default CaseStudyPage;

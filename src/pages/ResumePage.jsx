@@ -1,155 +1,179 @@
-import { HiArrowDownTray, HiArrowUpRight } from 'react-icons/hi2';
-import ctxMotoWorksLogo from '../assets/ctxmotoworks-logo-v2.png';
-import hsnbaLogo from '../assets/hsnba-logo-100x250 (1).png';
-import lambdaCurryLogo from '../assets/Icon 144x144-1718828587039.webp';
-import texasMalibuLogo from '../assets/texasmalibu-logo.png';
+import { Link } from 'react-router-dom';
+import { Eyebrow } from '../components/Editorial';
+import { experience } from '../content/experience';
+import { products } from '../content/projects';
 import { resumeContent } from '../content/resumeContent';
-import { resumeMeta } from '../content/resumeMeta';
 
-function ResumePage() {
-  const getCompanyLogo = (company) => {
-    if (company === 'Lambda Curry') {
-      return { src: lambdaCurryLogo, alt: 'Lambda Curry logo' };
-    }
-
-    if (company === 'HSNBA') {
-      return { src: hsnbaLogo, alt: 'HSNBA logo' };
-    }
-
-    if (company === 'CTX Motoworks') {
-      return { src: ctxMotoWorksLogo, alt: 'CTX Motoworks logo' };
-    }
-
-    if (company === 'Texas Malibu') {
-      return { src: texasMalibuLogo, alt: 'Texas Malibu logo' };
-    }
-
-    return null;
-  };
+export default function ResumePage() {
+  const r = resumeContent;
+  const featuredProducts = products
+    .filter((p) => p.tier === 'flagship' || p.tier === 'concept')
+    .slice(0, 4);
 
   return (
-    <div className="section-shell py-12 md:py-16">
-      <section className="surface-card p-8 md:p-12">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <span className="eyebrow">Resume</span>
-            <h1 className="max-w-4xl text-4xl font-semibold leading-tight md:text-6xl">{resumeContent.headline}</h1>
-            <div className="mt-6 max-w-3xl space-y-4">
-              {resumeContent.summary.map((paragraph) => (
-                <p key={paragraph} className="text-base leading-8 text-[color:var(--ink-muted)] md:text-lg">
-                  {paragraph}
+    <div className="fade-in">
+      <section className="page-hero">
+        <div className="container">
+          <div className="crumbs">
+            <Link to="/">Index</Link>
+            <span>/</span>
+            <span>Resume</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              flexWrap: 'wrap',
+              gap: 16,
+            }}
+          >
+            <h1 className="display" style={{ margin: 0 }}>
+              Resume.
+            </h1>
+            <span className="mono small uppercase">Last updated · Apr 2026</span>
+          </div>
+          <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
+            Cody Johnson — Product Manager, Austin, TX. PSPO I. Open to roles.
+          </p>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="r-grid">
+            <Eyebrow>Summary</Eyebrow>
+            <div>
+              {r.summary.map((p, i) => (
+                <p
+                  key={p}
+                  className="lead"
+                  style={{ margin: i === 0 ? 0 : '16px 0 0', color: 'var(--ink)' }}
+                >
+                  {p}
                 </p>
               ))}
             </div>
           </div>
-          <div className="no-print flex flex-col gap-3">
-            <a
-              href={resumeMeta.downloadPath}
-              className="cta-primary"
-              download
-            >
-              <HiArrowDownTray className="text-base" />
-              Download PDF
-            </a>
-            <a
-              href={resumeMeta.htmlSourcePath}
-              className="glass-cta-secondary"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Open printable source
-              <HiArrowUpRight className="text-base" />
-            </a>
-          </div>
-        </div>
-      </section>
 
-      <section className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="space-y-8">
-          <article className="surface-card p-7 md:p-8">
-            <span className="eyebrow">Core strengths</span>
-            <div className="mt-5 grid gap-5 md:grid-cols-2">
-              {resumeContent.strengths.map((group) => (
-                <div key={group.label} className="rounded-[24px] border border-[color:var(--line)] bg-white/60 p-5">
-                  <h2 className="text-xl font-semibold">{group.label}</h2>
-                  <p className="detail-line mt-4">{group.items.join(', ')}</p>
-                </div>
-              ))}
-            </div>
-          </article>
-
-          <article className="surface-card p-7 md:p-8">
-            <span className="eyebrow">Experience</span>
-            <div className="mt-4 space-y-6">
-              {resumeContent.experience.map((item) => (
-                <div key={`${item.company}-${item.role}`} className="rounded-[24px] border border-[color:var(--line)] bg-white/60 p-5">
-                  {(() => {
-                    const logo = getCompanyLogo(item.company);
-
-                    return (
-                  <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-                    <div>
-                      <h2 className="text-2xl font-semibold">{item.company}</h2>
-                      <p className="text-sm font-semibold text-[color:var(--ink-muted)]">{item.role}</p>
-                    </div>
-                    {logo ? (
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/80 p-2 shadow-sm">
-                        <img src={logo.src} alt={logo.alt} className="h-full w-full object-contain" />
-                      </div>
-                    ) : null}
-                  </div>
-                    );
-                  })()}
-                  <ul className="mt-4 space-y-3">
-                    {item.bullets.map((bullet) => (
-                      <li key={bullet} className="text-sm leading-7 text-[color:var(--ink-muted)]">
-                        {bullet}
+          <div className="r-grid">
+            <Eyebrow>Strengths</Eyebrow>
+            <div className="strengths-grid">
+              {r.strengths.map((g) => (
+                <div key={g.label}>
+                  <h3 className="h3" style={{ margin: '0 0 12px', fontSize: 18 }}>
+                    {g.label}
+                  </h3>
+                  <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+                    {g.items.map((it) => (
+                      <li
+                        key={it}
+                        style={{
+                          fontFamily: 'var(--mono)',
+                          fontSize: 12,
+                          letterSpacing: '0.06em',
+                          color: 'var(--ink-2)',
+                          padding: '4px 0',
+                        }}
+                      >
+                        {it}
                       </li>
                     ))}
                   </ul>
                 </div>
               ))}
             </div>
-          </article>
+          </div>
+
+          <div className="r-grid">
+            <Eyebrow>Experience</Eyebrow>
+            <div>
+              {experience.map((e) => (
+                <article key={`${e.company}-${e.role}`} className="exp-row">
+                  <div>
+                    <h3 className="role">{e.role}</h3>
+                    <p className="company">{e.company}</p>
+                    <p className="dates">{e.dates}</p>
+                  </div>
+                  <div>
+                    <ul>
+                      {e.evidence.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="right">
+                    {e.tags.map((t) => (
+                      <span key={t}>{t}</span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="r-grid">
+            <Eyebrow>Selected products</Eyebrow>
+            <div>
+              {featuredProducts.map((p, i) => (
+                <div
+                  key={p.slug}
+                  style={{
+                    padding: '14px 0',
+                    borderTop: '1px solid var(--rule-2)',
+                    display: 'grid',
+                    gridTemplateColumns: '32px 1fr auto',
+                    gap: 16,
+                    alignItems: 'baseline',
+                  }}
+                >
+                  <span className="mono small" style={{ color: 'var(--ink-3)' }}>
+                    0{i + 1}
+                  </span>
+                  <span>
+                    <span style={{ fontFamily: 'var(--serif)', fontSize: 19 }}>
+                      {p.name}
+                    </span>{' '}
+                    <span
+                      className="italic"
+                      style={{ color: 'var(--ink-3)', fontFamily: 'var(--serif)' }}
+                    >
+                      — {p.oneLiner}
+                    </span>
+                  </span>
+                  <Link
+                    to={`/products/${p.slug}`}
+                    className="mono small uppercase"
+                    style={{ color: 'var(--ink-3)' }}
+                  >
+                    Open ↗
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="r-grid" style={{ marginBottom: 0 }}>
+            <Eyebrow>Credentials</Eyebrow>
+            <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+              {r.credentials.map((c) => (
+                <li
+                  key={c}
+                  style={{
+                    padding: '10px 0',
+                    borderTop: '1px solid var(--rule-2)',
+                    fontFamily: 'var(--serif)',
+                    fontSize: 18,
+                    letterSpacing: '-0.005em',
+                  }}
+                >
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-
-        <aside className="space-y-8">
-          <article className="surface-card p-7">
-            <span className="eyebrow">Selected projects</span>
-            <ul className="mt-4 space-y-3">
-              {resumeContent.selectedProjects.map((project) => (
-                <li key={project} className="rounded-2xl border border-[color:var(--line)] bg-white/60 px-4 py-4 text-sm leading-6">
-                  {project}
-                </li>
-              ))}
-            </ul>
-          </article>
-
-          <article className="surface-card p-7">
-            <span className="eyebrow">Credentials and community</span>
-            <ul className="mt-4 space-y-3">
-              {resumeContent.credentials.map((item) => (
-                <li key={item} className="rounded-2xl border border-[color:var(--line)] bg-white/60 px-4 py-4 text-sm leading-6">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </article>
-
-          <article className="surface-card p-7">
-            <span className="eyebrow">Active builds</span>
-            <ul className="mt-4 space-y-3">
-              {resumeContent.activeBuilds.map((item) => (
-                <li key={item} className="rounded-2xl border border-[color:var(--line)] bg-white/60 px-4 py-4 text-sm leading-6">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </article>
-        </aside>
       </section>
     </div>
   );
 }
-
-export default ResumePage;

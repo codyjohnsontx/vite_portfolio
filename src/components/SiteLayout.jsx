@@ -1,111 +1,161 @@
-import { useState } from 'react';
-import { HiArrowUpRight, HiBars3, HiXMark } from 'react-icons/hi2';
-import { Link, Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { profile } from '../content/profile';
-import { resumeMeta } from '../content/resumeMeta';
+import { flagshipProducts } from '../content/projects';
+import { ArrowGlyph } from './Editorial';
 
-const navItems = [
-  { label: 'Products', href: '/products' },
-  { label: 'Case Studies', href: '/#case-studies' },
-  { label: 'Resume', href: '/resume' },
-  { label: 'Contact', href: '/#contact' },
+const THEMES = [
+  { id: 'paper', label: 'Paper' },
+  { id: 'ink', label: 'Ink' },
+  { id: 'dark', label: 'Dark' },
 ];
 
+const NAV = [
+  { to: '/', label: 'Index', end: true },
+  { to: '/products', label: 'Products' },
+  { to: '/case-studies', label: 'Case Studies' },
+  { to: '/resume', label: 'Resume' },
+];
+
+function getInitialTheme() {
+  if (typeof window === 'undefined') return 'paper';
+  const stored = window.localStorage?.getItem('cj-theme');
+  if (stored === 'paper' || stored === 'ink' || stored === 'dark') return stored;
+  return 'paper';
+}
+
+function ThemeToggle({ theme, onChange }) {
+  return (
+    <div className="theme-toggle" role="group" aria-label="Theme">
+      {THEMES.map((m) => (
+        <button
+          key={m.id}
+          type="button"
+          aria-pressed={theme === m.id}
+          className={theme === m.id ? 'active' : ''}
+          onClick={() => onChange(m.id)}
+        >
+          {m.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function SiteLayout() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, setTheme] = useState(getInitialTheme);
+  const location = useLocation();
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute('data-theme', theme);
+    try {
+      window.localStorage?.setItem('cj-theme', theme);
+    } catch {
+      /* ignore */
+    }
+  }, [theme]);
+
+  const onProductOrCase =
+    location.pathname.startsWith('/products') || location.pathname.startsWith('/case-studies');
 
   return (
-    <div className="min-h-screen">
-      <header className="sticky top-0 z-50 border-b border-[color:var(--line)] bg-[rgba(234,241,246,0.78)] backdrop-blur-xl">
-        <div className="section-shell flex items-center justify-between py-4">
-          <Link to="/" className="min-w-0">
-            <div className="text-lg font-semibold text-[color:var(--ink)] md:text-xl">
-              {profile.name}
-            </div>
-            <div className="text-sm text-[color:var(--ink-muted)]">
-              {profile.targetRole}
-            </div>
+    <>
+      <nav className="topnav">
+        <div className="topnav__inner">
+          <Link to="/" className="topnav__brand" aria-label="Cody Johnson — home">
+            <span>Cody Johnson</span>
           </Link>
-
-          <nav className="hidden items-center gap-6 md:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.href}
-                className="text-sm font-medium text-[color:var(--ink-muted)] transition hover:text-[color:var(--ink)]"
+          <div className="topnav__links">
+            {NAV.map((it) => (
+              <NavLink
+                key={it.to}
+                to={it.to}
+                end={it.end}
+                className={({ isActive }) => (isActive ? 'active' : '')}
               >
-                {item.label}
-              </Link>
+                {it.label}
+              </NavLink>
             ))}
-            <a
-              href={resumeMeta.downloadPath}
-              className="cta-primary px-4 py-2"
-              download
-            >
-              Download resume
-              <HiArrowUpRight className="text-base" />
-            </a>
-          </nav>
-
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded-full border border-[color:var(--line)] p-2 md:hidden"
-            aria-expanded={menuOpen}
-            aria-label="Toggle navigation"
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            {menuOpen ? <HiXMark className="text-xl" /> : <HiBars3 className="text-xl" />}
-          </button>
-        </div>
-
-        {menuOpen ? (
-          <div className="border-t border-[color:var(--line)] bg-[rgba(234,241,246,0.94)] md:hidden">
-            <div className="section-shell flex flex-col gap-3 py-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className="rounded-2xl border border-[color:var(--line)] px-4 py-3 text-sm font-medium"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <a
-                href={resumeMeta.downloadPath}
-                className="cta-primary justify-center"
-                onClick={() => setMenuOpen(false)}
-                download
-              >
-                Download resume
-              </a>
-            </div>
           </div>
-        ) : null}
-      </header>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <ThemeToggle theme={theme} onChange={setTheme} />
+            <a className="topnav__cta" href="mailto:codyjohnsontx@gmail.com">
+              Get in touch <ArrowGlyph />
+            </a>
+          </div>
+        </div>
+      </nav>
 
-      <main>
+      <main key={onProductOrCase ? location.pathname : undefined}>
         <Outlet />
       </main>
 
-      <footer className="border-t border-[color:var(--line)] py-10">
-        <div className="section-shell flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <footer className="site-footer">
+        <div className="site-footer__inner">
           <div>
-            <p className="text-lg font-semibold">{profile.name}</p>
-            <p className="max-w-xl text-sm leading-6 text-[color:var(--ink-muted)]">
-              {profile.footerNote}
+            <h4>Currently</h4>
+            <p className="lead" style={{ fontSize: 22, margin: 0, maxWidth: '38ch' }}>
+              Open to product manager and product owner roles. Based in Austin, TX. Working in
+              public.
             </p>
-          </div>
-          <div className="flex flex-wrap gap-4 text-sm font-medium text-[color:var(--ink-muted)]">
-            {profile.contactLinks.map((link) => (
-              <a key={link.label} href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noreferrer' : undefined}>
-                {link.label}
+            <div style={{ marginTop: 24 }}>
+              <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
+                codyjohnsontx@gmail.com <ArrowGlyph />
               </a>
-            ))}
+            </div>
+          </div>
+          <div>
+            <h4>Index</h4>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/products">Products</Link>
+              </li>
+              <li>
+                <Link to="/case-studies">Case Studies</Link>
+              </li>
+              <li>
+                <Link to="/resume">Resume</Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4>Active builds</h4>
+            <ul>
+              {flagshipProducts.map((p) => (
+                <li key={p.slug}>
+                  <Link to={`/products/${p.slug}`}>{p.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4>Elsewhere</h4>
+            <ul aria-label="primary contact links">
+              {profile.contactLinks.map((l) => (
+                <li key={l.label}>
+                  <a
+                    href={l.href}
+                    target={l.external ? '_blank' : undefined}
+                    rel={l.external ? 'noreferrer' : undefined}
+                  >
+                    {l.label} {l.external ? <span className="muted">↗</span> : null}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+        <div className="site-footer__bottom">
+          <span>© {new Date().getFullYear()} Cody Johnson</span>
+          <span>Designed in Austin · Built in public</span>
+          <span>Last update — Apr 2026</span>
+        </div>
       </footer>
-    </div>
+    </>
   );
 }
 
