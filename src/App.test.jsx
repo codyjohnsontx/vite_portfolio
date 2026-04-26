@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
@@ -15,51 +15,36 @@ function renderApp(initialEntry = '/') {
 }
 
 describe('portfolio routes and metadata', () => {
-  it('renders homepage product CTAs for every product brief and keeps contact links ordered', () => {
+  it('renders the editorial homepage with hero and active builds', () => {
     renderApp('/');
 
-    const briefLinks = screen.getAllByRole('link', { name: /open product brief/i });
-    expect(briefLinks).toHaveLength(products.length);
-
-    products.forEach((product) => {
-      expect(
-        screen.getByRole('link', {
-          name: product.name,
-        }).getAttribute('href'),
-      ).toBe(`/products/${product.slug}`);
-    });
-
-    const contactLinks = within(screen.getByLabelText(/primary contact links/i)).getAllByRole('link');
-    expect(contactLinks.map((link) => link.textContent.trim())).toEqual(['Email', 'LinkedIn', 'GitHub']);
-  });
-
-  it('keeps resume actions only in the closing block and renders decorative logos accessibly', () => {
-    const { container } = renderApp('/');
-
-    expect(screen.queryByRole('link', { name: /download resume/i })).toBeNull();
-    expect(screen.queryByRole('link', { name: /view resume page/i })).toBeNull();
-    expect(screen.getByRole('link', { name: /download pdf/i })).toBeTruthy();
-    expect(screen.getByRole('link', { name: /open resume page/i })).toBeTruthy();
-
-    const decorativeLogos = container.querySelectorAll('img[alt=""]');
-    expect(decorativeLogos.length).toBeGreaterThan(0);
-  });
-
-  it('removes flagship eyebrow copy from the products page while keeping concept metadata', () => {
-    renderApp('/products');
-
+    expect(screen.getAllByRole('heading', { level: 1 }).length).toBeGreaterThan(0);
     expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
-    expect(screen.queryByText('Active build • Independent build')).toBeNull();
-    expect(screen.queryByText('Active build • Diaz Martial Arts ecosystem')).toBeNull();
-    expect(screen.getByText('Prototype concept • iRacing ecosystem concept')).toBeTruthy();
+  });
+
+  it('renders the products index with filter pills', () => {
+    renderApp('/products');
+
+    expect(screen.getByRole('button', { name: /^all$/i })).toBeTruthy();
+    expect(screen.getByRole('button', { name: /active builds/i })).toBeTruthy();
+    expect(screen.getByRole('button', { name: /concepts/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
+  });
+
+  it('renders the cases index page', () => {
+    renderApp('/case-studies');
+
+    caseStudies.forEach((study) => {
+      expect(screen.getByRole('heading', { name: study.title })).toBeTruthy();
+    });
   });
 
   products.forEach((product) => {
     it(`renders the product detail page for ${product.slug}`, () => {
       renderApp(`/products/${product.slug}`);
 
-      expect(screen.getByRole('heading', { name: product.name })).toBeTruthy();
+      expect(screen.getByRole('heading', { name: 'How it works end-to-end' })).toBeTruthy();
       expect(screen.getByText(product.oneLiner)).toBeTruthy();
     });
   });

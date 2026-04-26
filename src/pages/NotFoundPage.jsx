@@ -1,25 +1,26 @@
 import { Link } from 'react-router-dom';
+import { ArrowGlyph, Eyebrow } from '../components/Editorial';
 
-function NotFoundPage() {
+export default function NotFoundPage() {
   return (
-    <div className="section-shell py-24">
-      <div className="surface-card max-w-3xl p-10">
-        <span className="eyebrow">Not found</span>
-        <h1 className="mt-4 text-4xl font-semibold">This page does not exist.</h1>
-        <p className="mt-4 text-base leading-7 text-[color:var(--ink-muted)]">
-          The rebuild is intentionally small and recruiter-focused. Head back to the homepage or open the resume directly.
+    <section className="section">
+      <div className="container">
+        <Eyebrow>404</Eyebrow>
+        <h1 className="display" style={{ margin: '24px 0 24px' }}>
+          This page does not exist.
+        </h1>
+        <p className="lead" style={{ maxWidth: '52ch', margin: '0 0 32px' }}>
+          The rebuild is intentionally small. Head back to the index or open the resume directly.
         </p>
-        <div className="mt-8 flex gap-3">
-          <Link to="/" className="cta-primary">
-            Go home
+        <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
+          <Link className="link-arrow" to="/">
+            Go home <ArrowGlyph />
           </Link>
-          <Link to="/resume" className="glass-cta-secondary">
-            Open resume
+          <Link className="link-arrow" to="/resume">
+            Open resume <ArrowGlyph />
           </Link>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
-
-export default NotFoundPage;

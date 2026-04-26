@@ -1,0 +1,89 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowGlyph, Eyebrow, StackRow, Tag } from './Editorial';
+
+export default function ProductList({ products, startIndex = 1 }) {
+  const navigate = useNavigate();
+  const [openSlug, setOpenSlug] = useState(null);
+
+  return (
+    <div>
+      {products.map((p, i) => {
+        const isOpen = openSlug === p.slug;
+        return (
+          <article
+            key={p.slug}
+            className={'prod-card' + (isOpen ? ' is-open' : '')}
+            style={{ '--card-accent': p.accent }}
+            onClick={() => setOpenSlug(isOpen ? null : p.slug)}
+          >
+            <span className="num">0{startIndex + i}</span>
+            <div className="prod-card__main">
+              <h3 className="prod-card__title">
+                {p.name}
+                <span className="accent-mark" aria-hidden="true" />
+                <span
+                  className="mono small uppercase"
+                  style={{ color: 'var(--ink-3)', letterSpacing: '0.14em' }}
+                >
+                  {p.year}
+                </span>
+              </h3>
+              <p className="prod-card__one">{p.oneLiner}</p>
+              <div className="prod-card__expand">
+                <div className="prod-card__expand-inner">
+                  <div className="prod-card__detail-grid">
+                    <div>
+                      <Eyebrow>The problem</Eyebrow>
+                      <p className="body" style={{ marginTop: 8, color: 'var(--ink-2)' }}>
+                        {p.problem}
+                      </p>
+                    </div>
+                    <div>
+                      <Eyebrow>Audience</Eyebrow>
+                      <p className="body" style={{ marginTop: 8, color: 'var(--ink-2)' }}>
+                        {p.audience}
+                      </p>
+                    </div>
+                    <div>
+                      <Eyebrow>Stack</Eyebrow>
+                      <div style={{ marginTop: 8 }}>
+                        <StackRow items={p.stack} />
+                      </div>
+                      <div style={{ marginTop: 16 }}>
+                        <button
+                          type="button"
+                          className="link-arrow"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/products/${p.slug}`);
+                          }}
+                        >
+                          Open project <ArrowGlyph />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  {p.brandDisclaimer ? (
+                    <p
+                      className="small italic"
+                      style={{ marginTop: 24, color: 'var(--ink-3)' }}
+                    >
+                      {p.brandDisclaimer}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+            <div className="prod-card__meta">
+              <Tag variant={p.status === 'active-build' ? 'active' : undefined}>
+                {p.statusLabel ?? (p.status === 'active-build' ? 'Active build' : 'Prototype')}
+              </Tag>
+            </div>
+            <span className="prod-card__caret" aria-hidden="true">+</span>
+          </article>
+        );
+      })}
+    </div>
+  );
+}

@@ -1,9 +1,16 @@
+import surfboard from '../assets/surfboard.png';
+import trackTuner from '../assets/track_tuner.png';
+
 export const products = [
   {
     name: 'Track Tuner',
     slug: 'track-tuner',
     tier: 'flagship',
     status: 'active-build',
+    statusLabel: 'Active build',
+    year: '2026',
+    accent: 'oklch(0.62 0.18 30)',
+    image: trackTuner,
     companyContext: 'Independent build',
     role: 'Product Manager / Developer',
     stack: ['React', 'TypeScript', 'Node.js', 'RAG prototypes'],
@@ -32,12 +39,36 @@ export const products = [
     nextStep:
       'Ship telemetry-enriched recommendations and validate suggested adjustments against repeat session performance.',
     standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'Apr 22, 2026',
+        tag: 'PR #142',
+        title: 'Wire telemetry timeline into setup comparison view',
+        body: 'Joined session telemetry to the setup-change log so deltas in lap time line up with the exact spring/preload changes. Next: add a confidence badge on each suggested adjustment.',
+      },
+      {
+        date: 'Apr 14, 2026',
+        tag: 'PR #138',
+        title: 'RAG retrieval over historical setup notes',
+        body: 'Indexed prior setup logs + rider feedback. First pass returns 3 nearest sessions for any active setup. Quality is good for bike track days; cars next.',
+      },
+      {
+        date: 'Apr 02, 2026',
+        tag: 'Note',
+        title: 'Talked to two club racers about session-end ritual',
+        body: 'Both drop notes into Notes.app while still in pit. Friction = typing on a phone with gloves. Considering a voice capture entry point.',
+      },
+    ],
   },
   {
     name: 'Diaz on Demand',
     slug: 'diaz-on-demand',
     tier: 'flagship',
     status: 'active-build',
+    statusLabel: 'Active build',
+    year: '2026',
+    accent: 'oklch(0.62 0.18 240)',
+    image: surfboard,
     companyContext: 'Diaz Martial Arts ecosystem',
     role: 'Product Manager / Developer',
     stack: ['React', 'TypeScript', 'Node.js', 'Stripe', 'Mux'],
@@ -66,12 +97,35 @@ export const products = [
     nextStep:
       'Expand multi-academy LMS controls and validate onboarding + retention patterns across affiliate school cohorts.',
     standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'Apr 19, 2026',
+        tag: 'PR #87',
+        title: 'Affiliate-school admin scopes',
+        body: 'Admin role now scoped to a single academy by default. Owner role keeps cross-academy publishing. Setting up E2E tests for entitlement boundaries.',
+      },
+      {
+        date: 'Apr 06, 2026',
+        tag: 'PR #82',
+        title: 'Resume-where-you-left-off across devices',
+        body: 'Progress state now syncs through the API rather than per-device localStorage. Helped a member start on iPad and finish on TV without skipping.',
+      },
+      {
+        date: 'Mar 28, 2026',
+        tag: 'Note',
+        title: 'Pricing experiment scoped',
+        body: 'Considering a single-academy tier vs. all-access. Need clean reporting of view-time per program before testing.',
+      },
+    ],
   },
   {
     name: 'Overlap',
     slug: 'overlap-racing-radar',
     tier: 'concept',
     status: 'prototype',
+    statusLabel: 'Prototype',
+    year: '2025',
+    accent: 'oklch(0.7 0.16 140)',
     companyContext: 'iRacing ecosystem concept',
     role: 'Product Manager / Developer',
     stack: ['.NET', 'WPF', 'iRacing SDK'],
@@ -99,12 +153,29 @@ export const products = [
     nextStep:
       'Run focused driver usability tests to tune information density and reaction time benefits under race pressure.',
     standaloneMockStatus: 'planned',
+    updates: [
+      {
+        date: 'Mar 12, 2026',
+        tag: 'Build',
+        title: 'Prototype runs at 90 Hz steady',
+        body: 'Frame budget holding under 4ms. Need to test on a second monitor + ultrawide before sharing more broadly.',
+      },
+      {
+        date: 'Feb 24, 2026',
+        tag: 'Note',
+        title: 'Decided on relative (not absolute) layout',
+        body: 'Drivers reacted faster to a "you-centered" radar than a top-down absolute one in informal tests. Going with it.',
+      },
+    ],
   },
   {
     name: 'Strava Component Lifecycle',
     slug: 'strava-component-lifecycle',
     tier: 'concept',
     status: 'prototype',
+    statusLabel: 'Prototype',
+    year: '2025',
+    accent: 'oklch(0.7 0.16 60)',
     companyContext: 'Strava concept',
     role: 'Product Manager / Developer',
     stack: ['React', 'Node.js'],
@@ -136,12 +207,23 @@ export const products = [
     standaloneMockStatus: 'planned',
     brandDisclaimer:
       'Unofficial independent product concept. Not affiliated with or endorsed by Strava.',
+    updates: [
+      {
+        date: 'Feb 02, 2026',
+        tag: 'Note',
+        title: 'Mapped chain wear curve to mileage + watts',
+        body: 'Weighted by elevation gain, the model predicts replacement within ~150mi for the bikes I have data for. Need more riders.',
+      },
+    ],
   },
   {
     name: 'Instagram GIF Vault',
     slug: 'instagram-comment-gif-vault',
     tier: 'concept',
     status: 'prototype',
+    statusLabel: 'Prototype',
+    year: '2025',
+    accent: 'oklch(0.7 0.16 320)',
     companyContext: 'Instagram concept',
     role: 'Product Manager / Developer',
     stack: ['Product concept', 'Comment UX', 'Saved reactions workflow'],
