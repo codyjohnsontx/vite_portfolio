@@ -1,21 +1,30 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow, Tag } from './Editorial';
 
 export default function ProductList({ products, startIndex = 1 }) {
-  const navigate = useNavigate();
   const [openSlug, setOpenSlug] = useState(null);
 
   return (
     <div>
       {products.map((p, i) => {
         const isOpen = openSlug === p.slug;
+        const toggle = () => setOpenSlug(isOpen ? null : p.slug);
         return (
           <article
             key={p.slug}
             className={'prod-card' + (isOpen ? ' is-open' : '')}
             style={{ '--card-accent': p.accent }}
-            onClick={() => setOpenSlug(isOpen ? null : p.slug)}
+            onClick={toggle}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggle();
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-expanded={isOpen}
           >
             <span className="num">0{startIndex + i}</span>
             <div className="prod-card__main">
@@ -57,16 +66,13 @@ export default function ProductList({ products, startIndex = 1 }) {
                         <StackRow items={p.stack} />
                       </div>
                       <div style={{ marginTop: 16 }}>
-                        <button
-                          type="button"
+                        <Link
+                          to={`/products/${p.slug}`}
                           className="link-arrow"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/products/${p.slug}`);
-                          }}
+                          onClick={(e) => e.stopPropagation()}
                         >
                           Open project <ArrowGlyph />
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
