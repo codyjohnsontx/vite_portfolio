@@ -35,13 +35,19 @@ export default function ProductList({ products, startIndex = 1 }) {
                   <div className="prod-card__detail-grid">
                     <div>
                       <Eyebrow>The problem</Eyebrow>
-                      <p className="body" style={{ marginTop: 8, color: 'var(--ink-2)' }}>
+                      <p
+                        className="body"
+                        style={{ marginTop: 8, color: 'var(--ink-2)' }}
+                      >
                         {p.problem}
                       </p>
                     </div>
                     <div>
                       <Eyebrow>Audience</Eyebrow>
-                      <p className="body" style={{ marginTop: 8, color: 'var(--ink-2)' }}>
+                      <p
+                        className="body"
+                        style={{ marginTop: 8, color: 'var(--ink-2)' }}
+                      >
                         {p.audience}
                       </p>
                     </div>
@@ -77,10 +83,13 @@ export default function ProductList({ products, startIndex = 1 }) {
             </div>
             <div className="prod-card__meta">
               <Tag variant={p.status === 'active-build' ? 'active' : undefined}>
-                {p.statusLabel ?? (p.status === 'active-build' ? 'Active build' : 'Prototype')}
+                {p.statusLabel ??
+                  (p.status === 'active-build' ? 'Active build' : 'Prototype')}
               </Tag>
             </div>
-            <span className="prod-card__caret" aria-hidden="true">+</span>
+            <span className="prod-card__caret" aria-hidden="true">
+              +
+            </span>
           </article>
         );
       })}

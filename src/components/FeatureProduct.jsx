@@ -1,24 +1,14 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from './Editorial';
 
 export default function FeatureProduct({ p }) {
-  const navigate = useNavigate();
-  const open = () => navigate(`/products/${p.slug}`);
-  const onKey = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      open();
-    }
-  };
+  const href = `/products/${p.slug}`;
 
   return (
     <article className="prod-feature" style={{ '--card-accent': p.accent }}>
-      <div
+      <Link
+        to={href}
         className="prod-feature__media"
-        onClick={open}
-        onKeyDown={onKey}
-        role="button"
-        tabIndex={0}
         aria-label={`Open ${p.name}`}
       >
         {p.image ? (
@@ -26,7 +16,7 @@ export default function FeatureProduct({ p }) {
         ) : (
           <div className="placeholder">{p.name} · product shot</div>
         )}
-      </div>
+      </Link>
       <div className="prod-feature__body">
         <Eyebrow>
           {p.year} · {p.tier === 'flagship' ? 'Flagship' : 'Concept'}
@@ -61,9 +51,9 @@ export default function FeatureProduct({ p }) {
         <StackRow items={p.stack} />
 
         <div style={{ display: 'flex', gap: 28, marginTop: 8, flexWrap: 'wrap' }}>
-          <button type="button" className="link-arrow" onClick={open}>
+          <Link to={href} className="link-arrow">
             Read the build <ArrowGlyph />
-          </button>
+          </Link>
           {p.updates?.length ? (
             <span
               className="mono small uppercase"

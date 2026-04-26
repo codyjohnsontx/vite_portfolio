@@ -1,10 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow } from '../components/Editorial';
 import { caseStudies } from '../content/caseStudies';
 
 export default function CaseStudyIndexPage() {
-  const navigate = useNavigate();
-
   return (
     <div className="fade-in">
       <section className="page-hero">
@@ -27,12 +25,10 @@ export default function CaseStudyIndexPage() {
       <section className="section">
         <div className="container">
           {caseStudies.map((c, i) => (
-            <button
+            <Link
               key={c.slug}
-              type="button"
+              to={`/case-studies/${c.slug}`}
               className="case-row"
-              onClick={() => navigate(`/case-studies/${c.slug}`)}
-              style={{ textAlign: 'left', font: 'inherit', background: 'transparent' }}
             >
               <span className="numeral" style={{ fontSize: 60 }}>
                 0{i + 1}
@@ -56,7 +52,7 @@ export default function CaseStudyIndexPage() {
                   Read <ArrowGlyph />
                 </span>
               </div>
-            </button>
+            </Link>
           ))}
         </div>
       </section>

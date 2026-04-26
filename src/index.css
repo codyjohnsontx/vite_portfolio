@@ -507,12 +507,15 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
 .prod-feature > * { min-width: 0; }
 .prod-feature:last-child { border-bottom: 1px solid var(--rule); }
 .prod-feature__media {
+  display: block;
   background: var(--bg-2);
   border: 1px solid var(--rule-2);
   aspect-ratio: 16 / 9;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 .prod-feature__media .placeholder {
   width: 100%;
@@ -757,6 +760,8 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   cursor: pointer;
   align-items: baseline;
   transition: padding 0.25s ease;
+  text-decoration: none;
+  color: inherit;
 }
 .case-row:last-child { border-bottom: 1px solid var(--rule); }
 .case-row:hover { padding-left: 16px; }
