@@ -1,5 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow } from '../components/Editorial';
 import { caseStudies } from '../content/caseStudies';
 
@@ -28,18 +27,12 @@ export default function CaseStudyIndexPage() {
       <section className="section">
         <div className="container">
           {caseStudies.map((c, i) => (
-            <article
+            <button
               key={c.slug}
+              type="button"
               className="case-row"
-              role="link"
-              tabIndex={0}
               onClick={() => navigate(`/case-studies/${c.slug}`)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  navigate(`/case-studies/${c.slug}`);
-                }
-              }}
+              style={{ textAlign: 'left', font: 'inherit', background: 'transparent' }}
             >
               <span className="numeral" style={{ fontSize: 60 }}>
                 0{i + 1}
@@ -63,7 +56,7 @@ export default function CaseStudyIndexPage() {
                   Read <ArrowGlyph />
                 </span>
               </div>
-            </article>
+            </button>
           ))}
         </div>
       </section>

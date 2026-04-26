@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from './Editorial';
 
-export default function FeatureProduct({ p, index }) {
+export default function FeatureProduct({ p }) {
   const navigate = useNavigate();
   const open = () => navigate(`/products/${p.slug}`);
   const onKey = (e) => {

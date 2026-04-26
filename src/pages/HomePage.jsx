@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   ArrowGlyph,
   Eyebrow,
@@ -73,8 +73,8 @@ export default function HomePage() {
             }
             sub="Both are operating products with real auth, billing, and content workflows — not slideware. Below, a snapshot. Click through for the full project page including a running changelog of pull requests and notes."
           />
-          {flagshipProducts.map((p, i) => (
-            <FeatureProduct key={p.slug} p={p} index={i + 1} />
+          {flagshipProducts.map((p) => (
+            <FeatureProduct key={p.slug} p={p} />
           ))}
         </div>
       </section>
