@@ -24,6 +24,22 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
   });
 
+  it('falls back when localStorage is unavailable during initial render', () => {
+    const descriptor = Object.getOwnPropertyDescriptor(window, 'localStorage');
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new Error('localStorage is blocked');
+      },
+    });
+
+    try {
+      expect(() => renderApp('/')).not.toThrow();
+    } finally {
+      Object.defineProperty(window, 'localStorage', descriptor);
+    }
+  });
+
   it('renders the products index with filter pills', () => {
     renderApp('/products');
 

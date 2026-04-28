@@ -19,9 +19,14 @@ const NAV = [
 
 function getInitialTheme() {
   if (typeof window === 'undefined') return 'paper';
-  const storage = window.localStorage;
-  const stored = typeof storage?.getItem === 'function' ? storage.getItem('cj-theme') : null;
-  if (stored === 'paper' || stored === 'ink' || stored === 'dark') return stored;
+  try {
+    const storage = window.localStorage;
+    if (typeof storage?.getItem !== 'function') return 'paper';
+    const stored = storage.getItem('cj-theme');
+    if (stored === 'paper' || stored === 'ink' || stored === 'dark') return stored;
+  } catch {
+    return 'paper';
+  }
   return 'paper';
 }
 
