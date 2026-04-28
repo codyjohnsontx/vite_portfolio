@@ -21,6 +21,7 @@ function getInitialTheme() {
     const storage = window.localStorage;
     if (typeof storage?.getItem !== 'function') return 'paper';
     const stored = storage.getItem('cj-theme');
+    if (stored === 'dark') return 'ink';
     if (stored === 'paper' || stored === 'ink') return stored;
   } catch {
     return 'paper';

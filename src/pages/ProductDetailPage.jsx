@@ -216,8 +216,8 @@ export default function ProductDetailPage() {
               >
                 Pull requests, notes, and decisions as they happen. Updated weekly.
               </p>
-              {(p.updates ?? []).map((u) => (
-                <article key={`${u.date}-${u.tag}-${u.title}`} className="update">
+              {(p.updates ?? []).map((u, i) => (
+                <article key={u.id || u.title || `update-${i}`} className="update">
                   <div className="update__body">
                     <h4>
                       {u.url ? (

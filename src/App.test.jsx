@@ -40,6 +40,25 @@ describe('portfolio routes and metadata', () => {
     }
   });
 
+  it('migrates the legacy dark theme preference to ink', () => {
+    const descriptor = Object.getOwnPropertyDescriptor(window, 'localStorage');
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      value: {
+        getItem: () => 'dark',
+        setItem: () => {},
+      },
+    });
+
+    try {
+      renderApp('/');
+
+      expect(document.documentElement.getAttribute('data-theme')).toBe('ink');
+    } finally {
+      Object.defineProperty(window, 'localStorage', descriptor);
+    }
+  });
+
   it('renders the products index with filter pills', () => {
     renderApp('/products');
 
