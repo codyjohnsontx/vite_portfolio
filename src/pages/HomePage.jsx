@@ -56,6 +56,8 @@ function Hero() {
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const flagshipProductCount = flagshipProducts.length;
+  const flagshipProductLabel = flagshipProductCount === 1 ? 'product' : 'products';
 
   return (
     <div className="fade-in">
@@ -68,10 +70,11 @@ export default function HomePage() {
             eyebrow="Now building"
             title={
               <>
-                Two products <span className="italic">in active build</span>, shipped in public.
+                {flagshipProductCount} {flagshipProductLabel}{' '}
+                <span className="italic">in active build</span>, shipped in public.
               </>
             }
-            sub="Both are operating products with real auth, billing, and content workflows — not slideware. Below, a snapshot. Click through for the full project page including a running changelog of pull requests and notes."
+            sub="Operating products with real auth, ingest, billing, analytics, and content workflows — not slideware. Below, a snapshot. Click through for the full project page including a running changelog of pull requests and notes."
           />
           {flagshipProducts.map((p) => (
             <FeatureProduct key={p.slug} p={p} />

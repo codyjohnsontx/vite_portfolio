@@ -19,8 +19,14 @@ const NAV = [
 
 function getInitialTheme() {
   if (typeof window === 'undefined') return 'paper';
-  const stored = window.localStorage?.getItem('cj-theme');
-  if (stored === 'paper' || stored === 'ink' || stored === 'dark') return stored;
+  try {
+    const storage = window.localStorage;
+    if (typeof storage?.getItem !== 'function') return 'paper';
+    const stored = storage.getItem('cj-theme');
+    if (stored === 'paper' || stored === 'ink' || stored === 'dark') return stored;
+  } catch {
+    return 'paper';
+  }
   return 'paper';
 }
 
@@ -50,7 +56,8 @@ function SiteLayout() {
     const root = document.documentElement;
     root.setAttribute('data-theme', theme);
     try {
-      window.localStorage?.setItem('cj-theme', theme);
+      const storage = window.localStorage;
+      if (typeof storage?.setItem === 'function') storage.setItem('cj-theme', theme);
     } catch {
       /* ignore */
     }

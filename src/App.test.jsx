@@ -19,8 +19,25 @@ describe('portfolio routes and metadata', () => {
     renderApp('/');
 
     expect(screen.getAllByRole('heading', { level: 1 }).length).toBeGreaterThan(0);
-    expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Track Tuner/ })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
+  });
+
+  it('falls back when localStorage is unavailable during initial render', () => {
+    const descriptor = Object.getOwnPropertyDescriptor(window, 'localStorage');
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new Error('localStorage is blocked');
+      },
+    });
+
+    try {
+      expect(() => renderApp('/')).not.toThrow();
+    } finally {
+      Object.defineProperty(window, 'localStorage', descriptor);
+    }
   });
 
   it('renders the products index with filter pills', () => {
@@ -29,7 +46,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('button', { name: /^all$/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /active builds/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /concepts/i })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Track Tuner/ })).toBeTruthy();
   });
 
   it('renders the cases index page', () => {
