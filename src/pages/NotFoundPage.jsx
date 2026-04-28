@@ -10,14 +10,14 @@ export default function NotFoundPage() {
           This page does not exist.
         </h1>
         <p className="lead" style={{ maxWidth: '52ch', margin: '0 0 32px' }}>
-          The rebuild is intentionally small. Head back to the index or open the resume directly.
+          The rebuild is intentionally small. Head back to the index or browse the product work.
         </p>
         <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
           <Link className="link-arrow" to="/">
             Go home <ArrowGlyph />
           </Link>
-          <Link className="link-arrow" to="/resume">
-            Open resume <ArrowGlyph />
+          <Link className="link-arrow" to="/products">
+            Browse products <ArrowGlyph />
           </Link>
         </div>
       </div>

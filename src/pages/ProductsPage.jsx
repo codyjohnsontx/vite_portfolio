@@ -29,11 +29,6 @@ export default function ProductsPage() {
           >
             Products & <span className="italic">prototypes</span>.
           </h1>
-          <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
-            Active builds first, then sharper concepts. Each card opens a project page with a
-            running changelog of pull requests and notes — so you can see what shipped this week,
-            not just what shipped last year.
-          </p>
         </div>
       </section>
 

@@ -18,26 +18,11 @@ export default function FeatureProduct({ p }) {
         )}
       </Link>
       <div className="prod-feature__body">
-        <Eyebrow>
-          {p.year} · {p.tier === 'flagship' ? 'Flagship' : 'Concept'}
-        </Eyebrow>
         <h3
           className="h1"
           style={{ margin: '6px 0 0', fontSize: 'clamp(36px, 4.4vw, 56px)' }}
         >
           {p.name}
-          <span
-            aria-hidden="true"
-            style={{
-              display: 'inline-block',
-              width: 10,
-              height: 10,
-              borderRadius: '50%',
-              background: p.accent,
-              transform: 'translateY(-8px)',
-              marginLeft: 6,
-            }}
-          />
         </h3>
         <p className="lead" style={{ margin: 0 }}>{p.oneLiner}</p>
 

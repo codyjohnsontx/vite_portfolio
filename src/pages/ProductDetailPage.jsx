@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { ArrowGlyph, Eyebrow, StackRow, Tag } from '../components/Editorial';
+import { ArrowGlyph, Eyebrow, StackRow } from '../components/Editorial';
 import { getProductBySlug } from '../content/projects';
 
 const SECTIONS = [
@@ -33,8 +33,6 @@ export default function ProductDetailPage() {
 
   if (!product) return <Navigate to="/not-found" replace />;
   const p = product;
-  const statusLabel = p.statusLabel ?? (p.status === 'active-build' ? 'Active build' : 'Prototype');
-  const tierLabel = p.tier === 'flagship' ? 'Flagship' : 'Concept';
   const nextSummary = p.nextStep.split('.')[0] + '.';
 
   return (
@@ -48,27 +46,11 @@ export default function ProductDetailPage() {
             <span>/</span>
             <span>{p.name}</span>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              marginBottom: 16,
-              flexWrap: 'wrap',
-              gap: 12,
-            }}
-          >
-            <Eyebrow>
-              {p.year ?? ''} · {tierLabel}
-            </Eyebrow>
-            <Tag variant={p.status === 'active-build' ? 'active' : undefined}>{statusLabel}</Tag>
-          </div>
           <h1
             className="display"
             style={{ margin: 0, fontSize: 'clamp(48px, 7vw, 110px)' }}
           >
             {p.name}
-            <span style={{ color: p.accent }}>.</span>
           </h1>
           <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
             {p.oneLiner}
@@ -235,11 +217,17 @@ export default function ProductDetailPage() {
                 Pull requests, notes, and decisions as they happen. Updated weekly.
               </p>
               {(p.updates ?? []).map((u) => (
-                <article key={`${u.date}-${u.tag}`} className="update">
-                  <span className="update__date">{u.date}</span>
-                  <span className="update__tag">{u.tag}</span>
+                <article key={`${u.date}-${u.tag}-${u.title}`} className="update">
                   <div className="update__body">
-                    <h4>{u.title}</h4>
+                    <h4>
+                      {u.url ? (
+                        <a href={u.url} target="_blank" rel="noreferrer">
+                          {u.title}
+                        </a>
+                      ) : (
+                        u.title
+                      )}
+                    </h4>
                     <p>{u.body}</p>
                   </div>
                 </article>

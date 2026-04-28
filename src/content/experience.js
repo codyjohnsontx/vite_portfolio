@@ -2,15 +2,15 @@ export const experience = [
   {
     company: 'Lambda Curry',
     role: 'Product Owner',
-    dates: 'Previous product work',
+    dates: 'Contract product work',
     summary:
-      'Owned multiple client backlogs while setting weekly priorities, defining higher-risk work up front, and running delivery cadence across engineering, design, and operations.',
+      'Owned product lifecycles across e-commerce, consumer, and B2B products while prioritizing work from business impact, user behavior, and delivery constraints.',
     evidence: [
-      'Turned vague requests into buildable tickets with user stories, acceptance criteria, edge cases, and launch constraints.',
-      'Wrote PRDs for higher-risk features and defined launch success metrics before release.',
-      'Led a client launch tied to revenue that increased first-week sales by 12 percent.',
+      'Defined feature scope and acceptance criteria for a checkout redesign and friction-reduction initiative that contributed to a 12 percent first-week sales lift.',
+      'Drove 10-25 percent retention improvement by identifying drop-off patterns and prioritizing fixes in sprint planning.',
+      'Wrote PRDs, defined success metrics, and coordinated releases across teams for higher-impact features.',
     ],
-    tags: ['Backlog ownership', 'Delivery reliability', 'Stakeholder management'],
+    tags: ['Product lifecycle', 'Conversion', 'Retention'],
   },
   {
     company: 'CTX Motoworks',

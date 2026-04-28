@@ -19,20 +19,9 @@ export default function ResumePage() {
             <span>/</span>
             <span>Resume</span>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              flexWrap: 'wrap',
-              gap: 16,
-            }}
-          >
-            <h1 className="display" style={{ margin: 0 }}>
-              Resume.
-            </h1>
-            <span className="mono small uppercase">Last updated · Apr 2026</span>
-          </div>
+          <h1 className="display" style={{ margin: 0 }}>
+            Resume.
+          </h1>
           <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
             Cody Johnson — Product Manager, Austin, TX. PSPO I. Open to roles.
           </p>

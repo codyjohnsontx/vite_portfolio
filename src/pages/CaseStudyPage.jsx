@@ -92,9 +92,6 @@ export default function CaseStudyPage() {
             <span>/</span>
             <span>{c.company}</span>
           </div>
-          <Eyebrow>
-            {c.company} · {c.timeframe} · {c.role}
-          </Eyebrow>
           <h1
             className="display"
             style={{ margin: '24px 0 0', fontSize: 'clamp(40px, 5.6vw, 84px)' }}

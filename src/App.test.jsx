@@ -84,6 +84,12 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
   });
 
+  it('does not expose the resume page route', () => {
+    renderApp('/resume');
+
+    expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
+  });
+
   it('includes the required social metadata in index.html', () => {
     const indexHtml = readFileSync('index.html', 'utf8');
 
