@@ -1,4 +1,5 @@
-import surfboard from '../assets/surfboard.png';
+import diazMa from '../assets/diazma.png';
+import rideSense from '../assets/ridesense.png';
 import trackTuner from '../assets/track_tuner.png';
 
 export const products = [
@@ -61,6 +62,71 @@ export const products = [
     ],
   },
   {
+    name: 'RideSense',
+    slug: 'ridesense',
+    tier: 'flagship',
+    status: 'active-build',
+    statusLabel: 'Active build',
+    year: '2026',
+    accent: 'oklch(0.66 0.16 170)',
+    image: rideSense,
+    companyContext: 'Independent build',
+    role: 'Product Manager / Developer',
+    stack: ['Next.js', 'TypeScript', 'FastAPI', 'Supabase Postgres', 'Fernet', 'Grounded AI'],
+    oneLiner:
+      'Grounded AI training-insights platform that unifies cyclist workout data across providers without coaching prescriptions.',
+    audience:
+      'Enthusiast and competitive cyclists who use multiple platforms, log structured intervals, and want decision-support for the next training block.',
+    jtbd:
+      'After a workout, riders need one canonical view of their week and grounded answers that cite the underlying metrics rather than fabricate authoritative advice.',
+    problem:
+      'Training data is fragmented across Strava, TrainerRoad, Garmin, and head-unit exports, leaving riders with double-counted load, timeline gaps, and no honest read on whether they are progressing or digging a hole.',
+    coreWorkflow: [
+      'Connect Strava via OAuth or drop GPX, TCX, and FIT exports into the dashboard; both paths feed the same ingest pipeline.',
+      'Score workouts from each provider for overlap using start-time delta, duration delta, and name similarity, then merge matches into a canonical activity at a 0.72 confidence threshold.',
+      'Run deterministic analytics over the canonical timeline to produce weekly load, zone breakdown, multi-week trend percentage, and regression flags.',
+      'Answer natural-language questions over those facts with metric citations, falling back to deterministic responses when no LLM key is configured.',
+    ],
+    mvpScope: [
+      'Strava OAuth and file upload first; TrainerRoad scaffolded for browser session-link',
+      'Similarity-scored cross-provider deduplication into one canonical timeline',
+      'Deterministic weekly load, zone distribution, and trend analytics',
+      'Grounded AI Q&A with mandatory metric citations and a no-medical-advice prompt boundary',
+      'Fernet-encrypted provider token storage with weak-secret guard outside development',
+    ],
+    evidenceSignal:
+      'OAuth, upload ingest, canonical activity deduplication, deterministic analytics, and citation-bound AI behavior are being built around verifiable workout facts instead of coaching claims.',
+    nextStep:
+      'Wire the live Strava OAuth credentials and validate the full pipeline against real activity history, then ship the TrainerRoad session-link via Playwright so riders with structured workouts get TSS-accurate canonical activities without manual exports.',
+    standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'Apr 28, 2026',
+        tag: 'PR #7',
+        title: 'Hardened Strava OAuth ahead of going live',
+        body: 'Stamped a 5-minute TTL onto the OAuth state token so a stolen redirect cannot be replayed later, taught sync_strava to mark the connection status="error" when refresh fails so the UI can prompt for a relink, and locked the behavior in with 6 new tests. Next: register the Strava app and run real activities through the canonical pipeline.',
+      },
+      {
+        date: 'Apr 28, 2026',
+        tag: 'PR #6',
+        title: 'GPX / TCX / FIT upload pipeline',
+        body: 'Built three parsers with defusedxml for XML formats and fitparse for FIT behind one EXTENSION_TO_PARSER dispatcher, using a SHA-256 content hash as the upsert identity so re-uploads are idempotent. Added a drag-and-drop card on the Connections page while TrainerRoad remains scaffolded.',
+      },
+      {
+        date: 'Apr 28, 2026',
+        tag: 'PR #5',
+        title: 'Replaced HMAC-only signing with real Fernet encryption',
+        body: 'The previous token wrapper was tamper-evident but plaintext-readable. Swapped to Fernet with the key derived from APP_SECRET_KEY, added a guard that refuses default or weak secrets outside development, and pinned the property that plaintext must not appear in ciphertext with a dedicated test.',
+      },
+      {
+        date: 'Apr 27, 2026',
+        tag: 'Note',
+        title: 'Audited the README against the implementation',
+        body: 'Three claims did not match the code: tokens were called encrypted, TrainerRoad was described as storing cookies only, and the AI was described as deterministic. Rewrote each to match what the code actually does.',
+      },
+    ],
+  },
+  {
     name: 'Diaz on Demand',
     slug: 'diaz-on-demand',
     tier: 'flagship',
@@ -68,7 +134,7 @@ export const products = [
     statusLabel: 'Active build',
     year: '2026',
     accent: 'oklch(0.62 0.18 240)',
-    image: surfboard,
+    image: diazMa,
     companyContext: 'Diaz Martial Arts ecosystem',
     role: 'Product Manager / Developer',
     stack: ['React', 'TypeScript', 'Node.js', 'Stripe', 'Mux'],

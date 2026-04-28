@@ -5,7 +5,7 @@ export const profile = {
   headline:
     'Building product systems with engineering depth, operational range, and a bias toward shipping useful things.',
   heroSupport:
-    'I am building Track Tuner and Diaz on Demand, and prototyping Overlap plus a Strava component lifecycle concept, while drawing on prior product ownership, automation, and operations work across client delivery, nonprofits, and commerce.',
+    'I am building Track Tuner, RideSense, and Diaz on Demand, and prototyping Overlap plus a Strava component lifecycle concept, while drawing on prior product ownership, automation, and operations work across client delivery, nonprofits, and commerce.',
   summary:
     'I do my best work when a team needs to turn vague requests into clear requirements, make practical release decisions, and keep execution moving until the result holds up in the real world.',
   footerNote:
@@ -24,6 +24,11 @@ export const profile = {
       stat: 'Track Tuner',
       title: 'AI-assisted setup tuning',
       body: 'Designed the MVP around setup logging first, then layered in RAG-based recommendations using historical setup, condition, and feedback data.',
+    },
+    {
+      stat: 'RideSense',
+      title: 'Grounded cyclist analytics',
+      body: 'Designed the MVP around canonical workout ingest, cross-provider deduplication, deterministic training analytics, and citation-bound AI answers without coaching prescriptions.',
     },
     {
       stat: 'Diaz on Demand',

@@ -19,7 +19,8 @@ const NAV = [
 
 function getInitialTheme() {
   if (typeof window === 'undefined') return 'paper';
-  const stored = window.localStorage?.getItem('cj-theme');
+  const storage = window.localStorage;
+  const stored = typeof storage?.getItem === 'function' ? storage.getItem('cj-theme') : null;
   if (stored === 'paper' || stored === 'ink' || stored === 'dark') return stored;
   return 'paper';
 }
@@ -50,7 +51,8 @@ function SiteLayout() {
     const root = document.documentElement;
     root.setAttribute('data-theme', theme);
     try {
-      window.localStorage?.setItem('cj-theme', theme);
+      const storage = window.localStorage;
+      if (typeof storage?.setItem === 'function') storage.setItem('cj-theme', theme);
     } catch {
       /* ignore */
     }

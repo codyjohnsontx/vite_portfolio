@@ -68,10 +68,10 @@ export default function HomePage() {
             eyebrow="Now building"
             title={
               <>
-                Two products <span className="italic">in active build</span>, shipped in public.
+                Three products <span className="italic">in active build</span>, shipped in public.
               </>
             }
-            sub="Both are operating products with real auth, billing, and content workflows — not slideware. Below, a snapshot. Click through for the full project page including a running changelog of pull requests and notes."
+            sub="Operating products with real auth, ingest, billing, analytics, and content workflows — not slideware. Below, a snapshot. Click through for the full project page including a running changelog of pull requests and notes."
           />
           {flagshipProducts.map((p) => (
             <FeatureProduct key={p.slug} p={p} />
