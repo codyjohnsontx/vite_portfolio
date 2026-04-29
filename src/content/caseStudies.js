@@ -2,66 +2,67 @@ export const caseStudies = [
   {
     slug: 'lambda-curry-scope-monitoring',
     company: 'Lambda Curry',
-    timeframe: 'Previous product work',
+    timeframe: 'Contract product work',
     role: 'Product Owner',
     team: 'Client stakeholders, engineering, design, and operations',
-    title: 'Owning concurrent client backlogs without letting scope drift break delivery',
+    title: 'Driving multi-product delivery from scope through measurable launch outcomes',
     tagline:
-      'Managed multiple client engagements while building tighter systems for prioritization, change monitoring, and delivery confidence.',
+      'Owned product lifecycles across e-commerce, consumer, and B2B products while using behavior data, stakeholder feedback, and release metrics to guide iteration.',
     challenge:
-      'Multiple projects were moving at once, and the real risk was not just shipping slower. It was losing alignment between what clients requested, what internal teams were building, and what had actually changed across tools and releases.',
+      'Multiple product lines were competing for attention at once. The work required deciding which features mattered most, protecting delivery scope, and making sure launches were measured by business and user outcomes instead of output alone.',
     featuredOutcome:
-      'Built an MCP system to monitor scope drift across Jira and Linear and supported a client deployment that contributed to a 12 percent first-week sales increase.',
+      'Contributed to a 12 percent first-week sales lift on a checkout redesign and friction-reduction launch, plus 10-25 percent retention improvement across a multi-product platform.',
     impactHighlights: [
-      'Owned product backlogs across multiple concurrent client projects.',
-      'Wrote PRDs, defined launch metrics, and translated requests into buildable tickets.',
-      'Partnered across delivery teams on a release that drove a 12 percent first-week sales increase for a client.',
+      'Owned product lifecycles across e-commerce, consumer, and B2B products.',
+      'Defined feature scope and acceptance criteria for a checkout redesign and friction-reduction initiative.',
+      'Drove 10-25 percent retention improvement by identifying drop-off patterns and prioritizing fixes in sprint planning.',
     ],
     sections: {
       context:
-        'Lambda Curry required balancing multiple client priorities at once while still preserving clarity for internal teams. The challenge was as much operational and product-oriented as it was delivery-oriented.',
+        'Lambda Curry required balancing e-commerce, consumer, and B2B product priorities while keeping stakeholders aligned around business impact, user behavior, and delivery constraints.',
       problem:
-        'Client requests often arrived vague and high pressure. Without stronger upfront definition, the team would lose time in back-and-forth clarification, absorb avoidable scope risk, and launch without a clear success yardstick.',
+        'Feature requests and stakeholder priorities often competed for the same engineering capacity. Without clear scope, acceptance criteria, and success metrics, the team risked shipping work that was on time but not tied to conversion, retention, or user behavior.',
       usersStakeholders:
         'Primary stakeholders included clients, internal engineering teams, designers, operations partners, and the delivery leads accountable for on-time execution.',
       goal:
-        'Keep concurrent projects aligned and shippable by improving backlog quality, locking scope earlier, and making post-launch decisions based on real data instead of guesswork.',
+        'Prioritize high-impact features, define release scope clearly, and use conversion, retention, and behavioral data to guide post-launch iteration.',
       constraints: [
-        'Several client engagements moving at the same time',
-        'Requirements and priorities split across multiple project systems',
-        'Need to protect release confidence without slowing delivery velocity',
+        'Competing priorities across e-commerce, consumer, and B2B product work',
+        'Stakeholders balancing business urgency, user feedback, and delivery realities',
+        'Need to define validation criteria before each release without slowing sprint execution',
       ],
       ownership: [
-        'Owned and prioritized multiple client backlogs',
-        'Translated stakeholder requests into requirements, user stories, acceptance criteria, edge cases, and launch constraints',
-        'Facilitated sprint ceremonies, dependency coordination, and blocker removal',
+        'Owned product lifecycles across multiple product surfaces',
+        'Prioritized features based on business impact, user behavior, conversion, and retention signals',
+        'Owned sprint execution, dependency management, and release coordination across teams',
       ],
       decisions: [
-        'Wrote PRDs for higher-risk features to get stakeholder sign-off before engineering work began.',
-        'Prioritized features based on business impact, delivery risk, and stakeholder expectations rather than urgency alone.',
-        'Defined launch success metrics and the tracking plan before release so post-launch iteration had a real signal.',
+        'Prioritized features based on business impact and user behavior rather than stakeholder urgency alone.',
+        'Wrote PRDs for higher-risk features to lock scope and secure sign-off before engineering began.',
+        'Defined success metrics and validation criteria before each release so post-launch iteration had a real signal.',
       ],
       tradeoffs: [
-        'Accepted more upfront product-definition work in exchange for less churn during implementation.',
-        'Balanced fast stakeholder response with the need to keep work clear enough for engineering teams to execute cleanly.',
+        'Balanced competing stakeholder priorities by using data and user feedback to make scope and delivery tradeoffs explicit.',
+        'Accepted more upfront product-definition work in exchange for less churn during implementation and cleaner validation after launch.',
       ],
       execution: [
-        'Managed sprint ceremonies, mid-sprint adjustments, dependency tracking, and release communication.',
-        'Turned vague requests into build-ready tickets with clear acceptance criteria and edge cases.',
-        'Worked with engineering, design, and operations to deliver a production release and continue iterating after launch.',
+        'Defined feature scope and acceptance criteria for a checkout redesign and friction-reduction initiative.',
+        'Identified drop-off patterns in behavioral data and prioritized retention fixes in sprint planning.',
+        'Managed sprint execution and release coordination across teams, including dependencies for high-impact features.',
       ],
       outcomes: [
-        'Reduced implementation friction by cutting clarification loops during delivery.',
-        'Helped ship a client deployment that contributed to a 12 percent first-week sales increase.',
-        'Created a stronger operating loop between product definition, release execution, and post-launch iteration.',
+        'Contributed to a 12 percent first-week sales lift at launch and measurable conversion improvement through the purchase funnel.',
+        'Drove 10-25 percent retention improvement across a multi-product platform.',
+        'Created a stronger operating loop between product definition, sprint execution, release coordination, and post-launch validation.',
       ],
       metrics: [
-        '12 percent first-week sales increase tied to a client deployment supported through backlog ownership and iterative releases',
-        'Delivery gains came through better scoping, clearer tickets, and defined launch metrics rather than a publicly shareable dashboard',
+        '12 percent first-week sales lift tied to a checkout redesign and friction-reduction launch',
+        '10-25 percent retention improvement across a multi-product platform',
+        'Conversion, retention, and behavioral data used to guide iteration and sprint priorities',
       ],
       lessons: [
-        'Product ownership gets stronger when scope and success criteria are clarified before engineering starts.',
-        'Owning multiple concurrent projects requires explicit tradeoff discipline, not just good task management.',
+        'Product ownership gets stronger when scope, acceptance criteria, and success metrics are clarified before engineering starts.',
+        'Competing priorities are easier to resolve when tradeoffs are grounded in business impact, user behavior, and delivery constraints.',
       ],
       confidentialityNote:
         'Client names, internal dashboards, and detailed release mechanics are intentionally withheld.',

@@ -7,14 +7,12 @@ import { ArrowGlyph } from './Editorial';
 const THEMES = [
   { id: 'paper', label: 'Paper' },
   { id: 'ink', label: 'Ink' },
-  { id: 'dark', label: 'Dark' },
 ];
 
 const NAV = [
   { to: '/', label: 'Index', end: true },
   { to: '/products', label: 'Products' },
   { to: '/case-studies', label: 'Case Studies' },
-  { to: '/resume', label: 'Resume' },
 ];
 
 function getInitialTheme() {
@@ -23,7 +21,8 @@ function getInitialTheme() {
     const storage = window.localStorage;
     if (typeof storage?.getItem !== 'function') return 'paper';
     const stored = storage.getItem('cj-theme');
-    if (stored === 'paper' || stored === 'ink' || stored === 'dark') return stored;
+    if (stored === 'dark') return 'ink';
+    if (stored === 'paper' || stored === 'ink') return stored;
   } catch {
     return 'paper';
   }
@@ -124,9 +123,6 @@ function SiteLayout() {
               <li>
                 <Link to="/case-studies">Case Studies</Link>
               </li>
-              <li>
-                <Link to="/resume">Resume</Link>
-              </li>
             </ul>
           </div>
           <div>
@@ -159,7 +155,6 @@ function SiteLayout() {
         <div className="site-footer__bottom">
           <span>© {new Date().getFullYear()} Cody Johnson</span>
           <span>Designed in Austin · Built in public</span>
-          <span>Last update — Apr 2026</span>
         </div>
       </footer>
     </>

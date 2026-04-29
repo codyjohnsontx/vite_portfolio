@@ -30,13 +30,6 @@ export default function ProductList({ products, startIndex = 1 }) {
             <div className="prod-card__main">
               <h3 className="prod-card__title">
                 {p.name}
-                <span className="accent-mark" aria-hidden="true" />
-                <span
-                  className="mono small uppercase"
-                  style={{ color: 'var(--ink-3)', letterSpacing: '0.14em' }}
-                >
-                  {p.year}
-                </span>
               </h3>
               <p className="prod-card__one">{p.oneLiner}</p>
               <div className="prod-card__expand">

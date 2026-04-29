@@ -7,7 +7,6 @@ import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import ProductsPage from './pages/ProductsPage';
-import ResumePage from './pages/ResumePage';
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
           <Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/case-studies" element={<CaseStudyIndexPage />} />
           <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
-          <Route path="/resume" element={<ResumePage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

@@ -7,7 +7,6 @@ Personal portfolio site built with Vite, React, React Router, and Tailwind CSS.
 - Homepage
 - Product index and product detail pages
 - Case study pages
-- Resume page
 - Downloadable resume assets
 - SPA rewrite support for deep links
 - Smoke tests for route and content integrity
