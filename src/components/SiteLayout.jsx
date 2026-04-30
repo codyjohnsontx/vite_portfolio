@@ -5,8 +5,8 @@ import { flagshipProducts } from '../content/projects';
 import { ArrowGlyph } from './Editorial';
 
 const THEMES = [
-  { id: 'paper', label: 'Paper' },
-  { id: 'ink', label: 'Ink' },
+  { id: 'paper', label: 'Light' },
+  { id: 'ink', label: 'Dark' },
 ];
 
 const NAV = [

@@ -2,7 +2,7 @@ export const resumeContent = {
   headline:
     'Building product systems with software engineering depth, delivery discipline, and real-world operating experience.',
   summary: [
-    'Currently building Track Tuner, RideSense, and Diaz on Demand, while prototyping Overlap and a Strava component lifecycle concept, and bringing prior product ownership experience from Lambda Curry plus systems-focused work across operations, automation, and commerce.',
+    'Currently building Track Tuner, RideSense, Diaz on Demand, and Overlap, while prototyping a Strava component lifecycle concept and bringing prior product ownership experience from Lambda Curry plus systems-focused work across operations, automation, and commerce.',
     'I do my best work when a team needs to turn vague requests into clear requirements, make practical release decisions, and keep execution moving.',
   ],
   strengths: [
