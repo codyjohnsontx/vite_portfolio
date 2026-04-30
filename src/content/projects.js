@@ -240,15 +240,15 @@ export const products = [
     name: 'Overlap',
     slug: 'overlap-racing-radar',
     tier: 'flagship',
-    status: 'prototype',
-    statusLabel: 'Prototype',
+    status: 'active-build',
+    statusLabel: 'Active app',
     year: '2025',
     accent: 'oklch(0.7 0.16 140)',
-    companyContext: 'iRacing ecosystem concept',
+    companyContext: 'iRacing ecosystem app',
     role: 'Product Manager / Developer',
     stack: ['.NET', 'WPF', 'iRacing SDK'],
     oneLiner:
-      'Real-time racing radar overlay concept for close-proximity battles where glance speed matters.',
+      'Real-time racing radar overlay app for close-proximity battles where glance speed matters.',
     audience: 'Sim racers who need immediate spatial awareness without losing cockpit visibility.',
     jtbd:
       'When cars are side-by-side, drivers need a glanceable position radar that improves awareness without visual clutter.',
@@ -267,7 +267,7 @@ export const products = [
       'Minimal cockpit-safe visual language',
     ],
     evidenceSignal:
-      'A working prototype exists with live telemetry integration and real-time positional rendering in desktop sessions.',
+      'A working app exists with live telemetry integration and real-time positional rendering in desktop sessions.',
     nextStep:
       'Run focused driver usability tests to tune information density and reaction time benefits under race pressure.',
     standaloneMockStatus: 'planned',
@@ -275,7 +275,7 @@ export const products = [
       {
         date: 'Mar 12, 2026',
         tag: 'Build',
-        title: 'Prototype runs at 90 Hz steady',
+        title: 'App runs at 90 Hz steady',
         body: 'Frame budget holding under 4ms. Need to test on a second monitor + ultrawide before sharing more broadly.',
       },
       {
