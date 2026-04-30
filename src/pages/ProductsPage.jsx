@@ -6,8 +6,8 @@ import { products } from '../content/projects';
 
 const FILTERS = [
   { id: 'all', label: 'All' },
-  { id: 'flagship', label: 'Active builds' },
-  { id: 'concept', label: 'Concepts' },
+  { id: 'flagship', label: 'Apps' },
+  { id: 'concept', label: 'Product features' },
 ];
 
 export default function ProductsPage() {

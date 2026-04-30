@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowGlyph, Eyebrow, StackRow, Tag } from './Editorial';
+import { ArrowGlyph, Eyebrow, StackRow } from './Editorial';
 
 export default function ProductList({ products, startIndex = 1 }) {
   const [openSlug, setOpenSlug] = useState(null);
@@ -79,12 +79,6 @@ export default function ProductList({ products, startIndex = 1 }) {
                   ) : null}
                 </div>
               </div>
-            </div>
-            <div className="prod-card__meta">
-              <Tag variant={p.status === 'active-build' ? 'active' : undefined}>
-                {p.statusLabel ??
-                  (p.status === 'active-build' ? 'Active build' : 'Prototype')}
-              </Tag>
             </div>
             <span className="prod-card__caret" aria-hidden="true">
               +

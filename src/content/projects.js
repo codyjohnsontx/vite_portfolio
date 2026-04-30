@@ -239,7 +239,7 @@ export const products = [
   {
     name: 'Overlap',
     slug: 'overlap-racing-radar',
-    tier: 'concept',
+    tier: 'flagship',
     status: 'prototype',
     statusLabel: 'Prototype',
     year: '2025',

@@ -63,8 +63,8 @@ describe('portfolio routes and metadata', () => {
     renderApp('/products');
 
     expect(screen.getByRole('button', { name: /^all$/i })).toBeTruthy();
-    expect(screen.getByRole('button', { name: /active builds/i })).toBeTruthy();
-    expect(screen.getByRole('button', { name: /concepts/i })).toBeTruthy();
+    expect(screen.getByRole('button', { name: /apps/i })).toBeTruthy();
+    expect(screen.getByRole('button', { name: /product features/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /Track Tuner/ })).toBeTruthy();
   });
 

@@ -436,17 +436,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   max-width: 60ch;
   margin: 0;
 }
-.prod-card__meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  padding-top: 10px;
-}
 .prod-card__expand {
   overflow: hidden;
   display: grid;
@@ -464,7 +453,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
 }
 @media (max-width: 800px) {
   .prod-card { grid-template-columns: 32px 1fr auto; }
-  .prod-card__meta { display: none; }
   .prod-card__detail-grid { grid-template-columns: 1fr; gap: 16px; }
 }
 .prod-card__caret {
