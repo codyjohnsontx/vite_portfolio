@@ -220,12 +220,14 @@ export const products = [
         date: 'May 01, 2026',
         tag: 'PR #10',
         title: 'Launched a production-gated coming-soon wall and waitlist flow',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/10',
         body: 'Added a gated Diaz on Demand launch path behind a feature flag, with a dedicated /ondemand waitlist page, Formspree-backed lead capture, and account-card routing that now points members into the on-demand funnel instead of a dead end.',
       },
       {
         date: 'May 01, 2026',
         tag: 'PR #9',
         title: 'Refreshed the homepage and rebuilt announcements as a flyer gallery',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/9',
         body: 'Updated the live class schedule, centered the homepage layout, and turned announcements into a clickable flyer gallery with modal enlargement. That gives the Diaz ecosystem a cleaner front door while on-demand access is still staged.',
       },
       {
