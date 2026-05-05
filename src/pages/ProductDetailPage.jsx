@@ -219,6 +219,11 @@ export default function ProductDetailPage() {
               {(p.updates ?? []).map((u, i) => (
                 <article key={u.url || u.id || u.title || `update-${i}`} className="update">
                   <div className="update__body">
+                    {u.date || u.tag ? (
+                      <p className="update__meta">
+                        {[u.date, u.tag].filter(Boolean).join(' · ')}
+                      </p>
+                    ) : null}
                     <h4>
                       {u.url ? (
                         <a href={u.url} target="_blank" rel="noreferrer">
