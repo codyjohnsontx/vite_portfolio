@@ -126,6 +126,7 @@ export default function ProductAnalysisPage() {
                 key={section.id}
                 href={`#${section.id}`}
                 className={active === section.id ? 'active' : ''}
+                aria-current={active === section.id ? 'page' : undefined}
               >
                 <span className="dash" />
                 {section.label}
