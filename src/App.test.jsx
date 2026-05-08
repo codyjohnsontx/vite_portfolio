@@ -85,6 +85,29 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
+  it('renders the Track Tuner PM analysis page', () => {
+    renderApp('/products/track-tuner/analysis');
+
+    expect(screen.getByRole('heading', { name: /Track Tuner PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
+    expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
+  });
+
+  it('shows the PM analysis CTA only for products with analysis content', () => {
+    const firstRender = renderApp('/products/track-tuner');
+    expect(screen.getByRole('link', { name: /Read PM analysis/i })).toBeTruthy();
+
+    firstRender.unmount();
+    renderApp('/products/ridesense');
+    expect(screen.queryByRole('link', { name: /Read PM analysis/i })).toBeNull();
+  });
+
+  it('sends product analysis slugs without content to the not-found experience', () => {
+    renderApp('/products/ridesense/analysis');
+
+    expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
+  });
+
   caseStudies.forEach((study) => {
     it(`renders the case study page for ${study.slug}`, () => {
       renderApp(`/case-studies/${study.slug}`);
