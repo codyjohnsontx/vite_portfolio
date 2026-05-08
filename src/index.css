@@ -751,6 +751,106 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
 }
 @media (max-width: 800px) { .case-section-grid { grid-template-columns: 1fr; } }
 
+/* ---------------- Product analysis ---------------- */
+.analysis-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(320px, 1fr);
+  gap: clamp(28px, 5vw, 72px);
+  margin-top: 36px;
+  align-items: start;
+}
+.analysis-hero__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid var(--rule);
+  background: var(--bg-2);
+}
+.analysis-user-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+.analysis-dual-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.analysis-list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+}
+.analysis-list li {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule-2);
+}
+.analysis-list--dense li {
+  padding: 12px 0;
+}
+.priority-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 16px;
+}
+.priority-card,
+.metric-card {
+  border: 1px solid var(--rule);
+  background: var(--bg-2);
+  padding: 22px;
+}
+.priority-card__kicker,
+.metric-card__label {
+  margin: 0 0 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.priority-card h3 {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.priority-card p,
+.metric-card__body {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.analysis-observability {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+@media (max-width: 960px) {
+  .analysis-hero,
+  .analysis-user-grid,
+  .analysis-dual-grid,
+  .priority-grid,
+  .metric-grid,
+  .analysis-observability {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------------- Product detail layout ---------------- */
 .pd-layout {
   display: grid;

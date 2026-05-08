@@ -5,6 +5,7 @@ import CaseStudyIndexPage from './pages/CaseStudyIndexPage';
 import CaseStudyPage from './pages/CaseStudyPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
+import ProductAnalysisPage from './pages/ProductAnalysisPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import ProductsPage from './pages/ProductsPage';
 
@@ -16,6 +17,7 @@ function App() {
         <Route element={<SiteLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:slug/analysis" element={<ProductAnalysisPage />} />
           <Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/case-studies" element={<CaseStudyIndexPage />} />
           <Route path="/case-studies/:slug" element={<CaseStudyPage />} />

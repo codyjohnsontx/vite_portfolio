@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from '../components/Editorial';
+import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
 
 const SECTIONS = [
@@ -33,6 +34,7 @@ export default function ProductDetailPage() {
 
   if (!product) return <Navigate to="/not-found" replace />;
   const p = product;
+  const analysis = getProductAnalysisBySlug(slug);
   const nextSummary = p.nextStep.split('.')[0] + '.';
 
   return (
@@ -58,6 +60,13 @@ export default function ProductDetailPage() {
           <div style={{ marginTop: 24, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             <StackRow items={p.stack} />
           </div>
+          {analysis ? (
+            <div style={{ marginTop: 24 }}>
+              <Link to={`/products/${p.slug}/analysis`} className="link-arrow">
+                Read PM analysis <ArrowGlyph />
+              </Link>
+            </div>
+          ) : null}
         </div>
       </section>
 
