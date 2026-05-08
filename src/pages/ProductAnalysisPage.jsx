@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from '../components/Editorial';
@@ -32,6 +33,15 @@ function AnalysisList({ items, className = '' }) {
     </ul>
   );
 }
+
+AnalysisList.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  className: PropTypes.string,
+};
+
+AnalysisList.defaultProps = {
+  className: '',
+};
 
 export default function ProductAnalysisPage() {
   const { slug } = useParams();
@@ -192,9 +202,9 @@ export default function ProductAnalysisPage() {
               </div>
               <div style={{ marginTop: 40 }}>
                 <Eyebrow>Prioritization</Eyebrow>
-                <div className="priority-grid" role="table" aria-label="Track Tuner prioritization">
+                <div className="priority-grid" role="list" aria-label="Track Tuner prioritization">
                   {analysis.priorities.map((item) => (
-                    <article key={item.initiative} className="priority-card">
+                    <article key={item.initiative} className="priority-card" role="listitem">
                       <p className="priority-card__kicker">{item.value} value · {item.effort} effort</p>
                       <h3>{item.initiative}</h3>
                       <p>{item.decision}</p>
@@ -310,4 +320,3 @@ export default function ProductAnalysisPage() {
     </div>
   );
 }
-
