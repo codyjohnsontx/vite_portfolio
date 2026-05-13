@@ -276,11 +276,13 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   margin-top: 80px;
 }
 .site-footer__inner {
-  max-width: var(--grid-max);
+  width: fit-content;
+  max-width: 100%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 32px;
+  grid-template-columns: repeat(3, minmax(180px, auto));
+  justify-content: center;
+  gap: clamp(48px, 8vw, 160px);
 }
 @media (max-width: 760px) { .site-footer__inner { grid-template-columns: 1fr 1fr; } }
 .site-footer h4 {
@@ -297,7 +299,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   max-width: var(--grid-max);
   margin: 56px auto 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: baseline;
   font-family: var(--mono);
   font-size: 11px;

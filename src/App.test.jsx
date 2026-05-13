@@ -21,6 +21,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getAllByRole('heading', { level: 1 }).length).toBeGreaterThan(0);
     expect(screen.getByRole('heading', { name: /Track Tuner/ })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'CTX Chat' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
   });
 
@@ -93,11 +94,23 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
   });
 
+  it('renders the CTX Chat PM analysis page', () => {
+    renderApp('/products/ctx-chat/analysis');
+
+    expect(screen.getByRole('heading', { name: /CTX Chat PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
+    expect(screen.getByText(/A dealership-specific communication tool/i)).toBeTruthy();
+  });
+
   it('shows the PM analysis CTA only for products with analysis content', () => {
     const firstRender = renderApp('/products/track-tuner');
     expect(screen.getByRole('link', { name: /Read PM analysis/i })).toBeTruthy();
 
     firstRender.unmount();
+    const secondRender = renderApp('/products/ctx-chat');
+    expect(screen.getByRole('link', { name: /Read PM analysis/i })).toBeTruthy();
+
+    secondRender.unmount();
     renderApp('/products/ridesense');
     expect(screen.queryByRole('link', { name: /Read PM analysis/i })).toBeNull();
   });

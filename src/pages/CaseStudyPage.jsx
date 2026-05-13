@@ -170,7 +170,7 @@ export default function CaseStudyPage() {
       <CaseListSection num="07" title="Outcomes" items={s.outcomes} />
       <CaseListSection num="08" title="Lessons" items={s.lessons} />
 
-      <section className="section">
+      <section className="section section--tight">
         <div
           className="container"
           style={{
