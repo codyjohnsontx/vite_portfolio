@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { profile } from '../content/profile';
@@ -46,6 +47,11 @@ function ThemeToggle({ theme, onChange }) {
     </div>
   );
 }
+
+ThemeToggle.propTypes = {
+  theme: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 function SiteLayout() {
   const [theme, setTheme] = useState(getInitialTheme);
@@ -100,18 +106,6 @@ function SiteLayout() {
       <footer className="site-footer">
         <div className="site-footer__inner">
           <div>
-            <h4>Currently</h4>
-            <p className="lead" style={{ fontSize: 22, margin: 0, maxWidth: '38ch' }}>
-              Open to product manager and product owner roles. Based in Austin, TX. Working in
-              public.
-            </p>
-            <div style={{ marginTop: 24 }}>
-              <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
-                codyjohnsontx@gmail.com <ArrowGlyph />
-              </a>
-            </div>
-          </div>
-          <div>
             <h4>Index</h4>
             <ul>
               <li>
@@ -154,7 +148,6 @@ function SiteLayout() {
         </div>
         <div className="site-footer__bottom">
           <span>© {new Date().getFullYear()} Cody Johnson</span>
-          <span>Designed in Austin · Built in public</span>
         </div>
       </footer>
     </>

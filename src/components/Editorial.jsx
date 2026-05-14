@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export function ArrowGlyph() {
   return <span className="arr" aria-hidden="true">→</span>;
 }
@@ -72,3 +74,42 @@ export function Marquee({ items }) {
     </div>
   );
 }
+
+Eyebrow.propTypes = {
+  children: PropTypes.node,
+  style: PropTypes.object,
+};
+
+Eyebrow.defaultProps = {
+  children: null,
+  style: undefined,
+};
+
+Tag.propTypes = {
+  children: PropTypes.node,
+  variant: PropTypes.oneOf(['active', 'accent']),
+};
+
+Tag.defaultProps = {
+  children: null,
+  variant: undefined,
+};
+
+StackRow.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+SectionHead.propTypes = {
+  num: PropTypes.string.isRequired,
+  eyebrow: PropTypes.node.isRequired,
+  title: PropTypes.node.isRequired,
+  sub: PropTypes.node,
+};
+
+SectionHead.defaultProps = {
+  sub: null,
+};
+
+Marquee.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+};

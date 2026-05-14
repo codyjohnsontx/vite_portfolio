@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from './Editorial';
@@ -28,9 +29,7 @@ export default function ProductList({ products, startIndex = 1 }) {
           >
             <span className="num">0{startIndex + i}</span>
             <div className="prod-card__main">
-              <h3 className="prod-card__title">
-                {p.name}
-              </h3>
+              <h3 className="prod-card__title">{p.name}</h3>
               <p className="prod-card__one">{p.oneLiner}</p>
               <div className="prod-card__expand">
                 <div className="prod-card__expand-inner">
@@ -89,3 +88,23 @@ export default function ProductList({ products, startIndex = 1 }) {
     </div>
   );
 }
+
+ProductList.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+      accent: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      oneLiner: PropTypes.string.isRequired,
+      problem: PropTypes.string.isRequired,
+      audience: PropTypes.string.isRequired,
+      stack: PropTypes.arrayOf(PropTypes.string).isRequired,
+      brandDisclaimer: PropTypes.string,
+    }),
+  ).isRequired,
+  startIndex: PropTypes.number,
+};
+
+ProductList.defaultProps = {
+  startIndex: 1,
+};

@@ -211,9 +211,202 @@ export const productAnalyses = [
       'Publish a public deploy and activation dashboard before spending on acquisition.',
     ],
   },
+  {
+    slug: 'ctx-chat',
+    title: 'CTX Chat PM analysis',
+    tagline:
+      'A shared dealership texting and follow-up system designed around the real operating rhythm of sales, service, and parts teams.',
+    summary:
+      'CTX Chat is built around a dealership communication problem that generic texting tools do not fully solve: a message thread only matters if it also has ownership, department context, follow-up state, and management visibility. The product bet is that a browser-first shared inbox tied to real dealership workflows can outperform fragmented texting, personal phones, and generic vendors by turning every customer conversation into an accountable work item.',
+    problem:
+      'Dealership communication is scattered across personal cell phones, calls, email, website leads, DMS notes, and memory. That fragmentation leads directly to missed follow-ups, unclear ownership, weak visibility for managers, and lost sales or service satisfaction when no one is sure who is supposed to respond next.',
+    users: {
+      primary:
+        'General managers, assistant GMs, service advisors, sales staff, and parts staff working customer conversations throughout the day.',
+      secondary:
+        'Managers and admin users reviewing response coverage, unread backlog, overdue follow-ups, and department exceptions.',
+      buyer:
+        'The dealership GM or ownership team, starting with a single-store internal rollout before any broader expansion.',
+    },
+    currentWorkflow: [
+      'Customer communication is spread across dealer texting tools, personal phones, phone calls, email, and DMS notes.',
+      'Follow-up ownership often lives in memory or manual reminders instead of a shared operational system.',
+      'Management can see that something is slipping, but not always where the unread backlog or missed follow-up sits.',
+    ],
+    opportunity: [
+      'A dealership-specific shared inbox can mirror the real roles of sales, service, and parts instead of flattening everything into one chat feed.',
+      'Shared ownership, assignment, and follow-up state create a better accountability model than personal texting or generic vendor tools.',
+      'Operational oversight becomes more valuable when unread, overdue, unassigned, and failed-message exceptions are visible in one command surface.',
+      'A single-store rollout keeps the scope narrow enough to validate workflow fit before adding heavier integrations.',
+    ],
+    productBet:
+      'A dealership-specific communication tool with clear ownership and next actions can outperform generic texting vendors when it matches the real workflow of the sales floor and service lane. The goal is not to be another inbox, but to make every conversation usable as a tracked operational object for the store.',
+    mvp: {
+      shipped: [
+        'Role-based login for admin, manager, sales, service, and parts users.',
+        'Shared inbox with filters, assignment, tags, priority, and status controls.',
+        'Conversation view with message history, internal notes, customer context, and template-driven replies.',
+        'Task and follow-up creation tied to both customers and conversations.',
+        'Manager Command Center with operational alerts and drill-down views.',
+      ],
+      cut: [
+        'Native iOS and Android apps.',
+        'Deep DMS or Lightspeed EVO integration.',
+        'Mass texting, AI features, payments, and full ecommerce integration.',
+      ],
+    },
+    priorities: [
+      {
+        initiative: 'Shared inbox + assignment',
+        value: 'High',
+        effort: 'M',
+        decision: 'Shipped first because accountability is the core wedge.',
+      },
+      {
+        initiative: 'Operational Command Center',
+        value: 'High',
+        effort: 'M',
+        decision: 'Shipped early to make management visibility part of the product, not an afterthought.',
+      },
+      {
+        initiative: 'Compliance handling',
+        value: 'High',
+        effort: 'S',
+        decision: 'Included in MVP because dealership texting needs opt-out basics from day one.',
+      },
+      {
+        initiative: 'Templates + follow-ups',
+        value: 'Medium',
+        effort: 'S',
+        decision: 'Shipped to reduce repetitive work and make next actions explicit.',
+      },
+      {
+        initiative: 'Deep DMS integration',
+        value: 'High',
+        effort: 'XL',
+        decision: 'Deferred until the communication workflow proves itself in a narrower rollout.',
+      },
+      {
+        initiative: 'Native apps',
+        value: 'Medium',
+        effort: 'L',
+        decision: 'Deferred in favor of a browser-first and PWA-friendly footprint.',
+      },
+      {
+        initiative: 'AI + payments',
+        value: 'Low',
+        effort: 'L',
+        decision: 'Cut from MVP because reliability and visibility mattered more than expansion features.',
+      },
+      {
+        initiative: 'Mass texting',
+        value: 'Low',
+        effort: 'M',
+        decision: 'Deferred because the first problem is accountability, not broadcast volume.',
+      },
+    ],
+    successMetrics: [
+      {
+        label: 'Response time',
+        detail:
+          'Track how quickly staff responds once a customer conversation enters the shared inbox.',
+      },
+      {
+        label: 'Unread backlog',
+        detail:
+          'Monitor unread conversation count and the aging of unread threads by department.',
+      },
+      {
+        label: 'Follow-up discipline',
+        detail:
+          'Measure overdue follow-up count and the completion rate of created tasks.',
+      },
+      {
+        label: 'Ownership clarity',
+        detail:
+          'Watch unassigned conversation count and reassignment patterns across staff and departments.',
+      },
+      {
+        label: 'Reply coverage',
+        detail:
+          'Measure whether customer conversations are getting responses instead of stalling in inbox noise.',
+      },
+      {
+        label: 'Message reliability',
+        detail:
+          'Track outbound message failures, status transitions, and exception resolution speed.',
+      },
+    ],
+    analyticsPlan: {
+      events: [
+        'conversation_status_changed',
+        'conversation_assigned',
+        'follow_up_created',
+        'follow_up_completed',
+        'conversation_unread_aged',
+        'message_sent',
+        'message_failed',
+        'notification_resolved',
+      ],
+      funnel: [
+        'Staff sign-in',
+        'Conversation opened',
+        'Reply or note added',
+        'Follow-up created',
+        'Follow-up completed',
+        'Exception resolved',
+      ],
+      cohorts: [
+        'Department: sales vs service vs parts',
+        'Role type: manager vs frontline staff',
+        'Conversation source or workflow bucket once available',
+      ],
+      observability:
+        'The product should track assignment changes, status transitions, unread aging, follow-up completion, and outbound send outcomes so the GM can see operational slippage before it becomes lost revenue or poor service follow-through.',
+      dashboards: [
+        'Unread backlog by department',
+        'Overdue follow-up trend',
+        'Unassigned conversation trend',
+        'Failed message exception queue',
+      ],
+    },
+    shippedHighlights: [
+      {
+        label: 'Initial build',
+        detail:
+          'Committed the first standalone CTX Chat build with the shared inbox, Command Center, tasks, templates, and Twilio route structure.',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/commit/64fb5b2',
+      },
+      {
+        label: 'Command Center',
+        detail:
+          'Added a manager-facing operational surface for unread conversations, overdue follow-ups, unassigned threads, failed messages, and service or sales exceptions.',
+      },
+      {
+        label: 'Conversation workflow',
+        detail:
+          'Shipped internal notes, reassignment, customer context, templates, and follow-up creation directly inside the message workflow.',
+      },
+      {
+        label: 'Compliance baseline',
+        detail:
+          'Included STOP and START handling early so the texting workflow has basic compliance built into the MVP.',
+      },
+    ],
+    learnings: [
+      'The product becomes more valuable when every message is tied to an owner, a department, a status, and a next action instead of just becoming another chat feed.',
+      'Operational visibility is part of the core product, not just reporting layered on top later.',
+      'Single-store rollout discipline makes it easier to validate dealership-specific workflow fit before taking on heavier integrations.',
+    ],
+    nextIterations: [
+      'Deploy a live internal environment with real Postgres and Twilio credentials.',
+      'Add SLA tracking and escalation rules around unread and overdue conversations.',
+      'Ship CSV import and cleaner customer record management.',
+      'Integrate with the broader CTX dealership system and add a handoff path to the Shopify storefront.',
+    ],
+  },
 ];
 
 export function getProductAnalysisBySlug(slug) {
   return productAnalyses.find((analysis) => analysis.slug === slug);
 }
-

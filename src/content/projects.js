@@ -1,4 +1,5 @@
 import diazMa from '../assets/diazma.png';
+import ctxChat from '../assets/ctxChat.png';
 import rideSense from '../assets/ridesense.png';
 import trackTuner from '../assets/track_tuner.png';
 
@@ -175,6 +176,76 @@ export const products = [
         tag: 'Note',
         title: 'Audited the README against the implementation',
         body: 'Three claims did not match the code: tokens were called encrypted, TrainerRoad was described as storing cookies only, and the AI was described as deterministic. Rewrote each to match what the code actually does.',
+      },
+    ],
+  },
+  {
+    name: 'CTX Chat',
+    slug: 'ctx-chat',
+    tier: 'flagship',
+    status: 'active-build',
+    statusLabel: 'Active build',
+    year: '2026',
+    accent: 'oklch(0.68 0.14 205)',
+    image: ctxChat,
+    companyContext:
+      'Dealership communication product built for a single-store motorcycle rollout, positioned against generic texting vendors.',
+    role: 'Full-stack product builder',
+    stack: [
+      'Next.js 16',
+      'TypeScript',
+      'Tailwind CSS',
+      'Prisma',
+      'PostgreSQL-ready schema',
+      'Auth.js / NextAuth',
+      'Twilio SMS/MMS',
+      'PWA',
+    ],
+    oneLiner:
+      'Browser-first shared texting and follow-up system for dealership sales, service, and parts workflows.',
+    audience:
+      'General managers, assistant GMs, service advisors, sales staff, parts staff, and managers reviewing daily dealership communication performance.',
+    jtbd:
+      'When dealership staff need to manage customer texting, ownership, and follow-up from one place, they need a shared inbox that preserves context and clear next actions.',
+    problem:
+      'Customer communication is fragmented across personal phones, calls, email, website leads, and memory, which causes missed follow-ups, poor visibility, and weak accountability.',
+    coreWorkflow: [
+      'Staff signs in and opens the shared inbox.',
+      'Staff filters customer conversations by department, assignee, unread state, or follow-up need.',
+      'Staff replies with SMS, applies a template, adds an internal note, reassigns the thread, or creates a follow-up task.',
+      'Management reviews the Command Center for unread conversations, overdue follow-ups, unassigned threads, failed messages, and department exceptions.',
+    ],
+    mvpScope: [
+      'Role-based login for admin, manager, sales, service, and parts users',
+      'Shared inbox with filters, assignment, tags, priority, and status controls',
+      'Conversation view with message thread, internal notes, customer context, and template-based replies',
+      'Task and follow-up creation tied to customers and conversations',
+      'Manager Command Center with operational notifications and drill-down views',
+    ],
+    evidenceSignal:
+      'The live prototype already includes seeded dealership data, working Next.js routes, Prisma models, Twilio inbound and status endpoints, and a committed first build on the public repository.',
+    nextStep:
+      'Deploy a usable internal environment with real Postgres and Twilio credentials, then validate live staff workflows on mobile and desktop.',
+    standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'May 08, 2026',
+        tag: 'Build',
+        title: 'Initial CTX Chat app committed and pushed',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/commit/64fb5b2',
+        body: 'The first full app build landed on main in the new ctxconnect repository. That established the standalone product with the shared inbox, Command Center, tasks, templates, and Twilio route structure.',
+      },
+      {
+        date: 'Current',
+        tag: 'Note',
+        title: 'Manager Command Center added for operational oversight',
+        body: 'The build includes a Command Center for unread conversations, overdue follow-ups, unassigned threads, failed messages, and exception states. That shifts the product from a simple inbox into a dealership operations surface.',
+      },
+      {
+        date: 'Current',
+        tag: 'Note',
+        title: 'SMS compliance and assignment workflow wired into the MVP',
+        body: 'The current build includes STOP and START handling, reassignment, internal notes, and follow-up creation inside conversation workflows. For dealership texting, accountability and baseline compliance need to exist from day one.',
       },
     ],
   },
