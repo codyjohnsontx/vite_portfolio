@@ -87,7 +87,7 @@ export default function HomePage() {
             <div />
           </div>
           <div className="case-grid">
-            {caseStudies.map((c, i) => (
+            {caseStudies.map((c) => (
               <button
                 key={c.slug}
                 type="button"

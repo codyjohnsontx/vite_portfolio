@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow } from '../components/Editorial';
 import { getCaseStudyBySlug } from '../content/caseStudies';
@@ -72,6 +73,18 @@ function CaseListSection({ num, title, items }) {
     </section>
   );
 }
+
+CaseSection.propTypes = {
+  num: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+};
+
+CaseListSection.propTypes = {
+  num: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default function CaseStudyPage() {
   const { slug } = useParams();

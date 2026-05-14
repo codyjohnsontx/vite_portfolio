@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from './Editorial';
 
@@ -52,3 +53,20 @@ export default function FeatureProduct({ p }) {
     </article>
   );
 }
+
+FeatureProduct.propTypes = {
+  p: PropTypes.shape({
+    slug: PropTypes.string.isRequired,
+    accent: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string,
+    oneLiner: PropTypes.string.isRequired,
+    problem: PropTypes.string.isRequired,
+    stack: PropTypes.arrayOf(PropTypes.string).isRequired,
+    updates: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+};
+
+FeatureProduct.defaultProps = {
+  p: undefined,
+};
