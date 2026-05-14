@@ -84,7 +84,9 @@ export default function HomePage() {
               <Eyebrow>Case studies</Eyebrow>
               <span className="num">03</span>
             </div>
-            <div />
+            <div>
+              <h2 className="sr-only">Case studies</h2>
+            </div>
           </div>
           <div className="case-grid">
             {caseStudies.map((c) => (
