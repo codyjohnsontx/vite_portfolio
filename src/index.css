@@ -455,10 +455,21 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   justify-self: end;
   white-space: nowrap;
 }
+.latest-update__links {
+  justify-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+}
 @media (max-width: 860px) {
   .latest-update__inner {
     grid-template-columns: 1fr;
     align-items: start;
+  }
+  .latest-update__links {
+    justify-self: start;
+    align-items: flex-start;
   }
   .latest-update__link {
     justify-self: start;
@@ -952,6 +963,13 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   max-height: 70vh;
   object-fit: contain;
   filter: drop-shadow(0 22px 32px rgba(24, 21, 18, 0.18));
+  transform-origin: center;
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.45s ease;
+}
+.research-hero__media:hover img,
+.research-hero__media:focus-within img {
+  filter: drop-shadow(0 28px 38px rgba(24, 21, 18, 0.22));
+  transform: scale(1.06);
 }
 .research-proof {
   display: flex;
@@ -1243,10 +1261,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   .research-insight {
     grid-template-columns: 1fr;
     gap: 8px;
-  }
-  .research-hero__caption {
-    position: static;
-    padding: 0 18px 18px;
   }
 }
 

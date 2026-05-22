@@ -24,9 +24,12 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'CTX Chat' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
     expect(screen.getByText('Latest update')).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Track Tuner persona research' })).toBeTruthy();
-    expect(screen.getByRole('link', { name: /Read the persona research/i }).getAttribute('href')).toBe(
+    expect(screen.getByRole('heading', { name: 'Persona research systems' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Track Tuner research/i }).getAttribute('href')).toBe(
       '/products/track-tuner/research',
+    );
+    expect(screen.getByRole('link', { name: /RideSense research/i }).getAttribute('href')).toBe(
+      '/products/ridesense/research',
     );
   });
 
@@ -182,6 +185,20 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('rowheader', { name: 'Race Engineer AI' })).toBeTruthy();
   });
 
+  it('renders the RideSense research page', () => {
+    renderApp('/products/ridesense/research');
+
+    expect(screen.getByRole('heading', { name: /RideSense research system/i })).toBeTruthy();
+    expect(screen.getAllByText('Structured Amateur').length).toBeGreaterThan(0);
+    expect(screen.getByText('Data-Aware Recreational Rider')).toBeTruthy();
+    expect(screen.getByText('Event-Driven Rider')).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Interpretation is the product wedge/i })).toBeTruthy();
+    expect(screen.getByText(/Feature prioritization matrix across Structured/i)).toBeTruthy();
+    expect(screen.getByRole('columnheader', { name: 'Structured' })).toBeTruthy();
+    expect(screen.getByRole('rowheader', { name: 'Deduped canonical feed' })).toBeTruthy();
+    expect(screen.queryByRole('link', { name: /Read PM analysis/i })).toBeNull();
+  });
+
   it('renders the CTX Chat PM analysis page', () => {
     renderApp('/products/ctx-chat/analysis');
 
@@ -208,7 +225,11 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('link', { name: /View persona research/i })).toBeTruthy();
 
     firstRender.unmount();
-    renderApp('/products/ridesense');
+    const secondRender = renderApp('/products/ridesense');
+    expect(screen.getByRole('link', { name: /View persona research/i })).toBeTruthy();
+
+    secondRender.unmount();
+    renderApp('/products/ctx-chat');
     expect(screen.queryByRole('link', { name: /View persona research/i })).toBeNull();
   });
 
@@ -224,6 +245,16 @@ describe('portfolio routes and metadata', () => {
     fireEvent.submit(input.closest('form'));
 
     expect(screen.getByRole('link', { name: /View persona research/i })).toBeTruthy();
+
+    fireEvent.change(input, { target: { value: 'product ridesense' } });
+    fireEvent.submit(input.closest('form'));
+
+    expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
+    expect(
+      screen
+        .getAllByRole('link', { name: /View persona research/i })
+        .some((link) => link.getAttribute('href') === '/products/ridesense/research'),
+    ).toBe(true);
   });
 
   it('sends product analysis slugs without content to the not-found experience', () => {
@@ -233,7 +264,7 @@ describe('portfolio routes and metadata', () => {
   });
 
   it('sends product research slugs without content to the not-found experience', () => {
-    renderApp('/products/ridesense/research');
+    renderApp('/products/diaz-on-demand/research');
 
     expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
   });
