@@ -104,6 +104,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'Dev Mode' })).toBeTruthy();
     expect(screen.getByRole('link', { name: 'Dev Mode' })).toBeTruthy();
     expect(screen.getByLabelText(/Dev Mode command/i)).toBeTruthy();
+    expect(screen.queryByRole('contentinfo')).toBeNull();
   });
 
   it('runs core Dev Mode commands', () => {

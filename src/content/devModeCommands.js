@@ -5,13 +5,12 @@ import { profile } from './profile';
 import { getProductResearchBySlug } from './productResearch';
 import { resumeContent } from './resumeContent';
 
-const productCommandSlugs = ['track-tuner', 'ridesense', 'ctx-chat', 'diaz-on-demand'];
-const whoamiProductSlugs = ['track-tuner', 'ridesense', 'ctx-chat', 'diaz-on-demand'];
+const PRODUCT_SLUGS = ['track-tuner', 'ridesense', 'ctx-chat', 'diaz-on-demand'];
 const commandNames = [
   'help',
   'whoami',
   'products',
-  ...productCommandSlugs.map((slug) => `product ${slug}`),
+  ...PRODUCT_SLUGS.map((slug) => `product ${slug}`),
   'case-studies',
   'experience',
   'stack',
@@ -44,7 +43,7 @@ function productOutput(slug) {
   const product = getProductBySlug(slug);
   const research = getProductResearchBySlug(slug);
 
-  if (!product || !productCommandSlugs.includes(slug)) {
+  if (!product || !PRODUCT_SLUGS.includes(slug)) {
     return unknownCommand(`product ${slug}`);
   }
 
@@ -146,7 +145,7 @@ export function runDevModeCommand(rawCommand) {
           },
           {
             label: 'Product proof',
-            items: whoamiProductSlugs
+            items: PRODUCT_SLUGS
               .map((slug) => getProductBySlug(slug))
               .filter(Boolean)
               .map(whoamiProductItem),
@@ -162,7 +161,7 @@ export function runDevModeCommand(rawCommand) {
           {
             label: 'Flagship products',
             items: flagshipProducts
-              .filter((product) => productCommandSlugs.includes(product.slug))
+              .filter((product) => PRODUCT_SLUGS.includes(product.slug))
               .map(productItem),
           },
         ],
@@ -241,5 +240,5 @@ export function runDevModeCommand(rawCommand) {
 }
 
 export function getDevModeProductSlugs() {
-  return productCommandSlugs.filter((slug) => products.some((product) => product.slug === slug));
+  return PRODUCT_SLUGS.filter((slug) => products.some((product) => product.slug === slug));
 }

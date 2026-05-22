@@ -945,7 +945,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   background:
     linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), var(--rule-2) calc(100% - 1px)),
     repeating-linear-gradient(0deg, transparent 0, transparent 31px, var(--rule-2) 32px);
-  animation: researchLift 0.7s ease both;
+  animation: research-lift 0.7s ease both;
 }
 .research-hero__media img {
   width: min(78%, 390px);
@@ -1087,7 +1087,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
 .research-persona {
   border-top: 1px solid var(--ink);
   padding-top: 22px;
-  animation: researchLift 0.35s ease both;
+  animation: research-lift 0.35s ease both;
 }
 .research-persona__summary {
   max-width: 68ch;
@@ -1203,7 +1203,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   flex-wrap: wrap;
   gap: 16px;
 }
-@keyframes researchLift {
+@keyframes research-lift {
   from {
     opacity: 0;
     transform: translateY(12px);
@@ -1573,6 +1573,11 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   color: #f0fff5;
   font: inherit;
   caret-color: #b7ffd6;
+}
+.dev-command input:focus,
+.dev-command input:focus-visible {
+  outline: 0;
+  box-shadow: 0 2px 0 #b7ffd6;
 }
 .dev-command input::placeholder {
   color: #5f7768;

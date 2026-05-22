@@ -43,6 +43,7 @@ export default function ProductResearchPage() {
   const research = getProductResearchBySlug(slug);
   const [activeSection, setActiveSection] = useState(SECTIONS[0].id);
   const [activePersona, setActivePersona] = useState(0);
+  const archetypes = Array.isArray(research?.archetypes) ? research.archetypes : [];
 
   useEffect(() => {
     if (!product || !research) return undefined;
@@ -61,9 +62,15 @@ export default function ProductResearchPage() {
     return () => window.removeEventListener('scroll', onScroll);
   }, [product, research]);
 
+  useEffect(() => {
+    if (archetypes.length > 0 && (activePersona < 0 || activePersona >= archetypes.length)) {
+      setActivePersona(0);
+    }
+  }, [activePersona, archetypes.length]);
+
   if (!product || !research) return <Navigate to="/not-found" replace />;
 
-  const selectedPersona = research.archetypes[activePersona];
+  const selectedPersona = archetypes[activePersona] ?? archetypes[0] ?? null;
 
   return (
     <div className="fade-in">
@@ -166,7 +173,7 @@ export default function ProductResearchPage() {
               <h2 className="h2">The launch segment is selected by frequency and pain.</h2>
               <div className="research-persona-shell">
                 <div className="research-persona-tabs" role="tablist" aria-label="Persona archetypes">
-                  {research.archetypes.map((persona, index) => (
+                  {archetypes.map((persona, index) => (
                     <button
                       key={persona.name}
                       type="button"
@@ -180,39 +187,41 @@ export default function ProductResearchPage() {
                     </button>
                   ))}
                 </div>
-                <article className="research-persona" role="tabpanel">
-                  <Eyebrow>{selectedPersona.segment} segment</Eyebrow>
-                  <h3>{selectedPersona.name}</h3>
-                  <p className="research-persona__summary">{selectedPersona.summary}</p>
-                  <div className="research-persona__grid">
-                    <div>
-                      <Eyebrow>Goals</Eyebrow>
-                      <ResearchList items={selectedPersona.goals} />
+                {selectedPersona ? (
+                  <article className="research-persona" role="tabpanel">
+                    <Eyebrow>{selectedPersona.segment} segment</Eyebrow>
+                    <h3>{selectedPersona.name}</h3>
+                    <p className="research-persona__summary">{selectedPersona.summary}</p>
+                    <div className="research-persona__grid">
+                      <div>
+                        <Eyebrow>Goals</Eyebrow>
+                        <ResearchList items={selectedPersona.goals} />
+                      </div>
+                      <div>
+                        <Eyebrow>Pain points</Eyebrow>
+                        <ResearchList items={selectedPersona.painPoints} />
+                      </div>
+                      <div>
+                        <Eyebrow>Opportunities</Eyebrow>
+                        <ResearchList items={selectedPersona.opportunities} />
+                      </div>
+                      <div>
+                        <Eyebrow>Feature priorities</Eyebrow>
+                        <ResearchList items={selectedPersona.featurePriorities} />
+                      </div>
                     </div>
-                    <div>
-                      <Eyebrow>Pain points</Eyebrow>
-                      <ResearchList items={selectedPersona.painPoints} />
+                    <div className="research-persona__meaning">
+                      <div>
+                        <Eyebrow>JTBD</Eyebrow>
+                        <p>{selectedPersona.jtbd}</p>
+                      </div>
+                      <div>
+                        <Eyebrow>Product meaning</Eyebrow>
+                        <p>{selectedPersona.productMeaning}</p>
+                      </div>
                     </div>
-                    <div>
-                      <Eyebrow>Opportunities</Eyebrow>
-                      <ResearchList items={selectedPersona.opportunities} />
-                    </div>
-                    <div>
-                      <Eyebrow>Feature priorities</Eyebrow>
-                      <ResearchList items={selectedPersona.featurePriorities} />
-                    </div>
-                  </div>
-                  <div className="research-persona__meaning">
-                    <div>
-                      <Eyebrow>JTBD</Eyebrow>
-                      <p>{selectedPersona.jtbd}</p>
-                    </div>
-                    <div>
-                      <Eyebrow>Product meaning</Eyebrow>
-                      <p>{selectedPersona.productMeaning}</p>
-                    </div>
-                  </div>
-                </article>
+                  </article>
+                ) : null}
               </div>
             </div>
 
