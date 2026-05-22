@@ -226,7 +226,7 @@ export const productResearch = [
       'Cyclists already collect data across Strava, TrainerRoad, Garmin, Wahoo, smart trainers, and uploaded files, but the meaning is fragmented. The product opportunity is to unify the activity timeline, deduplicate repeated rides, compute deterministic training signals, and answer questions with evidence instead of generic coaching advice.',
     designPhilosophy:
       'RideSense should feel summary-first, plain-spoken, and evidence-bound. Serious riders need enough metric depth to trust the analysis, while less structured riders need jargon translated into practical training direction without shame, prescription, or overconfidence.',
-    proofPoints: ['12 classification lenses', '3 personas', '1 MVP focus'],
+    proofPoints: ['10 classification lenses', '3 personas', '1 MVP focus'],
     headings: {
       problem: 'The opportunity is interpretation, not another activity log.',
       dimensions: 'The framework classifies riders by behavior and decision need.',
