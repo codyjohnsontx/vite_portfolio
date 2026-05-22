@@ -3,7 +3,7 @@ import ctxChat from '../assets/ctxChat.png';
 import rideSense from '../assets/ridesense.png';
 import trackTuner from '../assets/track_tuner.png';
 
-export const products = [
+const allProducts = [
   {
     name: 'Track Tuner',
     slug: 'track-tuner',
@@ -202,30 +202,30 @@ export const products = [
       'PWA',
     ],
     oneLiner:
-      'Browser-first shared texting and follow-up system for dealership sales, service, and parts workflows.',
+      'Dealership communication workspace for motorcycle teams that need customer texting, follow-ups, service updates, and accountability in one place.',
     audience:
       'General managers, assistant GMs, service advisors, sales staff, parts staff, and managers reviewing daily dealership communication performance.',
     jtbd:
-      'When dealership staff need to manage customer texting, ownership, and follow-up from one place, they need a shared inbox that preserves context and clear next actions.',
+      'When a customer conversation, service update, or follow-up is open, dealership staff need one shared workspace that preserves context, ownership, delivery status, and the next action before missed communication becomes missed revenue.',
     problem:
-      'Customer communication is fragmented across personal phones, calls, email, website leads, and memory, which causes missed follow-ups, poor visibility, and weak accountability.',
+      'Independent dealership communication is fragmented across personal phones, calls, website leads, service notes, and memory. That makes it easy to lose customer context, miss follow-ups, and leave managers without visibility into open conversations.',
     coreWorkflow: [
-      'Staff signs in and opens the shared inbox.',
-      'Staff filters customer conversations by department, assignee, unread state, or follow-up need.',
-      'Staff replies with SMS, applies a template, adds an internal note, reassigns the thread, or creates a follow-up task.',
-      'Management reviews the Command Center for unread conversations, overdue follow-ups, unassigned threads, failed messages, and department exceptions.',
+      'Staff signs in through secure role-based access for sales, service, parts, managers, and admins.',
+      'Staff manages customer conversations from a shared inbox with linked vehicles, assignments, templates, internal notes, notifications, and SMS/MMS delivery status.',
+      'Staff creates follow-up tasks, sends service updates, reassigns ownership, and handles opt-in or opt-out states without leaving the customer thread.',
+      'Managers review Command Center metrics for unread conversations, overdue follow-ups, unassigned threads, failed messages, and department exceptions.',
     ],
     mvpScope: [
-      'Role-based login for admin, manager, sales, service, and parts users',
-      'Shared inbox with filters, assignment, tags, priority, and status controls',
-      'Conversation view with message thread, internal notes, customer context, and template-based replies',
-      'Task and follow-up creation tied to customers and conversations',
-      'Manager Command Center with operational notifications and drill-down views',
+      'Public-facing Next.js site plus internal staff dashboard',
+      'Secure Auth.js staff login and role-based access for admin, manager, sales, service, and parts users',
+      'Shared inbox with customer profiles, linked vehicles, assignments, templates, tasks, notifications, and delivery status',
+      'Twilio SMS/MMS send and receive routes with webhook signature verification, opt-in/opt-out handling, and delivery failure alerts',
+      'Production-ready deployment structure with Vercel, Neon Postgres, Prisma, and Auth.js',
     ],
     evidenceSignal:
-      'The live prototype already includes seeded dealership data, working Next.js routes, Prisma models, Twilio inbound and status endpoints, and a committed first build on the public repository.',
+      'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure.',
     nextStep:
-      'Deploy a usable internal environment with real Postgres and Twilio credentials, then validate live staff workflows on mobile and desktop.',
+      'Expand CTX Chat into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
     standaloneMockStatus: 'in-progress',
     updates: [
       {
@@ -348,6 +348,7 @@ export const products = [
   {
     name: 'Overlap',
     slug: 'overlap-racing-radar',
+    archived: true,
     tier: 'flagship',
     status: 'active-build',
     statusLabel: 'Active app',
@@ -485,6 +486,9 @@ export const products = [
   },
 ];
 
+export { allProducts };
+
+export const products = allProducts.filter((product) => !product.archived);
 export const flagshipProducts = products.filter((product) => product.tier === 'flagship');
 export const conceptProducts = products.filter((product) => product.tier === 'concept');
 

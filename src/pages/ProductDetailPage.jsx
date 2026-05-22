@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from '../components/Editorial';
 import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
+import { getProductResearchBySlug } from '../content/productResearch';
 
 const SECTIONS = [
   { id: 'overview', label: '01 Overview' },
@@ -35,6 +36,7 @@ export default function ProductDetailPage() {
   if (!product) return <Navigate to="/not-found" replace />;
   const p = product;
   const analysis = getProductAnalysisBySlug(slug);
+  const research = getProductResearchBySlug(slug);
   const nextSummary = p.nextStep.split('.')[0] + '.';
 
   return (
@@ -64,6 +66,13 @@ export default function ProductDetailPage() {
             <div style={{ marginTop: 24 }}>
               <Link to={`/products/${p.slug}/analysis`} className="link-arrow">
                 Read PM analysis <ArrowGlyph />
+              </Link>
+            </div>
+          ) : null}
+          {research ? (
+            <div style={{ marginTop: 12 }}>
+              <Link to={`/products/${p.slug}/research`} className="link-arrow">
+                View persona research <ArrowGlyph />
               </Link>
             </div>
           ) : null}
