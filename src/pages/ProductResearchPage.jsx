@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow } from '../components/Editorial';
+import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
 import { getProductResearchBySlug } from '../content/productResearch';
 
@@ -41,6 +42,7 @@ export default function ProductResearchPage() {
   const { slug } = useParams();
   const product = getProductBySlug(slug);
   const research = getProductResearchBySlug(slug);
+  const analysis = getProductAnalysisBySlug(slug);
   const [activeSection, setActiveSection] = useState(SECTIONS[0].id);
   const [activePersona, setActivePersona] = useState(0);
   const archetypes = Array.isArray(research?.archetypes) ? research.archetypes : [];
@@ -71,6 +73,7 @@ export default function ProductResearchPage() {
   if (!product || !research) return <Navigate to="/not-found" replace />;
 
   const selectedPersona = archetypes[activePersona] ?? archetypes[0] ?? null;
+  const headings = research.headings ?? {};
 
   return (
     <div className="fade-in">
@@ -101,15 +104,12 @@ export default function ProductResearchPage() {
               <p className="body" style={{ marginTop: 18, maxWidth: '68ch' }}>
                 {research.summary}
               </p>
-              <div className="research-proof" aria-label="Research proof points">
-                {research.proofPoints.map((point) => (
-                  <span key={point}>{point}</span>
-                ))}
-              </div>
               <div style={{ marginTop: 28, display: 'flex', flexWrap: 'wrap', gap: 16 }}>
-                <Link to={`/products/${product.slug}/analysis`} className="link-arrow">
-                  Read PM analysis <ArrowGlyph />
-                </Link>
+                {analysis ? (
+                  <Link to={`/products/${product.slug}/analysis`} className="link-arrow">
+                    Read PM analysis <ArrowGlyph />
+                  </Link>
+                ) : null}
                 <Link to={`/products/${product.slug}`} className="link-arrow">
                   Back to build <ArrowGlyph />
                 </Link>
@@ -142,7 +142,9 @@ export default function ProductResearchPage() {
           <div style={{ minWidth: 0 }}>
             <div id="problem" className="research-section">
               <Eyebrow>01 — Strategic problem</Eyebrow>
-              <h2 className="h2">The opportunity sits between memory and telemetry.</h2>
+              <h2 className="h2">
+                {headings.problem ?? 'The research frames the product opportunity.'}
+              </h2>
               <div className="research-dual">
                 <p className="lead" style={{ margin: 0, color: 'var(--ink)' }}>
                   {research.strategicProblem}
@@ -156,7 +158,9 @@ export default function ProductResearchPage() {
 
             <div id="dimensions" className="research-section">
               <Eyebrow>02 — Persona dimensions</Eyebrow>
-              <h2 className="h2">A compact atlas for reading trackside behavior.</h2>
+              <h2 className="h2">
+                {headings.dimensions ?? 'The framework defines the behaviors that shape product decisions.'}
+              </h2>
               <div className="research-dimension-grid">
                 {research.dimensions.map((dimension, index) => (
                   <article key={dimension.label} className="research-dimension">
@@ -170,7 +174,9 @@ export default function ProductResearchPage() {
 
             <div id="archetypes" className="research-section">
               <Eyebrow>03 — Archetypes</Eyebrow>
-              <h2 className="h2">The launch segment is selected by frequency and pain.</h2>
+              <h2 className="h2">
+                {headings.archetypes ?? 'The launch segment is selected by frequency and pain.'}
+              </h2>
               <div className="research-persona-shell">
                 <div className="research-persona-tabs" role="tablist" aria-label="Persona archetypes">
                   {archetypes.map((persona, index) => (
@@ -227,12 +233,11 @@ export default function ProductResearchPage() {
 
             <div id="priority" className="research-section">
               <Eyebrow>04 — Feature priority</Eyebrow>
-              <h2 className="h2">A roadmap heatmap by persona value.</h2>
+              <h2 className="h2">{headings.priority ?? 'A roadmap heatmap by persona value.'}</h2>
               <div className="research-heatmap-wrap">
                 <table className="research-heatmap">
                   <caption>
-                    Feature prioritization matrix across Beginner, Amateur, Engineer, Social, Coach,
-                    and Organizer segments.
+                    {research.matrix.caption ?? 'Feature prioritization matrix across persona segments.'}
                   </caption>
                   <thead>
                     <tr>
@@ -262,7 +267,9 @@ export default function ProductResearchPage() {
 
             <div id="insights" className="research-section">
               <Eyebrow>05 — Strategic insights</Eyebrow>
-              <h2 className="h2">The personas clarify roadmap order and trust boundaries.</h2>
+              <h2 className="h2">
+                {headings.insights ?? 'The personas clarify roadmap order and trust boundaries.'}
+              </h2>
               <div className="research-insights">
                 {research.strategicInsights.map((insight, index) => (
                   <article key={insight.title} className="research-insight">
@@ -278,7 +285,7 @@ export default function ProductResearchPage() {
 
             <div id="system" className="research-section">
               <Eyebrow>06 — Research system</Eyebrow>
-              <h2 className="h2">What the next interviews should validate.</h2>
+              <h2 className="h2">{headings.system ?? 'What the next interviews should validate.'}</h2>
               <div className="analysis-dual-grid">
                 <div>
                   <Eyebrow>Interview areas</Eyebrow>
@@ -293,7 +300,7 @@ export default function ProductResearchPage() {
 
             <div className="research-footer">
               <Link className="link-arrow" to={`/products/${product.slug}`}>
-                ← Back to Track Tuner
+                ← Back to {product.name}
               </Link>
               <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
                 Talk product research <ArrowGlyph />

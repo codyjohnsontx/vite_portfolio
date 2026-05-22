@@ -54,15 +54,21 @@ function LatestUpdate() {
         <div className="latest-update__label mono uppercase">Latest update</div>
         <div className="latest-update__copy">
           <h2 id="latest-update-title" className="latest-update__title">
-            Track Tuner persona research
+            Persona research systems
           </h2>
           <p className="latest-update__body">
-            A clearer view of the riders, drivers, and coaches Track Tuner needs to serve first.
+            Current research pages for Track Tuner and RideSense, each tied to product strategy,
+            roadmap order, and trust boundaries.
           </p>
         </div>
-        <Link to="/products/track-tuner/research" className="link-arrow latest-update__link">
-          Read the persona research <ArrowGlyph />
-        </Link>
+        <div className="latest-update__links">
+          <Link to="/products/track-tuner/research" className="link-arrow latest-update__link">
+            Track Tuner research <ArrowGlyph />
+          </Link>
+          <Link to="/products/ridesense/research" className="link-arrow latest-update__link">
+            RideSense research <ArrowGlyph />
+          </Link>
+        </div>
       </div>
     </section>
   );
