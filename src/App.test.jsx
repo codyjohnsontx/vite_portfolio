@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 import { caseStudies } from './content/caseStudies';
-import { products } from './content/projects';
+import { allProducts, products } from './content/projects';
 
 function renderApp(initialEntry = '/') {
   return render(
@@ -19,10 +19,15 @@ describe('portfolio routes and metadata', () => {
     renderApp('/');
 
     expect(screen.getAllByRole('heading', { level: 1 }).length).toBeGreaterThan(0);
-    expect(screen.getByRole('heading', { name: /Track Tuner/ })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'CTX Chat' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
+    expect(screen.getByText('Latest update')).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Track Tuner persona research' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Read the persona research/i }).getAttribute('href')).toBe(
+      '/products/track-tuner/research',
+    );
   });
 
   it('falls back when localStorage is unavailable during initial render', () => {
@@ -69,12 +74,82 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /Track Tuner/ })).toBeTruthy();
   });
 
+  it('keeps Overlap archived outside the visible product exports', () => {
+    expect(allProducts.find((product) => product.slug === 'overlap-racing-radar')).toBeTruthy();
+    expect(products.some((product) => product.slug === 'overlap-racing-radar')).toBe(false);
+  });
+
+  it('does not expose Overlap on primary public product surfaces', () => {
+    const firstRender = renderApp('/');
+    expect(screen.queryByRole('heading', { name: 'Overlap' })).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Overlap' })).toBeNull();
+
+    firstRender.unmount();
+    renderApp('/products');
+    expect(screen.queryByRole('heading', { name: 'Overlap' })).toBeNull();
+    expect(screen.queryByRole('link', { name: /Overlap/ })).toBeNull();
+  });
+
   it('renders the cases index page', () => {
     renderApp('/case-studies');
 
     caseStudies.forEach((study) => {
       expect(screen.getByRole('heading', { name: study.title })).toBeTruthy();
     });
+  });
+
+  it('renders Dev Mode from the dedicated route and navbar', () => {
+    renderApp('/dev-mode');
+
+    expect(screen.getByRole('heading', { name: 'Dev Mode' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Dev Mode' })).toBeTruthy();
+    expect(screen.getByLabelText(/Dev Mode command/i)).toBeTruthy();
+    expect(screen.queryByRole('contentinfo')).toBeNull();
+  });
+
+  it('runs core Dev Mode commands', () => {
+    renderApp('/dev-mode');
+    const input = screen.getByLabelText(/Dev Mode command/i);
+
+    fireEvent.change(input, { target: { value: 'help' } });
+    fireEvent.submit(input.closest('form'));
+    expect(screen.getByText('Available commands')).toBeTruthy();
+
+    fireEvent.change(input, { target: { value: 'whoami' } });
+    fireEvent.submit(input.closest('form'));
+    expect(screen.getByText(/operational CRM \/ dealership command center/i)).toBeTruthy();
+    expect(screen.getByText(/Twilio SMS\/MMS routing/i)).toBeTruthy();
+
+    fireEvent.change(input, { target: { value: 'products' } });
+    fireEvent.submit(input.closest('form'));
+    expect(screen.getByText('Active builds')).toBeTruthy();
+    expect(screen.getByText(/run: product track-tuner/i)).toBeTruthy();
+
+    fireEvent.change(input, { target: { value: 'contact' } });
+    fireEvent.submit(input.closest('form'));
+    expect(screen.getByText('codyjohnsontx@gmail.com')).toBeTruthy();
+
+    fireEvent.change(input, { target: { value: 'wat' } });
+    fireEvent.submit(input.closest('form'));
+    expect(screen.getByText('Command not found')).toBeTruthy();
+
+    fireEvent.change(input, { target: { value: 'clear' } });
+    fireEvent.submit(input.closest('form'));
+    expect(screen.queryByText('Available commands')).toBeNull();
+    expect(screen.queryByText('Command not found')).toBeNull();
+  });
+
+  it('renders Dev Mode product commands from product data', () => {
+    renderApp('/dev-mode');
+    const input = screen.getByLabelText(/Dev Mode command/i);
+    const trackTuner = products.find((product) => product.slug === 'track-tuner');
+
+    fireEvent.change(input, { target: { value: 'product track-tuner' } });
+    fireEvent.submit(input.closest('form'));
+
+    expect(screen.getByRole('heading', { name: trackTuner.name })).toBeTruthy();
+    expect(screen.getByText(trackTuner.oneLiner)).toBeTruthy();
+    expect(screen.getByText(trackTuner.audience)).toBeTruthy();
   });
 
   products.forEach((product) => {
@@ -92,6 +167,19 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /Track Tuner PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
+  });
+
+  it('renders the Track Tuner research page', () => {
+    renderApp('/products/track-tuner/research');
+
+    expect(screen.getByRole('heading', { name: /Track Tuner research system/i })).toBeTruthy();
+    expect(screen.getAllByText('Progression Addict').length).toBeGreaterThan(0);
+    expect(screen.getByText('First-Track Learner')).toBeTruthy();
+    expect(screen.getByText('Coach Operator')).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /The wedge is memory before intelligence/i })).toBeTruthy();
+    expect(screen.getByText(/Feature prioritization matrix across Beginner/i)).toBeTruthy();
+    expect(screen.getByRole('columnheader', { name: 'Beginner' })).toBeTruthy();
+    expect(screen.getByRole('rowheader', { name: 'Race Engineer AI' })).toBeTruthy();
   });
 
   it('renders the CTX Chat PM analysis page', () => {
@@ -115,8 +203,37 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('link', { name: /Read PM analysis/i })).toBeNull();
   });
 
+  it('shows the research CTA only for products with research content', () => {
+    const firstRender = renderApp('/products/track-tuner');
+    expect(screen.getByRole('link', { name: /View persona research/i })).toBeTruthy();
+
+    firstRender.unmount();
+    renderApp('/products/ridesense');
+    expect(screen.queryByRole('link', { name: /View persona research/i })).toBeNull();
+  });
+
+  it('exposes Track Tuner research from the PM analysis page and Dev Mode output', () => {
+    const firstRender = renderApp('/products/track-tuner/analysis');
+    expect(screen.getAllByRole('link', { name: /View persona research/i }).length).toBeGreaterThan(0);
+
+    firstRender.unmount();
+    renderApp('/dev-mode');
+    const input = screen.getByLabelText(/Dev Mode command/i);
+
+    fireEvent.change(input, { target: { value: 'product track-tuner' } });
+    fireEvent.submit(input.closest('form'));
+
+    expect(screen.getByRole('link', { name: /View persona research/i })).toBeTruthy();
+  });
+
   it('sends product analysis slugs without content to the not-found experience', () => {
     renderApp('/products/ridesense/analysis');
+
+    expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
+  });
+
+  it('sends product research slugs without content to the not-found experience', () => {
+    renderApp('/products/ridesense/research');
 
     expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
   });
@@ -136,6 +253,12 @@ describe('portfolio routes and metadata', () => {
 
     firstRender.unmount();
     renderApp('/case-studies/not-a-real-study');
+    expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
+  });
+
+  it('sends the archived Overlap product route to the not-found experience', () => {
+    renderApp('/products/overlap-racing-radar');
+
     expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
   });
 

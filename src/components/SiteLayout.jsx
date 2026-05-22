@@ -14,6 +14,7 @@ const NAV = [
   { to: '/', label: 'Index', end: true },
   { to: '/products', label: 'Products' },
   { to: '/case-studies', label: 'Case Studies' },
+  { to: '/dev-mode', label: 'Dev Mode' },
 ];
 
 function getInitialTheme() {
@@ -70,6 +71,7 @@ function SiteLayout() {
 
   const onProductOrCase =
     location.pathname.startsWith('/products') || location.pathname.startsWith('/case-studies');
+  const inDevMode = location.pathname.startsWith('/dev-mode');
 
   return (
     <>
@@ -90,7 +92,15 @@ function SiteLayout() {
               </NavLink>
             ))}
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div className="topnav__actions">
+            <NavLink
+              to="/dev-mode"
+              className={({ isActive }) =>
+                isActive ? 'topnav__dev-mobile active' : 'topnav__dev-mobile'
+              }
+            >
+              Dev
+            </NavLink>
             <ThemeToggle theme={theme} onChange={setTheme} />
             <a className="topnav__cta" href="mailto:codyjohnsontx@gmail.com">
               Get in touch <ArrowGlyph />
@@ -103,6 +113,7 @@ function SiteLayout() {
         <Outlet />
       </main>
 
+      {inDevMode ? null : (
       <footer className="site-footer">
         <div className="site-footer__inner">
           <div>
@@ -150,6 +161,7 @@ function SiteLayout() {
           <span>© {new Date().getFullYear()} Cody Johnson</span>
         </div>
       </footer>
+      )}
     </>
   );
 }

@@ -4,6 +4,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from '../components/Editorial';
 import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
+import { getProductResearchBySlug } from '../content/productResearch';
 
 const SECTIONS = [
   { id: 'overview', label: '01 Overview' },
@@ -47,6 +48,7 @@ export default function ProductAnalysisPage() {
   const { slug } = useParams();
   const product = getProductBySlug(slug);
   const analysis = getProductAnalysisBySlug(slug);
+  const research = getProductResearchBySlug(slug);
   const [active, setActive] = useState(SECTIONS[0].id);
 
   useEffect(() => {
@@ -113,6 +115,11 @@ export default function ProductAnalysisPage() {
               <Link to={`/products/${product.slug}`} className="link-arrow">
                 Back to build <ArrowGlyph />
               </Link>
+              {research ? (
+                <Link to={`/products/${product.slug}/research`} className="link-arrow">
+                  View persona research <ArrowGlyph />
+                </Link>
+              ) : null}
             </div>
           </div>
         </div>
@@ -311,6 +318,11 @@ export default function ProductAnalysisPage() {
               <Link className="link-arrow" to={`/products/${product.slug}`}>
                 ← Back to build
               </Link>
+              {research ? (
+                <Link className="link-arrow" to={`/products/${product.slug}/research`}>
+                  View persona research <ArrowGlyph />
+                </Link>
+              ) : null}
               <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
                 Talk product strategy <ArrowGlyph />
               </a>

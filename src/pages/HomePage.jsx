@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   ArrowGlyph,
   Eyebrow,
@@ -47,12 +47,34 @@ function Hero() {
   );
 }
 
+function LatestUpdate() {
+  return (
+    <section className="latest-update" aria-labelledby="latest-update-title">
+      <div className="container latest-update__inner">
+        <div className="latest-update__label mono uppercase">Latest update</div>
+        <div className="latest-update__copy">
+          <h2 id="latest-update-title" className="latest-update__title">
+            Track Tuner persona research
+          </h2>
+          <p className="latest-update__body">
+            A clearer view of the riders, drivers, and coaches Track Tuner needs to serve first.
+          </p>
+        </div>
+        <Link to="/products/track-tuner/research" className="link-arrow latest-update__link">
+          Read the persona research <ArrowGlyph />
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 export default function HomePage() {
   const navigate = useNavigate();
 
   return (
     <div className="fade-in">
       <Hero />
+      <LatestUpdate />
 
       <section className="section" id="active">
         <div className="container">
