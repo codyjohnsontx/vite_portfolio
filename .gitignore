@@ -23,5 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# Claude Code local config
+# Local agent tooling config
 .claude/
+.codex/
+.playwright-cli/
