@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
@@ -206,10 +206,12 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText(/PR #7/)).toBeTruthy();
   });
 
-  it('opens RideSense screenshots in a zoom dialog', () => {
+  it('opens RideSense screenshots in a zoom dialog and restores focus on close', async () => {
     renderApp('/products/ridesense');
+    const zoomButton = screen.getByRole('button', { name: 'Zoom Desktop dashboard' });
 
-    fireEvent.click(screen.getByRole('button', { name: 'Zoom Desktop dashboard' }));
+    zoomButton.focus();
+    fireEvent.click(zoomButton);
 
     expect(
       screen.getByRole('dialog', { name: 'Desktop dashboard enlarged screenshot' }),
@@ -220,9 +222,13 @@ describe('portfolio routes and metadata', () => {
       }).length,
     ).toBeGreaterThan(1);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Close' }));
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    await waitFor(() => expect(document.activeElement).toBe(closeButton));
+
+    fireEvent.click(closeButton);
 
     expect(screen.queryByRole('dialog')).toBeNull();
+    expect(document.activeElement).toBe(zoomButton);
   });
 
   it('renders the Track Tuner PM analysis page', () => {

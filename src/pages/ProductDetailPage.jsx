@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from '../components/Editorial';
@@ -19,6 +19,8 @@ export default function ProductDetailPage() {
   const product = getProductBySlug(slug);
   const [active, setActive] = useState('overview');
   const [selectedVisualAsset, setSelectedVisualAsset] = useState(null);
+  const closeBtnRef = useRef(null);
+  const previousActiveElementRef = useRef(null);
 
   useEffect(() => {
     if (!product) return undefined;
@@ -42,7 +44,10 @@ export default function ProductDetailPage() {
   useEffect(() => {
     if (!selectedVisualAsset) return undefined;
 
+    previousActiveElementRef.current =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const originalOverflow = document.body.style.overflow;
+    const focusFrame = window.requestAnimationFrame(() => closeBtnRef.current?.focus());
     document.body.style.overflow = 'hidden';
 
     const onKeyDown = (event) => {
@@ -51,8 +56,11 @@ export default function ProductDetailPage() {
 
     window.addEventListener('keydown', onKeyDown);
     return () => {
+      window.cancelAnimationFrame(focusFrame);
       document.body.style.overflow = originalOverflow;
       window.removeEventListener('keydown', onKeyDown);
+      previousActiveElementRef.current?.focus();
+      previousActiveElementRef.current = null;
     };
   }, [selectedVisualAsset]);
 
@@ -435,6 +443,7 @@ export default function ProductDetailPage() {
                     {selectedVisualAsset.label}
                   </figcaption>
                   <button
+                    ref={closeBtnRef}
                     type="button"
                     className="mono small uppercase"
                     onClick={() => setSelectedVisualAsset(null)}
