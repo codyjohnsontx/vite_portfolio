@@ -1,10 +1,6 @@
-import { useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { getProductBySlug } from '../content/projects';
 import './RideSenseWireframesPage.css';
-
-const WIREFRAMES_FONTS_HREF =
-  'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Kalam:wght@300;400;700&display=swap';
 
 const WIREFRAMES_BODY = `
   <header class="page-head">
@@ -435,20 +431,6 @@ const WIREFRAMES_BODY = `
 export default function RideSenseWireframesPage() {
   const { slug } = useParams();
   const product = getProductBySlug(slug);
-
-  useEffect(() => {
-    if (typeof document === 'undefined') return undefined;
-    const existing = document.querySelector(`link[data-wf-fonts="true"]`);
-    if (existing) return undefined;
-    const link = document.createElement('link');
-    link.href = WIREFRAMES_FONTS_HREF;
-    link.rel = 'stylesheet';
-    link.setAttribute('data-wf-fonts', 'true');
-    document.head.appendChild(link);
-    return () => {
-      link.parentNode?.removeChild(link);
-    };
-  }, []);
 
   if (!product || product.slug !== 'ridesense') return <Navigate to="/not-found" replace />;
 
