@@ -225,6 +225,14 @@ describe('portfolio routes and metadata', () => {
     const closeButton = screen.getByRole('button', { name: 'Close' });
     await waitFor(() => expect(document.activeElement).toBe(closeButton));
 
+    fireEvent.keyDown(closeButton, { key: 'Tab' });
+    expect(document.activeElement).toBe(closeButton);
+    expect(document.activeElement).not.toBe(zoomButton);
+
+    fireEvent.keyDown(closeButton, { key: 'Tab', shiftKey: true });
+    expect(document.activeElement).toBe(closeButton);
+    expect(document.activeElement).not.toBe(zoomButton);
+
     fireEvent.click(closeButton);
 
     expect(screen.queryByRole('dialog')).toBeNull();
