@@ -4,6 +4,9 @@ import rideSense from '../assets/ridesense.png';
 import trackTuner from '../assets/track_tuner.png';
 import rideSenseOverviewDesktop from '../../docs/assets/readme/overview-desktop.png';
 import rideSenseOverviewMobile from '../../docs/assets/readme/overview-mobile.png';
+import windCastHero from '../assets/windcast/windcast-hero.png';
+import windCastMap from '../assets/windcast/windcast-map.png';
+import windCastSpotDetail from '../assets/windcast/windcast-spot-detail.png';
 
 const allProducts = [
   {
@@ -281,6 +284,101 @@ const allProducts = [
         tag: 'Note',
         title: 'Audited the README against the implementation',
         body: 'Three claims did not match the code: tokens were called encrypted, TrainerRoad was described as storing cookies only, and the AI was described as deterministic. Rewrote each to match what the code actually does.',
+      },
+    ],
+  },
+  {
+    name: 'windCast',
+    slug: 'windcast',
+    tier: 'flagship',
+    status: 'active-build',
+    statusLabel: 'MVP shipped',
+    year: '2026',
+    accent: 'oklch(0.7 0.15 235)',
+    image: windCastHero,
+    companyContext: 'Independent build',
+    role: 'Product Manager / Developer',
+    stack: [
+      'React 18',
+      'TypeScript',
+      'Vite',
+      'Tailwind CSS',
+      'React Router',
+      'Leaflet + react-leaflet',
+      'leaflet-velocity',
+      'Open-Meteo API',
+      'Vitest',
+    ],
+    oneLiner:
+      'Session planner for wind sports — saved spots, scored forecast hours, and an animated wind map answer one question: is it worth loading up gear today?',
+    audience:
+      'Recreational and intermediate kiteboarders, wing foilers, and downwind foilers who currently juggle 3+ weather sources to plan a single session.',
+    jtbd:
+      'When deciding whether to load gear and go, I want my saved spots scored against the next 48 hours of wind so I can pick a session window in seconds instead of cross-referencing forecasts.',
+    problem:
+      'Wind-sport athletes check multiple weather sources manually, then mentally map each forecast against per-spot rules (safe direction, ideal wind range, gust tolerance). The math is repetitive, error-prone, and often gets done in the parking lot. windCast encodes per-spot rules once and runs them against every forecast hour automatically.',
+    coreWorkflow: [
+      'Save your spots with per-location rules: ideal/unsafe wind directions, min/ideal/max wind speed, and sport type.',
+      'Open the dashboard — every saved spot shows current wind, a session-score badge (fire / good / maybe / poor / sketchy), and the best upcoming window.',
+      'Tap a spot for the full 48-hour hourly forecast with per-hour scores and the reasoning behind each label.',
+      'Switch to the map for an animated wind-particle overlay, score-colored pins at each saved spot, and tap-anywhere ephemeral forecasts.',
+      'Swap forecast sources in Settings (mock for demos, Open-Meteo for real data) — all providers are interface-compatible.',
+    ],
+    mvpScope: [
+      'Dashboard view sorted by current safety and confidence.',
+      'Per-spot rules engine and scoring (utils/sessionScore.ts) producing 5-label session quality with explainable reasons.',
+      'Interactive Leaflet map with animated wind-particle overlay and tap-to-forecast.',
+      'Spot CRUD with 48-hour hourly forecast detail.',
+      'Pluggable forecast-provider interface (mock + Open-Meteo) with response caching.',
+      'Unit toggles (mph / knots / m/s, F / C).',
+      'Local persistence with JSON import/export for spot backup.',
+    ],
+    evidenceSignal:
+      'Built end-to-end in roughly one day as a tightly-scoped MVP: real Open-Meteo integration, an explainable scoring engine, and an animated wind map that runs on mock data for offline demos. Codebase is test-covered (Vitest + RTL) and structured so future data sources (NOAA GFS for wind grids, NOAA CO-OPS for tides) drop in behind the existing provider interface.',
+    nextStep:
+      'Roadmap from the README: real tide data via NOAA CO-OPS, real wind grids via NOAA GFS through a serverless proxy, long-press to add spots on the map, PWA + offline cache, and push notifications for incoming "fire" windows. Explicitly out of scope: radar/satellite, accounts/auth, route planning, premium tiers.',
+    visualAssets: {
+      note: 'Screenshots use mock seed data — the same data the demo runs on offline.',
+      items: [
+        {
+          label: 'Dashboard',
+          src: windCastHero,
+          alt: 'windCast dashboard listing saved spots with session-score badges and current wind conditions.',
+        },
+        {
+          label: 'Wind map',
+          src: windCastMap,
+          alt: 'Leaflet map with animated wind-particle overlay and score-colored pins at saved spots.',
+        },
+        {
+          label: 'Spot forecast',
+          src: windCastSpotDetail,
+          alt: 'Spot detail page showing 48-hour hourly forecast with per-hour session scores and reasoning.',
+        },
+      ],
+    },
+    standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'Jun 02, 2026',
+        tag: 'PR #2',
+        title: 'Added forecast confidence by comparing model output to nearby observations',
+        url: 'https://github.com/codyjohnsontx/windCast/pull/2',
+        body: 'Each saved spot now compares its model forecast against the nearest weather station and surfaces whether the two agree. Added a layers drawer on the map, station and buoy markers from a mock observation provider, a timeline selector for the forecast hour, and decision summaries on the dashboard and spot detail.',
+      },
+      {
+        date: 'Jun 02, 2026',
+        tag: 'PR #1',
+        title: 'Swapped mock-only forecasts for the Open-Meteo provider and shipped spot CRUD',
+        url: 'https://github.com/codyjohnsontx/windCast/pull/1',
+        body: 'Replaced the mock-only forecast pipe with a real Open-Meteo provider behind the existing interface, added per-route error boundaries so a single forecast failure does not take down the dashboard, and built the spot CRUD that the scoring engine needs to do anything useful. Settings now exposes the forecast-source toggle, unit preferences (mph/knots/m/s), and JSON import/export for spot backup. Vitest suites were added for forms, hooks, and forecast utilities.',
+      },
+      {
+        date: 'Jun 01, 2026',
+        tag: 'Note',
+        title: 'Seeded the MVP in a day',
+        url: 'https://github.com/codyjohnsontx/windCast',
+        body: 'Initial commit shipped the dashboard, spot list, scoring engine (utils/sessionScore.ts), and a Leaflet map with an animated wind-particle overlay. Forecasts ran on mock data so the UX could be designed against the full data shape before any network call existed; the provider interface was in place from day one so real sources could slot in without component changes.',
       },
     ],
   },
