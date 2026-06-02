@@ -228,7 +228,7 @@ describe('portfolio routes and metadata', () => {
     fireEvent.click(closeButton);
 
     expect(screen.queryByRole('dialog')).toBeNull();
-    expect(document.activeElement).toBe(zoomButton);
+    await waitFor(() => expect(document.activeElement).toBe(zoomButton));
   });
 
   it('renders the Track Tuner PM analysis page', () => {
