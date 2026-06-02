@@ -2,6 +2,8 @@ import diazMa from '../assets/diazma.png';
 import ctxChat from '../assets/ctxChat.png';
 import rideSense from '../assets/ridesense.png';
 import trackTuner from '../assets/track_tuner.png';
+import rideSenseOverviewDesktop from '../../docs/assets/readme/overview-desktop.png';
+import rideSenseOverviewMobile from '../../docs/assets/readme/overview-mobile.png';
 
 const allProducts = [
   {
@@ -125,34 +127,137 @@ const allProducts = [
     image: rideSense,
     companyContext: 'Independent build',
     role: 'Product Manager / Developer',
-    stack: ['Next.js', 'TypeScript', 'FastAPI', 'Supabase Postgres', 'Fernet', 'Grounded AI'],
+    stack: [
+      'Next.js',
+      'TypeScript',
+      'FastAPI',
+      'Supabase Postgres',
+      'Strava OAuth',
+      'TrainerRoad ingest',
+      'Grounded AI',
+    ],
     oneLiner:
-      'Grounded AI training-insights platform that unifies cyclist workout data across providers without coaching prescriptions.',
+      'Full-stack training analytics MVP that unifies TrainerRoad, Strava, and uploaded ride files into one canonical activity timeline with workload trends and grounded AI Q&A.',
     audience:
       'Enthusiast and competitive cyclists who use multiple platforms, log structured intervals, and want decision-support for the next training block.',
     jtbd:
-      'After a workout, riders need one canonical view of their week and grounded answers that cite the underlying metrics rather than fabricate authoritative advice.',
+      'After workouts accumulate across multiple tools, riders need one canonical view of their training history and evidence-bound answers that explain workload, consistency, fatigue, freshness, and trend changes from their own data.',
     problem:
-      'Training data is fragmented across Strava, TrainerRoad, Garmin, and head-unit exports, leaving riders with double-counted load, timeline gaps, and no honest read on whether they are progressing or digging a hole.',
+      'Cyclists often split training history across TrainerRoad, Strava, head-unit exports, and manual files, making it hard to trust load trends, avoid duplicate activities, and understand what their recent work actually signals.',
     coreWorkflow: [
-      'Connect Strava via OAuth or drop GPX, TCX, and FIT exports into the dashboard; both paths feed the same ingest pipeline.',
-      'Score workouts from each provider for overlap using start-time delta, duration delta, and name similarity, then merge matches into a canonical activity at a 0.72 confidence threshold.',
-      'Run deterministic analytics over the canonical timeline to produce weekly load, zone breakdown, multi-week trend percentage, and regression flags.',
-      'Answer natural-language questions over those facts with metric citations, falling back to deterministic responses when no LLM key is configured.',
+      'Connect Strava through OAuth, bring in TrainerRoad activity context, or upload GPX, TCX, and FIT ride files.',
+      'Normalize provider data into one activity pipeline, then merge overlapping efforts into a canonical timeline.',
+      'Apply deterministic analytics for weekly load, form, fatigue, freshness, category breakdowns, and trend detection.',
+      'Explore the dashboard through accessible charts with hover readouts, keyboard support, mobile interactions, and screen reader copy.',
+      'Ask grounded training questions over computed metrics, with fallback handling when AI parsing fails instead of breaking the experience.',
     ],
     mvpScope: [
-      'Strava OAuth and file upload first; TrainerRoad scaffolded for browser session-link',
-      'Similarity-scored cross-provider deduplication into one canonical timeline',
-      'Deterministic weekly load, zone distribution, and trend analytics',
-      'Grounded AI Q&A with mandatory metric citations and a no-medical-advice prompt boundary',
-      'Fernet-encrypted provider token storage with weak-secret guard outside development',
+      'Next.js dashboard UI with FastAPI backend',
+      'Strava OAuth, sync hardening, and UTC-safe date range filtering',
+      'TrainerRoad, Strava, and uploaded file activity ingestion into a canonical timeline',
+      'Deterministic training analytics for workload trends, readiness signals, category breakdowns, and rolling date windows',
+      'Accessible dashboard visualizations with hover readouts, live metric explanations, keyboard support, and mobile behavior',
+      'Grounded AI Q&A with safer fallback behavior when model responses are malformed',
+      'Seeded demo workflow, README screenshots, custom logo, app icon, guided onboarding, and same-origin local API proxy',
     ],
     evidenceSignal:
-      'OAuth, upload ingest, canonical activity deduplication, deterministic analytics, and citation-bound AI behavior are being built around verifiable workout facts instead of coaching claims.',
+      'The MVP now demonstrates production-shaped product judgment across ingestion, deduplication, deterministic analytics, accessible visualization, AI guardrails, local development ergonomics, and public demo documentation.',
     nextStep:
-      'Wire the live Strava OAuth credentials and validate the full pipeline against real activity history, then ship the TrainerRoad session-link via Playwright so riders with structured workouts get TSS-accurate canonical activities without manual exports.',
+      "Validate the seeded demo flow against real rider history, tighten TrainerRoad ingestion depth, and use the dashboard's load, form, fatigue, freshness, and grounded Q&A signals to drive the next round of user interviews.",
+    visualAssets: {
+      note: 'Public screenshots use seeded demo data, not private athlete data.',
+      items: [
+        {
+          label: 'Desktop dashboard',
+          src: rideSenseOverviewDesktop,
+          alt: 'RideSense desktop dashboard showing seeded demo training analytics.',
+        },
+        {
+          label: 'Mobile dashboard',
+          src: rideSenseOverviewMobile,
+          alt: 'RideSense mobile dashboard showing seeded demo training analytics.',
+        },
+      ],
+    },
     standaloneMockStatus: 'in-progress',
     updates: [
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #18',
+        title: 'Added README screenshots with seeded demo data',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/18',
+        body: 'Added desktop and mobile README screenshots captured from seeded demo data so GitHub visitors can immediately understand the dashboard experience without exposing private athlete data.',
+      },
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #17',
+        title: 'Made analytics load trend tests deterministic',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/17',
+        body: 'Fixed flaky analytics tests by making rolling date-window behavior deterministic around UTC midnight boundaries.',
+      },
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #16',
+        title: 'Added the RideSense app icon',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/16',
+        body: 'Added an app icon to give the product a more complete, installable product feel.',
+      },
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #15',
+        title: 'Hardened AI fallback behavior',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/15',
+        body: 'Added safer fallback behavior when AI response parsing fails so malformed model output does not break the grounded Q&A experience.',
+      },
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #14',
+        title: 'Added same-origin local API proxying',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/14',
+        body: 'Routed frontend API calls through the Next.js app to the FastAPI backend during local development, simplifying setup and avoiding client-side backend URL wiring.',
+      },
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #13',
+        title: 'Added guided onboarding and clearer docs',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/13',
+        body: 'Added a guided onboarding experience and updated documentation so the product flow and local setup are easier to understand.',
+      },
+      {
+        date: 'May 09, 2026',
+        tag: 'PR #12',
+        title: 'Refactored the app shell and training analytics experience',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/12',
+        body: 'Refactored the app shell and analytics surface, polished mobile navigation accessibility, fixed active nav path matching, preserved accessible mobile dialog behavior, and hardened shell sync and resize behavior.',
+      },
+      {
+        date: 'May 02, 2026',
+        tag: 'PR #11',
+        title: 'Improved chart accessibility and metric explanations',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/11',
+        body: 'Added screen reader support for metric tooltip copy and improved chart explanations with directional context so dashboard metrics are easier to interpret.',
+      },
+      {
+        date: 'May 02, 2026',
+        tag: 'PR #10',
+        title: 'Added chart hover and live readout improvements',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/10',
+        body: 'Added chart hover readouts, improved mobile chart interactions, added live chart readouts, improved keyboard accessibility, and fixed stale heatmap hover behavior.',
+      },
+      {
+        date: 'Apr 29, 2026',
+        tag: 'PR #9',
+        title: 'Added the RideSense logo component',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/9',
+        body: 'Added a custom RideSense logo component to give the product stronger identity and polish inside the app.',
+      },
+      {
+        date: 'Apr 29, 2026',
+        tag: 'PR #8',
+        title: 'Hardened Strava OAuth sync and range filtering',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/8',
+        body: 'Hardened Strava sync behavior, improved activity analysis range filters, fixed UTC date boundary handling, and aligned range metadata with count behavior.',
+      },
       {
         date: 'Apr 28, 2026',
         tag: 'PR #7',

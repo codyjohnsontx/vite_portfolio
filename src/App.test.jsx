@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
@@ -75,6 +75,19 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('button', { name: /apps/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /product features/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /Track Tuner/ })).toBeTruthy();
+  });
+
+  it('does not collapse product cards when keyboard users press Enter on the nested project link', () => {
+    renderApp('/products');
+    const trackTunerCard = screen.getByRole('button', { name: /Track Tuner/i });
+
+    fireEvent.keyDown(trackTunerCard, { key: 'Enter' });
+    expect(trackTunerCard.getAttribute('aria-expanded')).toBe('true');
+
+    const projectLink = within(trackTunerCard).getByRole('link', { name: /Open project/i });
+    fireEvent.keyDown(projectLink, { key: 'Enter' });
+
+    expect(trackTunerCard.getAttribute('aria-expanded')).toBe('true');
   });
 
   it('keeps Overlap archived outside the visible product exports', () => {
@@ -162,6 +175,60 @@ describe('portfolio routes and metadata', () => {
       expect(screen.getByRole('heading', { name: 'How it works end-to-end' })).toBeTruthy();
       expect(screen.getByText(product.oneLiner)).toBeTruthy();
     });
+  });
+
+  it('renders the refreshed RideSense product proof and screenshot section', () => {
+    renderApp('/products/ridesense');
+
+    expect(
+      screen.getByText(
+        /Full-stack training analytics MVP that unifies TrainerRoad, Strava, and uploaded ride files/i,
+      ),
+    ).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Seeded demo dashboard' })).toBeTruthy();
+    expect(
+      screen.getByText('Public screenshots use seeded demo data, not private athlete data.'),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole('img', {
+        name: 'RideSense desktop dashboard showing seeded demo training analytics.',
+      }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole('img', {
+        name: 'RideSense mobile dashboard showing seeded demo training analytics.',
+      }),
+    ).toBeTruthy();
+    expect(screen.getByText(/PR #18/)).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Added README screenshots with seeded demo data' })).toBeTruthy();
+    expect(screen.getByText(/PR #8/)).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Hardened Strava OAuth sync and range filtering' })).toBeTruthy();
+    expect(screen.getByText(/PR #7/)).toBeTruthy();
+  });
+
+  it('opens RideSense screenshots in a zoom dialog and restores focus on close', async () => {
+    renderApp('/products/ridesense');
+    const zoomButton = screen.getByRole('button', { name: 'Zoom Desktop dashboard' });
+
+    zoomButton.focus();
+    fireEvent.click(zoomButton);
+
+    expect(
+      screen.getByRole('dialog', { name: 'Desktop dashboard enlarged screenshot' }),
+    ).toBeTruthy();
+    expect(
+      screen.getAllByRole('img', {
+        name: 'RideSense desktop dashboard showing seeded demo training analytics.',
+      }).length,
+    ).toBeGreaterThan(1);
+
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    await waitFor(() => expect(document.activeElement).toBe(closeButton));
+
+    fireEvent.click(closeButton);
+
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(document.activeElement).toBe(zoomButton);
   });
 
   it('renders the Track Tuner PM analysis page', () => {

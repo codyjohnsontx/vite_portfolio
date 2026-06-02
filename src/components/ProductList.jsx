@@ -3,6 +3,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from './Editorial';
 
+function isInteractiveChild(target, currentTarget) {
+  if (!(target instanceof Element)) return false;
+  const interactive = target.closest('a, button, input, select, textarea, summary, [role="button"]');
+  return Boolean(interactive && interactive !== currentTarget);
+}
+
 export default function ProductList({ products, startIndex = 1 }) {
   const [openSlug, setOpenSlug] = useState(null);
 
@@ -18,6 +24,7 @@ export default function ProductList({ products, startIndex = 1 }) {
             style={{ '--card-accent': p.accent }}
             onClick={toggle}
             onKeyDown={(e) => {
+              if (isInteractiveChild(e.target, e.currentTarget)) return;
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 toggle();
