@@ -6,10 +6,7 @@ const WIREFRAMES_BODY = `
   <header class="page-head">
     <h1 class="page-title">RideSense<small>Lo-fi wireframes · core flows · early exploration</small></h1>
     <div class="page-meta">
-      <span class="tape">v0 · pencil pass</span><br /><br />
-      <b>4 screens</b> · Dashboard, Activity, Plan, Ask<br />
-      Structure &amp; hierarchy only — no styling yet<br />
-      <b>Numbered notes</b> = key decisions
+      <span class="tape">v0 · pencil pass</span>
     </div>
   </header>
 
