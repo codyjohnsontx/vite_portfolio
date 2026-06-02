@@ -107,6 +107,13 @@ export default function ProductDetailPage() {
               </Link>
             </div>
           ) : null}
+          {p.slug === 'ridesense' ? (
+            <div style={{ marginTop: 12 }}>
+              <Link to={`/products/${p.slug}/wireframes`} className="link-arrow">
+                View lo-fi wireframes <ArrowGlyph />
+              </Link>
+            </div>
+          ) : null}
         </div>
       </section>
 
