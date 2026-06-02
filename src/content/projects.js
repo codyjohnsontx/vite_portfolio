@@ -357,6 +357,7 @@ const allProducts = [
         },
       ],
     },
+    standaloneMockStatus: 'in-progress',
     updates: [
       {
         date: 'Jun 02, 2026',
