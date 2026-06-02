@@ -20,6 +20,7 @@ export default function ProductDetailPage() {
   const [active, setActive] = useState('overview');
   const [selectedVisualAsset, setSelectedVisualAsset] = useState(null);
   const closeBtnRef = useRef(null);
+  const dialogRef = useRef(null);
   const previousActiveElementRef = useRef(null);
 
   useEffect(() => {
@@ -51,7 +52,32 @@ export default function ProductDetailPage() {
     document.body.style.overflow = 'hidden';
 
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') setSelectedVisualAsset(null);
+      if (event.key === 'Escape') {
+        setSelectedVisualAsset(null);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const root = dialogRef.current;
+      if (!root) return;
+      const focusables = root.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusables.length === 0) {
+        event.preventDefault();
+        return;
+      }
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const activeEl = document.activeElement;
+      if (event.shiftKey) {
+        if (activeEl === first || !root.contains(activeEl)) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else if (activeEl === last || !root.contains(activeEl)) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     window.addEventListener('keydown', onKeyDown);
@@ -104,6 +130,13 @@ export default function ProductDetailPage() {
             <div style={{ marginTop: 12 }}>
               <Link to={`/products/${p.slug}/research`} className="link-arrow">
                 View persona research <ArrowGlyph />
+              </Link>
+            </div>
+          ) : null}
+          {p.slug === 'ridesense' ? (
+            <div style={{ marginTop: 12 }}>
+              <Link to={`/products/${p.slug}/wireframes`} className="link-arrow">
+                View lo-fi wireframes <ArrowGlyph />
               </Link>
             </div>
           ) : null}
@@ -404,6 +437,7 @@ export default function ProductDetailPage() {
       {selectedVisualAsset
         ? createPortal(
             <div
+              ref={dialogRef}
               role="dialog"
               aria-modal="true"
               aria-label={`${selectedVisualAsset.label} enlarged screenshot`}

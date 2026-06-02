@@ -4,6 +4,7 @@ import { products, flagshipProducts, getProductBySlug } from './projects';
 import { profile } from './profile';
 import { getProductResearchBySlug } from './productResearch';
 import { resumeContent } from './resumeContent';
+import { resumeMeta } from './resumeMeta';
 
 const PRODUCT_SLUGS = ['track-tuner', 'ridesense', 'ctx-chat', 'diaz-on-demand'];
 const commandNames = [
@@ -196,7 +197,13 @@ export function runDevModeCommand(rawCommand) {
             ),
           },
         ],
-        links: [{ label: 'Open resume PDF', href: '/resume/Cody-Johnson-Product-Manager-Resume.pdf' }],
+        links: [
+          {
+            label: 'Open resume PDF',
+            href: resumeMeta.downloadPath,
+            external: true,
+          },
+        ],
       };
     case 'stack':
       return {
@@ -231,7 +238,11 @@ export function runDevModeCommand(rawCommand) {
         ],
         links: [
           ...profile.contactLinks,
-          { label: 'Resume PDF', href: '/resume/Cody-Johnson-Product-Manager-Resume.pdf' },
+          {
+            label: 'Resume PDF',
+            href: resumeMeta.downloadPath,
+            external: true,
+          },
         ],
       };
     default:
