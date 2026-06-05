@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from '../components/Editorial';
+import { Reveal } from '../components/ScrollReveal';
 import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
 import { getProductResearchBySlug } from '../content/productResearch';
@@ -72,7 +73,7 @@ export default function ProductAnalysisPage() {
 
   return (
     <div className="fade-in">
-      <section className="page-hero">
+      <Reveal as="section" className="page-hero" duration={900}>
         <div className="container">
           <div className="crumbs">
             <Link to="/">Index</Link>
@@ -93,13 +94,13 @@ export default function ProductAnalysisPage() {
             {analysis.tagline}
           </p>
           <div className="analysis-hero">
-            <div>
+            <Reveal delay={80}>
               <Eyebrow>Summary</Eyebrow>
               <p className="body" style={{ marginTop: 12, maxWidth: '64ch', color: 'var(--ink)' }}>
                 {analysis.summary}
               </p>
-            </div>
-            <div className="analysis-hero__meta">
+            </Reveal>
+            <Reveal className="analysis-hero__meta" delay={180}>
               <div>
                 <Eyebrow>Build</Eyebrow>
                 <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
@@ -120,10 +121,10 @@ export default function ProductAnalysisPage() {
                   View persona research <ArrowGlyph />
                 </Link>
               ) : null}
-            </div>
+            </Reveal>
           </div>
         </div>
-      </section>
+      </Reveal>
 
       <section className="section section--tight">
         <div className="container pd-layout">
@@ -142,7 +143,7 @@ export default function ProductAnalysisPage() {
           </aside>
 
           <div style={{ minWidth: 0 }}>
-            <div id="overview" style={{ marginBottom: 88 }}>
+            <Reveal id="overview" style={{ marginBottom: 88 }}>
               <Eyebrow>01 — Overview</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 20px' }}>
                 The problem worth solving
@@ -151,39 +152,39 @@ export default function ProductAnalysisPage() {
                 {analysis.problem}
               </p>
               <div className="analysis-user-grid">
-                <div>
+                <Reveal delay={0}>
                   <Eyebrow>Primary user</Eyebrow>
                   <p className="body" style={{ marginTop: 10 }}>{analysis.users.primary}</p>
-                </div>
-                <div>
+                </Reveal>
+                <Reveal delay={90}>
                   <Eyebrow>Secondary user</Eyebrow>
                   <p className="body" style={{ marginTop: 10 }}>{analysis.users.secondary}</p>
-                </div>
-                <div>
+                </Reveal>
+                <Reveal delay={180}>
                   <Eyebrow>Buyer</Eyebrow>
                   <p className="body" style={{ marginTop: 10 }}>{analysis.users.buyer}</p>
-                </div>
+                </Reveal>
               </div>
-            </div>
+            </Reveal>
 
-            <div id="workflow" style={{ marginBottom: 88 }}>
+            <Reveal id="workflow" style={{ marginBottom: 88 }}>
               <Eyebrow>02 — Workflow</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 Current behavior and market gap
               </h2>
               <div className="analysis-dual-grid">
-                <div>
+                <Reveal delay={100}>
                   <Eyebrow>Current workflow</Eyebrow>
                   <AnalysisList items={analysis.currentWorkflow} />
-                </div>
-                <div>
+                </Reveal>
+                <Reveal delay={180}>
                   <Eyebrow>Opportunity</Eyebrow>
                   <AnalysisList items={analysis.opportunity} />
-                </div>
+                </Reveal>
               </div>
-            </div>
+            </Reveal>
 
-            <div id="bet" style={{ marginBottom: 88 }}>
+            <Reveal id="bet" style={{ marginBottom: 88 }}>
               <Eyebrow>03 — Product bet</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 20px' }}>
                 Win the trackside loop first
@@ -191,60 +192,71 @@ export default function ProductAnalysisPage() {
               <p className="lead" style={{ margin: 0, color: 'var(--ink)' }}>
                 {analysis.productBet}
               </p>
-            </div>
+            </Reveal>
 
-            <div id="scope" style={{ marginBottom: 88 }}>
+            <Reveal id="scope" style={{ marginBottom: 88 }}>
               <Eyebrow>04 — MVP scope</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 What shipped and what stayed out
               </h2>
               <div className="analysis-dual-grid">
-                <div>
+                <Reveal delay={100}>
                   <Eyebrow>Shipped in MVP</Eyebrow>
                   <AnalysisList items={analysis.mvp.shipped} />
-                </div>
-                <div>
+                </Reveal>
+                <Reveal delay={180}>
                   <Eyebrow>Cut from MVP</Eyebrow>
                   <AnalysisList items={analysis.mvp.cut} />
-                </div>
+                </Reveal>
               </div>
               <div style={{ marginTop: 40 }}>
                 <Eyebrow>Prioritization</Eyebrow>
                 <div className="priority-grid" role="list" aria-label="Track Tuner prioritization">
-                  {analysis.priorities.map((item) => (
-                    <article key={item.initiative} className="priority-card" role="listitem">
+                  {analysis.priorities.map((item, index) => (
+                    <Reveal
+                      as="article"
+                      key={item.initiative}
+                      className="priority-card"
+                      role="listitem"
+                      delay={(index % 3) * 90}
+                    >
                       <p className="priority-card__kicker">{item.value} value · {item.effort} effort</p>
                       <h3>{item.initiative}</h3>
                       <p>{item.decision}</p>
-                    </article>
+                    </Reveal>
                   ))}
                 </div>
               </div>
-            </div>
+            </Reveal>
 
-            <div id="metrics" style={{ marginBottom: 88 }}>
+            <Reveal id="metrics" style={{ marginBottom: 88 }}>
               <Eyebrow>05 — Metrics</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 Measure whether the loop sticks
               </h2>
               <div className="metric-grid">
-                {analysis.successMetrics.map((metric) => (
-                  <article key={metric.label} className="metric-card">
+                {analysis.successMetrics.map((metric, index) => (
+                  <Reveal
+                    as="article"
+                    key={metric.label}
+                    className="metric-card"
+                    delay={(index % 3) * 90}
+                  >
                     <p className="metric-card__label">{metric.label}</p>
                     <p className="metric-card__body">{metric.detail}</p>
-                  </article>
+                  </Reveal>
                 ))}
               </div>
-              <div className="analysis-observability">
-                <div>
+              <Reveal className="analysis-observability" delay={100}>
+                <Reveal delay={0}>
                   <Eyebrow>Event plan</Eyebrow>
                   <AnalysisList items={analysis.analyticsPlan.events} className="analysis-list--dense" />
-                </div>
-                <div>
+                </Reveal>
+                <Reveal delay={90}>
                   <Eyebrow>Core funnel</Eyebrow>
                   <AnalysisList items={analysis.analyticsPlan.funnel} className="analysis-list--dense" />
-                </div>
-                <div>
+                </Reveal>
+                <Reveal delay={180}>
                   <Eyebrow>Cohorts and dashboards</Eyebrow>
                   <AnalysisList
                     items={[
@@ -253,17 +265,17 @@ export default function ProductAnalysisPage() {
                     ]}
                     className="analysis-list--dense"
                   />
-                </div>
-              </div>
+                </Reveal>
+              </Reveal>
               <div style={{ marginTop: 28 }}>
                 <Eyebrow>AI observability</Eyebrow>
                 <p className="body" style={{ marginTop: 10, maxWidth: '66ch' }}>
                   {analysis.analyticsPlan.observability}
                 </p>
               </div>
-            </div>
+            </Reveal>
 
-            <div id="shipped" style={{ marginBottom: 88 }}>
+            <Reveal id="shipped" style={{ marginBottom: 88 }}>
               <Eyebrow>06 — What shipped</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 12px' }}>
                 The milestones that changed the product
@@ -274,8 +286,8 @@ export default function ProductAnalysisPage() {
               >
                 Fourteen pull requests landed in the first public build cycle. These are the ones that most clearly changed the product story, monetization path, and trust model.
               </p>
-              {analysis.shippedHighlights.map((item) => (
-                <article key={item.label} className="update">
+              {analysis.shippedHighlights.map((item, index) => (
+                <Reveal as="article" key={item.label} className="update" delay={(index % 4) * 80}>
                   <div className="update__body">
                     <p className="update__meta">{item.label}</p>
                     <h4>
@@ -288,11 +300,11 @@ export default function ProductAnalysisPage() {
                       )}
                     </h4>
                   </div>
-                </article>
+                </Reveal>
               ))}
-            </div>
+            </Reveal>
 
-            <div id="learnings">
+            <Reveal id="learnings">
               <Eyebrow>07 — Learnings</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 What changed my product view
@@ -302,9 +314,9 @@ export default function ProductAnalysisPage() {
                 <Eyebrow>Next iteration</Eyebrow>
                 <AnalysisList items={analysis.nextIterations} />
               </div>
-            </div>
+            </Reveal>
 
-            <div
+            <Reveal
               style={{
                 marginTop: 80,
                 paddingTop: 32,
@@ -326,7 +338,7 @@ export default function ProductAnalysisPage() {
               <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
                 Talk product strategy <ArrowGlyph />
               </a>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>

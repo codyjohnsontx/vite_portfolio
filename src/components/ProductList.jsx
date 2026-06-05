@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from './Editorial';
+import { Reveal } from './ScrollReveal';
 
 function isInteractiveChild(target, currentTarget) {
   if (!(target instanceof Element)) return false;
@@ -18,9 +19,12 @@ export default function ProductList({ products, startIndex = 1 }) {
         const isOpen = openSlug === p.slug;
         const toggle = () => setOpenSlug(isOpen ? null : p.slug);
         return (
-          <article
+          <Reveal
+            as="article"
             key={p.slug}
             className={'prod-card' + (isOpen ? ' is-open' : '')}
+            delay={(i % 4) * 80}
+            distance={22}
             style={{ '--card-accent': p.accent }}
             onClick={toggle}
             onKeyDown={(e) => {
@@ -89,7 +93,7 @@ export default function ProductList({ products, startIndex = 1 }) {
             <span className="prod-card__caret" aria-hidden="true">
               +
             </span>
-          </article>
+          </Reveal>
         );
       })}
     </div>

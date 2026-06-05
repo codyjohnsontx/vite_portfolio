@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Eyebrow } from '../components/Editorial';
 import ProductList from '../components/ProductList';
+import { Reveal } from '../components/ScrollReveal';
 import { products } from '../content/projects';
 
 const FILTERS = [
@@ -16,7 +17,7 @@ export default function ProductsPage() {
 
   return (
     <div className="fade-in">
-      <section className="page-hero">
+      <Reveal as="section" className="page-hero" duration={900}>
         <div className="container">
           <div className="crumbs">
             <Link to="/">Index</Link>
@@ -30,11 +31,11 @@ export default function ProductsPage() {
             Products & <span className="italic">prototypes</span>.
           </h1>
         </div>
-      </section>
+      </Reveal>
 
-      <section className="section">
+      <Reveal as="section" className="section">
         <div className="container">
-          <div
+          <Reveal
             style={{
               display: 'flex',
               justifyContent: 'space-between',
@@ -60,10 +61,10 @@ export default function ProductsPage() {
                 </button>
               ))}
             </div>
-          </div>
+          </Reveal>
           <ProductList products={list} />
         </div>
-      </section>
+      </Reveal>
     </div>
   );
 }
