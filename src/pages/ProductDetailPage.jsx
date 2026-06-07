@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from '../components/Editorial';
+import { Reveal } from '../components/ScrollReveal';
 import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
 import { getProductResearchBySlug } from '../content/productResearch';
@@ -98,7 +99,7 @@ export default function ProductDetailPage() {
 
   return (
     <div className="fade-in">
-      <section className="page-hero">
+      <Reveal as="section" className="page-hero" duration={900}>
         <div className="container">
           <div className="crumbs">
             <Link to="/">Index</Link>
@@ -141,10 +142,10 @@ export default function ProductDetailPage() {
             </div>
           ) : null}
         </div>
-      </section>
+      </Reveal>
 
       {p.image ? (
-        <div style={{ borderBottom: '1px solid var(--rule)' }}>
+        <Reveal style={{ borderBottom: '1px solid var(--rule)' }} delay={80} distance={22}>
           <div
             className="container"
             style={{ padding: 'clamp(24px, 3vw, 56px) var(--gutter)' }}
@@ -172,11 +173,15 @@ export default function ProductDetailPage() {
               />
             </div>
           </div>
-        </div>
+        </Reveal>
       ) : null}
 
       {p.visualAssets?.items?.length ? (
-        <section className="section section--tight" style={{ borderBottom: '1px solid var(--rule)' }}>
+        <Reveal
+          as="section"
+          className="section section--tight"
+          style={{ borderBottom: '1px solid var(--rule)' }}
+        >
           <div className="container">
             <Eyebrow>Visual proof</Eyebrow>
             <h2 className="h2" style={{ margin: '12px 0 12px' }}>
@@ -196,9 +201,11 @@ export default function ProductDetailPage() {
                 marginTop: 32,
               }}
             >
-              {p.visualAssets.items.map((asset) => (
-                <figure
+              {p.visualAssets.items.map((asset, index) => (
+                <Reveal
+                  as="figure"
                   key={asset.src}
+                  delay={(index % 5) * 90}
                   style={{
                     margin: 0,
                     border: '1px solid var(--rule-2)',
@@ -233,11 +240,11 @@ export default function ProductDetailPage() {
                   >
                     {asset.label}
                   </figcaption>
-                </figure>
+                </Reveal>
               ))}
             </div>
           </div>
-        </section>
+        </Reveal>
       ) : null}
 
       <section className="section section--tight">
@@ -256,7 +263,7 @@ export default function ProductDetailPage() {
           </aside>
 
           <div style={{ minWidth: 0 }}>
-            <div id="overview" style={{ marginBottom: 80 }}>
+            <Reveal id="overview" style={{ marginBottom: 80 }}>
               <Eyebrow>01 — Overview</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 The problem
@@ -265,26 +272,28 @@ export default function ProductDetailPage() {
                 {p.problem}
               </p>
               <div className="pd-grid">
-                <div>
+                <Reveal delay={100}>
                   <Eyebrow>Audience</Eyebrow>
                   <p className="body" style={{ marginTop: 8 }}>{p.audience}</p>
-                </div>
-                <div>
+                </Reveal>
+                <Reveal delay={180}>
                   <Eyebrow>Job to be done</Eyebrow>
                   <p className="body" style={{ marginTop: 8 }}>{p.jtbd}</p>
-                </div>
+                </Reveal>
               </div>
-            </div>
+            </Reveal>
 
-            <div id="workflow" style={{ marginBottom: 80 }}>
+            <Reveal id="workflow" style={{ marginBottom: 80 }}>
               <Eyebrow>02 — Workflow</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 How it works end-to-end
               </h2>
               <ol style={{ margin: 0, padding: 0, listStyle: 'none' }}>
                 {p.coreWorkflow.map((step, i) => (
-                  <li
+                  <Reveal
+                    as="li"
                     key={step}
+                    delay={(i % 4) * 80}
                     style={{
                       display: 'grid',
                       gridTemplateColumns: '60px 1fr',
@@ -305,20 +314,22 @@ export default function ProductDetailPage() {
                     >
                       {step}
                     </p>
-                  </li>
+                  </Reveal>
                 ))}
               </ol>
-            </div>
+            </Reveal>
 
-            <div id="scope" style={{ marginBottom: 80 }}>
+            <Reveal id="scope" style={{ marginBottom: 80 }}>
               <Eyebrow>03 — MVP scope</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 What ships first
               </h2>
               <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
                 {p.mvpScope.map((s, i) => (
-                  <li
+                  <Reveal
+                    as="li"
                     key={s}
+                    delay={(i % 4) * 70}
                     style={{
                       padding: '14px 0',
                       borderTop: '1px solid var(--rule-2)',
@@ -342,12 +353,12 @@ export default function ProductDetailPage() {
                     >
                       {s}
                     </span>
-                  </li>
+                  </Reveal>
                 ))}
               </ul>
-            </div>
+            </Reveal>
 
-            <div id="updates" style={{ marginBottom: 80 }}>
+            <Reveal id="updates" style={{ marginBottom: 80 }}>
               <Eyebrow>04 — Updates</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 12px' }}>
                 Working in public
@@ -364,7 +375,12 @@ export default function ProductDetailPage() {
                 Pull requests, notes, and decisions as they happen. Updated weekly.
               </p>
               {(p.updates ?? []).map((u, i) => (
-                <article key={u.url || u.id || u.title || `update-${i}`} className="update">
+                <Reveal
+                  as="article"
+                  key={u.url || u.id || u.title || `update-${i}`}
+                  className="update"
+                  delay={(i % 4) * 80}
+                >
                   <div className="update__body">
                     {u.date || u.tag ? (
                       <p className="update__meta">
@@ -382,16 +398,16 @@ export default function ProductDetailPage() {
                     </h4>
                     <p>{u.body}</p>
                   </div>
-                </article>
+                </Reveal>
               ))}
               {!p.updates?.length ? (
                 <p className="body italic" style={{ color: 'var(--ink-3)' }}>
                   No updates yet.
                 </p>
               ) : null}
-            </div>
+            </Reveal>
 
-            <div id="whats-next">
+            <Reveal id="whats-next">
               <Eyebrow>05 — What&rsquo;s next</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 16px' }}>
                 {nextSummary}
@@ -410,9 +426,9 @@ export default function ProductDetailPage() {
                   {p.brandDisclaimer}
                 </p>
               ) : null}
-            </div>
+            </Reveal>
 
-            <div
+            <Reveal
               style={{
                 marginTop: 80,
                 paddingTop: 32,
@@ -429,7 +445,7 @@ export default function ProductDetailPage() {
               <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
                 Talk about this build <ArrowGlyph />
               </a>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>

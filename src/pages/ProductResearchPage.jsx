@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow } from '../components/Editorial';
+import { Reveal } from '../components/ScrollReveal';
 import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
 import { getProductResearchBySlug } from '../content/productResearch';
@@ -77,7 +78,7 @@ export default function ProductResearchPage() {
 
   return (
     <div className="fade-in">
-      <section className="page-hero research-hero">
+      <Reveal as="section" className="page-hero research-hero" duration={900}>
         <div className="container">
           <div className="crumbs">
             <Link to="/">Index</Link>
@@ -90,7 +91,7 @@ export default function ProductResearchPage() {
           </div>
 
           <div className="research-hero__grid">
-            <div>
+            <Reveal delay={60} duration={920}>
               <Eyebrow>Product strategy case study</Eyebrow>
               <h1
                 className="display"
@@ -114,14 +115,20 @@ export default function ProductResearchPage() {
                   Back to build <ArrowGlyph />
                 </Link>
               </div>
-            </div>
+            </Reveal>
 
-            <div className="research-hero__media" aria-label={`${product.name} product image`}>
+            <Reveal
+              className="research-hero__media"
+              aria-label={`${product.name} product image`}
+              delay={180}
+              distance={26}
+              duration={940}
+            >
               <img src={product.image} alt={product.name} />
-            </div>
+            </Reveal>
           </div>
         </div>
-      </section>
+      </Reveal>
 
       <section className="section section--tight">
         <div className="container pd-layout">
@@ -140,44 +147,55 @@ export default function ProductResearchPage() {
           </aside>
 
           <div style={{ minWidth: 0 }}>
-            <div id="problem" className="research-section">
-              <Eyebrow>01 — Strategic problem</Eyebrow>
-              <h2 className="h2">
-                {headings.problem ?? 'The research frames the product opportunity.'}
-              </h2>
+            <Reveal id="problem" className="research-section">
+              <Reveal delay={0}>
+                <Eyebrow>01 — Strategic problem</Eyebrow>
+                <h2 className="h2">
+                  {headings.problem ?? 'The research frames the product opportunity.'}
+                </h2>
+              </Reveal>
               <div className="research-dual">
-                <p className="lead" style={{ margin: 0, color: 'var(--ink)' }}>
+                <Reveal as="p" className="lead" delay={100} style={{ margin: 0, color: 'var(--ink)' }}>
                   {research.strategicProblem}
-                </p>
-                <div className="research-note">
+                </Reveal>
+                <Reveal className="research-note" delay={180}>
                   <Eyebrow>Design philosophy</Eyebrow>
                   <p>{research.designPhilosophy}</p>
-                </div>
+                </Reveal>
               </div>
-            </div>
+            </Reveal>
 
-            <div id="dimensions" className="research-section">
-              <Eyebrow>02 — Persona dimensions</Eyebrow>
-              <h2 className="h2">
-                {headings.dimensions ?? 'The framework defines the behaviors that shape product decisions.'}
-              </h2>
+            <Reveal id="dimensions" className="research-section">
+              <Reveal>
+                <Eyebrow>02 — Persona dimensions</Eyebrow>
+                <h2 className="h2">
+                  {headings.dimensions ?? 'The framework defines the behaviors that shape product decisions.'}
+                </h2>
+              </Reveal>
               <div className="research-dimension-grid">
                 {research.dimensions.map((dimension, index) => (
-                  <article key={dimension.label} className="research-dimension">
+                  <Reveal
+                    as="article"
+                    key={dimension.label}
+                    className="research-dimension"
+                    delay={(index % 4) * 90}
+                  >
                     <span className="research-dimension__index">0{index + 1}</span>
                     <h3>{dimension.label}</h3>
                     <p>{dimension.detail}</p>
-                  </article>
+                  </Reveal>
                 ))}
               </div>
-            </div>
+            </Reveal>
 
-            <div id="archetypes" className="research-section">
-              <Eyebrow>03 — Archetypes</Eyebrow>
-              <h2 className="h2">
-                {headings.archetypes ?? 'The launch segment is selected by frequency and pain.'}
-              </h2>
-              <div className="research-persona-shell">
+            <Reveal id="archetypes" className="research-section">
+              <Reveal>
+                <Eyebrow>03 — Archetypes</Eyebrow>
+                <h2 className="h2">
+                  {headings.archetypes ?? 'The launch segment is selected by frequency and pain.'}
+                </h2>
+              </Reveal>
+              <Reveal className="research-persona-shell" delay={120}>
                 <div className="research-persona-tabs" role="tablist" aria-label="Persona archetypes">
                   {archetypes.map((persona, index) => (
                     <button
@@ -228,13 +246,15 @@ export default function ProductResearchPage() {
                     </div>
                   </article>
                 ) : null}
-              </div>
-            </div>
+              </Reveal>
+            </Reveal>
 
-            <div id="priority" className="research-section">
-              <Eyebrow>04 — Feature priority</Eyebrow>
-              <h2 className="h2">{headings.priority ?? 'A roadmap heatmap by persona value.'}</h2>
-              <div className="research-heatmap-wrap">
+            <Reveal id="priority" className="research-section">
+              <Reveal>
+                <Eyebrow>04 — Feature priority</Eyebrow>
+                <h2 className="h2">{headings.priority ?? 'A roadmap heatmap by persona value.'}</h2>
+              </Reveal>
+              <Reveal className="research-heatmap-wrap" delay={120}>
                 <table className="research-heatmap">
                   <caption>
                     {research.matrix.caption ?? 'Feature prioritization matrix across persona segments.'}
@@ -262,50 +282,59 @@ export default function ProductResearchPage() {
                     ))}
                   </tbody>
                 </table>
-              </div>
-            </div>
+              </Reveal>
+            </Reveal>
 
-            <div id="insights" className="research-section">
-              <Eyebrow>05 — Strategic insights</Eyebrow>
-              <h2 className="h2">
-                {headings.insights ?? 'The personas clarify roadmap order and trust boundaries.'}
-              </h2>
+            <Reveal id="insights" className="research-section">
+              <Reveal>
+                <Eyebrow>05 — Strategic insights</Eyebrow>
+                <h2 className="h2">
+                  {headings.insights ?? 'The personas clarify roadmap order and trust boundaries.'}
+                </h2>
+              </Reveal>
               <div className="research-insights">
                 {research.strategicInsights.map((insight, index) => (
-                  <article key={insight.title} className="research-insight">
+                  <Reveal
+                    as="article"
+                    key={insight.title}
+                    className="research-insight"
+                    delay={(index % 4) * 90}
+                  >
                     <span className="numeral">0{index + 1}</span>
                     <div>
                       <h3>{insight.title}</h3>
                       <p>{insight.detail}</p>
                     </div>
-                  </article>
+                  </Reveal>
                 ))}
               </div>
-            </div>
+            </Reveal>
 
-            <div id="system" className="research-section">
-              <Eyebrow>06 — Research system</Eyebrow>
-              <h2 className="h2">{headings.system ?? 'What the next interviews should validate.'}</h2>
+            <Reveal id="system" className="research-section">
+              <Reveal>
+                <Eyebrow>06 — Research system</Eyebrow>
+                <h2 className="h2">{headings.system ?? 'What the next interviews should validate.'}</h2>
+              </Reveal>
               <div className="analysis-dual-grid">
-                <div>
+                <Reveal delay={100}>
                   <Eyebrow>Interview areas</Eyebrow>
                   <ResearchList items={research.researchSystem.interviewAreas} />
-                </div>
-                <div>
+                </Reveal>
+                <Reveal delay={180}>
                   <Eyebrow>Validation questions</Eyebrow>
                   <ResearchList items={research.researchSystem.validationQuestions} />
-                </div>
+                </Reveal>
               </div>
-            </div>
+            </Reveal>
 
-            <div className="research-footer">
+            <Reveal className="research-footer">
               <Link className="link-arrow" to={`/products/${product.slug}`}>
                 ← Back to {product.name}
               </Link>
               <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
                 Talk product research <ArrowGlyph />
               </a>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>

@@ -11,9 +11,9 @@ const THEMES = [
 ];
 
 const NAV = [
-  { to: '/', label: 'Index', end: true },
   { to: '/products', label: 'Products' },
   { to: '/case-studies', label: 'Case Studies' },
+  { to: '/blog', label: 'Blog' },
   { to: '/dev-mode', label: 'Dev Mode' },
 ];
 
@@ -69,8 +69,10 @@ function SiteLayout() {
     }
   }, [theme]);
 
-  const onProductOrCase =
-    location.pathname.startsWith('/products') || location.pathname.startsWith('/case-studies');
+  const onProductCaseOrBlog =
+    location.pathname.startsWith('/products') ||
+    location.pathname.startsWith('/case-studies') ||
+    location.pathname.startsWith('/blog');
   const inDevMode = location.pathname.startsWith('/dev-mode');
 
   return (
@@ -109,7 +111,7 @@ function SiteLayout() {
         </div>
       </nav>
 
-      <main key={onProductOrCase ? location.pathname : undefined}>
+      <main key={onProductCaseOrBlog ? location.pathname : undefined}>
         <Outlet />
       </main>
 
@@ -127,6 +129,9 @@ function SiteLayout() {
               </li>
               <li>
                 <Link to="/case-studies">Case Studies</Link>
+              </li>
+              <li>
+                <Link to="/blog">Blog</Link>
               </li>
             </ul>
           </div>

@@ -7,6 +7,7 @@ import {
 } from '../components/Editorial';
 import FeatureProduct from '../components/FeatureProduct';
 import ProductList from '../components/ProductList';
+import { Reveal } from '../components/ScrollReveal';
 import { caseStudies } from '../content/caseStudies';
 import { conceptProducts, flagshipProducts } from '../content/projects';
 
@@ -20,9 +21,11 @@ function Hero() {
   }, []);
 
   return (
-    <section
+    <Reveal
+      as="section"
       className="section"
       id="home"
+      duration={900}
       style={{ paddingTop: 'clamp(64px, 9vw, 140px)' }}
     >
       <div className="container">
@@ -43,13 +46,19 @@ function Hero() {
         </h1>
 
       </div>
-    </section>
+    </Reveal>
   );
 }
 
 function LatestUpdate() {
   return (
-    <section className="latest-update" aria-labelledby="latest-update-title">
+    <Reveal
+      as="section"
+      className="latest-update"
+      aria-labelledby="latest-update-title"
+      delay={80}
+      duration={840}
+    >
       <div className="container latest-update__inner">
         <div className="latest-update__label mono uppercase">Latest update</div>
         <div className="latest-update__copy">
@@ -70,7 +79,7 @@ function LatestUpdate() {
           </Link>
         </div>
       </div>
-    </section>
+    </Reveal>
   );
 }
 
@@ -90,24 +99,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section" id="concepts">
+      <Reveal as="section" className="section" id="concepts">
         <div className="container">
-          <SectionHead
-            num="02"
-            eyebrow="Concepts & prototypes"
-            title={<>Smaller bets, sharper questions.</>}
-            sub="Concepts I prototyped to push on a single hypothesis — usability under pressure, lifecycle modeling, micro-interactions in social products."
-          />
+          <Reveal delay={80}>
+            <SectionHead
+              num="02"
+              eyebrow="Concepts & prototypes"
+              title={<>Smaller bets, sharper questions.</>}
+              sub="Concepts I prototyped to push on a single hypothesis — usability under pressure, lifecycle modeling, micro-interactions in social products."
+            />
+          </Reveal>
           <ProductList
             products={conceptProducts}
             startIndex={flagshipProducts.length + 1}
           />
         </div>
-      </section>
+      </Reveal>
 
-      <section className="section" id="case-studies">
+      <Reveal as="section" className="section" id="case-studies">
         <div className="container">
-          <div className="section-head" style={{ marginBottom: 32 }}>
+          <Reveal className="section-head" style={{ marginBottom: 32 }}>
             <div className="index">
               <Eyebrow>Case studies</Eyebrow>
               <span className="num">03</span>
@@ -115,13 +126,15 @@ export default function HomePage() {
             <div>
               <h2 className="sr-only">Case studies</h2>
             </div>
-          </div>
+          </Reveal>
           <div className="case-grid">
-            {caseStudies.map((c) => (
-              <button
+            {caseStudies.map((c, index) => (
+              <Reveal
+                as="button"
                 key={c.slug}
                 type="button"
                 className="case-card"
+                delay={index * 90}
                 onClick={() => navigate(`/case-studies/${c.slug}`)}
                 style={{ textAlign: 'left', font: 'inherit' }}
               >
@@ -148,11 +161,11 @@ export default function HomePage() {
                     Read <ArrowGlyph />
                   </span>
                 </div>
-              </button>
+              </Reveal>
             ))}
           </div>
         </div>
-      </section>
+      </Reveal>
 
     </div>
   );

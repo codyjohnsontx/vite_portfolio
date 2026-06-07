@@ -310,7 +310,7 @@ const allProducts = [
       'Vitest',
     ],
     oneLiner:
-      'Session planner for wind sports — saved spots, scored forecast hours, and an animated wind map answer one question: is it worth loading up gear today?',
+      'Session planner for wind sports with saved spots, scored forecast hours, and an animated wind map that answers one question: is it worth loading up gear today?',
     audience:
       'Recreational and intermediate kiteboarders, wing foilers, and downwind foilers who currently juggle 3+ weather sources to plan a single session.',
     jtbd:
@@ -603,6 +603,7 @@ const allProducts = [
     name: 'Strava Component Lifecycle',
     slug: 'strava-component-lifecycle',
     tier: 'concept',
+    archived: true,
     status: 'prototype',
     statusLabel: 'Prototype',
     year: '2025',
@@ -651,6 +652,7 @@ const allProducts = [
     name: 'Instagram GIF Vault',
     slug: 'instagram-comment-gif-vault',
     tier: 'concept',
+    archived: true,
     status: 'prototype',
     statusLabel: 'Prototype',
     year: '2025',

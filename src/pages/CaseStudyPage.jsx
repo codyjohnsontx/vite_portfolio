@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow } from '../components/Editorial';
+import { Reveal } from '../components/ScrollReveal';
 import { getCaseStudyBySlug } from '../content/caseStudies';
 
 function CaseSection({ num, title, body }) {
   return (
-    <section className="section section--tight">
+    <Reveal as="section" className="section section--tight">
       <div className="container case-section-grid">
         <div>
           <span className="numeral" style={{ fontSize: 'clamp(48px, 6vw, 84px)' }}>
@@ -22,14 +23,14 @@ function CaseSection({ num, title, body }) {
         </div>
         <div />
       </div>
-    </section>
+    </Reveal>
   );
 }
 
 function CaseListSection({ num, title, items }) {
   if (!items?.length) return null;
   return (
-    <section className="section section--tight">
+    <Reveal as="section" className="section section--tight">
       <div className="container case-section-grid">
         <div>
           <span className="numeral" style={{ fontSize: 'clamp(48px, 6vw, 84px)' }}>
@@ -70,7 +71,7 @@ function CaseListSection({ num, title, items }) {
         </div>
         <div />
       </div>
-    </section>
+    </Reveal>
   );
 }
 
@@ -96,7 +97,7 @@ export default function CaseStudyPage() {
 
   return (
     <div className="fade-in">
-      <section className="page-hero">
+      <Reveal as="section" className="page-hero" duration={900}>
         <div className="container">
           <div className="crumbs">
             <Link to="/">Index</Link>
@@ -115,39 +116,39 @@ export default function CaseStudyPage() {
             {c.tagline}
           </p>
         </div>
-      </section>
+      </Reveal>
 
-      <section className="section">
+      <Reveal as="section" className="section">
         <div className="container">
           <div className="case-stats">
-            <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
+            <Reveal delay={0} style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
               <Eyebrow>Team</Eyebrow>
               <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
                 {c.team}
               </p>
-            </div>
-            <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
+            </Reveal>
+            <Reveal delay={90} style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
               <Eyebrow>Role</Eyebrow>
               <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
                 {c.role}
               </p>
-            </div>
-            <div style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
+            </Reveal>
+            <Reveal delay={180} style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
               <Eyebrow>Outcome</Eyebrow>
               <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
                 {c.featuredOutcome}
               </p>
-            </div>
+            </Reveal>
           </div>
 
           <div className="case-grid-2">
-            <div>
+            <Reveal delay={80}>
               <Eyebrow>Challenge</Eyebrow>
               <p className="lead drop-cap" style={{ marginTop: 16, color: 'var(--ink)' }}>
                 {c.challenge}
               </p>
-            </div>
-            <div>
+            </Reveal>
+            <Reveal delay={180}>
               <Eyebrow>Impact highlights</Eyebrow>
               <ul style={{ marginTop: 16, padding: 0, listStyle: 'none' }}>
                 {c.impactHighlights.map((h, i) => (
@@ -168,10 +169,10 @@ export default function CaseStudyPage() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Reveal>
           </div>
         </div>
-      </section>
+      </Reveal>
 
       <CaseSection num="01" title="Context" body={s.context} />
       <CaseSection num="02" title="The problem" body={s.problem} />
@@ -183,8 +184,8 @@ export default function CaseStudyPage() {
       <CaseListSection num="07" title="Outcomes" items={s.outcomes} />
       <CaseListSection num="08" title="Lessons" items={s.lessons} />
 
-      <section className="section section--tight">
-        <div
+      <Reveal as="section" className="section section--tight">
+        <Reveal
           className="container"
           style={{
             display: 'flex',
@@ -202,8 +203,8 @@ export default function CaseStudyPage() {
           <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
             Discuss this work <ArrowGlyph />
           </a>
-        </div>
-      </section>
+        </Reveal>
+      </Reveal>
     </div>
   );
 }

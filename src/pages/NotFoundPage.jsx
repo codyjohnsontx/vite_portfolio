@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow } from '../components/Editorial';
+import { Reveal } from '../components/ScrollReveal';
 
 export default function NotFoundPage() {
   return (
     <section className="section">
-      <div className="container">
+      <Reveal className="container" duration={900}>
         <Eyebrow>404</Eyebrow>
         <h1 className="display" style={{ margin: '24px 0 24px' }}>
           This page does not exist.
@@ -12,15 +13,15 @@ export default function NotFoundPage() {
         <p className="lead" style={{ maxWidth: '52ch', margin: '0 0 32px' }}>
           The rebuild is intentionally small. Head back to the index or browse the product work.
         </p>
-        <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
+        <Reveal delay={120} style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
           <Link className="link-arrow" to="/">
             Go home <ArrowGlyph />
           </Link>
           <Link className="link-arrow" to="/products">
             Browse products <ArrowGlyph />
           </Link>
-        </div>
-      </div>
+        </Reveal>
+      </Reveal>
     </section>
   );
 }

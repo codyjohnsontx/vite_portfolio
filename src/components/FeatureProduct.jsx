@@ -1,12 +1,19 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from './Editorial';
+import { Reveal } from './ScrollReveal';
 
 export default function FeatureProduct({ p }) {
   const href = `/products/${p.slug}`;
 
   return (
-    <article className="prod-feature" style={{ '--card-accent': p.accent }}>
+    <Reveal
+      as="article"
+      className="prod-feature"
+      distance={24}
+      duration={860}
+      style={{ '--card-accent': p.accent }}
+    >
       <Link
         to={href}
         className="prod-feature__media"
@@ -50,7 +57,7 @@ export default function FeatureProduct({ p }) {
           ) : null}
         </div>
       </div>
-    </article>
+    </Reveal>
   );
 }
 

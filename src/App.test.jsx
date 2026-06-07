@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor, within } from '@testing-library/rea
 import { describe, expect, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
+import { blogPosts } from './content/blogPosts';
 import { caseStudies } from './content/caseStudies';
 import { allProducts, products } from './content/projects';
 
@@ -90,9 +91,13 @@ describe('portfolio routes and metadata', () => {
     expect(trackTunerCard.getAttribute('aria-expanded')).toBe('true');
   });
 
-  it('keeps Overlap archived outside the visible product exports', () => {
+  it('keeps archived concepts outside the visible product exports', () => {
     expect(allProducts.find((product) => product.slug === 'overlap-racing-radar')).toBeTruthy();
+    expect(allProducts.find((product) => product.slug === 'strava-component-lifecycle')).toBeTruthy();
+    expect(allProducts.find((product) => product.slug === 'instagram-comment-gif-vault')).toBeTruthy();
     expect(products.some((product) => product.slug === 'overlap-racing-radar')).toBe(false);
+    expect(products.some((product) => product.slug === 'strava-component-lifecycle')).toBe(false);
+    expect(products.some((product) => product.slug === 'instagram-comment-gif-vault')).toBe(false);
   });
 
   it('does not expose Overlap on primary public product surfaces', () => {
@@ -112,6 +117,26 @@ describe('portfolio routes and metadata', () => {
     caseStudies.forEach((study) => {
       expect(screen.getByRole('heading', { name: study.title })).toBeTruthy();
     });
+  });
+
+  it('renders the blog index page with starter posts', () => {
+    renderApp('/blog');
+
+    expect(screen.getByRole('heading', { name: /Product notes/i })).toBeTruthy();
+    blogPosts.forEach((post) => {
+      expect(screen.getByRole('heading', { name: post.title })).toBeTruthy();
+      expect(screen.getByRole('link', { name: new RegExp(post.title, 'i') }).getAttribute('href')).toBe(
+        `/blog/${post.slug}`,
+      );
+    });
+  });
+
+  it('exposes Blog in the site navigation', () => {
+    renderApp('/blog');
+
+    const blogLinks = screen.getAllByRole('link', { name: 'Blog' });
+    expect(blogLinks.some((link) => link.getAttribute('href') === '/blog')).toBe(true);
+    expect(blogLinks.some((link) => link.className.includes('active'))).toBe(true);
   });
 
   it('renders Dev Mode from the dedicated route and navbar', () => {
@@ -353,12 +378,29 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
+  blogPosts.forEach((post) => {
+    it(`renders the blog post page for ${post.slug}`, () => {
+      renderApp(`/blog/${post.slug}`);
+
+      expect(screen.getByRole('heading', { name: post.title })).toBeTruthy();
+      expect(screen.getByText(post.deck)).toBeTruthy();
+      expect(screen.getAllByText(new RegExp(post.category)).length).toBeGreaterThan(0);
+      expect(screen.getByRole('heading', { name: post.sections[0].heading })).toBeTruthy();
+    });
+  });
+
   it('sends unknown product and case study slugs to the not-found experience', () => {
     const firstRender = renderApp('/products/not-a-real-product');
     expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
 
     firstRender.unmount();
     renderApp('/case-studies/not-a-real-study');
+    expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
+  });
+
+  it('sends unknown blog slugs to the not-found experience', () => {
+    renderApp('/blog/not-a-real-post');
+
     expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
   });
 
