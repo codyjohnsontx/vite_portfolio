@@ -202,6 +202,14 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
+  it('renders the Track Tuner public demo mode update', () => {
+    renderApp('/products/track-tuner');
+
+    expect(screen.getByText(/Update 11/)).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Add public read-only demo mode' })).toBeTruthy();
+    expect(screen.getByText(/Try Demo path/)).toBeTruthy();
+  });
+
   it('renders the refreshed RideSense product proof and screenshot section', () => {
     renderApp('/products/ridesense');
 

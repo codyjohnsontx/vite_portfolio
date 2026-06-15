@@ -48,7 +48,14 @@ const allProducts = [
     standaloneMockStatus: 'in-progress',
     updates: [
       {
-        date: 'Open',
+        date: 'Merged',
+        tag: 'Update 11',
+        title: 'Add public read-only demo mode',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/15',
+        body: 'Adds a Try Demo path that drops visitors into the real authenticated app UI without signing in or calling Supabase. Demo mode uses local typed sample data for a Yamaha R6, Texas tracks, and sample sessions, shows Pro-preview analytics and Race Engineer surfaces, and keeps every create, edit, delete, billing, export, and live AI action read-only.',
+      },
+      {
+        date: 'Merged',
         tag: 'Update 10',
         title: 'Deduplicate repeated Race Engineer prompts',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/13',
