@@ -206,7 +206,13 @@ describe('portfolio routes and metadata', () => {
     renderApp('/products/track-tuner');
 
     expect(screen.getByText(/Update 11/)).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Add public read-only demo mode' })).toBeTruthy();
+    const demoModeUpdateLink = screen.getByRole('link', {
+      name: 'Add public read-only demo mode',
+    });
+    expect(demoModeUpdateLink).toBeTruthy();
+    expect(demoModeUpdateLink.getAttribute('href')).toBe(
+      'https://github.com/codyjohnsontx/trackday_tuner/pull/15',
+    );
     expect(screen.getByText(/Try Demo path/)).toBeTruthy();
   });
 
