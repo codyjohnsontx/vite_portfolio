@@ -21,7 +21,7 @@ export default function BlogPostPage() {
             <span>{post.title}</span>
           </div>
           <Eyebrow>
-            {post.category} · {post.date} · {post.readingTime}
+            {post.date} · {post.readingTime}
           </Eyebrow>
           <h1
             className="display"
