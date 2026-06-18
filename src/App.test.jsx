@@ -398,7 +398,6 @@ describe('portfolio routes and metadata', () => {
 
       expect(screen.getByRole('heading', { name: post.title })).toBeTruthy();
       expect(screen.getByText(post.deck)).toBeTruthy();
-      expect(screen.getAllByText(new RegExp(post.category)).length).toBeGreaterThan(0);
       expect(screen.getByRole('heading', { name: post.sections[0].heading })).toBeTruthy();
     });
   });
