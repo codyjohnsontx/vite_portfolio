@@ -6,7 +6,6 @@ export const blogPosts = [
       'The hard part of an AI feature is deciding what the product is allowed to know, when it should stop, and how much confidence the user has actually earned from the evidence.',
     date: 'June 2026',
     readingTime: '5 min read',
-    category: 'Product judgment',
     intro:
       'I am interested in AI features, but I am more interested in whether the product deserves the confidence it creates. A chat box can make almost anything sound possible. The product work is deciding what the system should know, what it should admit it does not know, and where the answer should become a refusal instead of a guess.',
     sections: [
@@ -59,9 +58,8 @@ export const blogPosts = [
     title: 'MVP sequencing: memory before intelligence',
     deck:
       'Track Tuner gets more interesting when it becomes intelligent, but it gets useful first by becoming a better memory system for what changed and what happened next.',
-    date: 'June 2026',
+    date: 'May 2026',
     readingTime: '5 min read',
-    category: 'Product strategy',
     intro:
       'The exciting version of Track Tuner is easy to describe: telemetry, comparisons, setup recommendations, and a Race Engineer that helps a rider or driver decide what to change next. The useful first version starts smaller. It helps the user remember the setup, the conditions, the feedback, and the next decision while the day is still moving.',
     sections: [
@@ -114,9 +112,8 @@ export const blogPosts = [
     title: 'Operational friction is product scope',
     deck:
       'A lot of product work starts as operational drag: repeated manual work, unclear handoffs, weak reporting, and decisions that have to be renegotiated every day.',
-    date: 'June 2026',
+    date: 'April 2026',
     readingTime: '5 min read',
-    category: 'Product operations',
     intro:
       'I pay attention when work keeps getting stuck in the same place. A team enters the same data twice. A report takes too long to trust. A queue hides the next best action. A stakeholder request sounds like a feature, but the real problem is that the workflow forces people to keep making the same small decisions over and over.',
     sections: [

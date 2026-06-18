@@ -38,7 +38,7 @@ export default function BlogIndexPage() {
               </span>
               <div>
                 <Eyebrow>
-                  {post.category} · {post.date} · {post.readingTime}
+                  {post.date} · {post.readingTime}
                 </Eyebrow>
                 <h2 className="h2" style={{ margin: '8px 0 12px' }}>
                   {post.title}
