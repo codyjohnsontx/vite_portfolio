@@ -34,7 +34,7 @@ export default function FeatureProduct({ p }) {
         </h3>
         <p className="lead" style={{ margin: 0 }}>{p.oneLiner}</p>
 
-        <div style={{ marginTop: 8 }}>
+        <div>
           <Eyebrow>The problem</Eyebrow>
           <p className="body" style={{ marginTop: 8, color: 'var(--ink)' }}>
             {p.problem}
@@ -43,7 +43,7 @@ export default function FeatureProduct({ p }) {
 
         <StackRow items={p.stack} />
 
-        <div style={{ display: 'flex', gap: 28, marginTop: 8, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
           <Link to={href} className="link-arrow">
             Read the build <ArrowGlyph />
           </Link>

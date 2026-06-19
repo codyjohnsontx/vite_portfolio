@@ -1,0 +1,133 @@
+/* Session Compare deck page — slides preserve the 1920×1080 design and scale to fit */
+
+.sc-page {
+  background: #07090b;
+  color: #eef1f3;
+  min-height: 100vh;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  padding: 56px clamp(20px, 5vw, 80px) 120px;
+}
+
+.sc-page * {
+  box-sizing: border-box;
+}
+
+.sc-backbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  max-width: 1280px;
+  margin: 0 auto 28px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8b929b;
+}
+
+.sc-backbar a {
+  color: #c6f24e;
+  text-decoration: none;
+}
+
+.sc-backbar a:hover {
+  text-decoration: underline;
+}
+
+.sc-hero {
+  max-width: 1280px;
+  margin: 0 auto 40px;
+}
+
+.sc-hero__eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: #c6f24e;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+}
+
+.sc-hero__title {
+  font-size: clamp(40px, 5vw, 76px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0 0 18px;
+}
+
+.sc-hero__lead {
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.55;
+  color: #aab0b8;
+  max-width: 64ch;
+  margin: 0;
+}
+
+.sc-deck {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4vw, 56px);
+}
+
+.sc-slide {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: #0c0e11;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+.sc-slide__caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8b929b;
+}
+
+.sc-slide__caption strong {
+  color: #c6f24e;
+  font-weight: 500;
+}
+
+.sc-slide__frame {
+  position: relative;
+  width: 100%;
+}
+
+.sc-slide__frame > .sc-slide__inner {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: top left;
+  background: #0c0e11;
+}
+
+.sc-slide__notes {
+  padding: 18px 26px 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 15px;
+  line-height: 1.6;
+  color: #aab0b8;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.sc-slide__notes-label {
+  display: block;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #5b626b;
+  margin-bottom: 8px;
+}

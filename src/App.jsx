@@ -15,6 +15,10 @@ import ProductResearchPage from './pages/ProductResearchPage';
 import ProductsPage from './pages/ProductsPage';
 
 const RideSenseWireframesPage = lazy(() => import('./pages/RideSenseWireframesPage'));
+const SessionComparePage = lazy(() => import('./pages/SessionComparePage'));
+const SessionCompareWireframesPage = lazy(
+  () => import('./pages/SessionCompareWireframesPage'),
+);
 
 function App() {
   return (
@@ -31,6 +35,22 @@ function App() {
             element={
               <Suspense fallback={null}>
                 <RideSenseWireframesPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/products/:slug/session-compare"
+            element={
+              <Suspense fallback={null}>
+                <SessionComparePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/products/:slug/session-compare/wireframes"
+            element={
+              <Suspense fallback={null}>
+                <SessionCompareWireframesPage />
               </Suspense>
             }
           />

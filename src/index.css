@@ -606,28 +606,27 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
 .prod-feature__body {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   padding: 8px 0;
 }
 @media (max-width: 900px) {
   .prod-feature { grid-template-columns: 1fr; gap: 24px; padding: 36px 0; }
 }
 
-/* tags row */
+/* stack colophon — inline mono line, middot separators, no boxes */
 .stack-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 0 10px;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
-.stack-row .chip {
-  border: 1px solid var(--rule-2);
-  padding: 4px 10px;
-  border-radius: 999px;
+.stack-row__sep {
+  color: var(--rule);
+  user-select: none;
 }
 
 /* ---------------- Update / changelog ---------------- */
