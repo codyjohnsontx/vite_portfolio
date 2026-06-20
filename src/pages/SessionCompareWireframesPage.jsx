@@ -34,10 +34,9 @@ export default function SessionCompareWireframesPage() {
             actions, empty and warning states, and PM rationale called out.
           </p>
 
-          <div className="scw-tabs" role="tablist" aria-label="Wireframe direction">
+          <div className="scw-tabs" role="group" aria-label="Wireframe direction">
             <button
               type="button"
-              role="tab"
               aria-pressed={direction === 'A'}
               className="scw-tab"
               onClick={() => setDirection('A')}
@@ -46,7 +45,6 @@ export default function SessionCompareWireframesPage() {
             </button>
             <button
               type="button"
-              role="tab"
               aria-pressed={direction === 'B'}
               className="scw-tab"
               onClick={() => setDirection('B')}
@@ -116,11 +114,7 @@ export default function SessionCompareWireframesPage() {
           </div>
         </header>
 
-        <div
-          key={direction}
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
+        <div key={direction} dangerouslySetInnerHTML={{ __html: html }} />
       </div>
     </div>
   );
