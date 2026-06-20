@@ -46,6 +46,22 @@ const allProducts = [
     nextStep:
       'Ship telemetry-enriched recommendations and validate suggested adjustments against repeat session performance.',
     standaloneMockStatus: 'in-progress',
+    featurePresentations: [
+      {
+        slug: 'session-compare',
+        eyebrow: 'Concept extension · PM brief',
+        title: 'Session Compare',
+        summary:
+          'Ten-slide product brief that moves Track Tuner from setup logging toward trackside decision support. Frames the problem, the v1 scope, the workflow, and the four questions every comparison should answer.',
+        links: [
+          { label: 'Read the brief', href: '/products/track-tuner/session-compare' },
+          {
+            label: 'View wireframes',
+            href: '/products/track-tuner/session-compare/wireframes',
+          },
+        ],
+      },
+    ],
     updates: [
       {
         date: 'Merged',

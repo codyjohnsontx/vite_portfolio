@@ -23,11 +23,20 @@ export function Tag({ children, variant }) {
 export function StackRow({ items }) {
   return (
     <div className="stack-row">
-      {items.map((s) => (
-        <span key={s} className="chip">
-          {s}
-        </span>
-      ))}
+      {items.flatMap((s, i) => {
+        const item = (
+          <span key={s} className="stack-row__item">
+            {s}
+          </span>
+        );
+        if (i === 0) return [item];
+        return [
+          <span key={`${s}-sep`} className="stack-row__sep" aria-hidden="true">
+            ·
+          </span>,
+          item,
+        ];
+      })}
     </div>
   );
 }

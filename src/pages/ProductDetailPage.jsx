@@ -141,6 +141,23 @@ export default function ProductDetailPage() {
               </Link>
             </div>
           ) : null}
+          {p.slug === 'track-tuner' ? (
+            <>
+              <div style={{ marginTop: 12 }}>
+                <Link to={`/products/${p.slug}/session-compare`} className="link-arrow">
+                  Read Session Compare brief <ArrowGlyph />
+                </Link>
+              </div>
+              <div style={{ marginTop: 12 }}>
+                <Link
+                  to={`/products/${p.slug}/session-compare/wireframes`}
+                  className="link-arrow"
+                >
+                  View Session Compare wireframes <ArrowGlyph />
+                </Link>
+              </div>
+            </>
+          ) : null}
         </div>
       </Reveal>
 
@@ -171,6 +188,69 @@ export default function ProductDetailPage() {
                   display: 'block',
                 }}
               />
+            </div>
+          </div>
+        </Reveal>
+      ) : null}
+
+      {p.featurePresentations?.length ? (
+        <Reveal
+          as="section"
+          className="section section--tight"
+          style={{ borderBottom: '1px solid var(--rule)' }}
+        >
+          <div className="container">
+            <Eyebrow>Feature presentations</Eyebrow>
+            <h2 className="h2" style={{ margin: '12px 0 12px' }}>
+              Working briefs and wireframes
+            </h2>
+            <p className="body" style={{ margin: 0, maxWidth: '58ch', color: 'var(--ink-2)' }}>
+              PM briefs and lo-fi storyboards for features in flight. Each one starts as a small
+              hypothesis and ends with a wireframe a developer could build from.
+            </p>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+                gap: 'clamp(18px, 3vw, 32px)',
+                marginTop: 32,
+              }}
+            >
+              {p.featurePresentations.map((feature, index) => (
+                <Reveal
+                  as="article"
+                  key={feature.slug}
+                  delay={(index % 4) * 80}
+                  style={{
+                    border: '1px solid var(--rule-2)',
+                    background: 'var(--bg-2)',
+                    padding: 'clamp(20px, 3vw, 32px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 14,
+                  }}
+                >
+                  <Eyebrow>{feature.eyebrow}</Eyebrow>
+                  <h3
+                    className="h3"
+                    style={{ margin: 0, fontSize: 'clamp(24px, 2.4vw, 32px)' }}
+                  >
+                    {feature.title}
+                  </h3>
+                  <p className="body" style={{ margin: 0, color: 'var(--ink-2)' }}>
+                    {feature.summary}
+                  </p>
+                  <div
+                    style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 'auto' }}
+                  >
+                    {feature.links.map((link) => (
+                      <Link key={link.href} to={link.href} className="link-arrow">
+                        {link.label} <ArrowGlyph />
+                      </Link>
+                    ))}
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </Reveal>
