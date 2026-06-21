@@ -25,13 +25,13 @@ export function StackRow({ items }) {
     <div className="stack-row">
       {items.flatMap((s, i) => {
         const item = (
-          <span key={s} className="stack-row__item">
+          <span key={`${i}-${s}`} className="stack-row__item">
             {s}
           </span>
         );
         if (i === 0) return [item];
         return [
-          <span key={`${s}-sep`} className="stack-row__sep" aria-hidden="true">
+          <span key={`${i}-${s}-sep`} className="stack-row__sep" aria-hidden="true">
             ·
           </span>,
           item,

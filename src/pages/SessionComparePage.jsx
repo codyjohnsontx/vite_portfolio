@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { getProductBySlug } from '../content/projects';
@@ -35,12 +36,15 @@ function ScaledSlide({ html }) {
       <div
         className="sc-slide__inner"
         style={{ transform: `scale(${scale})` }}
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>
   );
 }
+
+ScaledSlide.propTypes = {
+  html: PropTypes.string.isRequired,
+};
 
 export default function SessionComparePage() {
   const { slug } = useParams();
