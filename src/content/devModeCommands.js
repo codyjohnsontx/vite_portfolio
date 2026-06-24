@@ -3,10 +3,11 @@ import { experience } from './experience';
 import { products, flagshipProducts, getProductBySlug } from './projects';
 import { profile } from './profile';
 import { getProductResearchBySlug } from './productResearch';
+import { getProductAnalysisBySlug } from './productAnalyses';
 import { resumeContent } from './resumeContent';
 import { resumeMeta } from './resumeMeta';
 
-const PRODUCT_SLUGS = ['track-tuner', 'ridesense', 'ctx-chat', 'diaz-on-demand'];
+const PRODUCT_SLUGS = ['track-tuner', 'ridesense', 'wattsmith', 'ctx-chat', 'diaz-on-demand'];
 const commandNames = [
   'help',
   'whoami',
@@ -42,6 +43,7 @@ function whoamiProductItem(product) {
 
 function productOutput(slug) {
   const product = getProductBySlug(slug);
+  const analysis = getProductAnalysisBySlug(slug);
   const research = getProductResearchBySlug(slug);
 
   if (!product || !PRODUCT_SLUGS.includes(slug)) {
@@ -72,7 +74,7 @@ function productOutput(slug) {
     ],
     links: [
       { label: 'Open product page', href: `/products/${product.slug}` },
-      ...(product.slug === 'track-tuner' || product.slug === 'ctx-chat'
+      ...(analysis
         ? [{ label: 'Read PM analysis', href: `/products/${product.slug}/analysis` }]
         : []),
       ...(research

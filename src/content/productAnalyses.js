@@ -22,8 +22,9 @@ export const productAnalyses = [
       'Existing motorsport software tends to split between free but sloppy note-taking and expensive telemetry-first desktop suites.',
     ],
     opportunity: [
-      'The smartphone is already in the tank bag or trailer, so there is no new hardware behavior to teach.',
+      'Every rider already has a phone in their pocket trackside, so adoption needs no new hardware and no new habit.',
       'There is a clear product gap between unstructured notes and pro-grade telemetry software.',
+      'Five-minute between-session turnarounds mean any log flow has to finish in under a minute, which disqualifies most note-taking and full telemetry tools.',
       'LLM-backed guidance becomes credible once it is grounded in the rider’s own session history instead of generic motorsport advice.',
       'The workflow repeats every track weekend, which supports a low-price recurring subscription model.',
     ],
@@ -100,32 +101,32 @@ export const productAnalyses = [
       {
         label: 'Activation',
         detail:
-          'Measure session-one creation within seven days and keep time-to-first-session below sixty seconds for the basic flow.',
+          'Time-to-first-session under 60 seconds, with at least 60% of new signups logging session one inside 7 days.',
       },
       {
         label: 'Retention',
         detail:
-          'Track the percentage of users who come back to log session two, plus sessions per active user each month.',
+          'Session-two return at 40% or higher within 30 days, with active users logging at least 3 sessions per month.',
       },
       {
         label: 'Engagement',
         detail:
-          'Watch the share of sessions using at least one setup module and the usage rate of the compare view.',
+          'At least 70% of sessions include one setup module, and compare view opens on 60% or more of post-first sessions.',
       },
       {
         label: 'Conversion',
         detail:
-          'Measure free-to-Pro conversion after free-tier limits and after Race Engineer queries hit an upgrade gate.',
+          'Free-to-Pro conversion of 3 to 5% overall, with 15% or higher conversion on paywall-hit and Race Engineer gate events.',
       },
       {
         label: 'AI quality',
         detail:
-          'Keep refusal rate low but non-zero, monitor follow-up question rate, and capture recommendation feedback.',
+          'Refusal rate between 5 and 15%, follow-up question rate above 30%, and thumbs-up feedback above 70% on shipped recommendations.',
       },
       {
         label: 'Revenue',
         detail:
-          'Track MRR, founder-promo conversion, and churn before scaling acquisition.',
+          'Monthly churn under 8%, founder-promo conversion at 25% or higher, and at least 6 months of MRR runway before paid acquisition.',
       },
     ],
     analyticsPlan: {
@@ -403,6 +404,202 @@ export const productAnalyses = [
       'Add SLA tracking and escalation rules around unread and overdue conversations.',
       'Ship CSV import and cleaner customer record management.',
       'Integrate with the broader CTX dealership system and add a handoff path to the Shopify storefront.',
+    ],
+  },
+  {
+    slug: 'wattsmith',
+    title: 'Wattsmith PM analysis',
+    tagline:
+      'A local-first cycling workout builder that prioritizes a reliable manual workflow before AI generation or platform sync.',
+    summary:
+      'Wattsmith is built around a practical product decision: make the manual builder useful first. The app now gives cyclists a fuller workflow for creating FTP-based workouts, inspecting power targets, saving reusable sessions, and exporting rideable .mrc or .erg files before adding AI workout generation. That keeps the product explainable, testable, and grounded in a structured workout model.',
+    problem:
+      'Cyclists can describe a structured workout in plain language, but turning that idea into a clean workout file is still fiddly. Repeats, ramps, target ranges, profile assumptions, training zones, validation warnings, and export syntax all have to agree or the file a rider exports will not match the workout they thought they built.',
+    users: {
+      primary:
+        'Cyclists who train with FTP-based structured workouts and want to build reusable sessions they can ride in external platforms.',
+      secondary:
+        'Self-coached riders and technical athletes who want to understand interval structure, watts, zone distribution, and workout rationale before exporting.',
+      buyer:
+        'Early product validation is self-serve and utility-led; no paid conversion or production usage metric has been claimed yet.',
+    },
+    currentWorkflow: [
+      'A rider sketches workouts in notes, spreadsheets, platform builders, or file text and then manually checks whether duration, watts, and repeats make sense.',
+      'Starter workout templates and saved personal workouts often live outside the builder, so reuse requires copying structure by hand.',
+      'Power charts can show a workout shape without making each interval inspectable against FTP, zones, and export behavior.',
+      'Export files can drift from the visible chart when range targets, ramps, repeats, or validation warnings are handled separately.',
+    ],
+    opportunity: [
+      'A local-first builder can make the whole workflow usable without accounts, integrations, or cloud storage.',
+      'The manual block model creates the structured foundation AI generation will need later.',
+      'Interactive chart inspection helps riders trust what they are exporting by tying watts, %FTP, zones, and selected blocks together.',
+      'A local library with templates turns one-off workout drafting into reusable training planning.',
+      'Export previews and validation warnings make the product feel rideable instead of just drawable.',
+    ],
+    betHeading: 'Manual builder first before AI',
+    productBet:
+      'If the manual builder is strong enough to create, inspect, save, validate, and export a workout without AI, then AI generation can later become a useful accelerator instead of the product trying to hide weak fundamentals. The core artifact is the workout model and export path, not the prompt box.',
+    mvp: {
+      shipped: [
+        'Tabbed workspace for Builder, Library, Profile, and Export.',
+        'Manual block builder with add, delete, duplicate, reorder, repeat blocks, target ranges, single targets, ramp targets, and text cues.',
+        'Local workout library with starter templates, search, category filtering, duplicate, rename, delete, and load.',
+        'Local athlete profile for FTP/default assumptions and workout warnings.',
+        'Interactive SVG power chart with hover/tap inspection, keyboard-accessible interval selection, selected-block highlighting, zone bands, FTP line, 0W baseline, and watts/%FTP axis references.',
+        'Validated .mrc and .erg exports with preview, range export strategy, and shared flattened workout data.',
+        'Workout metrics including duration, zone time, IF/TSS estimates, NP-style estimate, kJ, interval count, and work-above-threshold style metrics.',
+        'Cited workout rationale/science notes structure and Vitest coverage for workout helpers, validation, exports, zones, and science source resolution.',
+      ],
+      cut: [
+        'AI workout generation.',
+        'TrainerRoad, Strava, Garmin, or TrainingPeaks sync.',
+        'Accounts, cloud library sync, sharing, or coaching workflows.',
+        'Production usage, adoption, retention, or revenue claims.',
+      ],
+    },
+    priorities: [
+      {
+        initiative: 'Manual block builder',
+        value: 'High',
+        effort: 'L',
+        decision:
+          'Shipped first because every later AI or integration feature depends on a trustworthy workout structure.',
+      },
+      {
+        initiative: 'Interactive chart inspection',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Shipped early so riders can verify watts, %FTP, zones, selected blocks, and the 0W baseline before export.',
+      },
+      {
+        initiative: 'Local library + templates',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Shipped to make the builder reusable instead of forcing every workout to start from a blank canvas.',
+      },
+      {
+        initiative: 'Profile assumptions',
+        value: 'Medium',
+        effort: 'S',
+        decision:
+          'Included so warnings, watts, zones, and metrics are tied to a rider-specific FTP baseline.',
+      },
+      {
+        initiative: '.mrc and .erg exports',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Shipped because a workout builder is not useful unless the file a rider exports matches the chart and validation model.',
+      },
+      {
+        initiative: 'AI generation',
+        value: 'Medium',
+        effort: 'L',
+        decision:
+          'Deferred until the manual model, validation, profile assumptions, templates, and export path are reliable.',
+      },
+    ],
+    metricsHeading: 'Measure whether the builder is useful',
+    successMetrics: [
+      {
+        label: 'Export success',
+        detail:
+          'Track whether users can build and export .mrc or .erg workouts without validation-blocking errors.',
+      },
+      {
+        label: 'Library reuse',
+        detail:
+          'Measure saved workout count, template loads, duplicates, and repeat opens to see whether the library becomes part of planning.',
+      },
+      {
+        label: 'Builder completion',
+        detail:
+          'Watch how often started workouts reach a valid preview/export state instead of being abandoned mid-build.',
+      },
+      {
+        label: 'Inspection behavior',
+        detail:
+          'Track chart hover, tap, and keyboard interval inspection to see whether riders use the chart to understand targets.',
+      },
+      {
+        label: 'File confidence',
+        detail:
+          'Validate exported files against external riding workflows before claiming platform readiness.',
+      },
+      {
+        label: 'No measured result yet',
+        detail:
+          'This release is product foundation and usability work; adoption, retention, and revenue are not claimed.',
+      },
+    ],
+    analyticsPlan: {
+      events: [
+        'workout_created',
+        'block_added',
+        'repeat_block_added',
+        'template_loaded',
+        'workout_saved',
+        'chart_interval_inspected',
+        'validation_warning_viewed',
+        'export_preview_opened',
+        'export_downloaded',
+      ],
+      funnel: [
+        'Open builder',
+        'Create or load workout',
+        'Edit blocks',
+        'Inspect chart',
+        'Resolve warnings',
+        'Preview export',
+        'Download file',
+      ],
+      cohorts: [
+        'Workout source: blank vs starter template vs duplicated saved workout',
+        'Target type: single vs range vs ramp',
+        'Export type: .mrc vs .erg',
+      ],
+      observabilityLabel: 'Validation and evidence',
+      observability:
+        'The product should track validation warnings, export attempts, file type, target strategy, and chart inspection behavior before claiming usage impact. No production adoption, retention, revenue, or AI outcome metric exists yet.',
+      dashboards: [
+        'Builder completion funnel',
+        'Export success and warning rate',
+        'Template reuse trend',
+        'Chart inspection engagement',
+      ],
+    },
+    shippedIntro:
+      'PR #1 changed Wattsmith from a starter workout drawing MVP into a fuller local-first manual builder. These are the milestones that changed the product story.',
+    shippedHighlights: [
+      {
+        label: 'PR #1',
+        detail:
+          'Expanded Wattsmith into a tabbed manual workout builder with block editing, repeat blocks, target ranges, ramps, local library, profile assumptions, chart inspection, workout metrics, validation, cited rationale, and .mrc/.erg export previews.',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/1',
+      },
+      {
+        label: 'Product decision',
+        detail:
+          'Chose manual builder quality before AI so cyclists can create a structured workout, understand watts and zones, save it locally, and export a file that matches what they see.',
+      },
+      {
+        label: 'Technical foundation',
+        detail:
+          'Added reusable workout helpers, validation, storage migration, shared flattened workout data, export utilities, zone calculations, and focused Vitest coverage.',
+      },
+    ],
+    learnings: [
+      'AI would be premature without a dependable manual model. The builder has to be useful when every interval is entered by hand.',
+      'A chart is not just visualization; it is a trust surface when export files need to match watts, %FTP, zones, and interval structure.',
+      'Local-first can be a product advantage early because it lets the workout workflow work without accounts, sync, or integration dependencies.',
+    ],
+    nextIterations: [
+      'Capture fresh screenshots for Builder, chart tooltip, Library, Profile, and Export preview.',
+      'Validate exported .mrc and .erg files against real riding workflows.',
+      'Add AI workout generation only after the manual builder, templates, profile assumptions, validation, and export behavior are stable.',
+      'Avoid claiming direct TrainerRoad, Strava, Garmin, or TrainingPeaks sync until an integration actually ships.',
     ],
   },
 ];

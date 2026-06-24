@@ -187,7 +187,7 @@ export default function ProductAnalysisPage() {
             <Reveal id="bet" style={{ marginBottom: 88 }}>
               <Eyebrow>03 — Product bet</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 20px' }}>
-                Win the trackside loop first
+                {analysis.betHeading ?? 'Win the trackside loop first'}
               </h2>
               <p className="lead" style={{ margin: 0, color: 'var(--ink)' }}>
                 {analysis.productBet}
@@ -211,7 +211,7 @@ export default function ProductAnalysisPage() {
               </div>
               <div style={{ marginTop: 40 }}>
                 <Eyebrow>Prioritization</Eyebrow>
-                <div className="priority-grid" role="list" aria-label="Track Tuner prioritization">
+                <div className="priority-grid" role="list" aria-label={`${product.name} prioritization`}>
                   {analysis.priorities.map((item, index) => (
                     <Reveal
                       as="article"
@@ -232,7 +232,7 @@ export default function ProductAnalysisPage() {
             <Reveal id="metrics" style={{ marginBottom: 88 }}>
               <Eyebrow>05 — Metrics</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
-                Measure whether the loop sticks
+                {analysis.metricsHeading ?? 'Measure whether the loop sticks'}
               </h2>
               <div className="metric-grid">
                 {analysis.successMetrics.map((metric, index) => (
@@ -268,7 +268,7 @@ export default function ProductAnalysisPage() {
                 </Reveal>
               </Reveal>
               <div style={{ marginTop: 28 }}>
-                <Eyebrow>AI observability</Eyebrow>
+                <Eyebrow>{analysis.analyticsPlan.observabilityLabel ?? 'AI observability'}</Eyebrow>
                 <p className="body" style={{ marginTop: 10, maxWidth: '66ch' }}>
                   {analysis.analyticsPlan.observability}
                 </p>
@@ -284,7 +284,8 @@ export default function ProductAnalysisPage() {
                 className="body"
                 style={{ marginTop: 0, marginBottom: 28, color: 'var(--ink-2)', maxWidth: '60ch' }}
               >
-                Fourteen pull requests landed in the first public build cycle. These are the ones that most clearly changed the product story, monetization path, and trust model.
+                {analysis.shippedIntro ??
+                  'Fourteen pull requests landed in the first public build cycle. These are the ones that most clearly changed the product story, monetization path, and trust model.'}
               </p>
               {analysis.shippedHighlights.map((item, index) => (
                 <Reveal as="article" key={item.label} className="update" delay={(index % 4) * 80}>

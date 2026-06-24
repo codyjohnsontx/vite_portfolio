@@ -66,7 +66,7 @@ export default function SessionComparePage() {
           <p className="sc-hero__eyebrow">Concept extension · PM case study</p>
           <h1 className="sc-hero__title">Session Compare</h1>
           <p className="sc-hero__lead">
-            Planning the next step for Track Tuner — from setup logging toward trackside decision
+            Planning the next step for Track Tuner: from setup logging toward trackside decision
             support. Ten-slide product brief walks the problem, scope, workflow, and chart strategy,
             then hands off to lo-fi wireframes for two product directions.
           </p>

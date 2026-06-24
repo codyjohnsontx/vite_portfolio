@@ -79,7 +79,7 @@ function SiteLayout() {
     <>
       <nav className="topnav">
         <div className="topnav__inner">
-          <Link to="/" className="topnav__brand" aria-label="Cody Johnson — home">
+          <Link to="/" className="topnav__brand" aria-label="Cody Johnson, home">
             <span>Cody Johnson</span>
           </Link>
           <div className="topnav__links">

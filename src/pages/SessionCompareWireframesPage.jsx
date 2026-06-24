@@ -27,7 +27,7 @@ export default function SessionCompareWireframesPage() {
         </div>
 
         <header className="scw-header">
-          <h1 className="scw-title">Session Compare — Wireframe Storyboard</h1>
+          <h1 className="scw-title">Session Compare: Wireframe Storyboard</h1>
           <p className="scw-intro">
             Low-fi exploration for Track Tuner&rsquo;s manual-first, two-session comparison feature.
             Structure over polish. Two distinct product directions, with primary and secondary

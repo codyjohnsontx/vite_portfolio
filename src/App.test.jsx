@@ -22,15 +22,18 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getAllByRole('heading', { level: 1 }).length).toBeGreaterThan(0);
     expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'CTX Chat' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
     expect(screen.getByText('Latest update')).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Persona research systems' })).toBeTruthy();
-    expect(screen.getByRole('link', { name: /Track Tuner research/i }).getAttribute('href')).toBe(
-      '/products/track-tuner/research',
-    );
-    expect(screen.getByRole('link', { name: /RideSense research/i }).getAttribute('href')).toBe(
-      '/products/ridesense/research',
+    expect(screen.getByRole('heading', { name: 'Wattsmith v0.2 shipped' })).toBeTruthy();
+    expect(
+      screen
+        .getAllByRole('link', { name: /Read the build/i })
+        .some((link) => link.getAttribute('href') === '/products/wattsmith'),
+    ).toBe(true);
+    expect(screen.getByRole('link', { name: /PM analysis/i }).getAttribute('href')).toBe(
+      '/products/wattsmith/analysis',
     );
   });
 
@@ -245,6 +248,22 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText(/PR #7/)).toBeTruthy();
   });
 
+  it('renders the Wattsmith v0.2 product update without AI overclaiming', () => {
+    renderApp('/products/wattsmith');
+
+    expect(
+      screen.getByText(/Local-first cycling workout builder for creating reusable FTP-based workouts/i),
+    ).toBeTruthy();
+    expect(screen.getByText(/Jun 22, 2026 · PR #1/)).toBeTruthy();
+    expect(
+      screen.getByRole('link', {
+        name: /Wattsmith v0.2: Manual workout builder, library, profile, chart inspection, and export upgrades/i,
+      }),
+    ).toBeTruthy();
+    expect(screen.getByText(/without claiming AI generation or production usage metrics/i)).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Read PM analysis/i })).toBeTruthy();
+  });
+
   it('opens RideSense screenshots in a zoom dialog and restores focus on close', async () => {
     renderApp('/products/ridesense');
     const zoomButton = screen.getByRole('button', { name: 'Zoom Desktop dashboard' });
@@ -319,6 +338,14 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /CTX Chat PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getByText(/A dealership-specific communication tool/i)).toBeTruthy();
+  });
+
+  it('renders the Wattsmith PM analysis page', () => {
+    renderApp('/products/wattsmith/analysis');
+
+    expect(screen.getByRole('heading', { name: /Wattsmith PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Manual builder first before AI/i })).toBeTruthy();
+    expect(screen.getByText(/No measured result yet/)).toBeTruthy();
   });
 
   it('shows the PM analysis CTA only for products with analysis content', () => {
