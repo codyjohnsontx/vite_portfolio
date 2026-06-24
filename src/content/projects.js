@@ -7,6 +7,13 @@ import rideSenseOverviewMobile from '../../docs/assets/readme/overview-mobile.pn
 import windCastHero from '../assets/windcast/windcast-hero.png';
 import windCastMap from '../assets/windcast/windcast-map.png';
 import windCastSpotDetail from '../assets/windcast/windcast-spot-detail.png';
+import wattsmithBuilderDashboard from '../assets/wattsmith/wattsmith-01-builder-dashboard.png';
+import wattsmithChartTooltip from '../assets/wattsmith/wattsmith-02-chart-tooltip-vo2.png';
+import wattsmithLibrary from '../assets/wattsmith/wattsmith-03-workout-library.png';
+import wattsmithProfile from '../assets/wattsmith/wattsmith-04-athlete-profile.png';
+import wattsmithExport from '../assets/wattsmith/wattsmith-05-export-preview.png';
+import wattsmithMobileEditor from '../assets/wattsmith/wattsmith-06-mobile-builder-editor.png';
+import wattsmithMobileChart from '../assets/wattsmith/wattsmith-07-mobile-chart-summary.png';
 
 const allProducts = [
   {
@@ -318,6 +325,7 @@ const allProducts = [
     statusLabel: 'Active build',
     year: '2026',
     accent: 'oklch(0.64 0.15 110)',
+    image: wattsmithBuilderDashboard,
     companyContext: 'Independent build',
     role: 'Product Manager / Developer',
     stack: [
@@ -371,6 +379,46 @@ const allProducts = [
         body: 'Expanded Wattsmith from a starter FTP-based workout MVP into a local-first manual cycling workout builder. The release adds the tabbed workspace, block editing, repeats, target ranges and ramps, a local library with templates, athlete profile assumptions, interactive chart inspection, workout metrics, cited rationale, validation, and .mrc/.erg export previews without claiming AI generation or production usage metrics.',
       },
     ],
+    visualAssets: {
+      note: 'Screenshots from the v0.2 manual builder running on local demo data with the default athlete profile.',
+      items: [
+        {
+          label: 'Builder',
+          src: wattsmithBuilderDashboard,
+          alt: 'Wattsmith builder tab showing the workout block editor, interactive power chart, and zone-based metrics for a structured FTP workout.',
+        },
+        {
+          label: 'Chart inspection',
+          src: wattsmithChartTooltip,
+          alt: 'Interactive chart tooltip surfacing watts, %FTP, zone, and interval context for the hovered block.',
+        },
+        {
+          label: 'Library',
+          src: wattsmithLibrary,
+          alt: 'Local workout library with starter templates, search, category filters, and saved workouts ready to duplicate, rename, or load.',
+        },
+        {
+          label: 'Profile',
+          src: wattsmithProfile,
+          alt: 'Athlete profile tab where FTP and assumptions drive warnings, power targets, and workout metrics.',
+        },
+        {
+          label: 'Export preview',
+          src: wattsmithExport,
+          alt: 'Export preview showing a validated .mrc or .erg file that matches the visible chart and block structure.',
+        },
+        {
+          label: 'Mobile editor',
+          src: wattsmithMobileEditor,
+          alt: 'Mobile builder view of the same block editor adapted for narrow screens.',
+        },
+        {
+          label: 'Mobile chart',
+          src: wattsmithMobileChart,
+          alt: 'Mobile chart summary showing zone time, intensity, and interval structure at a glance.',
+        },
+      ],
+    },
   },
   {
     name: 'windCast',
