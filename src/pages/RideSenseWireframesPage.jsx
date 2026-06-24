@@ -139,9 +139,9 @@ const WIREFRAMES_BODY = `
       </div>
 
       <div class="notes">
-        <div class="note"><span class="n">1</span><p><b>Verdict first.</b> <span>A plain-language headline backed by the 3 core numbers — deterministic metrics lead, interpretation follows.</span></p></div>
-        <div class="note"><span class="n">2</span><p><b>The form curve is the hero.</b> <span>84-day CTL / ATL / TSB rolling window — the one chart that answers "how am I trending?"</span></p></div>
-        <div class="note"><span class="n">3</span><p><b>Ask, embedded.</b> <span>An answer lives on the dashboard and cites every metric it used as chips — trust built in.</span></p></div>
+        <div class="note"><span class="n">1</span><p><b>Verdict first.</b> <span>A plain-language headline backed by the 3 core numbers. Deterministic metrics lead, interpretation follows.</span></p></div>
+        <div class="note"><span class="n">2</span><p><b>The form curve is the hero.</b> <span>84-day CTL / ATL / TSB rolling window. The one chart that answers "how am I trending?"</span></p></div>
+        <div class="note"><span class="n">3</span><p><b>Ask, embedded.</b> <span>An answer lives on the dashboard and cites every metric it used as chips. Trust built in.</span></p></div>
         <div class="note"><span class="n">4</span><p><b>Activities by stress.</b> <span>The recent table ranks by training contribution, not just date.</span></p></div>
       </div>
     </section>
@@ -232,9 +232,9 @@ const WIREFRAMES_BODY = `
       </div>
 
       <div class="notes">
-        <div class="note"><span class="n">1</span><p><b>KPI strip.</b> <span>The whole session at a glance — six numbers before any chart so you can triage fast.</span></p></div>
+        <div class="note"><span class="n">1</span><p><b>KPI strip.</b> <span>The whole session at a glance: six numbers before any chart so you can triage fast.</span></p></div>
         <div class="note"><span class="n">2</span><p><b>Power trace with markers.</b> <span>Interval shading + a dashed FTP reference line make the structure of the workout legible.</span></p></div>
-        <div class="note"><span class="n">3</span><p><b>Per-interval table.</b> <span>Work intervals highlighted, recovery muted — compare effort rep to rep.</span></p></div>
+        <div class="note"><span class="n">3</span><p><b>Per-interval table.</b> <span>Work intervals highlighted, recovery muted, so you can compare effort rep to rep.</span></p></div>
         <div class="note"><span class="n">4</span><p><b>Channel toggle.</b> <span>Same trace switches between power / HR / cadence instead of stacking charts.</span></p></div>
       </div>
     </section>
@@ -327,9 +327,9 @@ const WIREFRAMES_BODY = `
       </div>
 
       <div class="notes">
-        <div class="note"><span class="n">1</span><p><b>Forward, not a log.</b> <span>Plan opens on what's coming — week rollups summarize load before you drill into a day.</span></p></div>
-        <div class="note"><span class="n">2</span><p><b>Hard/easy rhythm.</b> <span>Daily intensity as mini-bars shows the week's shape at a glance — rest days included.</span></p></div>
-        <div class="note"><span class="n">3</span><p><b>Form projection.</b> <span>"If you complete this as-is" — CTL / ATL / TSB move now → end so the plan's payoff is explicit.</span></p></div>
+        <div class="note"><span class="n">1</span><p><b>Forward, not a log.</b> <span>Plan opens on what's coming. Week rollups summarize load before you drill into a day.</span></p></div>
+        <div class="note"><span class="n">2</span><p><b>Hard/easy rhythm.</b> <span>Daily intensity as mini-bars shows the week's shape at a glance, rest days included.</span></p></div>
+        <div class="note"><span class="n">3</span><p><b>Form projection.</b> <span>"If you complete this as-is": CTL / ATL / TSB move now → end so the plan's payoff is explicit.</span></p></div>
         <div class="note"><span class="n">4</span><p><b>Coaching note.</b> <span>A plain-language line ties the projection back to the goal race.</span></p></div>
       </div>
     </section>
@@ -407,10 +407,10 @@ const WIREFRAMES_BODY = `
       </div>
 
       <div class="notes">
-        <div class="note"><span class="n">1</span><p><b>Cited, not generated.</b> <span>Every answer pins the exact metrics it used as chips — the AI can't hand-wave.</span></p></div>
+        <div class="note"><span class="n">1</span><p><b>Cited, not generated.</b> <span>Every answer pins the exact metrics it used as chips. The AI can't hand-wave.</span></p></div>
         <div class="note"><span class="n">2</span><p><b>Confidence up front.</b> <span>A badge sets the trust level before you read the claim.</span></p></div>
         <div class="note"><span class="n">3</span><p><b>Suggested follow-ups.</b> <span>One-tap next questions keep the user exploring instead of staring at a blank box.</span></p></div>
-        <div class="note"><span class="n">4</span><p><b>Sources drawer.</b> <span>Full provenance for the whole thread — click any metric to see the raw value.</span></p></div>
+        <div class="note"><span class="n">4</span><p><b>Sources drawer.</b> <span>Full provenance for the whole thread. Click any metric to see the raw value.</span></p></div>
       </div>
     </section>
 

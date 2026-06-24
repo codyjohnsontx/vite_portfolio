@@ -311,6 +311,68 @@ const allProducts = [
     ],
   },
   {
+    name: 'Wattsmith',
+    slug: 'wattsmith',
+    tier: 'flagship',
+    status: 'active-build',
+    statusLabel: 'Active build',
+    year: '2026',
+    accent: 'oklch(0.64 0.15 110)',
+    companyContext: 'Independent build',
+    role: 'Product Manager / Developer',
+    stack: [
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'localStorage',
+      'SVG charting',
+      'Vitest',
+      'FTP-based workouts',
+      '.mrc',
+      '.erg',
+    ],
+    oneLiner:
+      'Local-first cycling workout builder for creating reusable FTP-based workouts, inspecting power targets, saving templates, and exporting .mrc or .erg files.',
+    audience:
+      'Cyclists who train with FTP-based structured workouts and want to build reusable sessions before riding them in external training platforms.',
+    jtbd:
+      'When planning a structured ride, cyclists need to build intervals, understand watts and zones against their FTP, save the workout, and export a file that matches what the chart shows.',
+    problem:
+      'Cyclists can sketch a workout quickly, but turning that sketch into a reliable, reusable, and rideable file is harder when target types, repeats, profile assumptions, chart inspection, and export behavior are split across separate tools or hidden in file syntax.',
+    coreWorkflow: [
+      'Start in the Builder tab and create warmup, cooldown, steady, recovery, ramp, range, single-target, and repeat blocks with text cues.',
+      'Inspect the interactive power chart by hover, tap, or keyboard focus to compare watts, %FTP, zones, the FTP line, and the 0W baseline.',
+      'Use profile assumptions such as FTP defaults to calculate warnings, power targets, and workout metrics.',
+      'Save workouts locally, load starter templates, search and filter the library, then duplicate, rename, or delete saved sessions.',
+      'Preview validation warnings and export a flattened workout as .mrc or .erg so the file matches the visible structure.',
+    ],
+    mvpScope: [
+      'Tabbed workspace for Builder, Library, Profile, and Export',
+      'Manual block builder with add, delete, duplicate, reorder, repeat blocks, target ranges, ramps, single targets, and text cues',
+      'Local workout library with starter templates, search, category filtering, duplicate, rename, delete, and load',
+      'Local athlete profile for FTP/default assumptions and workout warnings',
+      'Interactive SVG power chart with hover/tap inspection, keyboard-accessible intervals, selected-block highlighting, zone bands, FTP line, 0W baseline, and watts/%FTP y-axis references',
+      'Validated .mrc and .erg exports with preview, range export strategy, and shared flattened workout data',
+      'Workout metrics for duration, zone time, IF/TSS estimates, NP-style estimate, kJ, interval counts, and work-above-threshold style metrics',
+      'Cited workout rationale structure plus Vitest coverage for helpers, validation, exports, zones, and science source resolution',
+    ],
+    evidenceSignal:
+      'Merged PR #1 moved the app from an initial FTP-based workout MVP into a fuller manual builder with domain helpers, validation, local storage migration, export reliability, accessible chart interactions, training metrics, cited rationale, and focused Vitest coverage.',
+    nextStep:
+      'Capture fresh public screenshots from the merged builder, validate exported workouts against real riding workflows, then add AI workout generation only after the manual model, library, profile assumptions, validation, and export path have proven reliable.',
+    standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'Jun 22, 2026',
+        tag: 'PR #1',
+        title:
+          'Wattsmith v0.2: Manual workout builder, library, profile, chart inspection, and export upgrades',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/1',
+        body: 'Expanded Wattsmith from a starter FTP-based workout MVP into a local-first manual cycling workout builder. The release adds the tabbed workspace, block editing, repeats, target ranges and ramps, a local library with templates, athlete profile assumptions, interactive chart inspection, workout metrics, cited rationale, validation, and .mrc/.erg export previews without claiming AI generation or production usage metrics.',
+      },
+    ],
+  },
+  {
     name: 'windCast',
     slug: 'windcast',
     tier: 'flagship',
@@ -342,10 +404,10 @@ const allProducts = [
       'Wind-sport athletes check multiple weather sources manually, then mentally map each forecast against per-spot rules (safe direction, ideal wind range, gust tolerance). The math is repetitive, error-prone, and often gets done in the parking lot. windCast encodes per-spot rules once and runs them against every forecast hour automatically.',
     coreWorkflow: [
       'Save your spots with per-location rules: ideal/unsafe wind directions, min/ideal/max wind speed, and sport type.',
-      'Open the dashboard — every saved spot shows current wind, a session-score badge (fire / good / maybe / poor / sketchy), and the best upcoming window.',
+      'Open the dashboard. Every saved spot shows current wind, a session-score badge (fire / good / maybe / poor / sketchy), and the best upcoming window.',
       'Tap a spot for the full 48-hour hourly forecast with per-hour scores and the reasoning behind each label.',
       'Switch to the map for an animated wind-particle overlay, score-colored pins at each saved spot, and tap-anywhere ephemeral forecasts.',
-      'Swap forecast sources in Settings (mock for demos, Open-Meteo for real data) — all providers are interface-compatible.',
+      'Swap forecast sources in Settings (mock for demos, Open-Meteo for real data). All providers are interface-compatible.',
     ],
     mvpScope: [
       'Dashboard view sorted by current safety and confidence.',
@@ -361,7 +423,7 @@ const allProducts = [
     nextStep:
       'Roadmap from the README: real tide data via NOAA CO-OPS, real wind grids via NOAA GFS through a serverless proxy, long-press to add spots on the map, PWA + offline cache, and push notifications for incoming "fire" windows. Explicitly out of scope: radar/satellite, accounts/auth, route planning, premium tiers.',
     visualAssets: {
-      note: 'Screenshots use mock seed data — the same data the demo runs on offline.',
+      note: 'Screenshots use mock seed data, the same data the demo runs on offline.',
       items: [
         {
           label: 'Dashboard',

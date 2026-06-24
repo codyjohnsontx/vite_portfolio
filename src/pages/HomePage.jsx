@@ -63,19 +63,19 @@ function LatestUpdate() {
         <div className="latest-update__label mono uppercase">Latest update</div>
         <div className="latest-update__copy">
           <h2 id="latest-update-title" className="latest-update__title">
-            Persona research systems
+            Wattsmith v0.2 shipped
           </h2>
           <p className="latest-update__body">
-            Current research pages for Track Tuner and RideSense, each tied to product strategy,
-            roadmap order, and trust boundaries.
+            A local-first cycling workout builder with manual blocks, templates, profile
+            assumptions, chart inspection, training metrics, validation, and .mrc/.erg exports.
           </p>
         </div>
         <div className="latest-update__links">
-          <Link to="/products/track-tuner/research" className="link-arrow latest-update__link">
-            Track Tuner research <ArrowGlyph />
+          <Link to="/products/wattsmith" className="link-arrow latest-update__link">
+            Read the build <ArrowGlyph />
           </Link>
-          <Link to="/products/ridesense/research" className="link-arrow latest-update__link">
-            RideSense research <ArrowGlyph />
+          <Link to="/products/wattsmith/analysis" className="link-arrow latest-update__link">
+            PM analysis <ArrowGlyph />
           </Link>
         </div>
       </div>
@@ -106,7 +106,7 @@ export default function HomePage() {
               num="02"
               eyebrow="Concepts & prototypes"
               title={<>Smaller bets, sharper questions.</>}
-              sub="Concepts I prototyped to push on a single hypothesis — usability under pressure, lifecycle modeling, micro-interactions in social products."
+              sub="Concepts I prototyped to push on a single hypothesis: usability under pressure, lifecycle modeling, micro-interactions in social products."
             />
           </Reveal>
           <ProductList
