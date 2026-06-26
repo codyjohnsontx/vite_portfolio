@@ -17,8 +17,8 @@ export default function CaseStudyIndexPage() {
             Case <span className="italic">studies</span>.
           </h1>
           <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
-            Two long-form write-ups. The work itself, the constraints, the calls I made, what I
-            would do differently next time.
+            Selected proof from past product ownership, automation, and operations work: the
+            problem, the constraints, the decisions, and the measurable result.
           </p>
         </div>
       </Reveal>

@@ -25,6 +25,11 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'CTX Chat' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
+    expect(screen.getByText(/Product manager \/ technical builder/i)).toBeTruthy();
+    expect(screen.getAllByText('Active builds').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('PM analysis').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Case studies').length).toBeGreaterThan(0);
+    expect(screen.getByText('Technical execution')).toBeTruthy();
     expect(screen.getByText('Latest update')).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Wattsmith trust pass shipped' })).toBeTruthy();
     expect(
@@ -32,9 +37,11 @@ describe('portfolio routes and metadata', () => {
         .getAllByRole('link', { name: /Read the build/i })
         .some((link) => link.getAttribute('href') === '/products/wattsmith'),
     ).toBe(true);
-    expect(screen.getByRole('link', { name: /PM analysis/i }).getAttribute('href')).toBe(
-      '/products/wattsmith/analysis',
-    );
+    expect(
+      screen
+        .getAllByRole('link', { name: /PM analysis/i })
+        .some((link) => link.getAttribute('href') === '/products/wattsmith/analysis'),
+    ).toBe(true);
   });
 
   it('falls back when localStorage is unavailable during initial render', () => {
@@ -75,6 +82,7 @@ describe('portfolio routes and metadata', () => {
   it('renders the products index with filter pills', () => {
     renderApp('/products');
 
+    expect(screen.getByText(/Active builds first/i)).toBeTruthy();
     expect(screen.getByRole('button', { name: /^all$/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /apps/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /product features/i })).toBeTruthy();
@@ -117,6 +125,7 @@ describe('portfolio routes and metadata', () => {
   it('renders the cases index page', () => {
     renderApp('/case-studies');
 
+    expect(screen.getByText(/Selected proof from past product ownership/i)).toBeTruthy();
     caseStudies.forEach((study) => {
       expect(screen.getByRole('heading', { name: study.title })).toBeTruthy();
     });
@@ -126,6 +135,7 @@ describe('portfolio routes and metadata', () => {
     renderApp('/blog');
 
     expect(screen.getByRole('heading', { name: /Product notes/i })).toBeTruthy();
+    expect(screen.getByText(/Short product notes on trust, sequencing, scope/i)).toBeTruthy();
     blogPosts.forEach((post) => {
       expect(screen.getByRole('heading', { name: post.title })).toBeTruthy();
       expect(screen.getByRole('link', { name: new RegExp(post.title, 'i') }).getAttribute('href')).toBe(
@@ -208,6 +218,9 @@ describe('portfolio routes and metadata', () => {
   it('renders the Track Tuner public demo mode update', () => {
     renderApp('/products/track-tuner');
 
+    expect(screen.getAllByText(/Active build/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Product Manager \/ Developer/)).toBeTruthy();
+    expect(screen.getByText(/Independent build/)).toBeTruthy();
     expect(screen.getByText(/Update 11/)).toBeTruthy();
     const demoModeUpdateLink = screen.getByRole('link', {
       name: 'Add public read-only demo mode',
@@ -227,7 +240,7 @@ describe('portfolio routes and metadata', () => {
         /Full-stack training analytics MVP that unifies TrainerRoad, Strava, and uploaded ride files/i,
       ),
     ).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Seeded demo dashboard' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Product screenshots' })).toBeTruthy();
     expect(
       screen.getByText('Public screenshots use seeded demo data, not private athlete data.'),
     ).toBeTruthy();
@@ -491,5 +504,12 @@ describe('portfolio routes and metadata', () => {
     expect(indexHtml).toContain('name="twitter:card"');
     expect(indexHtml).toContain('name="twitter:title"');
     expect(indexHtml).toContain('name="twitter:description"');
+  });
+
+  it('saves the portfolio roadmap document', () => {
+    const roadmap = readFileSync('docs/portfolio-roadmap.md', 'utf8');
+
+    expect(roadmap).toContain('Portfolio polish pass');
+    expect(roadmap).toContain('Status: planned');
   });
 });

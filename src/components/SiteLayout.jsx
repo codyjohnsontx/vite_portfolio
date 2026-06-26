@@ -146,7 +146,7 @@ function SiteLayout() {
             </ul>
           </div>
           <div>
-            <h4>Elsewhere</h4>
+            <h4>Contact</h4>
             <ul aria-label="primary contact links">
               {profile.contactLinks.map((l) => (
                 <li key={l.label}>

@@ -17,8 +17,8 @@ export default function BlogIndexPage() {
             Product <span className="italic">notes</span>.
           </h1>
           <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
-            Short essays on product judgment, technical tradeoffs, and the operating choices
-            behind the work I build.
+            Short product notes on trust, sequencing, scope, and technical tradeoffs behind the
+            active builds.
           </p>
         </div>
       </Reveal>
