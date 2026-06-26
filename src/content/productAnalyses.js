@@ -635,7 +635,7 @@ export const productAnalyses = [
       'PR #1 changed Wattsmith from a starter workout drawing MVP into a fuller local-first manual builder. PRs #2-#4 then tightened the trust surfaces before AI/RAG. These are the milestones that changed the product story.',
     shippedHighlights: [
       {
-        label: 'PRs #2-#4',
+        label: 'PR #4',
         detail:
           'Added template previews, accessible modal behavior, collapsible workout editing, and export readiness checks to make the manual builder easier to trust before AI/RAG.',
         url: 'https://github.com/codyjohnsontx/wattSmith/pull/4',

@@ -359,7 +359,10 @@ export default function ProductAnalysisPage() {
                   aria-label={`${product.name} AI roadmap guardrails`}
                   style={{ marginTop: 32 }}
                 >
-                  {[analysis.roadmap.aiPrep, analysis.roadmap.laterAi].filter(Boolean).map((item, index) => (
+                  {[
+                    { item: analysis.roadmap.aiPrep, kicker: 'Foundation' },
+                    { item: analysis.roadmap.laterAi, kicker: 'Later' },
+                  ].filter(({ item }) => Boolean(item)).map(({ item, kicker }, index) => (
                     <Reveal
                       as="article"
                       key={item.label}
@@ -367,9 +370,7 @@ export default function ProductAnalysisPage() {
                       role="listitem"
                       delay={index * 90}
                     >
-                      <p className="priority-card__kicker">
-                        {index === 0 ? 'Foundation' : 'Later'}
-                      </p>
+                      <p className="priority-card__kicker">{kicker}</p>
                       <h3>{item.label}</h3>
                       <p>{item.detail}</p>
                       {item.items?.length ? (

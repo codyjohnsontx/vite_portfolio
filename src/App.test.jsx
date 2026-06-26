@@ -254,7 +254,7 @@ describe('portfolio routes and metadata', () => {
     expect(
       screen.getByText(/FTP-percentage-based structured workouts/i),
     ).toBeTruthy();
-    expect(screen.getByText(/Jun 25, 2026 · PRs #2-#4/)).toBeTruthy();
+    expect(screen.getByText(/Jun 25, 2026 · PR #4/)).toBeTruthy();
     expect(
       screen.getByRole('link', {
         name: /Wattsmith trust pass: template preview, collapsible editing, and export readiness/i,

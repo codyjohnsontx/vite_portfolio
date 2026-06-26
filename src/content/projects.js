@@ -381,7 +381,7 @@ const allProducts = [
     updates: [
       {
         date: 'Jun 25, 2026',
-        tag: 'PRs #2-#4',
+        tag: 'PR #4',
         title: 'Wattsmith trust pass: template preview, collapsible editing, and export readiness',
         url: 'https://github.com/codyjohnsontx/wattSmith/pull/4',
         body: 'Added a trust pass for the manual workout-building workflow: starter template previews with chart, metrics, profile warnings, rationale, and citations; collapsible editing for complex workout and repeat blocks; and an export readiness checklist for .mrc and .erg downloads. The goal was to help riders inspect structure, reduce editing noise, and catch export issues before using the file elsewhere. No AI/RAG release or measured usage result is claimed.',
