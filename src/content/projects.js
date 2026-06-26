@@ -14,6 +14,9 @@ import wattsmithProfile from '../assets/wattsmith/wattsmith-04-athlete-profile.p
 import wattsmithExport from '../assets/wattsmith/wattsmith-05-export-preview.png';
 import wattsmithMobileEditor from '../assets/wattsmith/wattsmith-06-mobile-builder-editor.png';
 import wattsmithMobileChart from '../assets/wattsmith/wattsmith-07-mobile-chart-summary.png';
+import wattsmithTemplatePreview from '../assets/wattsmith/wattsmith-08-template-preview-modal.png';
+import wattsmithCollapsedEditor from '../assets/wattsmith/wattsmith-09-collapsed-workout-blocks.png';
+import wattsmithExportReadiness from '../assets/wattsmith/wattsmith-10-export-readiness-checklist.png';
 
 const allProducts = [
   {
@@ -330,17 +333,19 @@ const allProducts = [
     role: 'Product Manager / Developer',
     stack: [
       'Next.js',
+      'React',
       'TypeScript',
-      'Tailwind CSS',
-      'localStorage',
-      'SVG charting',
       'Vitest',
-      'FTP-based workouts',
+      'local-first storage',
+      'SVG charting',
+      'structured workout export',
+      'validation logic',
+      'FTP-percentage workouts',
       '.mrc',
       '.erg',
     ],
     oneLiner:
-      'Local-first cycling workout builder for creating reusable FTP-based workouts, inspecting power targets, saving templates, and exporting .mrc or .erg files.',
+      'Local-first cycling workout builder for creating reusable FTP-percentage-based structured workouts, previewing templates, managing complex interval blocks, and checking .mrc or .erg export readiness.',
     audience:
       'Cyclists who train with FTP-based structured workouts and want to build reusable sessions before riding them in external training platforms.',
     jtbd:
@@ -348,28 +353,39 @@ const allProducts = [
     problem:
       'Cyclists can sketch a workout quickly, but turning that sketch into a reliable, reusable, and rideable file is harder when target types, repeats, profile assumptions, chart inspection, and export behavior are split across separate tools or hidden in file syntax.',
     coreWorkflow: [
-      'Start in the Builder tab and create warmup, cooldown, steady, recovery, ramp, range, single-target, and repeat blocks with text cues.',
-      'Inspect the interactive power chart by hover, tap, or keyboard focus to compare watts, %FTP, zones, the FTP line, and the 0W baseline.',
-      'Use profile assumptions such as FTP defaults to calculate warnings, power targets, and workout metrics.',
-      'Save workouts locally, load starter templates, search and filter the library, then duplicate, rename, or delete saved sessions.',
-      'Preview validation warnings and export a flattened workout as .mrc or .erg so the file matches the visible structure.',
+      'Preview starter templates before loading them, with chart, metrics, profile warnings, training rationale, and citation links.',
+      'Build and manage warmups, recoveries, steady blocks, ramps, ranges, single targets, repeat structures, and text cues.',
+      'Collapse or expand workout blocks and repeat children to reduce visual noise in complex interval structures.',
+      'Inspect the interactive power chart by hover, tap, or keyboard focus to compare watts, %FTP, zones, selected blocks, the FTP line, and the 0W baseline.',
+      'Review export readiness before downloading .mrc or .erg files so validation, FTP, timeline, targets, preview, filename, and range strategy are visible.',
     ],
     mvpScope: [
       'Tabbed workspace for Builder, Library, Profile, and Export',
       'Manual block builder with add, delete, duplicate, reorder, repeat blocks, target ranges, ramps, single targets, and text cues',
       'Local workout library with starter templates, search, category filtering, duplicate, rename, delete, and load',
+      'Starter template preview modal with chart, metrics, profile warnings, training rationale, and citation links',
+      'Accessible modal behavior with focus trap, Escape close, and focus restore',
+      'Collapsible block editing for workout blocks and nested repeat children',
       'Local athlete profile for FTP/default assumptions and workout warnings',
       'Interactive SVG power chart with hover/tap inspection, keyboard-accessible intervals, selected-block highlighting, zone bands, FTP line, 0W baseline, and watts/%FTP y-axis references',
+      'Export readiness checklist covering validation, FTP, timeline, target sanity, file preview, filename, and range export strategy',
       'Validated .mrc and .erg exports with preview, range export strategy, and shared flattened workout data',
       'Workout metrics for duration, zone time, IF/TSS estimates, NP-style estimate, kJ, interval counts, and work-above-threshold style metrics',
-      'Cited workout rationale structure plus Vitest coverage for helpers, validation, exports, zones, and science source resolution',
+      'Cited workout rationale structure plus Vitest coverage for helpers, export readiness, validation, exports, zones, and science source resolution',
     ],
     evidenceSignal:
-      'Merged PR #1 moved the app from an initial FTP-based workout MVP into a fuller manual builder with domain helpers, validation, local storage migration, export reliability, accessible chart interactions, training metrics, cited rationale, and focused Vitest coverage.',
+      'After PR #1 moved Wattsmith into a fuller manual builder, PRs #2-#4 focused on rider trust before AI/RAG by improving template inspection, complex workout editing, export confidence, accessibility, and validation coverage.',
     nextStep:
-      'Capture fresh public screenshots from the merged builder, validate exported workouts against real riding workflows, then add AI workout generation only after the manual model, library, profile assumptions, validation, and export path have proven reliable.',
+      'Keep strengthening the manual builder before AI/RAG: undo/redo, inline validation, richer presets, better library organization, export naming controls, documented TrainerRoad import testing, clearer training metrics, deeper rationale coverage, and profile-driven warnings. Longer term, typed workout intent, source-backed rationale, and schema validation will prepare AI-generated workouts to use the same export-safe model.',
     standaloneMockStatus: 'in-progress',
     updates: [
+      {
+        date: 'Jun 25, 2026',
+        tag: 'PRs #2-#4',
+        title: 'Wattsmith trust pass: template preview, collapsible editing, and export readiness',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/4',
+        body: 'Added a trust pass for the manual workout-building workflow: starter template previews with chart, metrics, profile warnings, rationale, and citations; collapsible editing for complex workout and repeat blocks; and an export readiness checklist for .mrc and .erg downloads. The goal was to help riders inspect structure, reduce editing noise, and catch export issues before using the file elsewhere. No AI/RAG release or measured usage result is claimed.',
+      },
       {
         date: 'Jun 22, 2026',
         tag: 'PR #1',
@@ -380,8 +396,23 @@ const allProducts = [
       },
     ],
     visualAssets: {
-      note: 'Screenshots from the v0.2 manual builder running on local demo data with the default athlete profile.',
+      note: 'Screenshots from the manual builder running on local demo data with the default athlete profile.',
       items: [
+        {
+          label: 'Template preview',
+          src: wattsmithTemplatePreview,
+          alt: 'Wattsmith starter template preview modal showing the workout chart, key metrics, profile fit note, training rationale, cautions, and citation links before loading a template.',
+        },
+        {
+          label: 'Collapsed editor',
+          src: wattsmithCollapsedEditor,
+          alt: 'Wattsmith builder with workout blocks collapsed so repeat structures show summary rows and expand controls instead of every nested interval input.',
+        },
+        {
+          label: 'Export readiness',
+          src: wattsmithExportReadiness,
+          alt: 'Wattsmith export tab showing the export readiness checklist, range export strategy, .mrc and .erg download controls, and file preview.',
+        },
         {
           label: 'Builder',
           src: wattsmithBuilderDashboard,

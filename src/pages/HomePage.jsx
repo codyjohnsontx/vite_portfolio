@@ -63,11 +63,11 @@ function LatestUpdate() {
         <div className="latest-update__label mono uppercase">Latest update</div>
         <div className="latest-update__copy">
           <h2 id="latest-update-title" className="latest-update__title">
-            Wattsmith v0.2 shipped
+            Wattsmith trust pass shipped
           </h2>
           <p className="latest-update__body">
-            A local-first cycling workout builder with manual blocks, templates, profile
-            assumptions, chart inspection, training metrics, validation, and .mrc/.erg exports.
+            Wattsmith now has template previews, collapsible workout editing, and export
+            readiness checks for .mrc and .erg files, tightening the manual builder before AI/RAG.
           </p>
         </div>
         <div className="latest-update__links">
