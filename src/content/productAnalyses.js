@@ -412,9 +412,9 @@ export const productAnalyses = [
     tagline:
       'A local-first cycling workout builder that prioritizes a reliable manual workflow before AI generation or platform sync.',
     summary:
-      'Wattsmith is built around a practical product decision: make the manual builder useful first. The app now gives cyclists a fuller workflow for creating FTP-based workouts, inspecting power targets, saving reusable sessions, and exporting rideable .mrc or .erg files before adding AI workout generation. That keeps the product explainable, testable, and grounded in a structured workout model.',
+      'Wattsmith is built around a practical product decision: make the manual builder useful first. The latest roadmap slices focus on trust before AI/RAG: template inspection before load, collapsible editing for complex repeat structures, and export readiness before .mrc or .erg download. That keeps the product explainable, testable, and grounded in a structured workout model.',
     problem:
-      'Cyclists can describe a structured workout in plain language, but turning that idea into a clean workout file is still fiddly. Repeats, ramps, target ranges, profile assumptions, training zones, validation warnings, and export syntax all have to agree or the file a rider exports will not match the workout they thought they built.',
+      'Cyclists can describe a structured workout in plain language, but turning that idea into a clean workout file is still fiddly. They do not just need to draw a workout. They need to trust that a starter template is appropriate, that nested repeat structures are understandable, and that the exported file matches the visible workout before sending it to another platform.',
     users: {
       primary:
         'Cyclists who train with FTP-based structured workouts and want to build reusable sessions they can ride in external platforms.',
@@ -432,23 +432,30 @@ export const productAnalyses = [
     opportunity: [
       'A local-first builder can make the whole workflow usable without accounts, integrations, or cloud storage.',
       'The manual block model creates the structured foundation AI generation will need later.',
+      'Template previews reduce the risk of loading a workout blindly.',
+      'Collapsible editing makes complex interval structures easier to manage without hiding the underlying model.',
+      'Export readiness turns validation from hidden logic into a visible confidence check.',
       'Interactive chart inspection helps riders trust what they are exporting by tying watts, %FTP, zones, and selected blocks together.',
       'A local library with templates turns one-off workout drafting into reusable training planning.',
       'Export previews and validation warnings make the product feel rideable instead of just drawable.',
     ],
     betHeading: 'Manual builder first before AI',
     productBet:
-      'If the manual builder is strong enough to create, inspect, save, validate, and export a workout without AI, then AI generation can later become a useful accelerator instead of the product trying to hide weak fundamentals. The core artifact is the workout model and export path, not the prompt box.',
+      'Before adding AI/RAG, Wattsmith needed a manual workflow riders could trust. That meant making templates inspectable before load, making complex repeat structures manageable after load, and making export readiness visible before download. AI can later accelerate creation, but it should not cover for a weak workout model or unclear export path.',
     mvp: {
       shipped: [
         'Tabbed workspace for Builder, Library, Profile, and Export.',
         'Manual block builder with add, delete, duplicate, reorder, repeat blocks, target ranges, single targets, ramp targets, and text cues.',
         'Local workout library with starter templates, search, category filtering, duplicate, rename, delete, and load.',
+        'Starter template preview modal with chart, metrics, profile warnings, training rationale, and citation links.',
+        'Accessible modal behavior with focus trap and focus restore.',
+        'Collapsible workout editing for blocks and repeat children.',
         'Local athlete profile for FTP/default assumptions and workout warnings.',
         'Interactive SVG power chart with hover/tap inspection, keyboard-accessible interval selection, selected-block highlighting, zone bands, FTP line, 0W baseline, and watts/%FTP axis references.',
+        'Export readiness checklist for .mrc and .erg output covering validation, FTP, timeline, target sanity, file preview, filename, and range strategy.',
         'Validated .mrc and .erg exports with preview, range export strategy, and shared flattened workout data.',
         'Workout metrics including duration, zone time, IF/TSS estimates, NP-style estimate, kJ, interval count, and work-above-threshold style metrics.',
-        'Cited workout rationale/science notes structure and Vitest coverage for workout helpers, validation, exports, zones, and science source resolution.',
+        'Cited workout rationale/science notes structure and Vitest coverage for workout helpers, export readiness, validation, exports, zones, and science source resolution.',
       ],
       cut: [
         'AI workout generation.',
@@ -480,6 +487,20 @@ export const productAnalyses = [
           'Shipped to make the builder reusable instead of forcing every workout to start from a blank canvas.',
       },
       {
+        initiative: 'Template preview',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Shipped before AI/RAG so riders can inspect the workout structure, training intent, warnings, and citations before loading a template.',
+      },
+      {
+        initiative: 'Collapsible workout editing',
+        value: 'Medium',
+        effort: 'M',
+        decision:
+          'Shipped to make nested intervals and repeat blocks easier to manage without simplifying away the underlying structure.',
+      },
+      {
         initiative: 'Profile assumptions',
         value: 'Medium',
         effort: 'S',
@@ -492,6 +513,13 @@ export const productAnalyses = [
         effort: 'M',
         decision:
           'Shipped because a workout builder is not useful unless the file a rider exports matches the chart and validation model.',
+      },
+      {
+        initiative: 'Export readiness checklist',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Shipped because export confidence is central to whether a manual builder feels serious enough to use.',
       },
       {
         initiative: 'AI generation',
@@ -514,9 +542,34 @@ export const productAnalyses = [
           'Measure saved workout count, template loads, duplicates, and repeat opens to see whether the library becomes part of planning.',
       },
       {
+        label: 'Template preview-to-load rate',
+        detail:
+          'Track how often riders preview a starter template and then load it into the builder.',
+      },
+      {
+        label: 'Collapse/expand usage',
+        detail:
+          'Measure collapse and expand behavior on complex workouts to see whether riders use it to manage nested structures.',
+      },
+      {
         label: 'Builder completion',
         detail:
           'Watch how often started workouts reach a valid preview/export state instead of being abandoned mid-build.',
+      },
+      {
+        label: 'Export readiness pass rate',
+        detail:
+          'Track how often workouts reach a full readiness pass before download.',
+      },
+      {
+        label: 'Export blocker/warning frequency',
+        detail:
+          'Measure which readiness checks create warnings or blockers so the builder can reduce preventable export friction.',
+      },
+      {
+        label: 'Export after readiness review',
+        detail:
+          'Watch whether riders download .mrc or .erg files after reviewing readiness checks.',
       },
       {
         label: 'Inspection behavior',
@@ -539,25 +592,32 @@ export const productAnalyses = [
         'workout_created',
         'block_added',
         'repeat_block_added',
+        'template_preview_opened',
         'template_loaded',
+        'workout_block_collapsed',
+        'workout_block_expanded',
         'workout_saved',
         'chart_interval_inspected',
         'validation_warning_viewed',
+        'export_readiness_viewed',
         'export_preview_opened',
         'export_downloaded',
       ],
       funnel: [
         'Open builder',
         'Create or load workout',
+        'Preview template',
         'Edit blocks',
+        'Collapse or expand complex blocks',
         'Inspect chart',
-        'Resolve warnings',
-        'Preview export',
+        'Review export readiness',
+        'Resolve blockers or warnings',
         'Download file',
       ],
       cohorts: [
         'Workout source: blank vs starter template vs duplicated saved workout',
         'Target type: single vs range vs ramp',
+        'Editor state: simple blocks vs nested repeat blocks',
         'Export type: .mrc vs .erg',
       ],
       observabilityLabel: 'Validation and evidence',
@@ -565,14 +625,21 @@ export const productAnalyses = [
         'The product should track validation warnings, export attempts, file type, target strategy, and chart inspection behavior before claiming usage impact. No production adoption, retention, revenue, or AI outcome metric exists yet.',
       dashboards: [
         'Builder completion funnel',
-        'Export success and warning rate',
-        'Template reuse trend',
+        'Export readiness pass, blocker, and warning rate',
+        'Template preview-to-load trend',
+        'Collapse/expand usage on nested workouts',
         'Chart inspection engagement',
       ],
     },
     shippedIntro:
-      'PR #1 changed Wattsmith from a starter workout drawing MVP into a fuller local-first manual builder. These are the milestones that changed the product story.',
+      'PR #1 changed Wattsmith from a starter workout drawing MVP into a fuller local-first manual builder. PRs #2-#4 then tightened the trust surfaces before AI/RAG. These are the milestones that changed the product story.',
     shippedHighlights: [
+      {
+        label: 'PR #4',
+        detail:
+          'Added template previews, accessible modal behavior, collapsible workout editing, and export readiness checks to make the manual builder easier to trust before AI/RAG.',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/4',
+      },
       {
         label: 'PR #1',
         detail:
@@ -590,15 +657,112 @@ export const productAnalyses = [
           'Added reusable workout helpers, validation, storage migration, shared flattened workout data, export utilities, zone calculations, and focused Vitest coverage.',
       },
     ],
+    roadmap: {
+      heading: 'Roadmap staged around trust before AI',
+      intro:
+        'Wattsmith’s roadmap is intentionally staged around trust before AI. The next work strengthens the manual builder, library, export path, rationale system, metrics, and athlete-profile warnings before AI/RAG becomes part of the workflow. Longer term, typed workout intent, source-backed rationale, decision notes, and schema validation will make sure generated workouts cannot bypass the same export-safe model used by the manual builder.',
+      phases: [
+        {
+          label: 'Manual builder trust',
+          horizon: 'Next',
+          items: [
+            'Undo/redo for safer editing.',
+            'Inline block validation.',
+            'Better block presets.',
+            'Duplicate-template-into-workout flow.',
+          ],
+        },
+        {
+          label: 'Library depth',
+          horizon: 'Next',
+          items: [
+            'More starter templates.',
+            'Sort by duration, category, and difficulty.',
+            'Favorites.',
+            'Recently edited workouts.',
+            'Stronger empty states.',
+          ],
+        },
+        {
+          label: 'Export confidence',
+          horizon: 'Next',
+          items: [
+            'File naming controls.',
+            'Copy workout summary.',
+            'Documented TrainerRoad import testing before claiming compatibility.',
+          ],
+        },
+        {
+          label: 'Science and rationale',
+          horizon: 'Next',
+          items: [
+            'Rationale coverage for every template.',
+            'Citation/source registry.',
+            'Why this works.',
+            'Who should modify this.',
+            'Beginner, standard, and advanced versions.',
+          ],
+        },
+        {
+          label: 'Training metrics',
+          horizon: 'Next',
+          items: [
+            'Clearer IF/TSS/NP assumptions.',
+            'Intensity distribution.',
+            'Work/rest ratio.',
+            'Time above FTP.',
+            'High-intensity density warning.',
+            'kJ explanation.',
+          ],
+        },
+        {
+          label: 'Athlete profile warnings',
+          horizon: 'Next',
+          items: [
+            'Preferred duration.',
+            'Weekly hours.',
+            'Experience.',
+            'Goals.',
+            'Constraints.',
+            'Better non-AI warnings driven by those profile fields.',
+          ],
+        },
+      ],
+      aiPrep: {
+        label: 'AI/RAG preparation',
+        detail:
+          'Prepare typed workout intent, source-backed rationale, decision/training explanation types, and generated/imported workout schema validation before any generated workout reaches export.',
+        items: [
+          'WorkoutIntent.',
+          'WorkoutRationale.',
+          'Source registry.',
+          'Decision/training explanation types.',
+          'Generated/imported workout schema validation.',
+        ],
+      },
+      laterAi: {
+        label: 'Later AI',
+        detail:
+          'AI can suggest, explain, and revise workouts later, but it must use the same validation and export-safe workout model as manual workouts.',
+        items: [
+          'AI can suggest workouts.',
+          'AI can explain workouts.',
+          'AI can revise workouts.',
+          'AI must use the same validation and export-safe workout model as manual workouts.',
+        ],
+      },
+    },
     learnings: [
       'AI would be premature without a dependable manual model. The builder has to be useful when every interval is entered by hand.',
+      'Trust work is product work. A manual builder needs preview, editing clarity, validation, and export confidence before AI can be useful.',
+      'Export readiness should be visible, not just encoded in helper functions or disabled buttons.',
       'A chart is not just visualization; it is a trust surface when export files need to match watts, %FTP, zones, and interval structure.',
       'Local-first can be a product advantage early because it lets the workout workflow work without accounts, sync, or integration dependencies.',
     ],
     nextIterations: [
-      'Capture fresh screenshots for Builder, chart tooltip, Library, Profile, and Export preview.',
       'Validate exported .mrc and .erg files against real riding workflows.',
-      'Add AI workout generation only after the manual builder, templates, profile assumptions, validation, and export behavior are stable.',
+      'Capture any documented manual import test before claiming TrainerRoad compatibility.',
+      'Add AI/RAG only after manual builder trust remains stable across templates, nested blocks, validation, and export.',
       'Avoid claiming direct TrainerRoad, Strava, Garmin, or TrainingPeaks sync until an integration actually ships.',
     ],
   },

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from '../components/Editorial';
 import { Reveal } from '../components/ScrollReveal';
@@ -7,7 +7,7 @@ import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
 import { getProductResearchBySlug } from '../content/productResearch';
 
-const SECTIONS = [
+const BASE_SECTIONS = [
   { id: 'overview', label: '01 Overview' },
   { id: 'workflow', label: '02 Workflow' },
   { id: 'bet', label: '03 Product bet' },
@@ -16,6 +16,16 @@ const SECTIONS = [
   { id: 'shipped', label: '06 Shipped' },
   { id: 'learnings', label: '07 Learnings' },
 ];
+
+function getSections(hasRoadmap) {
+  if (!hasRoadmap) return BASE_SECTIONS;
+
+  return [
+    ...BASE_SECTIONS.slice(0, 6),
+    { id: 'roadmap', label: '07 Roadmap' },
+    { id: 'learnings', label: '08 Learnings' },
+  ];
+}
 
 function AnalysisList({ items, className = '' }) {
   if (!items?.length) return null;
@@ -50,14 +60,15 @@ export default function ProductAnalysisPage() {
   const product = getProductBySlug(slug);
   const analysis = getProductAnalysisBySlug(slug);
   const research = getProductResearchBySlug(slug);
-  const [active, setActive] = useState(SECTIONS[0].id);
+  const sections = useMemo(() => getSections(Boolean(analysis?.roadmap)), [analysis?.roadmap]);
+  const [active, setActive] = useState(BASE_SECTIONS[0].id);
 
   useEffect(() => {
     if (!product || !analysis) return undefined;
 
     const onScroll = () => {
-      let current = SECTIONS[0].id;
-      for (const section of SECTIONS) {
+      let current = sections[0].id;
+      for (const section of sections) {
         const node = document.getElementById(section.id);
         if (node && node.getBoundingClientRect().top < 200) current = section.id;
       }
@@ -67,7 +78,7 @@ export default function ProductAnalysisPage() {
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, [analysis, product]);
+  }, [analysis, product, sections]);
 
   if (!product || !analysis) return <Navigate to="/not-found" replace />;
 
@@ -129,7 +140,7 @@ export default function ProductAnalysisPage() {
       <section className="section section--tight">
         <div className="container pd-layout">
           <aside className="sidenav">
-            {SECTIONS.map((section) => (
+            {sections.map((section) => (
               <a
                 key={section.id}
                 href={`#${section.id}`}
@@ -305,8 +316,84 @@ export default function ProductAnalysisPage() {
               ))}
             </Reveal>
 
+            {analysis.roadmap ? (
+              <Reveal id="roadmap" style={{ marginBottom: 88 }}>
+                <Eyebrow>07 — Roadmap</Eyebrow>
+                <h2 className="h2" style={{ margin: '12px 0 16px' }}>
+                  {analysis.roadmap.heading}
+                </h2>
+                <p
+                  className="body"
+                  style={{ marginTop: 0, marginBottom: 28, color: 'var(--ink-2)', maxWidth: '66ch' }}
+                >
+                  {analysis.roadmap.intro}
+                </p>
+                <div
+                  className="priority-grid"
+                  role="list"
+                  aria-label={`${product.name} roadmap phases`}
+                >
+                  {analysis.roadmap.phases.map((phase, index) => (
+                    <Reveal
+                      as="article"
+                      key={phase.label}
+                      className="priority-card"
+                      role="listitem"
+                      delay={(index % 3) * 90}
+                    >
+                      <p className="priority-card__kicker">{phase.horizon}</p>
+                      <h3>{phase.label}</h3>
+                      <ul style={{ margin: '14px 0 0', paddingLeft: 18 }}>
+                        {phase.items.map((item) => (
+                          <li key={item} className="body" style={{ color: 'var(--ink-2)', marginTop: 8 }}>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </Reveal>
+                  ))}
+                </div>
+                <div
+                  className="analysis-dual-grid"
+                  role="list"
+                  aria-label={`${product.name} AI roadmap guardrails`}
+                  style={{ marginTop: 32 }}
+                >
+                  {[
+                    { item: analysis.roadmap.aiPrep, kicker: 'Foundation' },
+                    { item: analysis.roadmap.laterAi, kicker: 'Later' },
+                  ].filter(({ item }) => Boolean(item)).map(({ item, kicker }, index) => (
+                    <Reveal
+                      as="article"
+                      key={item.label}
+                      className="priority-card"
+                      role="listitem"
+                      delay={index * 90}
+                    >
+                      <p className="priority-card__kicker">{kicker}</p>
+                      <h3>{item.label}</h3>
+                      <p>{item.detail}</p>
+                      {item.items?.length ? (
+                        <ul style={{ margin: '14px 0 0', paddingLeft: 18 }}>
+                          {item.items.map((subItem) => (
+                            <li
+                              key={subItem}
+                              className="body"
+                              style={{ color: 'var(--ink-2)', marginTop: 8 }}
+                            >
+                              {subItem}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </Reveal>
+                  ))}
+                </div>
+              </Reveal>
+            ) : null}
+
             <Reveal id="learnings">
-              <Eyebrow>07 — Learnings</Eyebrow>
+              <Eyebrow>{analysis.roadmap ? '08 — Learnings' : '07 — Learnings'}</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 What changed my product view
               </h2>

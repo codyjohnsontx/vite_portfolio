@@ -26,7 +26,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'CTX Chat' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
     expect(screen.getByText('Latest update')).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Wattsmith v0.2 shipped' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Wattsmith trust pass shipped' })).toBeTruthy();
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
@@ -248,19 +248,27 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText(/PR #7/)).toBeTruthy();
   });
 
-  it('renders the Wattsmith v0.2 product update without AI overclaiming', () => {
+  it('renders the Wattsmith trust pass product update without AI overclaiming', () => {
     renderApp('/products/wattsmith');
 
     expect(
-      screen.getByText(/Local-first cycling workout builder for creating reusable FTP-based workouts/i),
+      screen.getByText(/FTP-percentage-based structured workouts/i),
     ).toBeTruthy();
-    expect(screen.getByText(/Jun 22, 2026 · PR #1/)).toBeTruthy();
+    expect(screen.getByText(/Jun 25, 2026 · PR #4/)).toBeTruthy();
     expect(
       screen.getByRole('link', {
-        name: /Wattsmith v0.2: Manual workout builder, library, profile, chart inspection, and export upgrades/i,
+        name: /Wattsmith trust pass: template preview, collapsible editing, and export readiness/i,
       }),
     ).toBeTruthy();
-    expect(screen.getByText(/without claiming AI generation or production usage metrics/i)).toBeTruthy();
+    expect(screen.getByText(/No AI\/RAG release or measured usage result is claimed/i)).toBeTruthy();
+    expect(screen.getByText('Template preview')).toBeTruthy();
+    expect(screen.getByText('Collapsed editor')).toBeTruthy();
+    expect(screen.getByText('Export readiness')).toBeTruthy();
+    expect(screen.getAllByText(/undo\/redo/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/inline validation/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/documented TrainerRoad import testing/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/typed workout intent/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/same export-safe model/i).length).toBeGreaterThan(0);
     expect(screen.getByRole('link', { name: /Read PM analysis/i })).toBeTruthy();
   });
 
@@ -303,6 +311,9 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /Track Tuner PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
+    expect(
+      screen.queryByRole('heading', { name: /Roadmap staged around trust before AI/i }),
+    ).toBeNull();
   });
 
   it('renders the Track Tuner research page', () => {
@@ -345,6 +356,20 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getByRole('heading', { name: /Wattsmith PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /Manual builder first before AI/i })).toBeTruthy();
+    expect(screen.getAllByText(/template previews/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/collapsible workout editing/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/export readiness checklist/i).length).toBeGreaterThan(0);
+    expect(
+      screen.getByRole('heading', { name: /Roadmap staged around trust before AI/i }),
+    ).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Manual builder trust/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Library depth/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Export confidence/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Science and rationale/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Training metrics/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Athlete profile warnings/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /AI\/RAG preparation/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Later AI/i })).toBeTruthy();
     expect(screen.getByText(/No measured result yet/)).toBeTruthy();
   });
 
