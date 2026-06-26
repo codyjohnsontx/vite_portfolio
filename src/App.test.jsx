@@ -238,15 +238,29 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Setup deltas')).toBeTruthy();
   });
 
-  it('renders the Track Tuner Session Compare brief as a shipped feature', async () => {
-    renderApp('/products/track-tuner/session-compare');
+  it('renders the Track Tuner Session Compare brief when ResizeObserver is unavailable', async () => {
+    const resizeObserverDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'ResizeObserver');
+    Object.defineProperty(globalThis, 'ResizeObserver', {
+      configurable: true,
+      value: undefined,
+    });
 
-    await waitFor(() =>
-      expect(screen.getByRole('heading', { name: /Session Compare/i })).toBeTruthy(),
-    );
-    expect(screen.getByText(/Session Comparison v1/i)).toBeTruthy();
-    expect(screen.getByText(/rules-based/i)).toBeTruthy();
-    expect(screen.getByText(/free previous-session comparison intact/i)).toBeTruthy();
+    try {
+      renderApp('/products/track-tuner/session-compare');
+
+      await waitFor(() =>
+        expect(screen.getByRole('heading', { name: /Session Compare/i })).toBeTruthy(),
+      );
+      expect(screen.getByText(/Session Comparison v1/i)).toBeTruthy();
+      expect(screen.getByText(/rules-based/i)).toBeTruthy();
+      expect(screen.getByText(/free previous-session comparison intact/i)).toBeTruthy();
+    } finally {
+      if (resizeObserverDescriptor) {
+        Object.defineProperty(globalThis, 'ResizeObserver', resizeObserverDescriptor);
+      } else {
+        delete globalThis.ResizeObserver;
+      }
+    }
   });
 
   it('renders the refreshed RideSense product proof and screenshot section', () => {
