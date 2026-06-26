@@ -44,7 +44,44 @@ function Hero() {
           </span>{' '}
           product systems with engineering depth and operating range.
         </h1>
+        <p className="hero-support">
+          Product manager / technical builder focused on active products, clear scope, practical
+          release decisions, and systems that hold up after launch.
+        </p>
+      </div>
+    </Reveal>
+  );
+}
 
+function ProofStrip() {
+  const proofItems = [
+    {
+      label: 'Active builds',
+      body: 'Track Tuner, RideSense, Wattsmith, and Diaz on Demand show current product work.',
+    },
+    {
+      label: 'PM analysis',
+      body: 'PM analysis pages show sequencing, tradeoffs, scope, and measurement plans.',
+    },
+    {
+      label: 'Case studies',
+      body: 'Case studies show past product ownership, automation, and operational outcomes.',
+    },
+    {
+      label: 'Technical execution',
+      body: 'Engineering fluency supports execution, validation, and better product tradeoffs.',
+    },
+  ];
+
+  return (
+    <Reveal as="section" className="proof-strip" aria-label="Portfolio proof areas" delay={40}>
+      <div className="container proof-strip__inner">
+        {proofItems.map((item) => (
+          <div key={item.label} className="proof-strip__item">
+            <span className="mono small uppercase">{item.label}</span>
+            <p>{item.body}</p>
+          </div>
+        ))}
       </div>
     </Reveal>
   );
@@ -89,6 +126,7 @@ export default function HomePage() {
   return (
     <div className="fade-in">
       <Hero />
+      <ProofStrip />
       <LatestUpdate />
 
       <section className="section" id="active">

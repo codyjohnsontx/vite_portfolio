@@ -122,15 +122,15 @@ export default function CaseStudyPage() {
         <div className="container">
           <div className="case-stats">
             <Reveal delay={0} style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
-              <Eyebrow>Team</Eyebrow>
-              <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
-                {c.team}
-              </p>
-            </Reveal>
-            <Reveal delay={90} style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
               <Eyebrow>Role</Eyebrow>
               <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
                 {c.role}
+              </p>
+            </Reveal>
+            <Reveal delay={90} style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
+              <Eyebrow>Team</Eyebrow>
+              <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
+                {c.team}
               </p>
             </Reveal>
             <Reveal delay={180} style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>

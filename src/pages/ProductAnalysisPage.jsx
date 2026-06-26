@@ -113,6 +113,21 @@ export default function ProductAnalysisPage() {
             </Reveal>
             <Reveal className="analysis-hero__meta" delay={180}>
               <div>
+                <Eyebrow>Why this matters</Eyebrow>
+                <div className="meta-row meta-row--stacked">
+                  {[
+                    ['Product bet', analysis.betHeading ?? 'Product bet'],
+                    ['Measurement', analysis.metricsHeading ?? 'Measurement plan'],
+                    ['No overclaim', analysis.users.buyer],
+                  ].map(([label, value]) => (
+                    <span key={label} className="meta-row__item">
+                      <strong>{label}</strong>
+                      {value}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
                 <Eyebrow>Build</Eyebrow>
                 <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
                   {product.oneLiner}

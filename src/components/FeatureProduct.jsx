@@ -2,9 +2,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from './Editorial';
 import { Reveal } from './ScrollReveal';
+import { getProductAnalysisBySlug } from '../content/productAnalyses';
+import { getProductResearchBySlug } from '../content/productResearch';
 
 export default function FeatureProduct({ p }) {
   const href = `/products/${p.slug}`;
+  const analysis = getProductAnalysisBySlug(p.slug);
+  const research = getProductResearchBySlug(p.slug);
+  const metaItems = [p.statusLabel, p.role, p.companyContext].filter(Boolean);
 
   return (
     <Reveal
@@ -32,6 +37,15 @@ export default function FeatureProduct({ p }) {
         >
           {p.name}
         </h3>
+        {metaItems.length ? (
+          <div className="meta-row" aria-label={`${p.name} product metadata`}>
+            {metaItems.map((item) => (
+              <span key={item} className="meta-row__item">
+                {item}
+              </span>
+            ))}
+          </div>
+        ) : null}
         <p className="lead" style={{ margin: 0 }}>{p.oneLiner}</p>
 
         <div>
@@ -43,14 +57,23 @@ export default function FeatureProduct({ p }) {
 
         <StackRow items={p.stack} />
 
-        <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
+        <div className="feature-links">
           <Link to={href} className="link-arrow">
             Read the build <ArrowGlyph />
           </Link>
+          {analysis ? (
+            <Link to={`${href}/analysis`} className="link-arrow">
+              PM analysis <ArrowGlyph />
+            </Link>
+          ) : null}
+          {research ? (
+            <Link to={`${href}/research`} className="link-arrow">
+              Persona research <ArrowGlyph />
+            </Link>
+          ) : null}
           {p.updates?.length ? (
             <span
               className="mono small uppercase"
-              style={{ color: 'var(--ink-3)' }}
             >
               {p.updates.length} recent updates
             </span>
@@ -67,6 +90,9 @@ FeatureProduct.propTypes = {
     accent: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     image: PropTypes.string,
+    statusLabel: PropTypes.string,
+    role: PropTypes.string,
+    companyContext: PropTypes.string,
     oneLiner: PropTypes.string.isRequired,
     problem: PropTypes.string.isRequired,
     stack: PropTypes.arrayOf(PropTypes.string).isRequired,
