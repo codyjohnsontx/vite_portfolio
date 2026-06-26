@@ -96,6 +96,12 @@ export default function ProductDetailPage() {
   const analysis = getProductAnalysisBySlug(slug);
   const research = getProductResearchBySlug(slug);
   const nextSummary = p.nextStep.split('.')[0] + '.';
+  const heroMetaItems = [
+    ['Status', p.statusLabel],
+    ['Role', p.role],
+    ['Context', p.companyContext],
+    ['Year', p.year],
+  ].filter(([, value]) => Boolean(value));
 
   return (
     <div className="fade-in">
@@ -120,19 +126,16 @@ export default function ProductDetailPage() {
           <div style={{ marginTop: 24, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             <StackRow items={p.stack} />
           </div>
-          <div className="meta-row meta-row--hero" aria-label={`${p.name} product metadata`}>
-            {[
-              ['Status', p.statusLabel],
-              ['Role', p.role],
-              ['Context', p.companyContext],
-              ['Year', p.year],
-            ].filter(([, value]) => Boolean(value)).map(([label, value]) => (
-              <span key={label} className="meta-row__item">
-                <strong>{label}</strong>
-                {value}
-              </span>
-            ))}
-          </div>
+          {heroMetaItems.length ? (
+            <div className="meta-row meta-row--hero" aria-label={`${p.name} product metadata`}>
+              {heroMetaItems.map(([label, value]) => (
+                <span key={label} className="meta-row__item">
+                  <strong>{label}</strong>
+                  {value}
+                </span>
+              ))}
+            </div>
+          ) : null}
           {analysis ? (
             <div style={{ marginTop: 24 }}>
               <Link to={`/products/${p.slug}/analysis`} className="link-arrow">
