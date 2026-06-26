@@ -2,6 +2,11 @@ import diazMa from '../assets/diazma.png';
 import ctxChat from '../assets/ctxChat.png';
 import rideSense from '../assets/ridesense.png';
 import trackTuner from '../assets/track_tuner.png';
+import trackTunerSessionDetailCompareCta from '../assets/track-tuner/session-detail-compare-cta.png';
+import trackTunerBaselinePicker from '../assets/track-tuner/session-compare-baseline-picker.png';
+import trackTunerStrengthLapMetrics from '../assets/track-tuner/session-compare-strength-lap-metrics.png';
+import trackTunerContextFlags from '../assets/track-tuner/session-compare-context-flags.png';
+import trackTunerSetupDeltas from '../assets/track-tuner/session-compare-setup-deltas.png';
 import rideSenseOverviewDesktop from '../../docs/assets/readme/overview-desktop.png';
 import rideSenseOverviewMobile from '../../docs/assets/readme/overview-mobile.png';
 import windCastHero from '../assets/windcast/windcast-hero.png';
@@ -31,7 +36,8 @@ const allProducts = [
     companyContext: 'Independent build',
     role: 'Product Manager / Developer',
     stack: ['React', 'TypeScript', 'Node.js', 'RAG prototypes'],
-    oneLiner: 'AI-assisted race setup and telemetry platform for faster trackside tuning decisions.',
+    oneLiner:
+      'Motorsport setup logger that helps riders and drivers compare sessions, understand setup deltas, and make better trackside decisions without overreading weak data.',
     audience:
       'Track day riders, HPDE and time-attack drivers, and club racers who need setup confidence between sessions.',
     jtbd:
@@ -39,30 +45,32 @@ const allProducts = [
     problem:
       'Scattered notes and memory-driven tuning make it difficult to learn from past sessions and improve consistently.',
     coreWorkflow: [
-      'Capture suspension settings, tire pressures, and track conditions right after each session.',
-      'Log rider and driver feedback in the same timeline as setup changes.',
-      'Compare historical sessions to identify what setup deltas improved lap behavior.',
-      'Use RAG-powered recommendations to suggest next setup adjustments from prior outcomes.',
+      'Capture suspension settings, tire pressures, environment, and session notes right after each run.',
+      'Keep the free previous-session comparison on the session detail page for the fastest "what changed since last time?" check.',
+      'Use the Pro Session Comparison page to choose a same-vehicle baseline and compare setup deltas, conditions, context flags, and available lap-summary metrics.',
+      'Treat comparison strength labels and warnings as guardrails so users do not assume a setup caused a result.',
+      'Use Race Engineer only where the app has enough session context to keep guidance grounded.',
     ],
     mvpScope: [
       'Setup logging first, telemetry workflows second',
       'Bike and car setup capture',
-      'Condition and feedback timeline',
-      'Historical comparison baseline',
-      'Early AI recommendation engine prototype',
+      'Condition, environment, and feedback timeline',
+      'Free previous-session setup comparison',
+      'Pro same-vehicle Session Comparison v1 with baseline picker, strength labels, context flags, lap metrics, and setup deltas',
+      'Early AI recommendation engine prototype with grounding and refusal guardrails',
     ],
     evidenceSignal:
-      'Roadmap and MVP sequence are already anchored in setup logging; AI recommendations are being layered in from historical data patterns.',
+      'The product has moved beyond basic logging into a setup-learning loop: free users can compare against the previous session, while Pro users can choose a same-vehicle baseline and review deterministic comparison signals with context warnings instead of causal claims.',
     nextStep:
-      'Ship telemetry-enriched recommendations and validate suggested adjustments against repeat session performance.',
+      'Validate whether Session Comparison v1 helps users return after repeat track days, then decide whether CSV import, richer telemetry summaries, saved takeaways, or coach-facing comparison workflows should come next.',
     standaloneMockStatus: 'in-progress',
     featurePresentations: [
       {
         slug: 'session-compare',
-        eyebrow: 'Concept extension · PM brief',
+        eyebrow: 'Shipped feature · PM brief',
         title: 'Session Compare',
         summary:
-          'Ten-slide product brief that moves Track Tuner from setup logging toward trackside decision support. Frames the problem, the v1 scope, the workflow, and the four questions every comparison should answer.',
+          'Shipped Session Comparison v1 for Track Tuner: a Pro workflow where users choose a same-vehicle baseline and compare setup changes, conditions, lap-summary metrics, and context warnings without treating the result as proof of causation.',
         links: [
           { label: 'Read the brief', href: '/products/track-tuner/session-compare' },
           {
@@ -72,7 +80,45 @@ const allProducts = [
         ],
       },
     ],
+    visualAssets: {
+      note:
+        'Screenshots use Trackday Tuner demo data from the shipped Session Comparison v1 flow. No measured result is claimed.',
+      items: [
+        {
+          label: 'Compare CTA',
+          src: trackTunerSessionDetailCompareCta,
+          alt: 'Trackday Tuner session detail page showing the free previous-session comparison and Compare Sessions CTA.',
+        },
+        {
+          label: 'Baseline picker',
+          src: trackTunerBaselinePicker,
+          alt: 'Trackday Tuner Session Comparison page showing the same-vehicle baseline picker with same-track sessions prioritized.',
+        },
+        {
+          label: 'Strength and metrics',
+          src: trackTunerStrengthLapMetrics,
+          alt: 'Trackday Tuner Session Comparison page showing the comparison strength banner and lap-summary metrics.',
+        },
+        {
+          label: 'Context flags',
+          src: trackTunerContextFlags,
+          alt: 'Trackday Tuner Session Comparison page showing context flags for track, conditions, tires, lap data, and notes.',
+        },
+        {
+          label: 'Setup deltas',
+          src: trackTunerSetupDeltas,
+          alt: 'Trackday Tuner Session Comparison page showing grouped setup deltas with changed fields shown by default.',
+        },
+      ],
+    },
     updates: [
+      {
+        date: 'Merged',
+        tag: 'Update 12',
+        title: 'Ship Session Comparison v1',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/16',
+        body: 'Added Session Comparison v1 for Pro users: choose a baseline session from the same vehicle, prioritize same-track comparisons, review strength labels, context flags, available lap-summary metrics, and grouped setup deltas. The comparison is rules-based, avoids causal claims, and keeps the free previous-session comparison intact.',
+      },
       {
         date: 'Merged',
         tag: 'Update 11',
