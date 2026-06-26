@@ -5,7 +5,7 @@ export const productAnalyses = [
     tagline:
       'A mobile-first setup logging product for riders and drivers who need faster trackside decisions than notes apps can support.',
     summary:
-      'Track Tuner is built around one narrow but recurring motorsport workflow: riders and drivers make setup changes every session, then struggle to remember what actually helped. The product bet is that if logging is faster than Notes and the app automatically surfaces what changed since last time, users will build enough structured history for grounded AI recommendations to become genuinely useful instead of generic forum advice.',
+      'Track Tuner is built around one narrow but recurring motorsport workflow: riders and drivers make setup changes every session, then struggle to understand what actually changed. The product now has a stronger setup-learning loop: free users keep the previous-session comparison, while Pro users can choose a same-vehicle baseline and review deterministic comparison signals with context warnings instead of causal claims.',
     problem:
       'Track day riders and HPDE or club drivers make tire, suspension, alignment, and sag changes between sessions, but the value of each change is comparative. A single session note is not enough. The real question is what changed versus last time, whether it improved the car or bike, and what to try next with only a few minutes before going back out.',
     users: {
@@ -29,13 +29,14 @@ export const productAnalyses = [
       'The workflow repeats every track weekend, which supports a low-price recurring subscription model.',
     ],
     productBet:
-      'If session logging is faster than typing into Notes in under a minute and the app automatically shows what changed since the previous session, riders will log consistently enough for structured history to become the moat. Once a rider has several grounded sessions, Race Engineer can answer with better context than a forum thread, which is what justifies upgrading to Pro.',
+      'If session logging is fast enough to repeat and comparison is careful enough not to overclaim, riders will build structured history they can actually use. The free previous-session diff answers the immediate "what changed?" question, while Pro Session Comparison v1 gives serious users a richer baseline picker, lap-summary metrics, context flags, and setup deltas without pretending the app can prove causation.',
     mvp: {
       shipped: [
         'Supabase auth, protected routes, and a mobile shell optimized for trackside use.',
         'Garage and track management for both motorcycle and car setups.',
         'Session logging with optional setup modules for tires, suspension, alignment, and notes.',
         'Compare-with-previous-session diff view as the core workflow wedge.',
+        'Pro Session Comparison v1 with same-vehicle baseline selection, same-track prioritization, strength labels, context flags, lap-summary metrics, and grouped setup deltas.',
         'Trackside tools including a sag calculator and unit converter.',
         'Stripe checkout, portal, webhook handling, and a founder promo path.',
       ],
@@ -43,7 +44,7 @@ export const productAnalyses = [
         'Social feed, sharing, and follower mechanics.',
         'Real-time telemetry ingestion and desktop-first analytics.',
         'Native apps beyond the PWA footprint.',
-        'Arbitrary compare-any-two-session workflows for v1.',
+        'Unbounded compare-any-vehicle workflows and causal recommendation claims.',
         'CSV export and analytics charts until the core loop was stable.',
       ],
     },
@@ -58,7 +59,14 @@ export const productAnalyses = [
         initiative: 'Compare with previous',
         value: 'High',
         effort: 'S',
-        decision: 'Shipped as the clearest wedge against Notes.',
+        decision: 'Shipped and retained for free users as the fastest way to see what changed since the previous session.',
+      },
+      {
+        initiative: 'Session Comparison v1',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Shipped as a Pro workflow for same-vehicle baseline selection, context warnings, lap-summary metrics, and setup deltas.',
       },
       {
         initiative: 'Stripe billing',
@@ -99,6 +107,11 @@ export const productAnalyses = [
     ],
     successMetrics: [
       {
+        label: 'Measurement status',
+        detail:
+          'No measured result yet. Impact to validate through compare starts, repeat comparison use, Pro gate hits, and follow-up track-day retention.',
+      },
+      {
         label: 'Activation',
         detail:
           'Time-to-first-session under 60 seconds, with at least 60% of new signups logging session one inside 7 days.',
@@ -134,6 +147,8 @@ export const productAnalyses = [
         'session_created',
         'session_module_added',
         'compare_viewed',
+        'session_compare_started',
+        'session_compare_baseline_changed',
         'ai_query_submitted',
         'ai_query_refused',
         'ai_feedback_submitted',
@@ -197,19 +212,26 @@ export const productAnalyses = [
         detail:
           'Moved billing controls out of the dashboard and into settings to keep the core product surface cleaner.',
       },
+      {
+        label: 'PR #16',
+        detail:
+          'Shipped Session Comparison v1 as a Pro page with same-vehicle baseline selection, same-track prioritization, strength labels, context flags, lap-summary metrics from telemetry summaries, and changed-fields-first setup deltas.',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/16',
+      },
     ],
     learnings: [
       'Compare-with-previous beat compare-any-two as the real v1 wedge. Riders usually want “what changed since last time,” not arbitrary historical analysis.',
+      'Session Comparison v1 needed rules and warnings more than AI language. The feature is useful because it shows context and setup deltas without implying the setup caused the lap result.',
       'The AI only became trustworthy after refusal hardening and grounding verification. Refusing weakly grounded asks became a feature rather than a failure mode.',
       'Privacy-safe observability is not just a compliance choice; it is a billing and trust feature when AI usage needs to be understood without storing raw notes.',
       'A polished mobile workflow mattered more than richer custom UI controls. Native select elements held up better than touch-unfriendly abstractions.',
     ],
     nextIterations: [
-      'Add multi-session compare as a Pro feature now that the session shape is more stable.',
-      'Ship CSV export as a low-effort Pro utility.',
+      'Measure compare starts, baseline changes, repeated comparison use, Pro gate hits, and saved-takeaway demand before expanding the workflow.',
+      'Add CSV import as a practical way to bring in more structured lap summaries.',
+      'Consider saved takeaways only after users prove they return to comparisons across multiple sessions.',
       'Add symptom tags so the AI can reason over more structured signals than free-text notes alone.',
       'Polish PWA install prompts and offline drafts for low-signal track environments.',
-      'Publish a public deploy and activation dashboard before spending on acquisition.',
     ],
   },
   {

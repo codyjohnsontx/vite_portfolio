@@ -215,21 +215,38 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
-  it('renders the Track Tuner public demo mode update', () => {
+  it('renders the Track Tuner Session Comparison v1 update and screenshots', () => {
     renderApp('/products/track-tuner');
 
     expect(screen.getAllByText(/Active build/).length).toBeGreaterThan(0);
     expect(screen.getByText(/Product Manager \/ Developer/)).toBeTruthy();
     expect(screen.getByText(/Independent build/)).toBeTruthy();
-    expect(screen.getByText(/Update 11/)).toBeTruthy();
-    const demoModeUpdateLink = screen.getByRole('link', {
-      name: 'Add public read-only demo mode',
+    expect(screen.getByText(/Update 12/)).toBeTruthy();
+    const comparisonUpdateLink = screen.getByRole('link', {
+      name: 'Ship Session Comparison v1',
     });
-    expect(demoModeUpdateLink).toBeTruthy();
-    expect(demoModeUpdateLink.getAttribute('href')).toBe(
-      'https://github.com/codyjohnsontx/trackday_tuner/pull/15',
+    expect(comparisonUpdateLink).toBeTruthy();
+    expect(comparisonUpdateLink.getAttribute('href')).toBe(
+      'https://github.com/codyjohnsontx/trackday_tuner/pull/16',
     );
-    expect(screen.getByText(/Try Demo path/)).toBeTruthy();
+    expect(screen.getByText(/rules-based, avoids causal claims/i)).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Product screenshots' })).toBeTruthy();
+    expect(screen.getByText(/No measured result is claimed/i)).toBeTruthy();
+    expect(screen.getByText('Baseline picker')).toBeTruthy();
+    expect(screen.getByText('Strength and metrics')).toBeTruthy();
+    expect(screen.getByText('Context flags')).toBeTruthy();
+    expect(screen.getByText('Setup deltas')).toBeTruthy();
+  });
+
+  it('renders the Track Tuner Session Compare brief as a shipped feature', async () => {
+    renderApp('/products/track-tuner/session-compare');
+
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: /Session Compare/i })).toBeTruthy(),
+    );
+    expect(screen.getByText(/Session Comparison v1/i)).toBeTruthy();
+    expect(screen.getByText(/rules-based/i)).toBeTruthy();
+    expect(screen.getByText(/free previous-session comparison intact/i)).toBeTruthy();
   });
 
   it('renders the refreshed RideSense product proof and screenshot section', () => {
@@ -324,6 +341,10 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /Track Tuner PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
+    expect(screen.getAllByText(/Session Comparison v1/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/No measured result yet/i)).toBeTruthy();
+    expect(screen.getByText(/PR #16/i)).toBeTruthy();
+    expect(screen.getAllByText(/context warnings/i).length).toBeGreaterThan(0);
     expect(
       screen.queryByRole('heading', { name: /Roadmap staged around trust before AI/i }),
     ).toBeNull();
