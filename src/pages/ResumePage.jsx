@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Eyebrow } from '../components/Editorial';
-import { experience } from '../content/experience';
 import { products } from '../content/projects';
 import { resumeContent } from '../content/resumeContent';
 
@@ -77,7 +76,7 @@ export default function ResumePage() {
           <div className="r-grid">
             <Eyebrow>Experience</Eyebrow>
             <div>
-              {experience.map((e) => (
+              {r.experience.map((e) => (
                 <article key={`${e.company}-${e.role}`} className="exp-row">
                   <div>
                     <h3 className="role">{e.role}</h3>
@@ -86,15 +85,13 @@ export default function ResumePage() {
                   </div>
                   <div>
                     <ul>
-                      {e.evidence.map((b) => (
+                      {e.bullets.map((b) => (
                         <li key={b}>{b}</li>
                       ))}
                     </ul>
                   </div>
                   <div className="right">
-                    {e.tags.map((t) => (
-                      <span key={t}>{t}</span>
-                    ))}
+                    <span>{e.company}</span>
                   </div>
                 </article>
               ))}
