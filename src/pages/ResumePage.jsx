@@ -23,7 +23,7 @@ export default function ResumePage() {
             Resume.
           </h1>
           <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
-            Cody Johnson, Product Manager, Austin, TX. PSPO I. Open to roles.
+            {r.headline}
           </p>
         </div>
       </section>

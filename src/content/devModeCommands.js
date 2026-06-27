@@ -41,7 +41,7 @@ function whoamiProductItem(product) {
 }
 
 function resumeRoleItem(role) {
-  return item(`${role.role} / ${role.company}`, role.bullets[0], role.dates);
+  return item(`${role.role} / ${role.company}`, role.bullets.join(' '), role.dates);
 }
 
 function resumeProjectItem(projectSummary) {

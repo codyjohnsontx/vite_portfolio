@@ -184,6 +184,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'Resume' })).toBeTruthy();
     expect(screen.getByText('Product Owner | Product Manager | Digital Platform Operations')).toBeTruthy();
     expect(screen.getByText('Professional experience')).toBeTruthy();
+    expect(screen.getByText(/directly contributing to a \$90K service revenue increase/i)).toBeTruthy();
     expect(screen.getByText('CTX Connect')).toBeTruthy();
     expect(screen.getByText('Technical skills')).toBeTruthy();
     expect(screen.getByText('Harvard CS50')).toBeTruthy();
