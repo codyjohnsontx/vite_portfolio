@@ -1,9 +1,9 @@
 export const resumeContent = {
   headline:
-    'Product Owner, Product Manager, Digital Platform Operations - building platforms, internal tools, automation, and analytics products.',
+    'Product Owner | Product Manager | Digital Platform Operations',
   summary: [
     'Technical Product Owner with experience building and improving digital platforms, internal tools, automation workflows, and analytics products. Skilled at translating business needs into user stories, acceptance criteria, backlog priorities, and release-ready requirements for engineering teams.',
-    'Background spans product ownership, software engineering, operational systems, data workflows, and stakeholder communication, with a focus on platform reliability, workflow clarity, and data-informed execution.',
+    'Background spans product ownership, software engineering, operational systems, and data workflows, with a focus on platform reliability, workflow clarity, and data-informed execution.',
   ],
   strengths: [
     {
@@ -75,11 +75,11 @@ export const resumeContent = {
   experience: [
     {
       company: 'CTX Motoworks',
-      role: 'Assistant General Manager, Operations & E-commerce (Full-time)',
+      role: 'Assistant General Manager (Full-time, Operations & E-commerce)',
       dates: 'Jul 2025 - May 2026',
       bullets: [
         'Owned service, inventory, and e-commerce workflows as product systems; mapped intake, service, billing, and inventory lifecycles to identify bottlenecks and ship process improvements.',
-        'Used operational data, queue age, capacity signals, and revenue trends to prioritize staffing and workflow changes, contributing to a $90K service revenue increase in one month.',
+        'Used operational data, queue age, capacity signals, and revenue trends to prioritize staffing and workflow changes, directly contributing to a $90K service revenue increase in one month.',
         'Led internal platform direction for a Dealerspike alternative with integrated chat, payments, inventory workflows, and a Command Center analytics dashboard for KPI visibility and faster GM decision-making.',
         'Defined product requirements for catalog structure, data models, workflow design, and dashboard reporting to support scalable e-commerce and service operations.',
         'Designed and launched an aged-inventory liquidation workflow on eBay, defining pricing logic, listing cadence, and SKU prioritization; generated $20K in three months and improved inventory turnover.',

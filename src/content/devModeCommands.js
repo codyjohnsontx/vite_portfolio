@@ -1,5 +1,4 @@
 import { caseStudies } from './caseStudies';
-import { experience } from './experience';
 import { products, flagshipProducts, getProductBySlug } from './projects';
 import { profile } from './profile';
 import { getProductResearchBySlug } from './productResearch';
@@ -39,6 +38,24 @@ function whoamiProductItem(product) {
   }
 
   return item(product.name, product.oneLiner, product.role);
+}
+
+function resumeRoleItem(role) {
+  return item(`${role.role} / ${role.company}`, role.bullets[0], role.dates);
+}
+
+function resumeProjectItem(projectSummary) {
+  const separatorIndex = projectSummary.indexOf(':');
+  if (separatorIndex === -1) return item(projectSummary, null);
+
+  return item(
+    projectSummary.slice(0, separatorIndex),
+    projectSummary.slice(separatorIndex + 1).trim(),
+  );
+}
+
+function resumeSkillItem(group) {
+  return item(group.label, group.items.join(' / '));
 }
 
 function productOutput(slug) {
@@ -189,14 +206,28 @@ export function runDevModeCommand(rawCommand) {
       };
     case 'experience':
       return {
-        title: 'Experience',
+        title: 'Resume',
         intro: resumeContent.headline,
         sections: [
           {
-            label: 'Roles',
-            items: experience.map((role) =>
-              item(`${role.role} / ${role.company}`, role.evidence[0], role.dates),
-            ),
+            label: 'Summary',
+            items: resumeContent.summary.map((summary, index) => item(`Summary ${index + 1}`, summary)),
+          },
+          {
+            label: 'Professional experience',
+            items: resumeContent.experience.map(resumeRoleItem),
+          },
+          {
+            label: 'Projects',
+            items: resumeContent.activeBuilds.map(resumeProjectItem),
+          },
+          {
+            label: 'Technical skills',
+            items: resumeContent.strengths.map(resumeSkillItem),
+          },
+          {
+            label: 'Education and certifications',
+            items: resumeContent.credentials.map((credential) => item(credential, null)),
           },
         ],
         links: [
