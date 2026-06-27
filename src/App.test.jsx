@@ -179,6 +179,16 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Active builds')).toBeTruthy();
     expect(screen.getByText(/run: product track-tuner/i)).toBeTruthy();
 
+    fireEvent.change(input, { target: { value: 'experience' } });
+    fireEvent.submit(input.closest('form'));
+    expect(screen.getByRole('heading', { name: 'Resume' })).toBeTruthy();
+    expect(screen.getByText('Product Owner | Product Manager | Digital Platform Operations')).toBeTruthy();
+    expect(screen.getByText('Professional experience')).toBeTruthy();
+    expect(screen.getByText(/directly contributing to a \$90K service revenue increase/i)).toBeTruthy();
+    expect(screen.getByText('CTX Connect')).toBeTruthy();
+    expect(screen.getByText('Technical skills')).toBeTruthy();
+    expect(screen.getByText('Harvard CS50')).toBeTruthy();
+
     fireEvent.change(input, { target: { value: 'contact' } });
     fireEvent.submit(input.closest('form'));
     expect(screen.getByText('codyjohnsontx@gmail.com')).toBeTruthy();
@@ -545,6 +555,7 @@ describe('portfolio routes and metadata', () => {
     const roadmap = readFileSync('docs/portfolio-roadmap.md', 'utf8');
 
     expect(roadmap).toContain('Portfolio polish pass');
-    expect(roadmap).toContain('Status: planned');
+    expect(roadmap).toContain('Status: complete');
+    expect(roadmap).toContain('Wattsmith roadmap UI polish');
   });
 });

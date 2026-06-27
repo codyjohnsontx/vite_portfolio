@@ -10,7 +10,7 @@ Keep the portfolio roadmap focused on recruiter scan quality, PM positioning, ac
 
 Improve homepage hierarchy, copy density, navigation flow, page scan quality, and responsive presentation across the portfolio.
 
-Status: planned  
+Status: complete  
 Goal: Make the site easier for recruiters and hiring managers to understand quickly.
 
 ### 2. Wattsmith roadmap UI polish
