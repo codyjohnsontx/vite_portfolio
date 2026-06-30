@@ -31,7 +31,8 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getAllByText('Case studies').length).toBeGreaterThan(0);
     expect(screen.getByText('Technical execution')).toBeTruthy();
     expect(screen.getByText('Latest update')).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Wattsmith trust pass shipped' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Wattsmith drag/drop builder shipped' })).toBeTruthy();
+    expect(screen.getByText(/60-block reusable starter palette/i)).toBeTruthy();
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
@@ -302,24 +303,26 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText(/PR #7/)).toBeTruthy();
   });
 
-  it('renders the Wattsmith trust pass product update without AI overclaiming', () => {
+  it('renders the Wattsmith reusable palette and drag/drop builder update without overclaiming', () => {
     renderApp('/products/wattsmith');
 
-    expect(
-      screen.getByText(/FTP-percentage-based structured workouts/i),
-    ).toBeTruthy();
-    expect(screen.getByText(/Jun 25, 2026 · PR #4/)).toBeTruthy();
+    expect(screen.getAllByText(/FTP-based structured workouts/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Jun 29, 2026 · PR #6/)).toBeTruthy();
     expect(
       screen.getByRole('link', {
-        name: /Wattsmith trust pass: template preview, collapsible editing, and export readiness/i,
+        name: /Wattsmith reusable palette and drag\/drop builder/i,
       }),
     ).toBeTruthy();
-    expect(screen.getByText(/No AI\/RAG release or measured usage result is claimed/i)).toBeTruthy();
+    expect(screen.getAllByText(/60-block reusable starter palette/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/drag\/drop insertion/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/custom reusable blocks/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/explicit drop joints/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/export-safe workout data/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/No adoption, speed, retention, or revenue result is claimed/i)).toBeTruthy();
     expect(screen.getByText('Template preview')).toBeTruthy();
     expect(screen.getByText('Collapsed editor')).toBeTruthy();
     expect(screen.getByText('Export readiness')).toBeTruthy();
     expect(screen.getAllByText(/undo\/redo/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/inline validation/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/documented TrainerRoad import testing/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/typed workout intent/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/same export-safe model/i).length).toBeGreaterThan(0);
@@ -414,6 +417,10 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getByRole('heading', { name: /Wattsmith PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /Manual builder first before AI/i })).toBeTruthy();
+    expect(screen.getAllByText(/Reusable starter palette/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Drag\/drop composition/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Custom reusable blocks/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/PR #6/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/template previews/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/collapsible workout editing/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/export readiness checklist/i).length).toBeGreaterThan(0);
