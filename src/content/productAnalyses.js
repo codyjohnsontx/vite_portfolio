@@ -434,9 +434,9 @@ export const productAnalyses = [
     tagline:
       'A local-first cycling workout builder that prioritizes a reliable manual workflow before AI generation or platform sync.',
     summary:
-      'Wattsmith is built around a practical product decision: make the manual builder useful first. The latest roadmap slices focus on trust before AI/RAG: template inspection before load, collapsible editing for complex repeat structures, and export readiness before .mrc or .erg download. That keeps the product explainable, testable, and grounded in a structured workout model.',
+      'Wattsmith is built around a practical product decision: make the manual builder useful first. PR #6 moves that manual workflow from form-heavy editing toward composable construction: a 60-block reusable starter palette, custom reusable blocks, drag/drop insertion, explicit drop joints, accessibility fixes, and tests around export-safe workout data. That keeps the product explainable, testable, and grounded in a structured workout model before AI/RAG is allowed into the workflow.',
     problem:
-      'Cyclists can describe a structured workout in plain language, but turning that idea into a clean workout file is still fiddly. They do not just need to draw a workout. They need to trust that a starter template is appropriate, that nested repeat structures are understandable, and that the exported file matches the visible workout before sending it to another platform.',
+      'Cyclists can describe a structured workout in plain language, but turning that idea into a clean workout file is still fiddly. Rebuilding the same warmups, endurance blocks, intervals, recoveries, and cooldowns by hand creates friction. Riders need reusable pieces, valid insertion points, understandable nested structures, and confidence that the exported file matches the visible workout before sending it to another platform.',
     users: {
       primary:
         'Cyclists who train with FTP-based structured workouts and want to build reusable sessions they can ride in external platforms.',
@@ -447,43 +447,53 @@ export const productAnalyses = [
     },
     currentWorkflow: [
       'A rider sketches workouts in notes, spreadsheets, platform builders, or file text and then manually checks whether duration, watts, and repeats make sense.',
-      'Starter workout templates and saved personal workouts often live outside the builder, so reuse requires copying structure by hand.',
+      'Starter workout templates, personal blocks, warmups, intervals, recoveries, and cooldowns often live outside the builder, so reuse requires copying or rebuilding structure by hand.',
+      'Palette-style reuse is only useful if starter blocks and custom blocks stay inside the same editing flow as the actual workout.',
       'Power charts can show a workout shape without making each interval inspectable against FTP, zones, and export behavior.',
       'Export files can drift from the visible chart when range targets, ramps, repeats, or validation warnings are handled separately.',
     ],
     opportunity: [
       'A local-first builder can make the whole workflow usable without accounts, integrations, or cloud storage.',
       'The manual block model creates the structured foundation AI generation will need later.',
+      'A 60-block reusable starter palette can reduce repeated setup for common warmups, endurance work, intervals, recovery steps, cooldowns, and general notes.',
+      'Drag/drop composition can make the builder feel faster only if explicit drop joints show where a block can safely land.',
+      'Custom reusable blocks let riders keep their own workout pieces visible instead of forcing personal structure to live in a separate library.',
       'Template previews reduce the risk of loading a workout blindly.',
       'Collapsible editing makes complex interval structures easier to manage without hiding the underlying model.',
       'Export readiness turns validation from hidden logic into a visible confidence check.',
+      'Accessibility fixes, drop announcements, and button fallbacks make composition behavior part of the product, not just the visual layer.',
       'Interactive chart inspection helps riders trust what they are exporting by tying watts, %FTP, zones, and selected blocks together.',
       'A local library with templates turns one-off workout drafting into reusable training planning.',
       'Export previews and validation warnings make the product feel rideable instead of just drawable.',
     ],
     betHeading: 'Manual builder first before AI',
     productBet:
-      'Before adding AI/RAG, Wattsmith needed a manual workflow riders could trust. That meant making templates inspectable before load, making complex repeat structures manageable after load, and making export readiness visible before download. AI can later accelerate creation, but it should not cover for a weak workout model or unclear export path.',
+      'Before adding AI/RAG, Wattsmith needs a manual workflow riders can trust and reuse. PR #6 strengthens that base by making workouts composable from protected starter blocks and custom reusable pieces, with explicit valid insertion points, nested movement rules, undo/redo, accessible controls, and export-safe data. AI can later accelerate creation, but it should not bypass the same reusable block model or unclear export path.',
     mvp: {
       shipped: [
         'Tabbed workspace for Builder, Library, Profile, and Export.',
         'Manual block builder with add, delete, duplicate, reorder, repeat blocks, target ranges, single targets, ramp targets, and text cues.',
+        '60 protected starter reusable blocks across Warmup, Endurance, Tempo, Sweet Spot, Threshold, VO2, Anaerobic, Recovery, Cooldown, and General.',
+        'Grouped searchable reusable block palette with drag/drop insertion and button fallbacks.',
+        'Custom reusable block management for creating, editing, duplicating, deleting, and inserting saved workout pieces.',
+        'Explicit drop joints before and after root workout blocks and inside repeat children, with invalid nested placements blocked.',
+        'Magnetic insertion previews, drag overlays, and drag handles for reordering existing workout blocks.',
         'Local workout library with starter templates, search, category filtering, duplicate, rename, delete, and load.',
         'Starter template preview modal with chart, metrics, profile warnings, training rationale, and citation links.',
-        'Accessible modal behavior with focus trap and focus restore.',
+        'Accessible modal behavior with focus trap, focus restore, search labeling, and drop joint announcements.',
         'Collapsible workout editing for blocks and repeat children.',
         'Local athlete profile for FTP/default assumptions and workout warnings.',
         'Interactive SVG power chart with hover/tap inspection, keyboard-accessible interval selection, selected-block highlighting, zone bands, FTP line, 0W baseline, and watts/%FTP axis references.',
         'Export readiness checklist for .mrc and .erg output covering validation, FTP, timeline, target sanity, file preview, filename, and range strategy.',
         'Validated .mrc and .erg exports with preview, range export strategy, and shared flattened workout data.',
         'Workout metrics including duration, zone time, IF/TSS estimates, NP-style estimate, kJ, interval count, and work-above-threshold style metrics.',
-        'Cited workout rationale/science notes structure and Vitest coverage for workout helpers, export readiness, validation, exports, zones, and science source resolution.',
+        'Cited workout rationale/science notes structure and Vitest coverage for starter validation, export readiness, clone/rekey behavior, nested drag/drop helpers, validation, exports, zones, and science source resolution.',
       ],
       cut: [
         'AI workout generation.',
         'TrainerRoad, Strava, Garmin, or TrainingPeaks sync.',
         'Accounts, cloud library sync, sharing, or coaching workflows.',
-        'Production usage, adoption, retention, or revenue claims.',
+        'Production usage, adoption, speed, retention, or revenue claims.',
       ],
     },
     priorities: [
@@ -493,6 +503,27 @@ export const productAnalyses = [
         effort: 'L',
         decision:
           'Shipped first because every later AI or integration feature depends on a trustworthy workout structure.',
+      },
+      {
+        initiative: 'Reusable starter palette',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Shipped to make common workout pieces reusable inside the builder instead of forcing riders to rebuild warmups, intervals, recoveries, and cooldowns from scratch.',
+      },
+      {
+        initiative: 'Drag/drop composition',
+        value: 'High',
+        effort: 'L',
+        decision:
+          'Added after the block model was stable enough to support explicit drop joints, magnetic previews, nested placement rules, reordering, and coherent undo/redo behavior.',
+      },
+      {
+        initiative: 'Custom reusable blocks',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Included so riders can keep their own repeatable workout pieces visible and manageable alongside protected starter blocks.',
       },
       {
         initiative: 'Interactive chart inspection',
@@ -544,6 +575,13 @@ export const productAnalyses = [
           'Shipped because export confidence is central to whether a manual builder feels serious enough to use.',
       },
       {
+        initiative: 'Accessibility and fallbacks',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Kept in scope because reusable composition needs labeled search, modal focus behavior, drop joint announcements, and button insertion paths to be usable beyond pointer dragging.',
+      },
+      {
         initiative: 'AI generation',
         value: 'Medium',
         effort: 'L',
@@ -562,6 +600,31 @@ export const productAnalyses = [
         label: 'Library reuse',
         detail:
           'Measure saved workout count, template loads, duplicates, and repeat opens to see whether the library becomes part of planning.',
+      },
+      {
+        label: 'Palette search and insert',
+        detail:
+          'Track palette searches, category use, and starter block insert rate to see whether the 60-block palette reduces blank-workout friction.',
+      },
+      {
+        label: 'Custom block reuse',
+        detail:
+          'Measure custom block creation, edits, inserts, duplicates, and deletes to see whether riders save personal workout pieces for later use.',
+      },
+      {
+        label: 'Drag/drop versus buttons',
+        detail:
+          'Compare drag/drop insertion with button insertion so the product does not mistake visual interaction for the only usable path.',
+      },
+      {
+        label: 'Invalid drop attempts',
+        detail:
+          'Track blocked repeat-child drops and other invalid placements to find confusing composition rules before they create export problems.',
+      },
+      {
+        label: 'Reorder and undo behavior',
+        detail:
+          'Watch workout block reorder frequency and undo after drag/drop to confirm composition changes stay understandable and reversible.',
       },
       {
         label: 'Template preview-to-load rate',
@@ -614,6 +677,16 @@ export const productAnalyses = [
         'workout_created',
         'block_added',
         'repeat_block_added',
+        'palette_searched',
+        'palette_category_selected',
+        'starter_block_inserted',
+        'custom_block_created',
+        'custom_block_inserted',
+        'custom_block_deleted',
+        'workout_block_drag_started',
+        'workout_block_dropped',
+        'drop_joint_focused',
+        'invalid_drop_blocked',
         'template_preview_opened',
         'template_loaded',
         'workout_block_collapsed',
@@ -628,7 +701,9 @@ export const productAnalyses = [
       funnel: [
         'Open builder',
         'Create or load workout',
-        'Preview template',
+        'Search or browse palette',
+        'Insert starter or custom block',
+        'Reorder or adjust block',
         'Edit blocks',
         'Collapse or expand complex blocks',
         'Inspect chart',
@@ -638,24 +713,38 @@ export const productAnalyses = [
       ],
       cohorts: [
         'Workout source: blank vs starter template vs duplicated saved workout',
+        'Block source: starter vs custom vs existing workout block',
+        'Starter block category',
+        'Insertion method: drag/drop vs button',
+        'Drop location: root vs repeat child',
         'Target type: single vs range vs ramp',
         'Editor state: simple blocks vs nested repeat blocks',
         'Export type: .mrc vs .erg',
       ],
       observabilityLabel: 'Validation and evidence',
       observability:
-        'The product should track validation warnings, export attempts, file type, target strategy, and chart inspection behavior before claiming usage impact. No production adoption, retention, revenue, or AI outcome metric exists yet.',
+        'The product should track validation warnings, export attempts, file type, target strategy, palette use, drag/drop behavior, invalid drops, and chart inspection behavior before claiming usage impact. No production adoption, speed, retention, revenue, or AI outcome metric exists yet.',
       dashboards: [
         'Builder completion funnel',
         'Export readiness pass, blocker, and warning rate',
+        'Palette search and starter block insert trend',
+        'Custom block creation and reuse trend',
+        'Drag/drop versus button insertion mix',
+        'Invalid drop and undo-after-drop rate',
         'Template preview-to-load trend',
         'Collapse/expand usage on nested workouts',
         'Chart inspection engagement',
       ],
     },
     shippedIntro:
-      'PR #1 changed Wattsmith from a starter workout drawing MVP into a fuller local-first manual builder. PRs #2-#4 then tightened the trust surfaces before AI/RAG. These are the milestones that changed the product story.',
+      'PR #1 changed Wattsmith from a starter workout drawing MVP into a fuller local-first manual builder. PRs #2-#4 tightened the trust surfaces before AI/RAG, and PR #6 made the builder more composable with reusable blocks and drag/drop insertion. These are the milestones that changed the product story.',
     shippedHighlights: [
+      {
+        label: 'PR #6',
+        detail:
+          'Added a 60-block reusable starter palette, custom reusable block management, drag/drop insertion, explicit drop joints, magnetic previews, workout block reordering, accessibility improvements, and tests for export-safe composition behavior.',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/6',
+      },
       {
         label: 'PR #4',
         detail:
@@ -676,30 +765,29 @@ export const productAnalyses = [
       {
         label: 'Technical foundation',
         detail:
-          'Added reusable workout helpers, validation, storage migration, shared flattened workout data, export utilities, zone calculations, and focused Vitest coverage.',
+          'Added reusable workout helpers, reusable block normalization, clone/rekey behavior, nested drag/drop helpers, validation, storage migration, shared flattened workout data, export utilities, zone calculations, and focused Vitest coverage.',
       },
     ],
     roadmap: {
       heading: 'Roadmap staged around trust before AI',
       intro:
-        'Wattsmith’s roadmap is intentionally staged around trust before AI. The next work strengthens the manual builder, library, export path, rationale system, metrics, and athlete-profile warnings before AI/RAG becomes part of the workflow. Longer term, typed workout intent, source-backed rationale, decision notes, and schema validation will make sure generated workouts cannot bypass the same export-safe model used by the manual builder.',
+        'Wattsmith’s roadmap is intentionally staged around trust before AI. The next work validates real exported files, deepens rationale coverage, improves training metrics, expands profile-driven warnings, and polishes the reusable library after the 60-block palette and drag/drop builder shipped. Longer term, typed workout intent, source-backed rationale, decision notes, and schema validation will make sure generated workouts cannot bypass the same export-safe model used by the manual builder.',
       phases: [
         {
           label: 'Manual builder trust',
           horizon: 'Next',
           items: [
-            'Undo/redo for safer editing.',
-            'Inline block validation.',
-            'Better block presets.',
-            'Duplicate-template-into-workout flow.',
+            'Inline validation refinements.',
+            'Keyboard and screen-reader QA across drag/drop paths.',
+            'More detailed invalid-drop explanations.',
+            'Duplicate-template-into-workout flow polish.',
           ],
         },
         {
           label: 'Library depth',
           horizon: 'Next',
           items: [
-            'More starter templates.',
-            'Sort by duration, category, and difficulty.',
+            'Duration and difficulty filters.',
             'Favorites.',
             'Recently edited workouts.',
             'Stronger empty states.',
@@ -777,6 +865,8 @@ export const productAnalyses = [
     learnings: [
       'AI would be premature without a dependable manual model. The builder has to be useful when every interval is entered by hand.',
       'Trust work is product work. A manual builder needs preview, editing clarity, validation, and export confidence before AI can be useful.',
+      'Composable workflows need explicit valid insertion points, not just drag/drop visuals.',
+      'Fallback buttons, labeled search, focus behavior, and drop announcements are part of the builder surface, not cleanup after the main interaction.',
       'Export readiness should be visible, not just encoded in helper functions or disabled buttons.',
       'A chart is not just visualization; it is a trust surface when export files need to match watts, %FTP, zones, and interval structure.',
       'Local-first can be a product advantage early because it lets the workout workflow work without accounts, sync, or integration dependencies.',

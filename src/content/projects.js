@@ -382,7 +382,10 @@ const allProducts = [
       'React',
       'TypeScript',
       'Vitest',
+      'dnd-kit',
       'local-first storage',
+      'accessibility',
+      'testing',
       'SVG charting',
       'structured workout export',
       'validation logic',
@@ -391,40 +394,53 @@ const allProducts = [
       '.erg',
     ],
     oneLiner:
-      'Local-first cycling workout builder for creating reusable FTP-percentage-based structured workouts, previewing templates, managing complex interval blocks, and checking .mrc or .erg export readiness.',
+      'Local-first cycling workout builder for composing FTP-based structured workouts from reusable blocks, managing custom workout pieces, and exporting clean .mrc or .erg files.',
     audience:
       'Cyclists who train with FTP-based structured workouts and want to build reusable sessions before riding them in external training platforms.',
     jtbd:
       'When planning a structured ride, cyclists need to build intervals, understand watts and zones against their FTP, save the workout, and export a file that matches what the chart shows.',
     problem:
-      'Cyclists can sketch a workout quickly, but turning that sketch into a reliable, reusable, and rideable file is harder when target types, repeats, profile assumptions, chart inspection, and export behavior are split across separate tools or hidden in file syntax.',
+      'Cyclists can sketch a workout quickly, but turning that sketch into a reliable, reusable, and rideable file is harder when common warmups, intervals, recoveries, cooldowns, target types, repeats, profile assumptions, chart inspection, and export behavior are split across separate tools or hidden in file syntax.',
     coreWorkflow: [
-      'Preview starter templates before loading them, with chart, metrics, profile warnings, training rationale, and citation links.',
-      'Build and manage warmups, recoveries, steady blocks, ramps, ranges, single targets, repeat structures, and text cues.',
-      'Collapse or expand workout blocks and repeat children to reduce visual noise in complex interval structures.',
+      'Browse and search a grouped 60-block starter palette across warmup, endurance, tempo, sweet spot, threshold, VO2, anaerobic, recovery, cooldown, and general categories.',
+      'Drag warmups, endurance blocks, intervals, recovery steps, and cooldowns from the palette into explicit drop joints in the root workout or repeat children.',
+      'Create, edit, duplicate, delete, and insert custom reusable blocks while protected starter blocks remain deterministic.',
+      'Reorder existing workout blocks with drag handles, magnetic insertion previews, drag overlays, undo/redo, and button fallbacks.',
       'Inspect the interactive power chart by hover, tap, or keyboard focus to compare watts, %FTP, zones, selected blocks, the FTP line, and the 0W baseline.',
       'Review export readiness before downloading .mrc or .erg files so validation, FTP, timeline, targets, preview, filename, and range strategy are visible.',
     ],
     mvpScope: [
       'Tabbed workspace for Builder, Library, Profile, and Export',
       'Manual block builder with add, delete, duplicate, reorder, repeat blocks, target ranges, ramps, single targets, and text cues',
+      '60 protected starter reusable blocks across Warmup, Endurance, Tempo, Sweet Spot, Threshold, VO2, Anaerobic, Recovery, Cooldown, and General',
+      'Grouped searchable reusable block palette with drag/drop insertion and button fallbacks',
+      'Custom reusable block management for creating, editing, duplicating, deleting, and inserting saved workout pieces',
+      'Explicit drop joints before and after root blocks and inside repeat children, with invalid nested placements blocked',
+      'Magnetic insertion previews, drag overlays, and drag handles for reordering existing workout blocks',
       'Local workout library with starter templates, search, category filtering, duplicate, rename, delete, and load',
       'Starter template preview modal with chart, metrics, profile warnings, training rationale, and citation links',
-      'Accessible modal behavior with focus trap, Escape close, and focus restore',
+      'Accessible modal behavior with focus trap, Escape close, focus restore, search labeling, and drop joint announcements',
       'Collapsible block editing for workout blocks and nested repeat children',
       'Local athlete profile for FTP/default assumptions and workout warnings',
       'Interactive SVG power chart with hover/tap inspection, keyboard-accessible intervals, selected-block highlighting, zone bands, FTP line, 0W baseline, and watts/%FTP y-axis references',
       'Export readiness checklist covering validation, FTP, timeline, target sanity, file preview, filename, and range export strategy',
       'Validated .mrc and .erg exports with preview, range export strategy, and shared flattened workout data',
       'Workout metrics for duration, zone time, IF/TSS estimates, NP-style estimate, kJ, interval counts, and work-above-threshold style metrics',
-      'Cited workout rationale structure plus Vitest coverage for helpers, export readiness, validation, exports, zones, and science source resolution',
+      'Cited workout rationale structure plus Vitest coverage for starter validation, export readiness, clone/rekey behavior, nested drag/drop helpers, validation, exports, zones, and science source resolution',
     ],
     evidenceSignal:
-      'After PR #1 moved Wattsmith into a fuller manual builder, PRs #2-#4 focused on rider trust before AI/RAG by improving template inspection, complex workout editing, export confidence, accessibility, and validation coverage.',
+      'PR #6 moved Wattsmith from a manual workout editor toward a composable workout builder: 60 protected starter blocks, a searchable grouped palette, custom reusable blocks, drag/drop insertion, explicit drop joints, magnetic previews, accessibility fixes, and tests around export-safe data behavior.',
     nextStep:
-      'Keep strengthening the manual builder before AI/RAG: undo/redo, inline validation, richer presets, better library organization, export naming controls, documented TrainerRoad import testing, clearer training metrics, deeper rationale coverage, and profile-driven warnings. Longer term, typed workout intent, source-backed rationale, and schema validation will prepare AI-generated workouts to use the same export-safe model.',
+      'Keep strengthening the manual builder before AI/RAG: documented TrainerRoad import testing, export naming controls, clearer training metrics, deeper rationale coverage, profile-driven warnings, duration and difficulty filters, favorites, and stronger empty states. Longer term, typed workout intent, source-backed rationale, and schema validation will prepare AI-generated workouts to use the same export-safe model.',
     standaloneMockStatus: 'in-progress',
     updates: [
+      {
+        date: 'Jun 29, 2026',
+        tag: 'PR #6',
+        title: 'Wattsmith reusable palette and drag/drop builder',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/6',
+        body: 'Expanded Wattsmith with a 60-block reusable starter palette, grouped search, custom reusable blocks, drag/drop insertion, explicit drop joints, magnetic insertion previews, and drag handles for reordering workout blocks. The workflow now supports composing structured FTP workouts from reusable pieces while preserving undo/redo behavior, button fallbacks, accessibility improvements, and export-safe workout data. No adoption, speed, retention, or revenue result is claimed.',
+      },
       {
         date: 'Jun 25, 2026',
         tag: 'PR #4',
@@ -442,7 +458,7 @@ const allProducts = [
       },
     ],
     visualAssets: {
-      note: 'Screenshots from the manual builder running on local demo data with the default athlete profile.',
+      note: 'Screenshots from the local demo builder. The current public images show the builder dashboard, workout library, template preview, chart inspection, athlete profile, export flow, and mobile views; no measured usage result is implied.',
       items: [
         {
           label: 'Template preview',
