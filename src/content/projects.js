@@ -458,7 +458,7 @@ const allProducts = [
       },
     ],
     visualAssets: {
-      note: 'Screenshots from the local demo builder. The current public images show the builder dashboard, workout library, export flow, and trust surfaces; no measured usage result is implied.',
+      note: 'Screenshots from the local demo builder. The current public images show the builder dashboard, workout library, template preview, chart inspection, athlete profile, export flow, and mobile views; no measured usage result is implied.',
       items: [
         {
           label: 'Template preview',
