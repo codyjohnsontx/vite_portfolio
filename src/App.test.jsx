@@ -25,11 +25,13 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'CTX Chat' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
+    expect(screen.getByText('Turning messy product asks into scoped, shippable work.')).toBeTruthy();
     expect(screen.getByText(/Product manager \/ technical builder/i)).toBeTruthy();
-    expect(screen.getAllByText('Active builds').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('PM analysis').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('Case studies').length).toBeGreaterThan(0);
-    expect(screen.getByText('Technical execution')).toBeTruthy();
+    expect(screen.getByText(/clear requirements/i)).toBeTruthy();
+    expect(screen.getByText('Requirements clarity')).toBeTruthy();
+    expect(screen.getByText('Cross-team execution')).toBeTruthy();
+    expect(screen.getByText('Operational trust')).toBeTruthy();
+    expect(screen.getByText('Measured outcomes')).toBeTruthy();
     expect(screen.getByText('Latest update')).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Wattsmith trust pass shipped' })).toBeTruthy();
     expect(
@@ -83,6 +85,9 @@ describe('portfolio routes and metadata', () => {
     renderApp('/products');
 
     expect(screen.getByText(/Active builds first/i)).toBeTruthy();
+    expect(screen.getByText(/scoped workflow/i)).toBeTruthy();
+    expect(screen.getByText(/delivery decisions/i)).toBeTruthy();
+    expect(screen.getAllByText(/validation logic/i).length).toBeGreaterThan(0);
     expect(screen.getByRole('button', { name: /^all$/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /apps/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /product features/i })).toBeTruthy();
@@ -125,7 +130,7 @@ describe('portfolio routes and metadata', () => {
   it('renders the cases index page', () => {
     renderApp('/case-studies');
 
-    expect(screen.getByText(/Selected proof from past product ownership/i)).toBeTruthy();
+    expect(screen.getByText(/ambiguous needs became scoped work/i)).toBeTruthy();
     caseStudies.forEach((study) => {
       expect(screen.getByRole('heading', { name: study.title })).toBeTruthy();
     });
@@ -171,6 +176,11 @@ describe('portfolio routes and metadata', () => {
 
     fireEvent.change(input, { target: { value: 'whoami' } });
     fireEvent.submit(input.closest('form'));
+    expect(screen.getByText(/turns ambiguous asks into scoped, shippable work/i)).toBeTruthy();
+    expect(screen.getByText(/user stories/i)).toBeTruthy();
+    expect(screen.getAllByText(/acceptance criteria/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/prioritized backlogs/i)).toBeTruthy();
+    expect(screen.getByText(/release-ready workflows/i)).toBeTruthy();
     expect(screen.getByText(/operational CRM \/ dealership command center/i)).toBeTruthy();
     expect(screen.getByText(/Twilio SMS\/MMS routing/i)).toBeTruthy();
 
@@ -502,6 +512,16 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
+  it('renders the Lambda Curry product-owner proof points', () => {
+    renderApp('/case-studies/lambda-curry-scope-monitoring');
+
+    expect(screen.getAllByText(/requirements, user stories, acceptance criteria/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/release-ready scope/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/backlog priorities/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/delivery visibility/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/success metrics/i).length).toBeGreaterThan(0);
+  });
+
   blogPosts.forEach((post) => {
     it(`renders the blog post page for ${post.slug}`, () => {
       renderApp(`/blog/${post.slug}`);
@@ -553,9 +573,15 @@ describe('portfolio routes and metadata', () => {
 
   it('saves the portfolio roadmap document', () => {
     const roadmap = readFileSync('docs/portfolio-roadmap.md', 'utf8');
+    const pmBrief = readFileSync('docs/pm-positioning-brief.md', 'utf8');
+    const evidenceInventory = readFileSync('docs/evidence-inventory.md', 'utf8');
+    const resumeTailoring = readFileSync('docs/resume-tailoring-guide.md', 'utf8');
 
     expect(roadmap).toContain('Portfolio polish pass');
     expect(roadmap).toContain('Status: complete');
     expect(roadmap).toContain('Wattsmith roadmap UI polish');
+    expect(pmBrief).toContain('Schwab-aligned product-owner signals');
+    expect(evidenceInventory).toContain('Digital Product Owner Fit');
+    expect(resumeTailoring).toContain('release readiness');
   });
 });

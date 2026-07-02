@@ -3,11 +3,11 @@ export const profile = {
   targetRole: 'Product Manager',
   location: 'Austin, Texas',
   headline:
-    'Building product systems with engineering depth, operational range, and a bias toward shipping useful things.',
+    'Turning ambiguous product asks into scoped, shippable work.',
   heroSupport:
-    'I am building Track Tuner, RideSense, and Diaz on Demand, while prototyping a Strava component lifecycle concept and drawing on prior product ownership, automation, and operations work across client delivery, nonprofits, and commerce.',
+    'I work across product, engineering, operations, and stakeholder needs to clarify scope, write actionable requirements, sequence delivery, and ship workflows that are understandable, measurable, and ready for real users.',
   summary:
-    'I do my best work when a team needs to turn vague requests into clear requirements, make practical release decisions, and keep execution moving until the result holds up in the real world.',
+    'I do my best work when the request is messy at first: define the real need, break it into deliverable pieces, clarify acceptance criteria, coordinate tradeoffs, and keep the work moving until the result holds up in practice.',
   footerNote:
     'Built as a focused portfolio for active products, selected case studies, and supporting execution proof.',
   contactLinks: [
@@ -43,20 +43,20 @@ export const profile = {
   ],
   toolkit: [
     {
-      title: 'Product work',
-      items: ['Backlog ownership', 'Requirements translation', 'Acceptance criteria', 'Stakeholder alignment'],
+      title: 'Product ownership',
+      items: ['Backlog refinement', 'User stories', 'Acceptance criteria', 'Roadmap sequencing'],
     },
     {
-      title: 'Execution',
-      items: ['Sprint ceremonies', 'Dependency clearing', 'Scope tradeoffs', 'Release coordination'],
+      title: 'Cross-functional execution',
+      items: ['Stakeholder alignment', 'Engineering handoff', 'QA clarification', 'Release coordination'],
     },
     {
-      title: 'Analytics and systems',
-      items: ['Jira', 'Linear', 'Google Analytics', 'GTM', 'MCP monitoring', 'SQL'],
+      title: 'Platform trust',
+      items: ['Validation logic', 'Operational metrics', 'Issue investigation', 'Readiness checks'],
     },
     {
       title: 'Technical fluency',
-      items: ['React', 'TypeScript', 'Node.js', '.NET/WPF', 'SQL', 'RAG prototyping'],
+      items: ['React', 'TypeScript', 'Node.js', 'SQL', 'RAG prototyping'],
     },
   ],
 };

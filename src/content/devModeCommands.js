@@ -152,14 +152,14 @@ export function runDevModeCommand(rawCommand) {
       return {
         title: profile.name,
         intro:
-          'Product Manager with a technical background building data-driven and AI-enabled products across e-commerce, internal tools, and analytics platforms. I focus on turning operational complexity into simple, usable products by combining engineering execution with product decision-making. Operate across code, data, and stakeholder conversations to ship and iterate quickly in fast-moving environments.',
+          'Product manager with a technical background who turns ambiguous asks into scoped, shippable work. I translate stakeholder needs, user problems, and engineering constraints into requirements, user stories, acceptance criteria, prioritized backlogs, validation paths, and release-ready workflows.',
         sections: [
           {
             label: 'Summary',
             items: [
               item(
                 'How I work',
-                'I operate across code, data, and stakeholder conversations to turn messy workflows into simple product surfaces that can ship, measure, and improve quickly.',
+                'I clarify the real need, break it into deliverable pieces, define acceptance criteria, surface risks early, and keep product, engineering, QA, operations, and stakeholder conversations aligned.',
               ),
             ],
           },

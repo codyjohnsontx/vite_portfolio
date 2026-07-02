@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ArrowGlyph,
@@ -11,15 +10,7 @@ import { Reveal } from '../components/ScrollReveal';
 import { caseStudies } from '../content/caseStudies';
 import { conceptProducts, flagshipProducts } from '../content/projects';
 
-const VERBS = ['shipping', 'building', 'shaping', 'tuning', 'scoping'];
-
 function Hero() {
-  const [verbIdx, setVerbIdx] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setVerbIdx((v) => (v + 1) % VERBS.length), 2400);
-    return () => clearInterval(t);
-  }, []);
-
   return (
     <Reveal
       as="section"
@@ -30,23 +21,12 @@ function Hero() {
     >
       <div className="container">
         <h1 className="display" style={{ margin: 0 }}>
-          Currently{' '}
-          <span
-            className="italic"
-            style={{ display: 'inline-block', minWidth: '5.6ch', position: 'relative' }}
-          >
-            <span
-              key={verbIdx}
-              style={{ display: 'inline-block', animation: 'fade .55s ease both' }}
-            >
-              {VERBS[verbIdx]}
-            </span>
-          </span>{' '}
-          product systems with engineering depth and operating range.
+          Turning messy product asks into scoped, shippable work.
         </h1>
         <p className="hero-support">
-          Product manager / technical builder focused on active products, clear scope, practical
-          release decisions, and systems that hold up after launch.
+          Product manager / technical builder who translates stakeholder needs, user problems, and
+          engineering constraints into clear requirements, prioritized work, validation paths, and
+          release-ready workflows.
         </p>
       </div>
     </Reveal>
@@ -56,20 +36,20 @@ function Hero() {
 function ProofStrip() {
   const proofItems = [
     {
-      label: 'Active builds',
-      body: 'Track Tuner, RideSense, Wattsmith, and Diaz on Demand show current product work.',
+      label: 'Requirements clarity',
+      body: 'Vague asks become user stories, acceptance criteria, validation rules, and delivery-ready scope.',
     },
     {
-      label: 'PM analysis',
-      body: 'PM analysis pages show sequencing, tradeoffs, scope, and measurement plans.',
+      label: 'Cross-team execution',
+      body: 'Experience working across product, engineering, QA, design, operations, and stakeholder groups.',
     },
     {
-      label: 'Case studies',
-      body: 'Case studies show past product ownership, automation, and operational outcomes.',
+      label: 'Operational trust',
+      body: 'Active builds surface validation, readiness, monitoring, and failure states instead of hiding them.',
     },
     {
-      label: 'Technical execution',
-      body: 'Engineering fluency supports execution, validation, and better product tradeoffs.',
+      label: 'Measured outcomes',
+      body: 'Case studies tie product decisions to launch metrics, retention, revenue, data quality, and workflow improvement.',
     },
   ];
 
