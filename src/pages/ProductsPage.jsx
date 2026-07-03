@@ -32,7 +32,7 @@ export default function ProductsPage() {
           </h1>
           <p className="lead" style={{ marginTop: 24, maxWidth: '62ch' }}>
             Active builds first, smaller product bets second. Each page shows the user problem,
-            current workflow, shipped scope, and what is next.
+            scoped workflow, delivery decisions, validation logic, and what should happen next.
           </p>
         </div>
       </Reveal>

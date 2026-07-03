@@ -2,20 +2,30 @@
 
 ## Core positioning
 
-Cody Johnson is a product operator with software engineering depth, automation instincts, and hands-on business execution experience. The public portfolio should read as product-led and build-focused, supported by past shipped work.
+Cody Johnson is a product operator with software engineering depth and product-owner execution strength. The portfolio should show that he can turn ambiguous asks into scoped, shippable work: clear requirements, user stories, acceptance criteria, prioritized backlogs, validation paths, and release-ready workflows.
 
 ## Audience
 
-- Recruiters screening for PM, technical PM, or product-owner-adjacent roles
-- Hiring managers looking for execution strength and cross-functional judgment
-- Interviewers who need fast proof that the product story is credible
+- Recruiters screening for associate PM, product owner, technical PM, and digital platform roles.
+- Hiring managers looking for cross-functional execution, backlog discipline, and stakeholder communication.
+- Interviewers testing whether Cody can translate messy needs into deliverable work with engineering teams.
 
 ## Narrative spine
 
-1. Start with active products, not employment chronology.
-2. Frame engineering experience as an execution advantage.
-3. Highlight business-side work to show customer and commercial fluency.
-4. Use Track Tuner, RideSense, and Diaz on Demand as the lead story, with Lambda Curry and HSNBA as selected proof.
+1. Lead with the operating pattern: clarify, scope, sequence, ship, validate.
+2. Use active products as proof of current product judgment.
+3. Use Lambda Curry as the strongest cross-functional product-owner case.
+4. Use HSNBA, CTX Chat, RideSense, and Wattsmith as proof of operational reliability, validation, metrics, and trust-building.
+5. Frame engineering fluency as a way to reduce ambiguity and communicate better with technical teams.
+
+## Schwab-aligned product-owner signals
+
+- Cross-functional delivery: Lambda Curry, CTX Chat, active product work.
+- User stories and acceptance criteria: Lambda Curry and resume content.
+- Backlog sequencing: Lambda Curry, Wattsmith roadmap, Track Tuner prioritization.
+- Platform health and issue awareness: CTX Chat delivery failure alerts, RideSense sync hardening, Track Tuner AI observability, Wattsmith export readiness.
+- Compliance-aware execution: CTX Chat STOP/START handling, RideSense privacy-safe observability, validation-heavy export flows.
+- Metrics and operational reporting: Lambda Curry outcomes, CTX Chat Command Center, HSNBA data-quality outcomes.
 
 ## Messaging rules
 

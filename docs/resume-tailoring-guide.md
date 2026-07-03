@@ -41,8 +41,15 @@ Tailor the master PM resume in 15 to 20 minutes without rewriting it from scratc
 
 ### For product owner or hybrid roles
 
-- Stress backlog refinement, agile ceremonies, issue shaping, and stakeholder alignment.
+- Stress backlog refinement, user stories, acceptance criteria, release readiness, cross-functional clarification, and stakeholder alignment.
+- Show status, risk, dependency, and scope communication as part of the operating model.
+- Use operational metrics to prove follow-through: conversion, retention, unread/overdue work, failed-message visibility, export readiness, and data-quality improvement.
+- Use compliance-aware wording where supported, but do not imply financial-regulatory expertise.
 - Use Lambda Curry and HSNBA higher in the story after the active builds.
+
+### Private interview note
+
+For digital platform roles, lead with Lambda Curry for product-owner delivery, CTX Chat for message/workflow ownership and operational visibility, Wattsmith for validation/readiness thinking, and RideSense/Track Tuner for platform trust, observability, and guardrails.
 
 ## Final check before sending
 

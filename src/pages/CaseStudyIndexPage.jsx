@@ -17,8 +17,9 @@ export default function CaseStudyIndexPage() {
             Case <span className="italic">studies</span>.
           </h1>
           <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
-            Selected proof from past product ownership, automation, and operations work: the
-            problem, the constraints, the decisions, and the measurable result.
+            Selected proof from product ownership, automation, and operations work: how ambiguous
+            needs became scoped work, cross-functional execution, validation, and measurable
+            outcomes.
           </p>
         </div>
       </Reveal>
