@@ -1,7 +1,7 @@
 import diazMa from '../assets/diazma.png';
 import ctxChat from '../assets/ctxChat.png';
 import rideSense from '../assets/ridesense.png';
-import trackTuner from '../assets/track_tuner.png';
+import trackTunerHomepage from '../assets/track-tuner/track-tuner-homepage.jpg';
 import trackTunerSessionDetailCompareCta from '../assets/track-tuner/session-detail-compare-cta.png';
 import trackTunerBaselinePicker from '../assets/track-tuner/session-compare-baseline-picker.png';
 import trackTunerStrengthLapMetrics from '../assets/track-tuner/session-compare-strength-lap-metrics.png';
@@ -32,7 +32,7 @@ const allProducts = [
     statusLabel: 'Active build',
     year: '2026',
     accent: 'oklch(0.62 0.18 30)',
-    image: trackTuner,
+    image: trackTunerHomepage,
     companyContext: 'Independent build',
     role: 'Product Manager / Developer',
     stack: ['React', 'TypeScript', 'Node.js', 'RAG prototypes'],

@@ -12,24 +12,37 @@ import { conceptProducts, flagshipProducts } from '../content/projects';
 
 function Hero() {
   return (
-    <Reveal
-      as="section"
+    <section
       className="section"
       id="home"
-      duration={900}
       style={{ paddingTop: 'clamp(64px, 9vw, 140px)' }}
     >
       <div className="container">
-        <h1 className="display" style={{ margin: 0 }}>
-          Turning messy product asks into scoped, shippable work.
-        </h1>
-        <p className="hero-support">
-          Product manager / technical builder who translates stakeholder needs, user problems, and
-          engineering constraints into clear requirements, prioritized work, validation paths, and
-          release-ready workflows.
-        </p>
+        <div className="home-hero__copy">
+          <Reveal
+            as="h1"
+            className="display"
+            delay={80}
+            distance={18}
+            duration={900}
+            style={{ margin: 0 }}
+          >
+            Turning messy product asks into scoped, shippable work.
+          </Reveal>
+          <Reveal
+            as="p"
+            className="hero-support"
+            delay={520}
+            distance={16}
+            duration={840}
+          >
+            Product manager / technical builder who translates stakeholder needs, user problems, and
+            engineering constraints into clear requirements, prioritized work, validation paths, and
+            release-ready workflows.
+          </Reveal>
+        </div>
       </div>
-    </Reveal>
+    </section>
   );
 }
 
