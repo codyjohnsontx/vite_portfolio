@@ -93,11 +93,12 @@ function LatestUpdate() {
         <div className="latest-update__label mono uppercase">Latest update</div>
         <div className="latest-update__copy">
           <h2 id="latest-update-title" className="latest-update__title">
-            Wattsmith trust pass shipped
+            Wattsmith drag/drop builder shipped
           </h2>
           <p className="latest-update__body">
-            Wattsmith now has template previews, collapsible workout editing, and export
-            readiness checks for .mrc and .erg files, tightening the manual builder before AI/RAG.
+            Wattsmith now has a 60-block reusable starter palette, custom reusable blocks,
+            drag/drop insertion, explicit drop joints, and export-safe workout composition for .mrc
+            and .erg files.
           </p>
         </div>
         <div className="latest-update__links">
