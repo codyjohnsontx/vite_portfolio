@@ -7,21 +7,21 @@ export const caseStudies = [
     team: 'Client stakeholders, engineering, design, and operations',
     title: 'Driving multi-product delivery from scope through measurable launch outcomes',
     tagline:
-      'Owned product lifecycles across e-commerce, consumer, and B2B products while using behavior data, stakeholder feedback, and release metrics to guide iteration.',
+      'Turned competing stakeholder asks into scoped product work across e-commerce, consumer, and B2B surfaces, using requirements, acceptance criteria, backlog priorities, and release metrics to guide delivery.',
     challenge:
-      'Multiple product lines were competing for attention at once. The work required deciding which features mattered most, protecting delivery scope, and making sure launches were measured by business and user outcomes instead of output alone.',
+      'Multiple product lines and stakeholder requests were competing for the same delivery capacity. The work required clarifying what was actually needed, defining ready-to-build scope, sequencing the backlog, and making sure launches were measured by business and user outcomes instead of output alone.',
     featuredOutcome:
       'Contributed to a 12 percent first-week sales lift on a checkout redesign and friction-reduction launch, plus 10-25 percent retention improvement across a multi-product platform.',
     impactHighlights: [
       'Owned product lifecycles across e-commerce, consumer, and B2B products.',
-      'Defined feature scope and acceptance criteria for a checkout redesign and friction-reduction initiative.',
+      'Translated stakeholder needs into requirements, user stories, acceptance criteria, and release-ready scope for engineering teams.',
       'Drove 10-25 percent retention improvement by identifying drop-off patterns and prioritizing fixes in sprint planning.',
     ],
     sections: {
       context:
         'Lambda Curry required balancing e-commerce, consumer, and B2B product priorities while keeping stakeholders aligned around business impact, user behavior, and delivery constraints.',
       problem:
-        'Feature requests and stakeholder priorities often competed for the same engineering capacity. Without clear scope, acceptance criteria, and success metrics, the team risked shipping work that was on time but not tied to conversion, retention, or user behavior.',
+        'Stakeholder requests often arrived as desired outputs rather than clear product problems. Without requirements, acceptance criteria, prioritization, and success metrics, the team risked shipping work that was on time but not tied to conversion, retention, or user behavior.',
       usersStakeholders:
         'Primary stakeholders included clients, internal engineering teams, designers, operations partners, and the delivery leads accountable for on-time execution.',
       goal:
@@ -32,9 +32,9 @@ export const caseStudies = [
         'Need to define validation criteria before each release without slowing sprint execution',
       ],
       ownership: [
-        'Owned product lifecycles across multiple product surfaces',
-        'Prioritized features based on business impact, user behavior, conversion, and retention signals',
-        'Owned sprint execution, dependency management, and release coordination across teams',
+        'Translated stakeholder asks into requirements, user stories, acceptance criteria, and release-ready scope',
+        'Maintained backlog priorities and delivery visibility across multiple product surfaces',
+        'Coordinated sprint execution, dependencies, blocker removal, and release readiness across teams',
       ],
       decisions: [
         'Prioritized features based on business impact and user behavior rather than stakeholder urgency alone.',
@@ -46,9 +46,10 @@ export const caseStudies = [
         'Accepted more upfront product-definition work in exchange for less churn during implementation and cleaner validation after launch.',
       ],
       execution: [
-        'Defined feature scope and acceptance criteria for a checkout redesign and friction-reduction initiative.',
+        'Translated stakeholder asks into requirements, user stories, acceptance criteria, and release-ready scope for engineering teams.',
+        'Maintained backlog priorities and delivery visibility across multiple product surfaces.',
         'Identified drop-off patterns in behavioral data and prioritized retention fixes in sprint planning.',
-        'Managed sprint execution and release coordination across teams, including dependencies for high-impact features.',
+        'Managed sprint execution, dependency coordination, blocker removal, and release readiness across teams.',
       ],
       outcomes: [
         'Contributed to a 12 percent first-week sales lift at launch and measurable conversion improvement through the purchase funnel.',
@@ -61,7 +62,7 @@ export const caseStudies = [
         'Conversion, retention, and behavioral data used to guide iteration and sprint priorities',
       ],
       lessons: [
-        'Product ownership gets stronger when scope, acceptance criteria, and success metrics are clarified before engineering starts.',
+        'Product ownership is strongest when ambiguous requests become clear scope, acceptance criteria, delivery sequence, and validation before engineering starts.',
         'Competing priorities are easier to resolve when tradeoffs are grounded in business impact, user behavior, and delivery constraints.',
       ],
       confidentialityNote:
@@ -76,9 +77,9 @@ export const caseStudies = [
     team: 'Operations leaders, municipal GIS partners, and shelter staff',
     title: 'Reducing manual work and data risk in a mission-driven operations environment',
     tagline:
-      'Designed automation and geospatial workflows that made reporting cleaner, grant work stronger, and daily operations far less manual.',
+      'Improved operational reliability and data quality with automation, validation, and partner-facing analysis that made daily work and reporting easier to trust.',
     challenge:
-      'The organization needed more reliable operational data, but manual entry and fragmented processes created drag, introduced errors, and limited the usefulness of reporting for both daily work and funding efforts.',
+      'The organization needed more reliable operational data and clearer partner communication, but manual entry and fragmented processes created drag, introduced errors, and limited the usefulness of reporting for both daily work and funding efforts.',
     featuredOutcome:
       'Reduced manual data entry by 65 percent, decreased data errors by 95 percent, and helped analyze more than 19,000 records for grant-supporting GIS work.',
     impactHighlights: [
@@ -88,9 +89,9 @@ export const caseStudies = [
     ],
     sections: {
       context:
-        'HSNBA operated in a setting where operational data quality mattered both for day-to-day execution and for the organization’s ability to make a stronger case for external funding.',
+        'HSNBA operated in a setting where operational data quality, daily reliability, and partner-ready reporting all mattered to the organization’s ability to execute.',
       problem:
-        'Manual data workflows consumed time, introduced avoidable errors, and made reporting less reliable than the organization needed.',
+        'Manual data workflows consumed time, introduced avoidable errors, made reporting less reliable than the organization needed, and made partner analysis harder to communicate cleanly.',
       usersStakeholders:
         'Stakeholders included shelter operations staff, leadership, municipal GIS collaborators, and grant-related decision-makers relying on clean analysis.',
       goal:
@@ -103,7 +104,7 @@ export const caseStudies = [
       ownership: [
         'Architected the automation suite and SQL integration approach',
         'Led the GIS partnership and technical design for record analysis',
-        'Connected operational pain points to practical automation choices',
+        'Connected operational pain points to practical automation choices and clearer reporting handoffs',
       ],
       decisions: [
         'Focused first on eliminating repetitive manual work because that unlocked both accuracy and reporting quality.',
