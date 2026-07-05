@@ -69,9 +69,9 @@ This file consolidates the strongest product-relevant evidence currently reflect
 - Ambiguous asks to actionable work: Lambda Curry translated stakeholder requests into requirements, user stories, acceptance criteria, and release validation.
 - Backlog and sequencing: Lambda Curry sprint priorities; Wattsmith trust-before-AI roadmap; Track Tuner compare workflow sequencing.
 - Cross-functional execution: Lambda Curry with client stakeholders, engineering, QA/design; CTX Chat across sales, service, parts, and leadership; HSNBA with operations and GIS partners.
-- Production/platform trust: RideSense OAuth hardening and fallback behavior; Track Tuner privacy-safe AI observability; Wattsmith reusable palette, drag/drop composition, accessibility fixes, and export readiness; CTX Chat failed-message visibility.
+- Production/platform trust: RideSense OAuth hardening and fallback behavior; Track Tuner privacy-safe AI observability; Wattsmith reusable palette, drag/drop composition, accessibility fixes, export readiness, and Wattsmith automated export verification; CTX Chat failed-message visibility.
 - Metrics and monitoring: Lambda Curry conversion/retention signals; CTX Chat unread/overdue/failed-message metrics; HSNBA data error reduction.
-- Compliance-aware habits: CTX Chat STOP/START handling; privacy-safe AI observability; explicit validation before export.
+- Compliance-aware habits: CTX Chat STOP/START handling; privacy-safe AI observability; explicit validation before export; file-format verification before app-acceptance claims.
 
 ## Active builds to keep product-first
 
