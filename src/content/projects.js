@@ -22,6 +22,9 @@ import wattsmithMobileChart from '../assets/wattsmith/wattsmith-07-mobile-chart-
 import wattsmithTemplatePreview from '../assets/wattsmith/wattsmith-08-template-preview-modal.png';
 import wattsmithCollapsedEditor from '../assets/wattsmith/wattsmith-09-collapsed-workout-blocks.png';
 import wattsmithExportReadiness from '../assets/wattsmith/wattsmith-10-export-readiness-checklist.png';
+import wattsmithBuilderWorkspace from '../assets/wattsmith/wattsmith-11-builder-workspace.png';
+import wattsmithReusableBlockPalette from '../assets/wattsmith/wattsmith-12-reusable-block-palette.png';
+import wattsmithWorkoutStepEditor from '../assets/wattsmith/wattsmith-13-workout-step-editor.png';
 
 const allProducts = [
   {
@@ -372,29 +375,18 @@ const allProducts = [
     tier: 'flagship',
     status: 'active-build',
     statusLabel: 'Active build',
-    year: '2026',
     accent: 'oklch(0.64 0.15 110)',
     image: wattsmithBuilderDashboard,
-    companyContext: 'Independent build',
     role: 'Product Manager / Developer',
     stack: [
       'Next.js',
       'React',
       'TypeScript',
+      'Tailwind CSS',
       'Vitest',
-      'dnd-kit',
-      'local-first storage',
-      'accessibility',
-      'testing',
-      'SVG charting',
-      'structured workout export',
-      'validation logic',
-      'FTP-percentage workouts',
-      '.mrc',
-      '.erg',
     ],
     oneLiner:
-      'Local-first cycling workout builder for composing FTP-based structured workouts from reusable blocks, managing custom workout pieces, and exporting clean .mrc or .erg files.',
+      'Wattsmith is a local-first cycling training workspace for self-coached riders and coach-led athletes. It connects performance markers like FTP, form, fatigue, TSS, and VO2 progress with analytics, AI-assisted insight, and workout creation; the current builder supports reusable FTP-based blocks, load inspection, and verified .mrc/.erg exports.',
     audience:
       'Cyclists who train with FTP-based structured workouts and want to build reusable sessions before riding them in external training platforms.',
     jtbd:
@@ -408,6 +400,7 @@ const allProducts = [
       'Reorder existing workout blocks with drag handles, magnetic insertion previews, drag overlays, undo/redo, and button fallbacks.',
       'Inspect the interactive power chart by hover, tap, or keyboard focus to compare watts, %FTP, zones, selected blocks, the FTP line, and the 0W baseline.',
       'Review export readiness before downloading .mrc or .erg files so validation, FTP, timeline, targets, preview, filename, and range strategy are visible.',
+      'Export .mrc or .erg files whose generated timelines are checked against the source workout for durations, power targets, ramps, repeats, and cues.',
     ],
     mvpScope: [
       'Tabbed workspace for Builder, Library, Profile, and Export',
@@ -425,15 +418,24 @@ const allProducts = [
       'Interactive SVG power chart with hover/tap inspection, keyboard-accessible intervals, selected-block highlighting, zone bands, FTP line, 0W baseline, and watts/%FTP y-axis references',
       'Export readiness checklist covering validation, FTP, timeline, target sanity, file preview, filename, and range export strategy',
       'Validated .mrc and .erg exports with preview, range export strategy, and shared flattened workout data',
+      'Automated export verification that parses generated .mrc and .erg files back into workout timelines and checks durations, power targets, ramps, expanded repeats, and cue timestamps',
+      'Golden-file checks that keep committed sample exports byte-for-byte aligned with current exporter output',
       'Workout metrics for duration, zone time, IF/TSS estimates, NP-style estimate, kJ, interval counts, and work-above-threshold style metrics',
-      'Cited workout rationale structure plus Vitest coverage for starter validation, export readiness, clone/rekey behavior, nested drag/drop helpers, validation, exports, zones, and science source resolution',
+      'Cited workout rationale structure plus Vitest coverage for starter validation, export readiness, clone/rekey behavior, nested drag/drop helpers, validation, exports, export round-trip verification, zones, and science source resolution',
     ],
     evidenceSignal:
-      'PR #6 moved Wattsmith from a manual workout editor toward a composable workout builder: 60 protected starter blocks, a searchable grouped palette, custom reusable blocks, drag/drop insertion, explicit drop joints, magnetic previews, accessibility fixes, and tests around export-safe data behavior.',
+      'PR #10 closed a stalled export-confidence milestone by replacing flaky third-party-app testing with automated in-repo verification: generated .mrc/.erg files are parsed back into workout timelines, checked against the source workout, and protected by golden-file tests.',
     nextStep:
-      'Keep strengthening the manual builder before AI/RAG: documented TrainerRoad import testing, export naming controls, clearer training metrics, deeper rationale coverage, profile-driven warnings, duration and difficulty filters, favorites, and stronger empty states. Longer term, typed workout intent, source-backed rationale, and schema validation will prepare AI-generated workouts to use the same export-safe model.',
+      'Keep strengthening the manual builder before AI/RAG: clearer training metrics, deeper rationale coverage, profile-driven warnings, duration and difficulty filters, favorites, and stronger empty states. Optional third-party app acceptance checks can still be run in any ERG/MRC-capable tool, but export correctness is now verified in the codebase.',
     standaloneMockStatus: 'in-progress',
     updates: [
+      {
+        date: 'Jul 4, 2026',
+        tag: 'PR #10',
+        title: 'Wattsmith automated export verification',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/10',
+        body: 'Wattsmith exports cycling workouts as .mrc/.erg files for training apps, so those files have to be exactly right. I replaced a manual testing step that relied on a third-party desktop app with automated checks in the codebase. The tests read each exported file back into a workout timeline and confirm it matches the original: durations, power targets, ramps, repeats, and cues. Golden-file checks flag unintended export-format changes. Export correctness is now checked automatically on every change; third-party app acceptance remains a separate optional check. Test count moved from 84 to 119.',
+      },
       {
         date: 'Jun 29, 2026',
         tag: 'PR #6',
@@ -458,7 +460,7 @@ const allProducts = [
       },
     ],
     visualAssets: {
-      note: 'Screenshots from the local demo builder. The current public images show the builder dashboard, workout library, template preview, chart inspection, athlete profile, export flow, and mobile views; no measured usage result is implied.',
+      note: 'Screenshots from the local demo builder. The current public images show the builder homescreen, workout library, reusable block palette, step editing, template preview, chart inspection, athlete profile, export flow, and mobile views; no measured usage result is implied.',
       items: [
         {
           label: 'Template preview',
@@ -478,7 +480,22 @@ const allProducts = [
         {
           label: 'Builder',
           src: wattsmithBuilderDashboard,
-          alt: 'Wattsmith builder tab showing the workout block editor, interactive power chart, and zone-based metrics for a structured FTP workout.',
+          alt: 'Wattsmith builder homescreen showing the workout preview chart, FTP controls, builder form, and workout summary for a structured FTP workout.',
+        },
+        {
+          label: 'Builder workspace',
+          src: wattsmithBuilderWorkspace,
+          alt: 'Wattsmith builder workspace showing workout name and description fields, reusable block search, starter block cards, and summary metrics.',
+        },
+        {
+          label: 'Reusable block palette',
+          src: wattsmithReusableBlockPalette,
+          alt: 'Wattsmith reusable block palette showing starter warmup blocks, workout metrics, time in zones, and workout rationale.',
+        },
+        {
+          label: 'Workout step editor',
+          src: wattsmithWorkoutStepEditor,
+          alt: 'Wattsmith workout step editor showing an editable warmup ramp, a nested repeat set, repeat children, and cited workout rationale.',
         },
         {
           label: 'Chart inspection',

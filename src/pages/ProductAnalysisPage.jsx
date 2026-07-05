@@ -329,6 +329,31 @@ export default function ProductAnalysisPage() {
                   </div>
                 </Reveal>
               ))}
+              {analysis.decisionStory ? (
+                <Reveal style={{ marginTop: 40 }}>
+                  <Eyebrow>Problem -&gt; decision -&gt; outcome</Eyebrow>
+                  <h3 className="h3" style={{ margin: '12px 0 20px' }}>
+                    {analysis.decisionStory.heading}
+                  </h3>
+                  <div className="analysis-dual-grid">
+                    {[
+                      ['Problem', analysis.decisionStory.problem],
+                      ['Decision', analysis.decisionStory.decision],
+                      ['Outcome', analysis.decisionStory.outcome],
+                    ].map(([label, body], index) => (
+                      <Reveal
+                        as="article"
+                        key={label}
+                        className="priority-card"
+                        delay={index * 90}
+                      >
+                        <p className="priority-card__kicker">{label}</p>
+                        <p>{body}</p>
+                      </Reveal>
+                    ))}
+                  </div>
+                </Reveal>
+              ) : null}
             </Reveal>
 
             {analysis.roadmap ? (

@@ -434,9 +434,9 @@ export const productAnalyses = [
     tagline:
       'A local-first cycling workout builder that prioritizes a reliable manual workflow before AI generation or platform sync.',
     summary:
-      'Wattsmith is built around a practical product decision: make the manual builder useful first. PR #6 moves that manual workflow from form-heavy editing toward composable construction: a 60-block reusable starter palette, custom reusable blocks, drag/drop insertion, explicit drop joints, accessibility fixes, and tests around export-safe workout data. That keeps the product explainable, testable, and grounded in a structured workout model before AI/RAG is allowed into the workflow.',
+      'Wattsmith is built around a practical product decision: make the manual builder trustworthy before AI/RAG. PR #10 tightened the moment of truth for the app: exported .mrc/.erg files are now verified in-repo by parsing them back into workout timelines and checking them against the source workout. The builder is still local-first and composable, but export correctness no longer depends on a flaky third-party desktop app.',
     problem:
-      'Cyclists can describe a structured workout in plain language, but turning that idea into a clean workout file is still fiddly. Rebuilding the same warmups, endurance blocks, intervals, recoveries, and cooldowns by hand creates friction. Riders need reusable pieces, valid insertion points, understandable nested structures, and confidence that the exported file matches the visible workout before sending it to another platform.',
+      'Cyclists can describe a structured workout in plain language, but turning that idea into a clean workout file is still fiddly. Rebuilding common workout pieces by hand creates friction, and export is where trust either holds or breaks: if the file is wrong, the rider gets the wrong workout on the trainer. Riders need reusable pieces, valid insertion points, understandable nested structures, and confidence that the exported file matches the visible workout before sending it to another platform.',
     users: {
       primary:
         'Cyclists who train with FTP-based structured workouts and want to build reusable sessions they can ride in external platforms.',
@@ -451,6 +451,7 @@ export const productAnalyses = [
       'Palette-style reuse is only useful if starter blocks and custom blocks stay inside the same editing flow as the actual workout.',
       'Power charts can show a workout shape without making each interval inspectable against FTP, zones, and export behavior.',
       'Export files can drift from the visible chart when range targets, ramps, repeats, or validation warnings are handled separately.',
+      'Export testing previously depended on importing files into a third-party desktop app and visually checking the result, which stalled the milestone when the app was too buggy to log into.',
     ],
     opportunity: [
       'A local-first builder can make the whole workflow usable without accounts, integrations, or cloud storage.',
@@ -461,6 +462,7 @@ export const productAnalyses = [
       'Template previews reduce the risk of loading a workout blindly.',
       'Collapsible editing makes complex interval structures easier to manage without hiding the underlying model.',
       'Export readiness turns validation from hidden logic into a visible confidence check.',
+      'In-repo export verification can prove the generated file reconstructs the intended workout without depending on any single third-party training app.',
       'Accessibility fixes, drop announcements, and button fallbacks make composition behavior part of the product, not just the visual layer.',
       'Interactive chart inspection helps riders trust what they are exporting by tying watts, %FTP, zones, and selected blocks together.',
       'A local library with templates turns one-off workout drafting into reusable training planning.',
@@ -468,7 +470,7 @@ export const productAnalyses = [
     ],
     betHeading: 'Manual builder first before AI',
     productBet:
-      'Before adding AI/RAG, Wattsmith needs a manual workflow riders can trust and reuse. PR #6 strengthens that base by making workouts composable from protected starter blocks and custom reusable pieces, with explicit valid insertion points, nested movement rules, undo/redo, accessible controls, and export-safe data. AI can later accelerate creation, but it should not bypass the same reusable block model or unclear export path.',
+      'Before adding AI/RAG, Wattsmith needs a manual workflow riders can trust and reuse. PR #10 strengthens that base by moving export confidence into automated tests: generated .mrc/.erg files are parsed back into workout timelines, checked against source durations, power targets, ramps, repeats, and cues, and protected by golden-file comparisons. AI can later accelerate creation, but it should not bypass the same export-safe model.',
     mvp: {
       shipped: [
         'Tabbed workspace for Builder, Library, Profile, and Export.',
@@ -486,11 +488,15 @@ export const productAnalyses = [
         'Interactive SVG power chart with hover/tap inspection, keyboard-accessible interval selection, selected-block highlighting, zone bands, FTP line, 0W baseline, and watts/%FTP axis references.',
         'Export readiness checklist for .mrc and .erg output covering validation, FTP, timeline, target sanity, file preview, filename, and range strategy.',
         'Validated .mrc and .erg exports with preview, range export strategy, and shared flattened workout data.',
+        'Automated .mrc/.erg export verification that round-trips generated files back into workout timelines.',
+        'Golden-file export checks that fail when committed sample exports drift from current exporter output.',
+        'App-agnostic export-testing documentation that makes human third-party app checks optional instead of the source of truth.',
         'Workout metrics including duration, zone time, IF/TSS estimates, NP-style estimate, kJ, interval count, and work-above-threshold style metrics.',
         'Cited workout rationale/science notes structure and Vitest coverage for starter validation, export readiness, clone/rekey behavior, nested drag/drop helpers, validation, exports, zones, and science source resolution.',
       ],
       cut: [
         'AI workout generation.',
+        'Claims that a specific third-party app accepts every exported file.',
         'TrainerRoad, Strava, Garmin, or TrainingPeaks sync.',
         'Accounts, cloud library sync, sharing, or coaching workflows.',
         'Production usage, adoption, speed, retention, or revenue claims.',
@@ -503,6 +509,13 @@ export const productAnalyses = [
         effort: 'L',
         decision:
           'Shipped first because every later AI or integration feature depends on a trustworthy workout structure.',
+      },
+      {
+        initiative: 'Automated export verification',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Shipped in PR #10 because export correctness is the app’s moment of truth. The build now verifies round-trip file-to-workout fidelity and golden fixtures instead of depending on a flaky third-party desktop app.',
       },
       {
         initiative: 'Reusable starter palette',
@@ -595,6 +608,11 @@ export const productAnalyses = [
         label: 'Export success',
         detail:
           'Track whether users can build and export .mrc or .erg workouts without validation-blocking errors.',
+      },
+      {
+        label: 'Export verification coverage',
+        detail:
+          'PR #10 moved test count from 84 to 119 and verifies file-format correctness through automated round-trip and golden-file checks. This is a build-confidence signal, not a measured user-impact result.',
       },
       {
         label: 'Library reuse',
@@ -723,7 +741,7 @@ export const productAnalyses = [
       ],
       observabilityLabel: 'Validation and evidence',
       observability:
-        'The product should track validation warnings, export attempts, file type, target strategy, palette use, drag/drop behavior, invalid drops, and chart inspection behavior before claiming usage impact. No production adoption, speed, retention, revenue, or AI outcome metric exists yet.',
+        'The product should track validation warnings, export attempts, file type, target strategy, palette use, drag/drop behavior, invalid drops, and chart inspection behavior before claiming usage impact. Export file-format correctness is now checked in-repo through automated round-trip and golden-file tests. No production adoption, speed, retention, revenue, or AI outcome metric exists yet.',
       dashboards: [
         'Builder completion funnel',
         'Export readiness pass, blocker, and warning rate',
@@ -737,8 +755,14 @@ export const productAnalyses = [
       ],
     },
     shippedIntro:
-      'PR #1 changed Wattsmith from a starter workout drawing MVP into a fuller local-first manual builder. PRs #2-#4 tightened the trust surfaces before AI/RAG, and PR #6 made the builder more composable with reusable blocks and drag/drop insertion. These are the milestones that changed the product story.',
+      'PR #1 changed Wattsmith from a starter workout drawing MVP into a fuller local-first manual builder. PRs #2-#4 tightened trust surfaces before AI/RAG, PR #6 made the builder composable with reusable blocks and drag/drop insertion, and PR #10 moved export correctness into automated verification. These are the milestones that changed the product story.',
     shippedHighlights: [
+      {
+        label: 'PR #10',
+        detail:
+          'Replaced flaky third-party-app export testing with automated in-repo verification: generated .mrc/.erg files are parsed back into workout timelines, checked against the source workout, and protected by golden-file tests.',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/10',
+      },
       {
         label: 'PR #6',
         detail:
@@ -768,10 +792,19 @@ export const productAnalyses = [
           'Added reusable workout helpers, reusable block normalization, clone/rekey behavior, nested drag/drop helpers, validation, storage migration, shared flattened workout data, export utilities, zone calculations, and focused Vitest coverage.',
       },
     ],
+    decisionStory: {
+      heading: 'Export confidence moved into the codebase',
+      problem:
+        'The export milestone was blocked by a manual verification step that depended on a third-party desktop app. When that app was too buggy to log into, the product could not rely on it as the source of truth.',
+      decision:
+        'I verified the file format directly in the codebase: generate each .mrc/.erg export, parse it back into a workout timeline, compare it to the source workout, and keep committed sample exports under golden-file checks.',
+      outcome:
+        'Export correctness is now checked automatically on every change. The milestone is closed, test count moved from 84 to 119, and human visual checks are optional app-acceptance checks instead of the gate.',
+    },
     roadmap: {
       heading: 'Roadmap staged around trust before AI',
       intro:
-        'Wattsmith’s roadmap is intentionally staged around trust before AI. The next work validates real exported files, deepens rationale coverage, improves training metrics, expands profile-driven warnings, and polishes the reusable library after the 60-block palette and drag/drop builder shipped. Longer term, typed workout intent, source-backed rationale, decision notes, and schema validation will make sure generated workouts cannot bypass the same export-safe model used by the manual builder.',
+        'Wattsmith’s roadmap is intentionally staged around trust before AI. Export confidence is now complete through automated round-trip and golden-file verification, so the next work can focus on rationale coverage, clearer training metrics, profile-driven warnings, and library polish. Longer term, typed workout intent, source-backed rationale, decision notes, and schema validation will make sure generated workouts cannot bypass the same export-safe model used by the manual builder.',
       phases: [
         {
           label: 'Manual builder trust',
@@ -795,11 +828,12 @@ export const productAnalyses = [
         },
         {
           label: 'Export confidence',
-          horizon: 'Next',
+          horizon: 'Done',
           items: [
-            'File naming controls.',
-            'Copy workout summary.',
-            'Documented TrainerRoad import testing before claiming compatibility.',
+            'Automated round-trip parsing for generated .mrc and .erg files.',
+            'Checks for durations, %FTP and watts targets, ramp slopes, expanded repeats, and cue timestamps.',
+            'Golden-file checks for committed sample exports.',
+            'App-agnostic export-testing docs with third-party visual checks treated as optional.',
           ],
         },
         {
@@ -868,12 +902,12 @@ export const productAnalyses = [
       'Composable workflows need explicit valid insertion points, not just drag/drop visuals.',
       'Fallback buttons, labeled search, focus behavior, and drop announcements are part of the builder surface, not cleanup after the main interaction.',
       'Export readiness should be visible, not just encoded in helper functions or disabled buttons.',
+      'Export confidence should not depend on a single third-party app. The source of truth belongs in tests that prove the file reconstructs the intended workout.',
       'A chart is not just visualization; it is a trust surface when export files need to match watts, %FTP, zones, and interval structure.',
       'Local-first can be a product advantage early because it lets the workout workflow work without accounts, sync, or integration dependencies.',
     ],
     nextIterations: [
-      'Validate exported .mrc and .erg files against real riding workflows.',
-      'Capture any documented manual import test before claiming TrainerRoad compatibility.',
+      'Optional: run a one-time visual acceptance check in an ERG/MRC-capable app if app-specific confidence is needed.',
       'Add AI/RAG only after manual builder trust remains stable across templates, nested blocks, validation, and export.',
       'Avoid claiming direct TrainerRoad, Strava, Garmin, or TrainingPeaks sync until an integration actually ships.',
     ],

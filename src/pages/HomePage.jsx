@@ -93,12 +93,13 @@ function LatestUpdate() {
         <div className="latest-update__label mono uppercase">Latest update</div>
         <div className="latest-update__copy">
           <h2 id="latest-update-title" className="latest-update__title">
-            Wattsmith drag/drop builder shipped
+            Wattsmith export verification shipped
           </h2>
           <p className="latest-update__body">
-            Wattsmith now has a 60-block reusable starter palette, custom reusable blocks,
-            drag/drop insertion, explicit drop joints, and export-safe workout composition for .mrc
-            and .erg files.
+            Wattsmith now verifies .mrc/.erg exports in-repo by parsing generated files back into
+            workout timelines and checking durations, power targets, ramps, repeats, cues, and
+            golden fixtures. Test count moved from 84 to 119; third-party app acceptance remains
+            optional.
           </p>
         </div>
         <div className="latest-update__links">
