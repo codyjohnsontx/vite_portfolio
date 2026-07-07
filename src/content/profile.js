@@ -14,7 +14,7 @@ export const profile = {
     { label: 'Email', href: 'mailto:codyjohnsontx@gmail.com', external: false },
     {
       label: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/cody-johnson-92460b124/',
+      href: 'https://www.linkedin.com/in/codyjohnsontx/',
       external: true,
     },
     { label: 'GitHub', href: 'https://github.com/codyjohnsontx', external: true },

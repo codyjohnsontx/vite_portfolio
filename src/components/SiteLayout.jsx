@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { profile } from '../content/profile';
 import { flagshipProducts } from '../content/projects';
-import { ArrowGlyph } from './Editorial';
 
 const THEMES = [
   { id: 'paper', label: 'Light' },
@@ -56,7 +55,11 @@ ThemeToggle.propTypes = {
 
 function SiteLayout() {
   const [theme, setTheme] = useState(getInitialTheme);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const menuBtnRef = useRef(null);
+  const firstLinkRef = useRef(null);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -69,6 +72,36 @@ function SiteLayout() {
     }
   }, [theme]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // close the menu whenever the route changes
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  // while open: lock body scroll, close on Escape, and manage focus
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const menuBtn = menuBtnRef.current;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    firstLinkRef.current?.focus();
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
+      menuBtn?.focus();
+    };
+  }, [menuOpen]);
+
   const onProductCaseOrBlog =
     location.pathname.startsWith('/products') ||
     location.pathname.startsWith('/case-studies') ||
@@ -77,39 +110,68 @@ function SiteLayout() {
 
   return (
     <>
-      <nav className="topnav">
+      <nav className={'topnav' + (scrolled ? ' is-scrolled' : '')}>
         <div className="topnav__inner">
           <Link to="/" className="topnav__brand" aria-label="Cody Johnson, home">
             <span>Cody Johnson</span>
           </Link>
-          <div className="topnav__links">
-            {NAV.map((it) => (
-              <NavLink
-                key={it.to}
-                to={it.to}
-                end={it.end}
-                className={({ isActive }) => (isActive ? 'active' : '')}
-              >
-                {it.label}
-              </NavLink>
-            ))}
-          </div>
           <div className="topnav__actions">
-            <NavLink
-              to="/dev-mode"
-              className={({ isActive }) =>
-                isActive ? 'topnav__dev-mobile active' : 'topnav__dev-mobile'
-              }
-            >
-              Dev
-            </NavLink>
             <ThemeToggle theme={theme} onChange={setTheme} />
-            <a className="topnav__cta" href="mailto:codyjohnsontx@gmail.com">
-              Get in touch <ArrowGlyph />
-            </a>
+            <button
+              type="button"
+              ref={menuBtnRef}
+              className={'topnav__menu-btn' + (menuOpen ? ' is-open' : '')}
+              aria-expanded={menuOpen}
+              aria-controls="nav-menu"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              <span className="topnav__menu-lines" aria-hidden="true">
+                <span />
+                <span />
+              </span>
+            </button>
           </div>
         </div>
       </nav>
+
+      <div
+        id="nav-menu"
+        className={'nav-menu' + (menuOpen ? ' is-open' : '')}
+        onClick={() => setMenuOpen(false)}
+      >
+        <nav className="nav-menu__inner" aria-label="Primary">
+          <ul className="nav-menu__links">
+            {NAV.map((it, i) => (
+              <li key={it.to} style={{ '--i': i }}>
+                <NavLink
+                  to={it.to}
+                  end={it.end}
+                  ref={i === 0 ? firstLinkRef : undefined}
+                  className={({ isActive }) => (isActive ? 'active' : '')}
+                >
+                  {it.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+          <div className="nav-menu__social">
+            {profile.contactLinks
+              .filter((l) => l.external)
+              .map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="nav-menu__social-link mono uppercase"
+                >
+                  {l.label} <span aria-hidden="true" className="muted">↗</span>
+                </a>
+              ))}
+          </div>
+        </nav>
+      </div>
 
       <main key={onProductCaseOrBlog ? location.pathname : undefined}>
         <Outlet />

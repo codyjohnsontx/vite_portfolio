@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow, StackRow } from './Editorial';
 import { Reveal } from './ScrollReveal';
+import { useMediaMotion } from '../hooks/useMediaMotion';
 import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductResearchBySlug } from '../content/productResearch';
 
@@ -10,6 +11,7 @@ export default function FeatureProduct({ p }) {
   const analysis = getProductAnalysisBySlug(p.slug);
   const research = getProductResearchBySlug(p.slug);
   const metaItems = [p.statusLabel, p.role, p.companyContext].filter(Boolean);
+  const { wrapRef, imgRef, revealed } = useMediaMotion();
 
   return (
     <Reveal
@@ -21,11 +23,12 @@ export default function FeatureProduct({ p }) {
     >
       <Link
         to={href}
-        className="prod-feature__media"
+        className={'prod-feature__media' + (revealed ? ' is-revealed' : '')}
         aria-label={`Open ${p.name}`}
+        ref={wrapRef}
       >
         {p.image ? (
-          <img src={p.image} alt={p.name} />
+          <img src={p.image} alt={p.name} ref={imgRef} data-parallax />
         ) : (
           <div className="placeholder">{p.name} · product shot</div>
         )}

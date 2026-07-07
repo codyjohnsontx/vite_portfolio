@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
+import { Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { TypeAnimation } from 'react-type-animation';
 import {
   ArrowGlyph,
   Eyebrow,
@@ -10,6 +13,33 @@ import { Reveal } from '../components/ScrollReveal';
 import { caseStudies } from '../content/caseStudies';
 import { conceptProducts, flagshipProducts } from '../content/projects';
 
+const HERO_HEADLINE = 'Turning messy product asks into scoped, shippable work.';
+
+function MaskedHeadline({ text }) {
+  const words = text.split(' ');
+  return (
+    <h1 className="display" style={{ margin: 0 }}>
+      {words.map((w, i) => (
+        <Fragment key={`${w}-${i}`}>
+          <span className="rise-mask">
+            <span
+              className="rise-word"
+              style={{ animationDelay: `${80 + i * 70}ms` }}
+              data-em={w === 'into' ? '' : undefined}
+            >
+              {w}
+            </span>
+          </span>{' '}
+        </Fragment>
+      ))}
+    </h1>
+  );
+}
+
+MaskedHeadline.propTypes = {
+  text: PropTypes.string.isRequired,
+};
+
 function Hero() {
   return (
     <section
@@ -19,16 +49,14 @@ function Hero() {
     >
       <div className="container">
         <div className="home-hero__copy">
-          <Reveal
-            as="h1"
-            className="display"
-            delay={80}
-            distance={18}
-            duration={900}
-            style={{ margin: 0 }}
-          >
-            Turning messy product asks into scoped, shippable work.
-          </Reveal>
+          <div className="hero-eyebrow mono uppercase">
+            <TypeAnimation
+              sequence={['Product Manager · Technical Builder']}
+              speed={72}
+              cursor
+            />
+          </div>
+          <MaskedHeadline text={HERO_HEADLINE} />
           <Reveal
             as="p"
             className="hero-support"
