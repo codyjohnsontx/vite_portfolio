@@ -74,7 +74,7 @@ export function useMediaMotion({ amplitude = 22 } = {}) {
       startLoop();
     }
 
-    // Cache pointer position only — the layout read happens once per frame in tick().
+    // Cache pointer position only - the layout read happens once per frame in tick().
     const onMove = (ev) => {
       mouseX = ev.clientX;
       mouseY = ev.clientY;

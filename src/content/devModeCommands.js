@@ -7,11 +7,17 @@ import { resumeContent } from './resumeContent';
 import { resumeMeta } from './resumeMeta';
 
 const PRODUCT_SLUGS = ['track-tuner', 'ridesense', 'wattsmith', 'windcast', 'ctx-chat', 'diaz-on-demand'];
+// Command token overrides for products whose current brand name differs from
+// their URL slug, so the console reads correctly without changing the route.
+const COMMAND_TOKENS = { 'ctx-chat': 'ctx-connect' };
+const tokenForSlug = (slug) => COMMAND_TOKENS[slug] || slug;
+const slugForToken = (token) =>
+  Object.keys(COMMAND_TOKENS).find((slug) => COMMAND_TOKENS[slug] === token) || token;
 const commandNames = [
   'help',
   'whoami',
   'products',
-  ...PRODUCT_SLUGS.map((slug) => `product ${slug}`),
+  ...PRODUCT_SLUGS.map((slug) => `product ${tokenForSlug(slug)}`),
   'case-studies',
   'experience',
   'stack',
@@ -131,7 +137,7 @@ export function runDevModeCommand(rawCommand) {
   }
 
   if (command.startsWith('product ')) {
-    return productOutput(command.replace('product ', ''));
+    return productOutput(slugForToken(command.replace('product ', '')));
   }
 
   switch (command) {
@@ -211,7 +217,7 @@ export function runDevModeCommand(rawCommand) {
         sections: [
           {
             label: 'Summary',
-            items: resumeContent.summary.map((summary, index) => item(`Summary ${index + 1}`, summary)),
+            items: [item('', resumeContent.summary.join(' '))],
           },
           {
             label: 'Professional experience',
@@ -230,13 +236,7 @@ export function runDevModeCommand(rawCommand) {
             items: resumeContent.credentials.map((credential) => item(credential, null)),
           },
         ],
-        links: [
-          {
-            label: 'Open resume PDF',
-            href: resumeMeta.downloadPath,
-            external: true,
-          },
-        ],
+        links: [],
       };
     case 'stack':
       return {

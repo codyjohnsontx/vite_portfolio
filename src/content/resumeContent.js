@@ -121,14 +121,15 @@ export const resumeContent = {
       ],
     },
   ],
-  selectedProjects: ['CTX Connect', 'RideSense', 'Track Tuner', 'Windcast'],
+  selectedProjects: ['Track Tuner', 'CTX Connect', 'RideSense', 'windCast'],
   activeBuilds: [
+    'Track Tuner: AI-assisted race setup and telemetry platform capturing session data, vehicle setup, rider feedback, and track conditions, with a RAG-based recommendation flow validated by real riders.',
     'CTX Connect: internal dealership operations and messaging platform unifying sales, service, inventory, customer messaging, payments, and operational reporting, with a Command Center dashboard for GM-level KPI visibility.',
     'RideSense: cross-provider cycling training insights platform with similarity-scored deduplication, canonical activity modeling, deterministic weekly load and zone analytics, and evidence-backed AI responses.',
-    'Track Tuner: AI-assisted race setup and telemetry platform capturing session data, vehicle setup, rider feedback, and track conditions, with a RAG-based recommendation flow validated by real riders.',
-    'Windcast: mobile-first wind sports forecasting and session planning app with a spot-specific scoring engine, Leaflet map discovery, saved-spot management, and Open-Meteo forecast integration.',
+    'windCast: mobile-first wind sports forecasting and session planning app with a spot-specific scoring engine, Leaflet map discovery, saved-spot management, and Open-Meteo forecast integration.',
   ],
   credentials: [
+    'University of Colorado Boulder - M.S. Computer Science (in progress)',
     'Texas State University - B.S. Advertising',
     'Harvard CS50',
   ],

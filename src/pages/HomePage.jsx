@@ -15,7 +15,7 @@ import { conceptProducts, flagshipProducts } from '../content/projects';
 
 const HERO_HEADLINE = 'Turning messy product asks into scoped, shippable work.';
 const HERO_EYEBROW = 'Product Manager · Technical Builder';
-// Words rendered italic in the headline — kept separate from the copy so
+// Words rendered italic in the headline - kept separate from the copy so
 // changing HERO_HEADLINE doesn't silently drop or misplace the emphasis.
 const HERO_EMPHASIS = ['into'];
 

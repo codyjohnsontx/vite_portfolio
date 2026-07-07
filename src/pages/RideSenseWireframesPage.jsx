@@ -202,7 +202,7 @@ const WIREFRAMES_BODY = `
                 <line class="ftp" x1="0" y1="42" x2="300" y2="42" />
                 <path class="ink-line" d="M0,96 L12,92 L20,52 L36,44 L52,90 L66,88 L78,84 L92,50 L108,46 L124,86 L138,90 L150,84 L164,48 L180,44 L196,88 L210,86 L222,82 L236,46 L252,42 L268,86 L284,88 L300,90" />
               </svg>
-              <span class="lbl sm" style="color:var(--wf-pen);">— FTP 286W reference</span>
+              <span class="lbl sm" style="color:var(--wf-pen);">FTP 286W reference</span>
             </div>
 
             <div class="grid-2">

@@ -170,7 +170,7 @@ export default function ProductAnalysisPage() {
 
           <div style={{ minWidth: 0 }}>
             <Reveal id="overview" style={{ marginBottom: 88 }}>
-              <Eyebrow>01 — Overview</Eyebrow>
+              <Eyebrow>01 · Overview</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 20px' }}>
                 The problem worth solving
               </h2>
@@ -194,7 +194,7 @@ export default function ProductAnalysisPage() {
             </Reveal>
 
             <Reveal id="workflow" style={{ marginBottom: 88 }}>
-              <Eyebrow>02 — Workflow</Eyebrow>
+              <Eyebrow>02 · Workflow</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 Current behavior and market gap
               </h2>
@@ -211,7 +211,7 @@ export default function ProductAnalysisPage() {
             </Reveal>
 
             <Reveal id="bet" style={{ marginBottom: 88 }}>
-              <Eyebrow>03 — Product bet</Eyebrow>
+              <Eyebrow>03 · Product bet</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 20px' }}>
                 {analysis.betHeading ?? 'Win the trackside loop first'}
               </h2>
@@ -221,7 +221,7 @@ export default function ProductAnalysisPage() {
             </Reveal>
 
             <Reveal id="scope" style={{ marginBottom: 88 }}>
-              <Eyebrow>04 — MVP scope</Eyebrow>
+              <Eyebrow>04 · MVP scope</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 What shipped and what stayed out
               </h2>
@@ -256,7 +256,7 @@ export default function ProductAnalysisPage() {
             </Reveal>
 
             <Reveal id="metrics" style={{ marginBottom: 88 }}>
-              <Eyebrow>05 — Metrics</Eyebrow>
+              <Eyebrow>05 · Metrics</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 {analysis.metricsHeading ?? 'Measure whether the loop sticks'}
               </h2>
@@ -302,7 +302,7 @@ export default function ProductAnalysisPage() {
             </Reveal>
 
             <Reveal id="shipped" style={{ marginBottom: 88 }}>
-              <Eyebrow>06 — What shipped</Eyebrow>
+              <Eyebrow>06 · What shipped</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 12px' }}>
                 The milestones that changed the product
               </h2>
@@ -358,7 +358,7 @@ export default function ProductAnalysisPage() {
 
             {analysis.roadmap ? (
               <Reveal id="roadmap" style={{ marginBottom: 88 }}>
-                <Eyebrow>07 — Roadmap</Eyebrow>
+                <Eyebrow>07 · Roadmap</Eyebrow>
                 <h2 className="h2" style={{ margin: '12px 0 16px' }}>
                   {analysis.roadmap.heading}
                 </h2>
@@ -433,7 +433,7 @@ export default function ProductAnalysisPage() {
             ) : null}
 
             <Reveal id="learnings">
-              <Eyebrow>{analysis.roadmap ? '08 — Learnings' : '07 — Learnings'}</Eyebrow>
+              <Eyebrow>{analysis.roadmap ? '08 · Learnings' : '07 · Learnings'}</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 What changed my product view
               </h2>

@@ -30,11 +30,20 @@ function OutputBlock({ entry }) {
           <section key={section.label} className="dev-output__section">
             <h3>{section.label}</h3>
             <ul>
-              {section.items.map((it) => (
-                <li key={`${section.label}-${it.title}`}>
-                  <span className="dev-output__item-title">{it.title}</span>
-                  {it.meta ? <span className="dev-output__meta">{it.meta}</span> : null}
-                  {it.body ? <span className="dev-output__body">{it.body}</span> : null}
+              {section.items.map((it, index) => (
+                <li
+                  key={`${section.label}-${index}`}
+                  className={it.title ? undefined : 'dev-output__prose'}
+                >
+                  {it.title ? (
+                    <span className="dev-output__item-title">{it.title}</span>
+                  ) : null}
+                  {it.meta || it.body ? (
+                    <div className="dev-output__detail">
+                      {it.meta ? <span className="dev-output__meta">{it.meta}</span> : null}
+                      {it.body ? <span className="dev-output__body">{it.body}</span> : null}
+                    </div>
+                  ) : null}
                 </li>
               ))}
             </ul>

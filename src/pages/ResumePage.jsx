@@ -124,7 +124,7 @@ export default function ResumePage() {
                       className="italic"
                       style={{ color: 'var(--ink-3)', fontFamily: 'var(--serif)' }}
                     >
-                      — {p.oneLiner}
+                      · {p.oneLiner}
                     </span>
                   </span>
                   <Link

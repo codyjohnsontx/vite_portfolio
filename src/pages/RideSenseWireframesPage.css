@@ -1,4 +1,4 @@
-/* RideSense lo-fi wireframes — scoped under .wf-page so the rest of the portfolio is untouched */
+/* RideSense lo-fi wireframes - scoped under .wf-page so the rest of the portfolio is untouched */
 
 .wf-page {
   --wf-paper: #efece1;
@@ -520,7 +520,7 @@
   border: none;
 }
 
-/* top bar inside the wireframes page — back link in portfolio style */
+/* top bar inside the wireframes page - back link in portfolio style */
 .wf-page .wf-backbar {
   max-width: 1480px;
   margin: 0 auto 24px;

@@ -360,7 +360,7 @@ export default function ProductDetailPage() {
 
           <div style={{ minWidth: 0 }}>
             <Reveal id="overview" style={{ marginBottom: 80 }}>
-              <Eyebrow>01 — Overview</Eyebrow>
+              <Eyebrow>01 · Overview</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 The problem
               </h2>
@@ -380,7 +380,7 @@ export default function ProductDetailPage() {
             </Reveal>
 
             <Reveal id="workflow" style={{ marginBottom: 80 }}>
-              <Eyebrow>02 — Workflow</Eyebrow>
+              <Eyebrow>02 · Workflow</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 How it works end-to-end
               </h2>
@@ -416,7 +416,7 @@ export default function ProductDetailPage() {
             </Reveal>
 
             <Reveal id="scope" style={{ marginBottom: 80 }}>
-              <Eyebrow>03 — MVP scope</Eyebrow>
+              <Eyebrow>03 · MVP scope</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                 What ships first
               </h2>
@@ -455,7 +455,7 @@ export default function ProductDetailPage() {
             </Reveal>
 
             <Reveal id="updates" style={{ marginBottom: 80 }}>
-              <Eyebrow>04 — Updates</Eyebrow>
+              <Eyebrow>04 · Updates</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 12px' }}>
                 Working in public
               </h2>
@@ -504,7 +504,7 @@ export default function ProductDetailPage() {
             </Reveal>
 
             <Reveal id="whats-next">
-              <Eyebrow>05 — What&rsquo;s next</Eyebrow>
+              <Eyebrow>05 · What&rsquo;s next</Eyebrow>
               <h2 className="h2" style={{ margin: '12px 0 16px' }}>
                 {nextSummary}
               </h2>
