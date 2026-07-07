@@ -10,7 +10,7 @@ export default function FeatureProduct({ p }) {
   const href = `/products/${p.slug}`;
   const analysis = getProductAnalysisBySlug(p.slug);
   const research = getProductResearchBySlug(p.slug);
-  const metaItems = [p.statusLabel, p.role, p.companyContext].filter(Boolean);
+  const metaItems = [p.role].filter(Boolean);
   const { wrapRef, imgRef, revealed } = useMediaMotion();
 
   return (
@@ -93,9 +93,7 @@ FeatureProduct.propTypes = {
     accent: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     image: PropTypes.string,
-    statusLabel: PropTypes.string,
     role: PropTypes.string,
-    companyContext: PropTypes.string,
     oneLiner: PropTypes.string.isRequired,
     problem: PropTypes.string.isRequired,
     stack: PropTypes.arrayOf(PropTypes.string).isRequired,
