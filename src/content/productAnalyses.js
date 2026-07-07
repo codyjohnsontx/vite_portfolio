@@ -236,11 +236,11 @@ export const productAnalyses = [
   },
   {
     slug: 'ctx-chat',
-    title: 'CTX Chat PM analysis',
+    title: 'CTX Connect PM analysis',
     tagline:
       'A shared dealership texting and follow-up system designed around the real operating rhythm of sales, service, and parts teams.',
     summary:
-      'CTX Chat is built around a dealership communication problem that generic texting tools do not fully solve: a message thread only matters if it also has ownership, department context, follow-up state, and management visibility. The product turns each message into an owned operational work item with status, assignment, follow-up, and exception visibility. The product bet is that a browser-first shared inbox tied to real dealership workflows can outperform fragmented texting, personal phones, and generic vendors by making every customer conversation accountable.',
+      'CTX Connect is built around a dealership communication problem that generic texting tools do not fully solve: a message thread only matters if it also has ownership, department context, follow-up state, and management visibility. The product turns each message into an owned operational work item with status, assignment, follow-up, and exception visibility. The product bet is that a browser-first shared inbox tied to real dealership workflows can outperform fragmented texting, personal phones, and generic vendors by making every customer conversation accountable.',
     problem:
       'Dealership communication is scattered across personal cell phones, calls, email, website leads, DMS notes, and memory. That fragmentation leads directly to missed follow-ups, unclear ownership, weak visibility for managers, and lost sales or service satisfaction when no one is sure who is supposed to respond next.',
     users: {
@@ -397,7 +397,7 @@ export const productAnalyses = [
       {
         label: 'Initial build',
         detail:
-          'Committed the first standalone CTX Chat build with the shared inbox, Command Center, tasks, templates, and Twilio route structure.',
+          'Committed the first standalone CTX Connect build with the shared inbox, Command Center, tasks, templates, and Twilio route structure.',
         url: 'https://github.com/codyjohnsontx/ctxconnect/commit/64fb5b2',
       },
       {

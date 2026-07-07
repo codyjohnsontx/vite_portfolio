@@ -23,7 +23,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'CTX Chat' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'CTX Connect' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
     expect(screen.getByText('Turning messy product asks into scoped, shippable work.')).toBeTruthy();
     expect(screen.getByText(/Product manager \/ technical builder/i)).toBeTruthy();
@@ -434,10 +434,10 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('link', { name: /Read PM analysis/i })).toBeNull();
   });
 
-  it('renders the CTX Chat PM analysis page', () => {
+  it('renders the CTX Connect PM analysis page', () => {
     renderApp('/products/ctx-chat/analysis');
 
-    expect(screen.getByRole('heading', { name: /CTX Chat PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /CTX Connect PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getByText(/A dealership-specific communication tool/i)).toBeTruthy();
   });

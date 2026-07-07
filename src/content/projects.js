@@ -626,7 +626,7 @@ const allProducts = [
     ],
   },
   {
-    name: 'CTX Chat',
+    name: 'CTX Connect',
     slug: 'ctx-chat',
     tier: 'flagship',
     status: 'active-build',
@@ -671,13 +671,13 @@ const allProducts = [
     evidenceSignal:
       'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure.',
     nextStep:
-      'Expand CTX Chat into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
+      'Expand CTX Connect into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
     standaloneMockStatus: 'in-progress',
     updates: [
       {
         date: 'May 08, 2026',
         tag: 'Build',
-        title: 'Initial CTX Chat app committed and pushed',
+        title: 'Initial CTX Connect app committed and pushed',
         url: 'https://github.com/codyjohnsontx/ctxconnect/commit/64fb5b2',
         body: 'The first full app build landed on main in the new ctxconnect repository. That established the standalone product with the shared inbox, Command Center, tasks, templates, and Twilio route structure.',
       },
