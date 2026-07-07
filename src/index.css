@@ -585,9 +585,9 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   margin-bottom: 30px;
   min-height: 1.2em;
 }
-/* tint the react-type-animation cursor with the accent */
-.hero-eyebrow .type-animation-cursor,
-.hero-eyebrow ::after { color: var(--accent); }
+/* tint the react-type-animation cursor with the accent — its blinking "|" is
+   the ::after of the wrapper span it renders as a direct child */
+.hero-eyebrow > span::after { color: var(--accent); }
 
 .rise-mask { display: inline-block; overflow: hidden; vertical-align: top; }
 .rise-word {

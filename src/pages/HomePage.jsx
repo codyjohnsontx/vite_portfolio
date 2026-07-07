@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { TypeAnimation } from 'react-type-animation';
 import {
@@ -14,8 +14,33 @@ import { caseStudies } from '../content/caseStudies';
 import { conceptProducts, flagshipProducts } from '../content/projects';
 
 const HERO_HEADLINE = 'Turning messy product asks into scoped, shippable work.';
+const HERO_EYEBROW = 'Product Manager · Technical Builder';
+// Words rendered italic in the headline — kept separate from the copy so
+// changing HERO_HEADLINE doesn't silently drop or misplace the emphasis.
+const HERO_EMPHASIS = ['into'];
 
-function MaskedHeadline({ text }) {
+function usePrefersReducedMotion() {
+  const [reduce, setReduce] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return undefined;
+    }
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = () => setReduce(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  return reduce;
+}
+
+function MaskedHeadline({ text, emphasize }) {
   const words = text.split(' ');
   return (
     <h1 className="display" style={{ margin: 0 }}>
@@ -25,7 +50,7 @@ function MaskedHeadline({ text }) {
             <span
               className="rise-word"
               style={{ animationDelay: `${80 + i * 70}ms` }}
-              data-em={w === 'into' ? '' : undefined}
+              data-em={emphasize.includes(w) ? '' : undefined}
             >
               {w}
             </span>
@@ -38,9 +63,15 @@ function MaskedHeadline({ text }) {
 
 MaskedHeadline.propTypes = {
   text: PropTypes.string.isRequired,
+  emphasize: PropTypes.arrayOf(PropTypes.string),
+};
+
+MaskedHeadline.defaultProps = {
+  emphasize: [],
 };
 
 function Hero() {
+  const reduceMotion = usePrefersReducedMotion();
   return (
     <section
       className="section"
@@ -50,13 +81,13 @@ function Hero() {
       <div className="container">
         <div className="home-hero__copy">
           <div className="hero-eyebrow mono uppercase">
-            <TypeAnimation
-              sequence={['Product Manager · Technical Builder']}
-              speed={72}
-              cursor
-            />
+            {reduceMotion ? (
+              <span>{HERO_EYEBROW}</span>
+            ) : (
+              <TypeAnimation sequence={[HERO_EYEBROW]} speed={72} cursor />
+            )}
           </div>
-          <MaskedHeadline text={HERO_HEADLINE} />
+          <MaskedHeadline text={HERO_HEADLINE} emphasize={HERO_EMPHASIS} />
           <Reveal
             as="p"
             className="hero-support"

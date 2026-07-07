@@ -84,20 +84,29 @@ function SiteLayout() {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  // while open: lock body scroll, close on Escape, and manage focus
+  // while open: lock body scroll, close on Escape, and manage focus. The
+  // background (page content behind the overlay) is made inert so Tab can't
+  // move focus into content hidden beneath the menu — the top bar and the menu
+  // itself stay interactive.
   useEffect(() => {
     if (!menuOpen) return undefined;
     const menuBtn = menuBtnRef.current;
+    const backdropEls = [
+      document.querySelector('main'),
+      document.querySelector('.site-footer'),
+    ].filter(Boolean);
     const onKey = (e) => {
       if (e.key === 'Escape') setMenuOpen(false);
     };
     window.addEventListener('keydown', onKey);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    backdropEls.forEach((el) => el.setAttribute('inert', ''));
     firstLinkRef.current?.focus();
     return () => {
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = prevOverflow;
+      backdropEls.forEach((el) => el.removeAttribute('inert'));
       menuBtn?.focus();
     };
   }, [menuOpen]);
