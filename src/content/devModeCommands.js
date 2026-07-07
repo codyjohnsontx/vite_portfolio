@@ -6,7 +6,7 @@ import { getProductAnalysisBySlug } from './productAnalyses';
 import { resumeContent } from './resumeContent';
 import { resumeMeta } from './resumeMeta';
 
-const PRODUCT_SLUGS = ['track-tuner', 'ridesense', 'wattsmith', 'ctx-chat', 'diaz-on-demand'];
+const PRODUCT_SLUGS = ['track-tuner', 'ridesense', 'wattsmith', 'windcast', 'ctx-chat', 'diaz-on-demand'];
 const commandNames = [
   'help',
   'whoami',
