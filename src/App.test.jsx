@@ -529,6 +529,21 @@ describe('portfolio routes and metadata', () => {
     ).toBe(true);
   });
 
+  it('resolves the CTX product through both the ctx-connect alias and the ctx-chat slug', () => {
+    renderApp('/dev-mode');
+    const input = screen.getByLabelText(/Dev Mode command/i);
+
+    // Alias token: `product ctx-connect` maps back to the ctx-chat slug.
+    fireEvent.change(input, { target: { value: 'product ctx-connect' } });
+    fireEvent.submit(input.closest('form'));
+    expect(screen.getAllByRole('heading', { name: 'CTX Connect' })).toHaveLength(1);
+
+    // Raw slug still resolves via the fallback path.
+    fireEvent.change(input, { target: { value: 'product ctx-chat' } });
+    fireEvent.submit(input.closest('form'));
+    expect(screen.getAllByRole('heading', { name: 'CTX Connect' })).toHaveLength(2);
+  });
+
   it('sends product analysis slugs without content to the not-found experience', () => {
     renderApp('/products/ridesense/analysis');
 
