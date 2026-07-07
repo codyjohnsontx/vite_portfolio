@@ -86,7 +86,7 @@ function SiteLayout() {
 
   // while open: lock body scroll, close on Escape, and manage focus. The
   // background (page content behind the overlay) is made inert so Tab can't
-  // move focus into content hidden beneath the menu — the top bar and the menu
+  // move focus into content hidden beneath the menu - the top bar and the menu
   // itself stay interactive.
   useEffect(() => {
     if (!menuOpen) return undefined;

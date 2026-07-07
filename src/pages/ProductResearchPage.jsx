@@ -149,7 +149,7 @@ export default function ProductResearchPage() {
           <div style={{ minWidth: 0 }}>
             <Reveal id="problem" className="research-section">
               <Reveal delay={0}>
-                <Eyebrow>01 — Strategic problem</Eyebrow>
+                <Eyebrow>01 · Strategic problem</Eyebrow>
                 <h2 className="h2">
                   {headings.problem ?? 'The research frames the product opportunity.'}
                 </h2>
@@ -167,7 +167,7 @@ export default function ProductResearchPage() {
 
             <Reveal id="dimensions" className="research-section">
               <Reveal>
-                <Eyebrow>02 — Persona dimensions</Eyebrow>
+                <Eyebrow>02 · Persona dimensions</Eyebrow>
                 <h2 className="h2">
                   {headings.dimensions ?? 'The framework defines the behaviors that shape product decisions.'}
                 </h2>
@@ -190,7 +190,7 @@ export default function ProductResearchPage() {
 
             <Reveal id="archetypes" className="research-section">
               <Reveal>
-                <Eyebrow>03 — Archetypes</Eyebrow>
+                <Eyebrow>03 · Archetypes</Eyebrow>
                 <h2 className="h2">
                   {headings.archetypes ?? 'The launch segment is selected by frequency and pain.'}
                 </h2>
@@ -251,7 +251,7 @@ export default function ProductResearchPage() {
 
             <Reveal id="priority" className="research-section">
               <Reveal>
-                <Eyebrow>04 — Feature priority</Eyebrow>
+                <Eyebrow>04 · Feature priority</Eyebrow>
                 <h2 className="h2">{headings.priority ?? 'A roadmap heatmap by persona value.'}</h2>
               </Reveal>
               <Reveal className="research-heatmap-wrap" delay={120}>
@@ -287,7 +287,7 @@ export default function ProductResearchPage() {
 
             <Reveal id="insights" className="research-section">
               <Reveal>
-                <Eyebrow>05 — Strategic insights</Eyebrow>
+                <Eyebrow>05 · Strategic insights</Eyebrow>
                 <h2 className="h2">
                   {headings.insights ?? 'The personas clarify roadmap order and trust boundaries.'}
                 </h2>
@@ -312,7 +312,7 @@ export default function ProductResearchPage() {
 
             <Reveal id="system" className="research-section">
               <Reveal>
-                <Eyebrow>06 — Research system</Eyebrow>
+                <Eyebrow>06 · Research system</Eyebrow>
                 <h2 className="h2">{headings.system ?? 'What the next interviews should validate.'}</h2>
               </Reveal>
               <div className="analysis-dual-grid">

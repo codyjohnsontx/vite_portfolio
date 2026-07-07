@@ -1,10 +1,10 @@
 /* ========================================================================
-   Cody Johnson Portfolio — editorial minimal design system
+   Cody Johnson Portfolio - editorial minimal design system
    Type: Newsreader (display serif) + IBM Plex Sans (body) + JetBrains Mono
    ======================================================================== */
 
 :root {
-  /* paper / light — default */
+  /* paper / light - default */
   --bg: #f4efe6;
   --bg-2: #efe9dd;
   --ink: #181512;
@@ -585,7 +585,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   margin-bottom: 30px;
   min-height: 1.2em;
 }
-/* tint the react-type-animation cursor with the accent — its blinking "|" is
+/* tint the react-type-animation cursor with the accent - its blinking "|" is
    the ::after of the wrapper span it renders as a direct child */
 .hero-eyebrow > span::after { color: var(--accent); }
 
@@ -822,7 +822,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   }
 }
 
-/* stack colophon — inline mono line, middot separators, no boxes */
+/* stack colophon - inline mono line, middot separators, no boxes */
 .stack-row {
   display: flex;
   flex-wrap: wrap;
@@ -1807,8 +1807,17 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   padding-top: 10px;
   border-top: 1px solid rgba(183, 255, 214, 0.1);
 }
+.dev-output li.dev-output__prose {
+  grid-template-columns: 1fr;
+}
 .dev-output__item-title {
   color: #f0fff5;
+}
+.dev-output__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
 }
 .dev-output__meta {
   font-size: 11px;
@@ -1816,7 +1825,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   letter-spacing: 0.1em;
 }
 .dev-output__body {
-  grid-column: 2;
   color: #c7ead5;
 }
 .dev-output__links {
@@ -1879,9 +1887,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   }
   .dev-output li {
     grid-template-columns: 1fr;
-  }
-  .dev-output__body {
-    grid-column: 1;
   }
   .dev-terminal__prompt-line,
   .dev-command {
