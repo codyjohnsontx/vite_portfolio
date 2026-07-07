@@ -183,12 +183,18 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   -webkit-backdrop-filter: blur(14px) saturate(160%);
   background: color-mix(in oklab, var(--bg) 78%, transparent);
   border-bottom: 1px solid var(--rule-2);
-  transition: background-color 0.35s ease, border-color 0.35s ease;
+  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
+.topnav.is-scrolled {
+  border-bottom-color: var(--rule);
+  box-shadow: 0 1px 24px rgba(24, 21, 18, 0.06);
+}
+.topnav.is-scrolled .topnav__inner { padding-top: 9px; padding-bottom: 9px; }
 .topnav__inner {
   max-width: var(--grid-max);
   margin: 0 auto;
   padding: 14px var(--gutter);
+  transition: padding 0.35s ease;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -202,30 +208,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   font-weight: 500;
   font-size: 18px;
   letter-spacing: -0.01em;
-}
-.topnav__links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  font-size: 13.5px;
-  letter-spacing: 0.005em;
-}
-.topnav__links a {
-  position: relative;
-  padding: 6px 0;
-  color: var(--ink-2);
-  transition: color 0.2s ease;
-}
-.topnav__links a:hover { color: var(--ink); }
-.topnav__links a.active { color: var(--ink); }
-.topnav__links a.active::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 1px;
-  background: var(--ink);
 }
 .topnav__cta {
   font-family: var(--mono);
@@ -246,21 +228,120 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   align-items: center;
   gap: 12px;
 }
-.topnav__dev-mobile {
-  display: none;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+
+/* Hamburger button */
+.topnav__menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--rule);
-  padding: 8px 10px;
   border-radius: 999px;
+  color: var(--ink);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
-.topnav__dev-mobile.active {
-  background: var(--ink);
-  color: var(--bg);
-  border-color: var(--ink);
+.topnav__menu-btn:hover { border-color: var(--ink); }
+.topnav__menu-lines {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 10px;
 }
+.topnav__menu-lines span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.2s ease;
+}
+.topnav__menu-lines span:nth-child(1) { top: 0; }
+.topnav__menu-lines span:nth-child(2) { bottom: 0; }
+.topnav__menu-btn.is-open .topnav__menu-lines span:nth-child(1) {
+  transform: translateY(4.25px) rotate(45deg);
+}
+.topnav__menu-btn.is-open .topnav__menu-lines span:nth-child(2) {
+  transform: translateY(-4.25px) rotate(-45deg);
+}
+
+/* Full-screen overlay menu */
+.nav-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--bg);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  overflow-y: auto;
+}
+.nav-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+.nav-menu__inner {
+  max-width: var(--grid-max);
+  margin: 0 auto;
+  min-height: 100%;
+  padding: clamp(120px, 22vh, 240px) var(--gutter) clamp(48px, 8vh, 88px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(32px, 6vh, 56px);
+}
+.nav-menu__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 1vh, 10px);
+}
+.nav-menu__links li {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--i, 0) * 55ms);
+}
+.nav-menu.is-open .nav-menu__links li {
+  opacity: 1;
+  transform: none;
+}
+.nav-menu__links a {
+  display: inline-block;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(40px, 8vw, 84px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  padding: 4px 0;
+  transition: opacity 0.2s ease;
+}
+.nav-menu__links a:hover { opacity: 0.55; }
+.nav-menu__links a.active { font-style: italic; }
+.nav-menu__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: 260ms;
+}
+.nav-menu.is-open .nav-menu__social {
+  opacity: 1;
+  transform: none;
+}
+.nav-menu__social-link {
+  font-size: 12px;
+  color: var(--ink-2);
+  transition: color 0.2s ease;
+}
+.nav-menu__social-link:hover { color: var(--ink); }
 
 .theme-toggle {
   display: inline-flex;
@@ -282,12 +363,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
 .theme-toggle button.active {
   background: var(--ink);
   color: var(--bg);
-}
-
-@media (max-width: 760px) {
-  .topnav__links { display: none; }
-  .topnav__cta { display: none; }
-  .topnav__dev-mobile { display: inline-flex; }
 }
 
 /* ---------------- Footer ---------------- */
@@ -414,6 +489,14 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
     transition-duration: 0.001ms !important;
   }
   .marquee__track { animation: none; }
+  .rise-word { transform: none !important; animation: none !important; }
+  .prod-feature__media { clip-path: none !important; transform: none !important; }
+  .prod-feature__media img {
+    position: absolute !important;
+    inset: 0 !important;
+    height: 100% !important;
+    transform: none !important;
+  }
 }
 
 /* ---------------- Homepage latest update ---------------- */
@@ -492,6 +575,31 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   font-size: clamp(18px, 1.6vw, 22px);
   line-height: 1.5;
   text-wrap: pretty;
+}
+
+/* Hero typed eyebrow + masked word rise */
+.hero-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--ink-3);
+  margin-bottom: 30px;
+  min-height: 1.2em;
+}
+/* tint the react-type-animation cursor with the accent — its blinking "|" is
+   the ::after of the wrapper span it renders as a direct child */
+.hero-eyebrow > span::after { color: var(--accent); }
+
+.rise-mask { display: inline-block; overflow: hidden; vertical-align: top; }
+.rise-word {
+  display: inline-block;
+  transform: translateY(115%);
+  animation: riseIn 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.rise-word[data-em] { font-style: italic; font-weight: 300; }
+
+@keyframes riseIn {
+  from { transform: translateY(115%); }
+  to   { transform: translateY(0); }
 }
 .proof-strip {
   border-top: 1px solid var(--rule);
@@ -614,7 +722,11 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   cursor: pointer;
   text-decoration: none;
   color: inherit;
+  clip-path: inset(0 0 100% 0);
+  transform: perspective(1200px);
+  transition: clip-path 1.05s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.3s ease;
 }
+.prod-feature__media.is-revealed { clip-path: inset(0 0 0% 0); }
 .prod-feature__media .placeholder {
   width: 100%;
   height: 100%;
@@ -629,8 +741,10 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   color: var(--ink-3);
 }
 .prod-feature__media img {
+  position: absolute;
+  inset: -8% 0;
   width: 100%;
-  height: 100%;
+  height: 116%;
   object-fit: cover;
   object-position: top;
 }
@@ -884,9 +998,9 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   gap: 20px;
   background: var(--bg-2);
   cursor: pointer;
-  transition: background 0.25s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: background 0.25s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
 }
-.case-card:hover { transform: translateY(-2px); }
+.case-card:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(24, 21, 18, 0.10); }
 
 .case-row {
   display: grid;
