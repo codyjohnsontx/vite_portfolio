@@ -97,9 +97,7 @@ export default function ProductDetailPage() {
   const research = getProductResearchBySlug(slug);
   const nextSummary = p.nextStep.split('.')[0] + '.';
   const heroMetaItems = [
-    ['Status', p.statusLabel],
     ['Role', p.role],
-    ['Context', p.companyContext],
     ['Year', p.year],
   ].filter(([, value]) => Boolean(value));
 
