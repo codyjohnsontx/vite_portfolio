@@ -494,6 +494,19 @@ describe('portfolio routes and metadata', () => {
     expect(evalUpdateLink.getAttribute('href')).toBe('https://github.com/codyjohnsontx/ocnoPath');
     expect(screen.getAllByText(/not trusted yet/i).length).toBeGreaterThan(0);
     expect(screen.queryByText(/81 percent accurate/i)).toBeNull();
+    expect(screen.getByRole('heading', { name: 'Product screenshots' })).toBeTruthy();
+    expect(
+      screen.getByText(
+        /Screenshots show the local prototype using public ClinicalTrials\.gov records and generic demo search context/i,
+      ),
+    ).toBeTruthy();
+    expect(screen.getByText('Explanation notes')).toBeTruthy();
+    expect(screen.getByText('Eval run output')).toBeTruthy();
+    expect(
+      screen.getByRole('img', {
+        name: 'OncoPath trial detail page showing plain-English explanation notes generated from the official record.',
+      }),
+    ).toBeTruthy();
   });
 
   it('renders the OncoPath PM analysis page without overclaiming', () => {

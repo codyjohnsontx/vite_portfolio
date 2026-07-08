@@ -25,6 +25,11 @@ import wattsmithExportReadiness from '../assets/wattsmith/wattsmith-10-export-re
 import wattsmithBuilderWorkspace from '../assets/wattsmith/wattsmith-11-builder-workspace.png';
 import wattsmithReusableBlockPalette from '../assets/wattsmith/wattsmith-12-reusable-block-palette.png';
 import wattsmithWorkoutStepEditor from '../assets/wattsmith/wattsmith-13-workout-step-editor.png';
+import oncopathHomeHero from '../assets/oncopath/oncopath-01-home-hero.png';
+import oncopathResults from '../assets/oncopath/oncopath-02-results.png';
+import oncopathTrialExplanation from '../assets/oncopath/oncopath-03-trial-explanation.png';
+import oncopathDiscussionSheet from '../assets/oncopath/oncopath-04-discussion-sheet.png';
+import oncopathEvalTerminal from '../assets/oncopath/oncopath-05-eval-terminal.png';
 
 const allProducts = [
   {
@@ -206,6 +211,7 @@ const allProducts = [
     status: 'prototype',
     year: '2026',
     accent: 'oklch(0.6 0.17 300)',
+    image: oncopathHomeHero,
     role: 'Product Manager / Developer',
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'ClinicalTrials.gov API', 'Groq/LLM', 'zod'],
     oneLiner:
@@ -234,6 +240,37 @@ const allProducts = [
     nextStep:
       'Tighten the judge and the generator so the model stops addressing the reader as if it knows their diagnosis, then re-run human calibration before trusting any faithfulness number.',
     standaloneMockStatus: 'in-progress',
+    visualAssets: {
+      note:
+        'Screenshots show the local prototype using public ClinicalTrials.gov records and generic demo search context. The eval output is from a real harness run; the faithfulness number it reports is not yet trusted.',
+      items: [
+        {
+          label: 'Home hero',
+          src: oncopathHomeHero,
+          alt: 'OncoPath home page explaining plain-English notes, source-linked explanations, and questions to ask.',
+        },
+        {
+          label: 'Trial results',
+          src: oncopathResults,
+          alt: 'OncoPath results page listing recruiting breast cancer trials from public ClinicalTrials.gov records.',
+        },
+        {
+          label: 'Explanation notes',
+          src: oncopathTrialExplanation,
+          alt: 'OncoPath trial detail page showing plain-English explanation notes generated from the official record.',
+        },
+        {
+          label: 'Discussion sheet',
+          src: oncopathDiscussionSheet,
+          alt: 'OncoPath printable doctor discussion sheet with saved trials, discussion points, and questions for the oncology team.',
+        },
+        {
+          label: 'Eval run output',
+          src: oncopathEvalTerminal,
+          alt: 'Terminal output from a real OncoPath eval harness run showing 12 of 12 model outputs with zero fallbacks.',
+        },
+      ],
+    },
     updates: [
       {
         date: 'Current',
