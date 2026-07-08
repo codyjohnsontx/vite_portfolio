@@ -200,6 +200,58 @@ const allProducts = [
     ],
   },
   {
+    name: 'OncoPath',
+    slug: 'oncopath',
+    tier: 'flagship',
+    status: 'prototype',
+    year: '2026',
+    accent: 'oklch(0.6 0.17 300)',
+    role: 'Product Manager / Developer',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'ClinicalTrials.gov API', 'Groq/LLM', 'zod'],
+    oneLiner:
+      'A calmer path through cancer trials: plain-English explanations of public clinical trials, built to be checked, not trusted blindly.',
+    audience:
+      'Cancer patients and caregivers who want to walk into an oncology appointment with the right questions about clinical trials.',
+    jtbd:
+      'When a patient or caregiver finds a trial that might matter, they need to understand what it is, where it may or may not fit, and what to ask their care team, without the app pretending it can decide for them.',
+    problem:
+      'ClinicalTrials.gov records are public but written for researchers. Eligibility criteria, phases, and endpoints are hard for patients to parse, so relevant trials never make it into the appointment conversation.',
+    coreWorkflow: [
+      'Enter basic context only: cancer type, age group, and location. Never records or identifiers.',
+      'Search public ClinicalTrials.gov records and open a trial to read a plain-English explanation: why it may be relevant, possible eligibility concerns, what information is missing, and questions to ask the oncology team.',
+      'Explanations run behind a safety validator with a deterministic source-grounded fallback when the model is unavailable or its output fails checks.',
+      'Save trials to a printable doctor discussion sheet, stored in the browser only.',
+    ],
+    mvpScope: [
+      'ClinicalTrials.gov v2 API search with plain-English trial explanations',
+      'Safety validator with a deterministic source-grounded fallback',
+      'Printable doctor discussion sheet and saved searches in localStorage, so no PHI is collected',
+      'Deliberate non-goals: no diagnosis, no treatment advice, no eligibility confirmation, no enrollment recommendations',
+      'Faithfulness evaluation harness with a second-model judge and human calibration',
+    ],
+    evidenceSignal:
+      'An evaluation harness measures whether the AI explanations stay faithful to the source record. It surfaced a validator bug that rejected 100 percent of valid output, a warnings field the model used for unsourced clinical claims, and a self-grading bug in the judge. Human calibration then showed the judge is too lenient, so its 81 percent faithfulness score is reported but not trusted.',
+    nextStep:
+      'Tighten the judge and the generator so the model stops addressing the reader as if it knows their diagnosis, then re-run human calibration before trusting any faithfulness number.',
+    standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'Current',
+        tag: 'Eval',
+        title: 'Built an accuracy-evaluation harness and a faithfulness judge',
+        url: 'https://github.com/codyjohnsontx/ocnoPath',
+        body: 'Snapshotted about a dozen real trials as a reproducible test set, then measured the generator against it. Fixed a validator bug that silently rejected 100 percent of valid output (0 to 100 percent usable), removed a warnings field the model used for unsourced clinical claims, and fixed a self-grading bug in the judge (67 to 81 percent). Human calibration then revealed the judge is too lenient, so the faithfulness number is not trusted yet.',
+      },
+      {
+        date: 'Build',
+        tag: 'Prototype',
+        title: 'Working prototype of the trial explainer and discussion sheet',
+        url: 'https://github.com/codyjohnsontx/ocnoPath',
+        body: 'Runs locally, not yet deployed. Searches public ClinicalTrials.gov records, explains each trial in plain English behind a safety validator with a deterministic fallback, and saves trials to a printable doctor discussion sheet. Context stays in the browser, so the app collects no protected health information by design.',
+      },
+    ],
+  },
+  {
     name: 'RideSense',
     slug: 'ridesense',
     tier: 'flagship',
