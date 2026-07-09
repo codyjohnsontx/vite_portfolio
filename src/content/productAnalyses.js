@@ -928,7 +928,7 @@ export const productAnalyses = [
         'Caregivers and family members preparing questions and a printable discussion sheet for someone else’s oncology appointment.',
       buyerLabel: 'Mission',
       buyer:
-        'OncoPath is not built to make money and never will be. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live and free at onco-path.vercel.app, newly deployed with no adoption or accuracy claims yet, and a faithfulness number that is reported but not yet validated.',
+        'OncoPath is not built to make money and never will be. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live and free at onco-path.vercel.app, with no adoption or accuracy claims, and a faithfulness number that is reported but not yet validated.',
     },
     currentWorkflow: [
       'Patients and caregivers search Google and forums, then land on raw ClinicalTrials.gov pages written for researchers.',
@@ -1048,7 +1048,7 @@ export const productAnalyses = [
       {
         label: 'No product metrics',
         detail:
-          'Newly deployed: no revenue, no adoption or performance numbers, and none are claimed.',
+          'No revenue, no adoption or performance numbers, and none are claimed.',
       },
     ],
     analyticsPlan: {
