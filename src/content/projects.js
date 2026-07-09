@@ -208,7 +208,7 @@ const allProducts = [
     name: 'OncoPath',
     slug: 'oncopath',
     tier: 'flagship',
-    status: 'prototype',
+    status: 'active-build',
     year: '2026',
     accent: 'oklch(0.6 0.17 300)',
     image: oncopathHomeHero,
@@ -242,7 +242,7 @@ const allProducts = [
     standaloneMockStatus: 'in-progress',
     visualAssets: {
       note:
-        'Screenshots show the local prototype using public ClinicalTrials.gov records and generic demo search context. The eval output is from a real harness run; the faithfulness number it reports is not yet trusted.',
+        'Screenshots show the app using public ClinicalTrials.gov records and generic demo search context. The eval output is from a real harness run; the faithfulness number it reports is not yet trusted.',
       items: [
         {
           label: 'Home hero',
@@ -272,6 +272,13 @@ const allProducts = [
       ],
     },
     updates: [
+      {
+        date: 'Live',
+        tag: 'Deploy',
+        title: 'Deployed OncoPath to production',
+        url: 'https://onco-path.vercel.app',
+        body: 'OncoPath is now live and free at onco-path.vercel.app, deployed on Vercel with the repo connected for automatic deploys. Anyone can search public ClinicalTrials.gov records, read plain-English explanation notes, and print a discussion sheet. No accounts, no PHI collected, and the eval faithfulness number is still reported but not trusted.',
+      },
       {
         date: 'Current',
         tag: 'Eval',

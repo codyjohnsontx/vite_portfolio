@@ -496,9 +496,13 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'Product screenshots' })).toBeTruthy();
     expect(
       screen.getByText(
-        /Screenshots show the local prototype using public ClinicalTrials\.gov records and generic demo search context/i,
+        /Screenshots show the app using public ClinicalTrials\.gov records and generic demo search context/i,
       ),
     ).toBeTruthy();
+    const liveUpdateLink = screen.getByRole('link', {
+      name: 'Deployed OncoPath to production',
+    });
+    expect(liveUpdateLink.getAttribute('href')).toBe('https://onco-path.vercel.app');
     expect(screen.getByText('Explanation notes')).toBeTruthy();
     expect(screen.getByText('Eval run output')).toBeTruthy();
     expect(

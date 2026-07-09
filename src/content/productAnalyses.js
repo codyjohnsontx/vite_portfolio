@@ -926,8 +926,9 @@ export const productAnalyses = [
         'Cancer patients researching trials for themselves, entering only basic context: cancer type, age group, and location.',
       secondary:
         'Caregivers and family members preparing questions and a printable discussion sheet for someone else’s oncology appointment.',
+      buyerLabel: 'Mission',
       buyer:
-        'No users, no revenue, no adoption or accuracy claims. OncoPath is a prototype that runs locally, and its faithfulness number is reported but not yet validated.',
+        'OncoPath is not built to make money and never will be. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live and free at onco-path.vercel.app, newly deployed with no adoption or accuracy claims yet, and a faithfulness number that is reported but not yet validated.',
     },
     currentWorkflow: [
       'Patients and caregivers search Google and forums, then land on raw ClinicalTrials.gov pages written for researchers.',
@@ -977,7 +978,7 @@ export const productAnalyses = [
         value: 'High',
         effort: 'S',
         decision:
-          'Browser-local storage only. Collecting no protected health information sidesteps HIPAA by design and keeps the prototype honest about what it can protect.',
+          'Browser-local storage only. Collecting no protected health information sidesteps HIPAA by design and keeps the app honest about what it can protect.',
       },
       {
         initiative: 'Plain-English explanations',
@@ -1019,7 +1020,7 @@ export const productAnalyses = [
         value: 'Medium',
         effort: 'M',
         decision:
-          'Deferred. The prototype runs locally until the faithfulness work earns more trust.',
+          'Shipped. Deployed to Vercel at onco-path.vercel.app, free with no accounts. The faithfulness number stays untrusted until calibration improves.',
       },
     ],
     metricsHeading: 'Measured on the eval bench, not in production',
@@ -1047,7 +1048,7 @@ export const productAnalyses = [
       {
         label: 'No product metrics',
         detail:
-          'Prototype status: no users, no revenue, no adoption or performance numbers, and none are claimed.',
+          'Newly deployed: no revenue, no adoption or performance numbers, and none are claimed.',
       },
     ],
     analyticsPlan: {
@@ -1086,10 +1087,10 @@ export const productAnalyses = [
       ],
     },
     shippedIntro:
-      'OncoPath is a working prototype that runs locally. Most of the milestones that matter came from the evaluation work rather than the UI.',
+      'OncoPath is live at onco-path.vercel.app. Most of the milestones that matter came from the evaluation work rather than the UI.',
     shippedHighlights: [
       {
-        label: 'Prototype',
+        label: 'Core app',
         detail:
           'Built the core app: ClinicalTrials.gov v2 search, plain-English explanation boxes, a printable doctor discussion sheet, and browser-local saved searches with no PHI collected.',
         url: 'https://github.com/codyjohnsontx/ocnoPath',
