@@ -15,6 +15,21 @@ const SECTIONS = [
   { id: 'whats-next', label: "05 What's next" },
 ];
 
+const HERO_IMAGE_STYLE = {
+  maxWidth: '100%',
+  maxHeight: '70vh',
+  height: 'auto',
+  width: 'auto',
+  display: 'block',
+};
+
+const ASSET_IMAGE_STYLE = {
+  width: '100%',
+  height: 'auto',
+  display: 'block',
+  border: '1px solid var(--rule-2)',
+};
+
 export default function ProductDetailPage() {
   const { slug } = useParams();
   const product = getProductBySlug(slug);
@@ -185,30 +200,10 @@ export default function ProductDetailPage() {
                   aria-label={`Open the live ${p.name} app`}
                   style={{ display: 'block', maxWidth: '100%' }}
                 >
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    style={{
-                      maxWidth: '100%',
-                      maxHeight: '70vh',
-                      height: 'auto',
-                      width: 'auto',
-                      display: 'block',
-                    }}
-                  />
+                  <img src={p.image} alt={p.name} style={HERO_IMAGE_STYLE} />
                 </a>
               ) : (
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  style={{
-                    maxWidth: '100%',
-                    maxHeight: '70vh',
-                    height: 'auto',
-                    width: 'auto',
-                    display: 'block',
-                  }}
-                />
+                <img src={p.image} alt={p.name} style={HERO_IMAGE_STYLE} />
               )}
             </div>
             {p.liveUrl ? (
@@ -336,16 +331,7 @@ export default function ProductDetailPage() {
                         display: 'block',
                       }}
                     >
-                      <img
-                        src={asset.src}
-                        alt={asset.alt}
-                        style={{
-                          width: '100%',
-                          height: 'auto',
-                          display: 'block',
-                          border: '1px solid var(--rule-2)',
-                        }}
-                      />
+                      <img src={asset.src} alt={asset.alt} style={ASSET_IMAGE_STYLE} />
                     </a>
                   ) : (
                     <button
@@ -358,16 +344,7 @@ export default function ProductDetailPage() {
                         cursor: 'zoom-in',
                       }}
                     >
-                      <img
-                        src={asset.src}
-                        alt={asset.alt}
-                        style={{
-                          width: '100%',
-                          height: 'auto',
-                          display: 'block',
-                          border: '1px solid var(--rule-2)',
-                        }}
-                      />
+                      <img src={asset.src} alt={asset.alt} style={ASSET_IMAGE_STYLE} />
                     </button>
                   )}
                   <figcaption
