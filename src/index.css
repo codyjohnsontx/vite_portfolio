@@ -788,9 +788,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   align-items: center;
   min-width: 0;
 }
-.meta-row--hero {
-  margin-top: 24px;
-}
 .meta-row--stacked {
   align-items: stretch;
   margin-top: 12px;

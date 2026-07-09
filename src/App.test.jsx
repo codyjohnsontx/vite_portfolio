@@ -246,7 +246,6 @@ describe('portfolio routes and metadata', () => {
     renderApp('/products/track-tuner');
 
     expect(screen.getAllByText(/Active build/).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Product Manager \/ Developer/)).toBeTruthy();
     expect(screen.getByText(/Independent build/)).toBeTruthy();
     expect(screen.getByText(/Update 12/)).toBeTruthy();
     const comparisonUpdateLink = screen.getByRole('link', {
