@@ -187,7 +187,7 @@ export default function ProductAnalysisPage() {
                   <p className="body" style={{ marginTop: 10 }}>{analysis.users.secondary}</p>
                 </Reveal>
                 <Reveal delay={180}>
-                  <Eyebrow>Buyer</Eyebrow>
+                  <Eyebrow>{analysis.users.buyerLabel ?? 'Buyer'}</Eyebrow>
                   <p className="body" style={{ marginTop: 10 }}>{analysis.users.buyer}</p>
                 </Reveal>
               </div>

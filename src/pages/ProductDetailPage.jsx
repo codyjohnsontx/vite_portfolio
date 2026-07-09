@@ -15,6 +15,21 @@ const SECTIONS = [
   { id: 'whats-next', label: "05 What's next" },
 ];
 
+const HERO_IMAGE_STYLE = {
+  maxWidth: '100%',
+  maxHeight: '70vh',
+  height: 'auto',
+  width: 'auto',
+  display: 'block',
+};
+
+const ASSET_IMAGE_STYLE = {
+  width: '100%',
+  height: 'auto',
+  display: 'block',
+  border: '1px solid var(--rule-2)',
+};
+
 export default function ProductDetailPage() {
   const { slug } = useParams();
   const product = getProductBySlug(slug);
@@ -96,10 +111,6 @@ export default function ProductDetailPage() {
   const analysis = getProductAnalysisBySlug(slug);
   const research = getProductResearchBySlug(slug);
   const nextSummary = p.nextStep.split('.')[0] + '.';
-  const heroMetaItems = [
-    ['Role', p.role],
-    ['Year', p.year],
-  ].filter(([, value]) => Boolean(value));
 
   return (
     <div className="fade-in">
@@ -124,16 +135,6 @@ export default function ProductDetailPage() {
           <div style={{ marginTop: 24, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             <StackRow items={p.stack} />
           </div>
-          {heroMetaItems.length ? (
-            <div className="meta-row meta-row--hero" aria-label={`${p.name} product metadata`}>
-              {heroMetaItems.map(([label, value]) => (
-                <span key={label} className="meta-row__item">
-                  <strong>{label}</strong>
-                  {value}
-                </span>
-              ))}
-            </div>
-          ) : null}
           {analysis ? (
             <div style={{ marginTop: 24 }}>
               <Link to={`/products/${p.slug}/analysis`} className="link-arrow">
@@ -191,18 +192,30 @@ export default function ProductDetailPage() {
                 padding: 'clamp(16px, 3vw, 48px)',
               }}
             >
-              <img
-                src={p.image}
-                alt={p.name}
-                style={{
-                  maxWidth: '100%',
-                  maxHeight: '70vh',
-                  height: 'auto',
-                  width: 'auto',
-                  display: 'block',
-                }}
-              />
+              {p.liveUrl ? (
+                <a
+                  href={p.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Open the live ${p.name} app`}
+                  style={{ display: 'block', maxWidth: '100%' }}
+                >
+                  <img src={p.image} alt={p.name} style={HERO_IMAGE_STYLE} />
+                </a>
+              ) : (
+                <img src={p.image} alt={p.name} style={HERO_IMAGE_STYLE} />
+              )}
             </div>
+            {p.liveUrl ? (
+              <p
+                className="mono small uppercase"
+                style={{ marginTop: 12, textAlign: 'center' }}
+              >
+                <a href={p.liveUrl} target="_blank" rel="noreferrer">
+                  Live at {p.liveUrl.replace(/^https?:\/\//, '')} ↗
+                </a>
+              </p>
+            ) : null}
           </div>
         </Reveal>
       ) : null}
@@ -307,32 +320,38 @@ export default function ProductDetailPage() {
                     padding: 'clamp(10px, 2vw, 18px)',
                   }}
                 >
-                  <button
-                    type="button"
-                    aria-label={`Zoom ${asset.label}`}
-                    onClick={() => setSelectedVisualAsset(asset)}
-                    style={{
-                      width: '100%',
-                      display: 'block',
-                      cursor: 'zoom-in',
-                    }}
-                  >
-                    <img
-                      src={asset.src}
-                      alt={asset.alt}
+                  {asset.href ? (
+                    <a
+                      href={asset.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`Open ${asset.label}`}
                       style={{
                         width: '100%',
-                        height: 'auto',
                         display: 'block',
-                        border: '1px solid var(--rule-2)',
                       }}
-                    />
-                  </button>
+                    >
+                      <img src={asset.src} alt={asset.alt} style={ASSET_IMAGE_STYLE} />
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      aria-label={`Zoom ${asset.label}`}
+                      onClick={() => setSelectedVisualAsset(asset)}
+                      style={{
+                        width: '100%',
+                        display: 'block',
+                        cursor: 'zoom-in',
+                      }}
+                    >
+                      <img src={asset.src} alt={asset.alt} style={ASSET_IMAGE_STYLE} />
+                    </button>
+                  )}
                   <figcaption
                     className="mono small uppercase"
                     style={{ marginTop: 12, color: 'var(--ink-3)' }}
                   >
-                    {asset.label}
+                    {asset.href ? `${asset.label} ↗` : asset.label}
                   </figcaption>
                 </Reveal>
               ))}

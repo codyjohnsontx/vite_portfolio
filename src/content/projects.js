@@ -25,6 +25,11 @@ import wattsmithExportReadiness from '../assets/wattsmith/wattsmith-10-export-re
 import wattsmithBuilderWorkspace from '../assets/wattsmith/wattsmith-11-builder-workspace.png';
 import wattsmithReusableBlockPalette from '../assets/wattsmith/wattsmith-12-reusable-block-palette.png';
 import wattsmithWorkoutStepEditor from '../assets/wattsmith/wattsmith-13-workout-step-editor.png';
+import oncopathHomeHero from '../assets/oncopath/oncopath-01-home-hero.png';
+import oncopathResults from '../assets/oncopath/oncopath-02-results.png';
+import oncopathTrialExplanation from '../assets/oncopath/oncopath-03-trial-explanation.png';
+import oncopathDiscussionSheet from '../assets/oncopath/oncopath-04-discussion-sheet.png';
+import oncopathEvalTerminal from '../assets/oncopath/oncopath-05-eval-terminal.png';
 
 const allProducts = [
   {
@@ -196,6 +201,93 @@ const allProducts = [
         title: 'Stabilize app wiring, lint config, and contributor docs',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/4',
         body: 'Cleans up the app foundation before adding more AI work: navigation, auth, billing display, session comparison, environment helpers, contributor docs, automated checks, and test coverage.',
+      },
+    ],
+  },
+  {
+    name: 'OncoPath',
+    slug: 'oncopath',
+    tier: 'flagship',
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.6 0.17 300)',
+    image: oncopathHomeHero,
+    liveUrl: 'https://onco-path.vercel.app',
+    role: 'Product Manager / Developer',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'ClinicalTrials.gov API', 'Groq/LLM', 'zod'],
+    oneLiner:
+      'A calmer path through cancer trials: plain-English explanations of public clinical trials, built to be checked, not trusted blindly.',
+    audience:
+      'Cancer patients and caregivers who want to walk into an oncology appointment with the right questions about clinical trials.',
+    jtbd:
+      'When a patient or caregiver finds a trial that might matter, they need to understand what it is, where it may or may not fit, and what to ask their care team, without the app pretending it can decide for them.',
+    problem:
+      'ClinicalTrials.gov records are public but written for researchers. Eligibility criteria, phases, and endpoints are hard for patients to parse, so relevant trials never make it into the appointment conversation.',
+    coreWorkflow: [
+      'Enter basic context only: cancer type, age group, and location. Never records or identifiers.',
+      'Search public ClinicalTrials.gov records and open a trial to read a plain-English explanation: why it may be relevant, possible eligibility concerns, what information is missing, and questions to ask the oncology team.',
+      'Explanations run behind a safety validator with a deterministic source-grounded fallback when the model is unavailable or its output fails checks.',
+      'Save trials to a printable doctor discussion sheet, stored in the browser only.',
+    ],
+    mvpScope: [
+      'ClinicalTrials.gov v2 API search with plain-English trial explanations',
+      'Safety validator with a deterministic source-grounded fallback',
+      'Printable doctor discussion sheet and saved searches in localStorage, so no PHI is collected',
+      'Deliberate non-goals: no diagnosis, no treatment advice, no eligibility confirmation, no enrollment recommendations',
+      'Faithfulness evaluation harness with a second-model judge and human calibration',
+    ],
+    evidenceSignal:
+      'An evaluation harness measures whether the AI explanations stay faithful to the source record. It surfaced a validator bug that rejected 100 percent of valid output, a warnings field the model used for unsourced clinical claims, and a self-grading bug in the judge. Human calibration then showed the judge is too lenient, so its 81 percent faithfulness score is reported but not trusted.',
+    nextStep:
+      'Tighten the judge and the generator so the model stops addressing the reader as if it knows their diagnosis, then re-run human calibration before trusting any faithfulness number.',
+    standaloneMockStatus: 'in-progress',
+    visualAssets: {
+      note:
+        'The app uses public ClinicalTrials.gov records and only the basic context a person chooses to share. Each trial gets explanation notes tied to the official record, and saved trials become a printable sheet to bring to an appointment. The eval output is from a real harness run; the faithfulness number it reports is not yet trusted.',
+      items: [
+        {
+          label: 'Trial results',
+          src: oncopathResults,
+          alt: 'OncoPath results page listing recruiting breast cancer trials from public ClinicalTrials.gov records.',
+        },
+        {
+          label: 'Explanation notes',
+          src: oncopathTrialExplanation,
+          alt: 'OncoPath trial detail page showing plain-English explanation notes generated from the official record.',
+        },
+        {
+          label: 'Discussion sheet',
+          src: oncopathDiscussionSheet,
+          alt: 'OncoPath printable doctor discussion sheet with saved trials, discussion points, and questions for the oncology team.',
+        },
+        {
+          label: 'Eval run output',
+          src: oncopathEvalTerminal,
+          alt: 'Terminal output from a real OncoPath eval harness run showing 12 of 12 model outputs with zero fallbacks.',
+        },
+      ],
+    },
+    updates: [
+      {
+        date: 'Live',
+        tag: 'Deploy',
+        title: 'Deployed OncoPath to production',
+        url: 'https://onco-path.vercel.app',
+        body: 'OncoPath is now live and free at onco-path.vercel.app, deployed on Vercel with the repo connected for automatic deploys. Anyone can search public ClinicalTrials.gov records, read plain-English explanation notes, and print a discussion sheet. No accounts, no PHI collected, and the eval faithfulness number is still reported but not trusted.',
+      },
+      {
+        date: 'Current',
+        tag: 'Eval',
+        title: 'Built an accuracy-evaluation harness and a faithfulness judge',
+        url: 'https://github.com/codyjohnsontx/ocnoPath',
+        body: 'Snapshotted about a dozen real trials as a reproducible test set, then measured the generator against it. Fixed a validator bug that silently rejected 100 percent of valid output (0 to 100 percent usable), removed a warnings field the model used for unsourced clinical claims, and fixed a self-grading bug in the judge (67 to 81 percent). Human calibration then revealed the judge is too lenient, so the faithfulness number is not trusted yet.',
+      },
+      {
+        date: 'Build',
+        tag: 'Prototype',
+        title: 'Working prototype of the trial explainer and discussion sheet',
+        url: 'https://github.com/codyjohnsontx/ocnoPath',
+        body: 'Runs locally, not yet deployed. Searches public ClinicalTrials.gov records, explains each trial in plain English behind a safety validator with a deterministic fallback, and saves trials to a printable doctor discussion sheet. Context stays in the browser, so the app collects no protected health information by design.',
       },
     ],
   },

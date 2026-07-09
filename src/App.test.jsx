@@ -21,6 +21,7 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getAllByRole('heading', { level: 1 }).length).toBeGreaterThan(0);
     expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'OncoPath' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'CTX Connect' })).toBeTruthy();
@@ -33,21 +34,22 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Operational trust')).toBeTruthy();
     expect(screen.getByText('Measured outcomes')).toBeTruthy();
     expect(screen.getByText('Latest update')).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Wattsmith export verification shipped' })).toBeTruthy();
-    expect(screen.getAllByText(/\.mrc\/\.erg exports/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/durations/i)).toBeTruthy();
-    expect(screen.getByText(/power targets/i)).toBeTruthy();
-    expect(screen.getByText(/golden fixtures/i)).toBeTruthy();
-    expect(screen.getByText(/84 to 119/i)).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { name: 'OncoPath faithfulness eval built and calibrated' }),
+    ).toBeTruthy();
+    expect(screen.getAllByText(/frozen test set/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/0 to 100 percent/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/faithfulness judge/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/not trusted yet/i).length).toBeGreaterThan(0);
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
-        .some((link) => link.getAttribute('href') === '/products/wattsmith'),
+        .some((link) => link.getAttribute('href') === '/products/oncopath'),
     ).toBe(true);
     expect(
       screen
         .getAllByRole('link', { name: /PM analysis/i })
-        .some((link) => link.getAttribute('href') === '/products/wattsmith/analysis'),
+        .some((link) => link.getAttribute('href') === '/products/oncopath/analysis'),
     ).toBe(true);
   });
 
@@ -244,7 +246,6 @@ describe('portfolio routes and metadata', () => {
     renderApp('/products/track-tuner');
 
     expect(screen.getAllByText(/Active build/).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Product Manager \/ Developer/)).toBeTruthy();
     expect(screen.getByText(/Independent build/)).toBeTruthy();
     expect(screen.getByText(/Update 12/)).toBeTruthy();
     const comparisonUpdateLink = screen.getByRole('link', {
@@ -477,6 +478,59 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /AI\/RAG preparation/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /Later AI/i })).toBeTruthy();
     expect(screen.getByText(/No measured result yet/)).toBeTruthy();
+  });
+
+  it('renders the OncoPath product page with the eval story and the repo link', () => {
+    renderApp('/products/oncopath');
+
+    expect(
+      screen.getByText(/plain-English explanations of public clinical trials/i),
+    ).toBeTruthy();
+    expect(screen.getAllByText(/no PHI/i).length).toBeGreaterThan(0);
+    const evalUpdateLink = screen.getByRole('link', {
+      name: 'Built an accuracy-evaluation harness and a faithfulness judge',
+    });
+    expect(evalUpdateLink.getAttribute('href')).toBe('https://github.com/codyjohnsontx/ocnoPath');
+    expect(screen.getAllByText(/not trusted yet/i).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/81 percent accurate/i)).toBeNull();
+    expect(screen.getByRole('heading', { name: 'Product screenshots' })).toBeTruthy();
+    expect(
+      screen.getByText(
+        /The app uses public ClinicalTrials\.gov records and only the basic context a person chooses to share/i,
+      ),
+    ).toBeTruthy();
+    const liveUpdateLink = screen.getByRole('link', {
+      name: 'Deployed OncoPath to production',
+    });
+    expect(liveUpdateLink.getAttribute('href')).toBe('https://onco-path.vercel.app');
+    expect(screen.getByText('Explanation notes')).toBeTruthy();
+    expect(screen.getByText('Eval run output')).toBeTruthy();
+    const liveAppLink = screen.getByRole('link', {
+      name: 'Open the live OncoPath app',
+    });
+    expect(liveAppLink.getAttribute('href')).toBe('https://onco-path.vercel.app');
+    expect(
+      screen.getByRole('img', {
+        name: 'OncoPath trial detail page showing plain-English explanation notes generated from the official record.',
+      }),
+    ).toBeTruthy();
+  });
+
+  it('renders the OncoPath PM analysis page without overclaiming', () => {
+    renderApp('/products/oncopath/analysis');
+
+    expect(screen.getByRole('heading', { name: /OncoPath PM analysis/i })).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { name: /Built to be checked, not trusted blindly/i }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { name: /The judge said 81 percent and I did not believe it/i }),
+    ).toBeTruthy();
+    expect(screen.getAllByText(/0 percent usable/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/67/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/n=6/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/sidesteps HIPAA by design/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/no revenue, no adoption or performance numbers/i)).toBeTruthy();
   });
 
   it('shows the PM analysis CTA only for products with analysis content', () => {

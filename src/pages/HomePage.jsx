@@ -152,20 +152,20 @@ function LatestUpdate() {
         <div className="latest-update__label mono uppercase">Latest update</div>
         <div className="latest-update__copy">
           <h2 id="latest-update-title" className="latest-update__title">
-            Wattsmith export verification shipped
+            OncoPath faithfulness eval built and calibrated
           </h2>
           <p className="latest-update__body">
-            Wattsmith now verifies .mrc/.erg exports in-repo by parsing generated files back into
-            workout timelines and checking durations, power targets, ramps, repeats, cues, and
-            golden fixtures. Test count moved from 84 to 119; third-party app acceptance remains
-            optional.
+            OncoPath, an AI-assisted cancer trial explainer, now has an accuracy-evaluation
+            harness: a frozen test set of real trials, a validator fix that took usable output
+            from 0 to 100 percent, and a second-model faithfulness judge. Human calibration
+            showed the judge is too lenient, so its 81 percent score is not trusted yet.
           </p>
         </div>
         <div className="latest-update__links">
-          <Link to="/products/wattsmith" className="link-arrow latest-update__link">
+          <Link to="/products/oncopath" className="link-arrow latest-update__link">
             Read the build <ArrowGlyph />
           </Link>
-          <Link to="/products/wattsmith/analysis" className="link-arrow latest-update__link">
+          <Link to="/products/oncopath/analysis" className="link-arrow latest-update__link">
             PM analysis <ArrowGlyph />
           </Link>
         </div>

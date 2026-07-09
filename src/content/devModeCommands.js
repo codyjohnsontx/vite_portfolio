@@ -6,7 +6,7 @@ import { getProductAnalysisBySlug } from './productAnalyses';
 import { resumeContent } from './resumeContent';
 import { resumeMeta } from './resumeMeta';
 
-const PRODUCT_SLUGS = ['track-tuner', 'ridesense', 'wattsmith', 'windcast', 'ctx-chat', 'diaz-on-demand'];
+const PRODUCT_SLUGS = ['track-tuner', 'oncopath', 'ridesense', 'wattsmith', 'windcast', 'ctx-chat', 'diaz-on-demand'];
 // Command token overrides for products whose current brand name differs from
 // their URL slug, so the console reads correctly without changing the route.
 const COMMAND_TOKENS = { 'ctx-chat': 'ctx-connect' };

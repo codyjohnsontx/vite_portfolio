@@ -1,5 +1,66 @@
 export const blogPosts = [
   {
+    slug: 'is-an-ai-medical-summary-lying-to-you',
+    title: 'How do you know if an AI medical summary is lying to you?',
+    deck:
+      'The judge scored OncoPath at 81 percent faithful. Calibrating that judge against my own labels proved the number is not trustworthy yet, and finding that out was the point.',
+    date: 'July 2026',
+    readingTime: '5 min read',
+    intro:
+      "I've been building OncoPath, a tool that explains public cancer clinical trials in plain English so patients and caregivers can walk into an appointment with better questions. The pretty part (search, clean UI, a printable discussion sheet) was the easy 20 percent. The part that actually matters is the question I couldn't design my way around: when the AI summarizes a trial, is it telling the truth, or making things up?",
+    sections: [
+      {
+        heading: 'Shipping and hoping was not an option',
+        body: [
+          'For most apps, "it produced an answer" is good enough. For a cancer app, it absolutely is not. So instead of shipping and hoping, I built an evaluation harness to measure faithfulness, and it taught me more about my own app (and my own testing) than I expected.',
+          "Here's the honest sequence.",
+        ],
+      },
+      {
+        heading: 'Step 1: I froze a test set',
+        body: [
+          'I pulled about a dozen real trials from ClinicalTrials.gov across different cancers and complexity, from a simple observational study to a Phase 1 trial with pages of eligibility criteria, and snapshotted them so the eval is reproducible.',
+        ],
+      },
+      {
+        heading: 'Step 2: I ran the generator and got 0 percent usable',
+        body: [
+          'Not because the model was bad, but because my own safety validator was silently rejecting 100 percent of perfectly good explanations. It required a safety disclaimer to be worded an exact way that I never told the model to use.',
+          'The fix was a better idea anyway: guarantee the disclaimer by construction instead of hoping the model remembers to write it. A safety-critical line should never depend on the model. Zero percent became 100 percent.',
+        ],
+      },
+      {
+        heading: 'Step 3: I read the actual outputs, and found the model freelancing',
+        body: [
+          'In a "warnings" field, it was inventing clinical risk claims that were not in the source. So I removed the field. If the model wants to add unsourced medical assertions, the answer is to not give it the opening.',
+        ],
+      },
+      {
+        heading: 'Step 4: I built a faithfulness judge',
+        body: [
+          'A second model (a different, larger one, so it is not grading its own family) reads the source trial and each claim in the explanation, and labels every claim: supported, partially supported, unsupported, or overstated.',
+          '"Overstated" is the sneaky one: taking an exclusion criterion ("patients with heart failure are excluded") and quietly turning it into a medical risk ("you may be at risk of heart complications"). That is more dangerous than an obvious hallucination because it sounds responsible.',
+        ],
+      },
+      {
+        heading: 'Step 5: the judge caught a bug in the judge',
+        body: [
+          'My first score was 67 percent, and a lot of the "unsupported" flags were wrong: the judge was penalizing claims like "currently recruiting" because I had not given it the same source fields the generator saw. Fixed that, and the score moved to 81 percent.',
+          "And here's where most people would stop, write \"81 percent faithful\" on a slide, and move on. I didn't, because a judge whose own accuracy you haven't checked is just another unverified model.",
+        ],
+      },
+      {
+        heading: 'Step 6: I calibrated it',
+        body: [
+          'I hand-labeled a sample of claims myself, blind, and compared. The judge and I only agreed about half the time, and not randomly. It was systematically too lenient about one specific thing: when the model writes "You have been diagnosed with breast cancer and are planning chemotherapy," the judge shrugged because the facts match the trial\'s eligibility. But the source says nothing about the reader. For a cancer app, telling someone "you have been diagnosed with" is exactly the kind of thing it must never do.',
+          "So the real conclusion isn't \"OncoPath is 81 percent faithful.\" It's: the judge said 81 percent, my calibration proved that number isn't trustworthy yet, and I know precisely why. The next work is tightening both the judge and the generator so the model stops addressing the reader as if it knows them.",
+        ],
+      },
+    ],
+    closing:
+      "That's the whole point I want to make. Building the AI feature is the beginning. The engineering is in measuring whether it's safe, finding your own bugs (including in your own tests), and being willing to distrust a good-looking number until you've earned the right to believe it. Especially when the stakes are someone's cancer care.",
+  },
+  {
     slug: 'ai-trust-boundaries-before-ai-features',
     title: 'AI trust boundaries before AI features',
     deck:

@@ -912,6 +912,243 @@ export const productAnalyses = [
       'Avoid claiming direct TrainerRoad, Strava, Garmin, or TrainingPeaks sync until an integration actually ships.',
     ],
   },
+  {
+    slug: 'oncopath',
+    title: 'OncoPath PM analysis',
+    tagline:
+      'An AI-assisted cancer trial explainer where the centerpiece is not the UI. It is the evaluation work that measures whether the AI explanations stay faithful to the source record.',
+    summary:
+      'OncoPath turns public ClinicalTrials.gov records into plain-English explanations so patients and caregivers can walk into an oncology appointment with better questions. The product deliberately does not diagnose, recommend treatment, confirm eligibility, or tell anyone to enroll, and it collects no protected health information because everything stays in the browser. The credibility work is the evidence track: a frozen test set of real trials, a validator bug fixed by construction (0 to 100 percent usable output), an unsourced warnings field removed, a second-model faithfulness judge that surfaced a bug in its own inputs (67 to 81 percent), and human calibration that showed the judge is too lenient. The 81 percent is reported, and explicitly not trusted yet.',
+    problem:
+      'Public trial data is hard for patients to use. ClinicalTrials.gov records are written for researchers, with dense eligibility criteria, phase jargon, and endpoints that do not answer the question a patient actually has: is this trial worth asking my oncologist about? For an AI summarizer in this domain, the harder question is not whether the output looks nice. It is whether the output is making things up.',
+    users: {
+      primary:
+        'Cancer patients researching trials for themselves, entering only basic context: cancer type, age group, and location.',
+      secondary:
+        'Caregivers and family members preparing questions and a printable discussion sheet for someone else’s oncology appointment.',
+      buyerLabel: 'Mission',
+      buyer:
+        'OncoPath is not built to make money and never will be. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live and free at onco-path.vercel.app, with no adoption or accuracy claims, and a faithfulness number that is reported but not yet validated.',
+    },
+    currentWorkflow: [
+      'Patients and caregivers search Google and forums, then land on raw ClinicalTrials.gov pages written for researchers.',
+      'Eligibility criteria can run for pages, so people either give up or carry a misreading into the appointment.',
+      'Questions for the care team get assembled from memory in the waiting room instead of from the official record.',
+    ],
+    opportunity: [
+      'Trial records are public and free through the ClinicalTrials.gov v2 API, with no auth and no patient data involved.',
+      'Plain-English explanations tied to the official record can prepare a conversation without pretending to give medical advice.',
+      'A printable discussion sheet turns research into something a patient can physically bring to an appointment.',
+      'Keeping all context in browser localStorage means the app collects no PHI, which sidesteps HIPAA by design. That is a deliberate architectural choice, not a gap.',
+      'The safety boundary is a feature: a tool that refuses to diagnose or confirm eligibility is easier to trust than one that answers everything.',
+    ],
+    betHeading: 'Built to be checked, not trusted blindly',
+    productBet:
+      'For most apps, "it produced an answer" is good enough. For a cancer app it is not. The bet is that an AI trial explainer is only shippable with a hard safety boundary (no diagnosis, no treatment advice, no eligibility confirmation, no enrollment recommendations) and an evaluation loop that measures whether every explanation traces back to the official record. The search UI and discussion sheet were the easy 20 percent. The evidence track is the product.',
+    mvp: {
+      shipped: [
+        'Trial search over the ClinicalTrials.gov v2 API using basic context only: cancer type, age group, location.',
+        'Plain-English explanation boxes per trial: why it may be relevant, possible eligibility concerns, what information is missing, and questions to ask the oncology team.',
+        'Safety validator on every explanation, with a deterministic source-grounded fallback when the model is unavailable or output fails checks.',
+        'Printable doctor discussion sheet with saved trials.',
+        'Browser localStorage persistence with no accounts and no PHI.',
+        'A reproducible eval test set snapshotted from about a dozen real trials across cancer types and complexity.',
+        'A faithfulness judge from a different model family that grades each claim as supported, partially supported, unsupported, or overstated.',
+        'Human calibration of the judge against blind hand-labels.',
+      ],
+      cut: [
+        'Diagnosis, treatment recommendations, and eligibility confirmation.',
+        'Trial ranking or best-match scoring.',
+        'Telling anyone to enroll.',
+        'Collecting health records, identifiers, or any server-side storage of personal context.',
+        'The model’s free-form warnings field, removed after it invented unsourced clinical risk claims.',
+        'Shipping the 81 percent judge score as an accuracy claim.',
+      ],
+    },
+    priorities: [
+      {
+        initiative: 'Safety boundary',
+        value: 'High',
+        effort: 'S',
+        decision:
+          'Defined before features: the app only summarizes public information to prepare a conversation with a care team. Everything it refuses to do is scope, not a disclaimer.',
+      },
+      {
+        initiative: 'No-PHI architecture',
+        value: 'High',
+        effort: 'S',
+        decision:
+          'Browser-local storage only. Collecting no protected health information sidesteps HIPAA by design and keeps the app honest about what it can protect.',
+      },
+      {
+        initiative: 'Plain-English explanations',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Shipped as the core loop: relevance, eligibility concerns, missing information, and questions to ask, each meant to trace back to the official record.',
+      },
+      {
+        initiative: 'Disclaimer by construction',
+        value: 'High',
+        effort: 'S',
+        decision:
+          'The safety disclaimer is guaranteed in code instead of hoping the model writes it. A safety-critical line should never depend on the model.',
+      },
+      {
+        initiative: 'Faithfulness eval harness',
+        value: 'High',
+        effort: 'M',
+        decision:
+          'Built before trusting any quality claim. A frozen test set and usable-output measurement found bugs in the app and in the eval itself.',
+      },
+      {
+        initiative: 'Judge calibration',
+        value: 'High',
+        effort: 'S',
+        decision:
+          'Hand-labeled a sample blind and compared. Agreement was only about half, so the judge’s 81 percent is not treated as evidence yet.',
+      },
+      {
+        initiative: 'Warnings field',
+        value: 'Low',
+        effort: 'S',
+        decision:
+          'Removed. The model used it to invent clinical risk claims that were not in the source, so the opening no longer exists.',
+      },
+      {
+        initiative: 'Deployment',
+        value: 'Medium',
+        effort: 'M',
+        decision:
+          'Shipped. Deployed to Vercel at onco-path.vercel.app, free with no accounts. The faithfulness number stays untrusted until calibration improves.',
+      },
+    ],
+    metricsHeading: 'Measured on the eval bench, not in production',
+    successMetrics: [
+      {
+        label: 'Usable output rate',
+        detail:
+          'First harness run: 0 percent usable, because the app’s own safety validator silently rejected every valid explanation over an undocumented phrasing rule. Guaranteeing the disclaimer by construction moved it to 100 percent.',
+      },
+      {
+        label: 'Faithfulness judge score',
+        detail:
+          'A second-model judge grades each claim in an explanation against the source trial text. It first scored 67 percent, then 81 percent after fixing a bug where the judge was not given the same source fields the generator saw.',
+      },
+      {
+        label: 'Judge-human agreement',
+        detail:
+          'Blind hand-labels on a small sample (n=6) agreed with the judge only about half the time. That is why the 81 percent is explicitly not trusted.',
+      },
+      {
+        label: 'The unsafe pattern',
+        detail:
+          'Calibration showed the judge is systematically too lenient when the model addresses the reader directly, like "You have been diagnosed with X," when the source says nothing about the reader.',
+      },
+      {
+        label: 'No product metrics',
+        detail:
+          'No revenue, no adoption or performance numbers, and none are claimed.',
+      },
+    ],
+    analyticsPlan: {
+      events: [
+        'trial_searched',
+        'trial_detail_opened',
+        'explanation_generated',
+        'validator_fallback_used',
+        'trial_saved_to_sheet',
+        'discussion_sheet_printed',
+        'eval_run_completed',
+        'claim_graded',
+        'human_label_recorded',
+      ],
+      funnel: [
+        'Enter basic context',
+        'Search trials',
+        'Open a trial',
+        'Read the plain-English explanation',
+        'Save to discussion sheet',
+        'Print the sheet for an appointment',
+      ],
+      cohorts: [
+        'Cancer type searched',
+        'Trial complexity: simple observational vs Phase 1 with pages of eligibility criteria',
+        'Explanation source: model output vs deterministic fallback',
+      ],
+      observabilityLabel: 'Evaluation and evidence',
+      observability:
+        'The trust surface is the eval bench, not production telemetry: a frozen test set of about a dozen real trials, usable-output measurement, per-claim faithfulness grades from a different model family than the generator, and human calibration labels. The app itself keeps context in the browser only, so there is no server-side data to protect and no PHI anywhere in the system.',
+      dashboards: [
+        'Usable output rate per harness run',
+        'Faithfulness grade distribution per trial',
+        'Judge-human agreement across calibration rounds',
+        'Deterministic fallback usage rate',
+      ],
+    },
+    shippedIntro:
+      'OncoPath is live at onco-path.vercel.app. Most of the milestones that matter came from the evaluation work rather than the UI.',
+    shippedHighlights: [
+      {
+        label: 'Core app',
+        detail:
+          'Built the core app: ClinicalTrials.gov v2 search, plain-English explanation boxes, a printable doctor discussion sheet, and browser-local saved searches with no PHI collected.',
+        url: 'https://github.com/codyjohnsontx/ocnoPath',
+      },
+      {
+        label: 'Eval harness',
+        detail:
+          'Snapshotted about a dozen real trials across cancer types and complexity as a reproducible test set, then measured how often the generator produced usable output versus falling back to the safe template.',
+      },
+      {
+        label: 'Validator fix',
+        detail:
+          'First run was 0 percent usable because the safety validator required an exact disclaimer phrasing the model was never told to use. The disclaimer is now guaranteed by construction, and usable output moved to 100 percent.',
+      },
+      {
+        label: 'Warnings field removed',
+        detail:
+          'Reading real outputs showed the model freelancing unsourced clinical risk claims in a warnings field. The field was removed instead of prompt-patched.',
+      },
+      {
+        label: 'Faithfulness judge',
+        detail:
+          'A second model from a different family grades each claim in an explanation against the source trial text: supported, partially supported, unsupported, or overstated. A different family avoids self-grading bias.',
+      },
+      {
+        label: 'Judge bug fix',
+        detail:
+          'The judge was wrongly penalizing claims like "currently recruiting" because it was not given the same source fields the generator saw. Fixing that moved the score from 67 to 81 percent.',
+      },
+      {
+        label: 'Human calibration',
+        detail:
+          'Blind hand-labels agreed with the judge only about half the time and revealed systematic leniency on explanations that address the reader directly. The 81 percent is reported, not trusted.',
+      },
+    ],
+    decisionStory: {
+      heading: 'The judge said 81 percent and I did not believe it',
+      problem:
+        'A judge whose own accuracy has not been checked is just another unverified model. The score had already moved from 67 to 81 percent because of a bug in the judge itself, which made trusting the headline number harder to justify.',
+      decision:
+        'Instead of writing 81 percent faithful on a slide, I hand-labeled a sample of claims blind and compared my labels against the judge’s.',
+      outcome:
+        'Agreement was only about 50 percent, and the misses clustered on one unsafe pattern: the model telling the reader "you have been diagnosed with X" when the source says nothing about the reader. The faithfulness number is not trusted yet, and the next work targets that exact pattern in both the judge and the generator.',
+    },
+    learnings: [
+      'A safety-critical line should never depend on the model remembering to write it. Guarantee it by construction.',
+      'If the model keeps inventing unsourced claims in a field, remove the field instead of prompt-engineering around it.',
+      'An eval can be wrong in both directions. My validator failed 100 percent of good output, and my judge passed unsafe output.',
+      'Overstated claims are more dangerous than obvious hallucinations because they sound responsible.',
+      'A green number you have not calibrated is not evidence. The judge said 81 percent; my own labels said do not believe it yet.',
+    ],
+    nextIterations: [
+      'Tighten the generator so it never addresses the reader as if it knows their diagnosis.',
+      'Tighten the judge on that same pattern and expand human calibration beyond the first small sample.',
+      'Re-run calibration before quoting any faithfulness number.',
+      'Add product screenshots, and consider deployment only after the eval earns more trust.',
+    ],
+  },
 ];
 
 export function getProductAnalysisBySlug(slug) {
