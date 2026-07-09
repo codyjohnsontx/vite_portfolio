@@ -245,8 +245,9 @@ const allProducts = [
         'The app uses public ClinicalTrials.gov records and only the basic context a person chooses to share. Each trial gets explanation notes tied to the official record, and saved trials become a printable sheet to bring to an appointment. The eval output is from a real harness run; the faithfulness number it reports is not yet trusted.',
       items: [
         {
-          label: 'Home hero',
+          label: 'Live at onco-path.vercel.app',
           src: oncopathHomeHero,
+          href: 'https://onco-path.vercel.app',
           alt: 'OncoPath home page explaining plain-English notes, source-linked explanations, and questions to ask.',
         },
         {

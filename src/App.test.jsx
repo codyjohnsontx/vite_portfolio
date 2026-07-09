@@ -505,6 +505,10 @@ describe('portfolio routes and metadata', () => {
     expect(liveUpdateLink.getAttribute('href')).toBe('https://onco-path.vercel.app');
     expect(screen.getByText('Explanation notes')).toBeTruthy();
     expect(screen.getByText('Eval run output')).toBeTruthy();
+    const heroShotLink = screen.getByRole('link', {
+      name: 'Open Live at onco-path.vercel.app',
+    });
+    expect(heroShotLink.getAttribute('href')).toBe('https://onco-path.vercel.app');
     expect(
       screen.getByRole('img', {
         name: 'OncoPath trial detail page showing plain-English explanation notes generated from the official record.',

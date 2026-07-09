@@ -293,32 +293,56 @@ export default function ProductDetailPage() {
                     padding: 'clamp(10px, 2vw, 18px)',
                   }}
                 >
-                  <button
-                    type="button"
-                    aria-label={`Zoom ${asset.label}`}
-                    onClick={() => setSelectedVisualAsset(asset)}
-                    style={{
-                      width: '100%',
-                      display: 'block',
-                      cursor: 'zoom-in',
-                    }}
-                  >
-                    <img
-                      src={asset.src}
-                      alt={asset.alt}
+                  {asset.href ? (
+                    <a
+                      href={asset.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`Open ${asset.label}`}
                       style={{
                         width: '100%',
-                        height: 'auto',
                         display: 'block',
-                        border: '1px solid var(--rule-2)',
                       }}
-                    />
-                  </button>
+                    >
+                      <img
+                        src={asset.src}
+                        alt={asset.alt}
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          display: 'block',
+                          border: '1px solid var(--rule-2)',
+                        }}
+                      />
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      aria-label={`Zoom ${asset.label}`}
+                      onClick={() => setSelectedVisualAsset(asset)}
+                      style={{
+                        width: '100%',
+                        display: 'block',
+                        cursor: 'zoom-in',
+                      }}
+                    >
+                      <img
+                        src={asset.src}
+                        alt={asset.alt}
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          display: 'block',
+                          border: '1px solid var(--rule-2)',
+                        }}
+                      />
+                    </button>
+                  )}
                   <figcaption
                     className="mono small uppercase"
                     style={{ marginTop: 12, color: 'var(--ink-3)' }}
                   >
-                    {asset.label}
+                    {asset.href ? `${asset.label} ↗` : asset.label}
                   </figcaption>
                 </Reveal>
               ))}
