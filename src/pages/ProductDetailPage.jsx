@@ -177,18 +177,50 @@ export default function ProductDetailPage() {
                 padding: 'clamp(16px, 3vw, 48px)',
               }}
             >
-              <img
-                src={p.image}
-                alt={p.name}
-                style={{
-                  maxWidth: '100%',
-                  maxHeight: '70vh',
-                  height: 'auto',
-                  width: 'auto',
-                  display: 'block',
-                }}
-              />
+              {p.liveUrl ? (
+                <a
+                  href={p.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Open the live ${p.name} app`}
+                  style={{ display: 'block', maxWidth: '100%' }}
+                >
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    style={{
+                      maxWidth: '100%',
+                      maxHeight: '70vh',
+                      height: 'auto',
+                      width: 'auto',
+                      display: 'block',
+                    }}
+                  />
+                </a>
+              ) : (
+                <img
+                  src={p.image}
+                  alt={p.name}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '70vh',
+                    height: 'auto',
+                    width: 'auto',
+                    display: 'block',
+                  }}
+                />
+              )}
             </div>
+            {p.liveUrl ? (
+              <p
+                className="mono small uppercase"
+                style={{ marginTop: 12, textAlign: 'center' }}
+              >
+                <a href={p.liveUrl} target="_blank" rel="noreferrer">
+                  Live at {p.liveUrl.replace(/^https?:\/\//, '')} ↗
+                </a>
+              </p>
+            ) : null}
           </div>
         </Reveal>
       ) : null}

@@ -212,6 +212,7 @@ const allProducts = [
     year: '2026',
     accent: 'oklch(0.6 0.17 300)',
     image: oncopathHomeHero,
+    liveUrl: 'https://onco-path.vercel.app',
     role: 'Product Manager / Developer',
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'ClinicalTrials.gov API', 'Groq/LLM', 'zod'],
     oneLiner:
@@ -244,12 +245,6 @@ const allProducts = [
       note:
         'The app uses public ClinicalTrials.gov records and only the basic context a person chooses to share. Each trial gets explanation notes tied to the official record, and saved trials become a printable sheet to bring to an appointment. The eval output is from a real harness run; the faithfulness number it reports is not yet trusted.',
       items: [
-        {
-          label: 'Live at onco-path.vercel.app',
-          src: oncopathHomeHero,
-          href: 'https://onco-path.vercel.app',
-          alt: 'OncoPath home page explaining plain-English notes, source-linked explanations, and questions to ask.',
-        },
         {
           label: 'Trial results',
           src: oncopathResults,
