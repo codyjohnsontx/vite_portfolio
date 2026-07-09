@@ -242,7 +242,7 @@ const allProducts = [
     standaloneMockStatus: 'in-progress',
     visualAssets: {
       note:
-        'Screenshots show the app using public ClinicalTrials.gov records and generic demo search context. The eval output is from a real harness run; the faithfulness number it reports is not yet trusted.',
+        'The app uses public ClinicalTrials.gov records and only the basic context a person chooses to share. Each trial gets explanation notes tied to the official record, and saved trials become a printable sheet to bring to an appointment. The eval output is from a real harness run; the faithfulness number it reports is not yet trusted.',
       items: [
         {
           label: 'Home hero',

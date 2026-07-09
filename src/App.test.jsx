@@ -496,7 +496,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'Product screenshots' })).toBeTruthy();
     expect(
       screen.getByText(
-        /Screenshots show the app using public ClinicalTrials\.gov records and generic demo search context/i,
+        /The app uses public ClinicalTrials\.gov records and only the basic context a person chooses to share/i,
       ),
     ).toBeTruthy();
     const liveUpdateLink = screen.getByRole('link', {
