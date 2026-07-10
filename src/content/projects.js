@@ -30,6 +30,11 @@ import oncopathResults from '../assets/oncopath/oncopath-02-results.png';
 import oncopathTrialExplanation from '../assets/oncopath/oncopath-03-trial-explanation.png';
 import oncopathDiscussionSheet from '../assets/oncopath/oncopath-04-discussion-sheet.png';
 import oncopathEvalTerminal from '../assets/oncopath/oncopath-05-eval-terminal.png';
+import ctxchatInboxBrief from '../assets/ctxchat/ctxchat-01-inbox-ai-ops-brief.png';
+import ctxchatCommandCenter from '../assets/ctxchat/ctxchat-02-command-center-overview.png';
+import ctxchatAiOpsAnalytics from '../assets/ctxchat/ctxchat-03-command-center-ai-ops-analytics.png';
+import ctxchatCustomers from '../assets/ctxchat/ctxchat-04-customers.png';
+import ctxchatTasks from '../assets/ctxchat/ctxchat-05-tasks.png';
 
 const allProducts = [
   {
@@ -728,6 +733,10 @@ const allProducts = [
       'Auth.js / NextAuth',
       'Twilio SMS/MMS',
       'PWA',
+      'OpenAI',
+      'Structured Outputs',
+      'Product analytics',
+      'Experimentation',
     ],
     oneLiner:
       'Dealership communication workspace for motorcycle teams that need customer texting, follow-ups, service updates, and accountability in one place.',
@@ -741,7 +750,8 @@ const allProducts = [
       'Staff signs in through secure role-based access for sales, service, parts, managers, and admins.',
       'Staff manages customer conversations from a shared inbox with linked vehicles, assignments, templates, internal notes, notifications, and SMS/MMS delivery status.',
       'Staff creates follow-up tasks, sends service updates, reassigns ownership, and handles opt-in or opt-out states without leaving the customer thread.',
-      'Managers review Command Center metrics for unread conversations, overdue follow-ups, unassigned threads, failed messages, and department exceptions.',
+      'Staff generates an AI Ops Brief on an open conversation, reviews the summary, customer need, risk level, escalation recommendation, and suggested reply, then accepts, dismisses, copies the reply, or converts it into a note or follow-up. Every action stays a human decision.',
+      'Managers review Command Center metrics for unread conversations, overdue follow-ups, unassigned threads, failed messages, and department exceptions, plus AI Ops Analytics for how the team actually uses the briefs.',
     ],
     mvpScope: [
       'Public-facing Next.js site plus internal staff dashboard',
@@ -751,11 +761,55 @@ const allProducts = [
       'Production-ready deployment structure with Vercel, Neon Postgres, Prisma, and Auth.js',
     ],
     evidenceSignal:
-      'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure.',
+      'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure. The latest build adds an OpenAI-backed AI Ops Brief with Structured Outputs, a product analytics event taxonomy for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created, and a PRD plus event taxonomy checked into content/prds/ before any impact is claimed.',
     nextStep:
-      'Expand CTX Connect into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
+      'Run the AI-suggested-reply experiment once real usage accumulates and validate impact with the instrumentation now in place. Beyond that, expand CTX Connect into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
+    visualAssets: {
+      note: 'Screenshots captured from the seeded demo environment. The AI Ops Brief shown was generated live by the app.',
+      items: [
+        {
+          label: 'AI Ops Brief',
+          src: ctxchatInboxBrief,
+          alt: 'Inbox conversation with the AI Ops Brief panel showing summary, customer need, risk, escalation, suggested next action, and suggested reply.',
+        },
+        {
+          label: 'Command Center',
+          src: ctxchatCommandCenter,
+          alt: 'Command Center dashboard with unread, waiting-on-staff, follow-up, SLA, and exception metrics for the dealership.',
+        },
+        {
+          label: 'AI Ops Analytics',
+          src: ctxchatAiOpsAnalytics,
+          alt: 'AI Ops Analytics panel showing briefs generated, acceptance rate, high-risk briefs, and follow-up conversions beside the Experiment Readiness panel.',
+        },
+        {
+          label: 'Customers',
+          src: ctxchatCustomers,
+          alt: 'Customer list with linked units, latest conversation status, and SMS opt-in state.',
+        },
+        {
+          label: 'Tasks',
+          src: ctxchatTasks,
+          alt: 'Task list of follow-ups connected to customers and conversations with priorities and due times.',
+        },
+      ],
+    },
     standaloneMockStatus: 'in-progress',
     updates: [
+      {
+        date: 'Jul 10, 2026',
+        tag: 'PR #4',
+        title: 'Added the AI Ops Brief, an OpenAI-backed inbox assistant',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/4',
+        body: 'The GM can generate a structured brief for any conversation: summary, customer need, risk level with reasons, escalation recommendation, suggested next action, suggested reply, and suggested follow-up. Generation uses OpenAI Structured Outputs against a strict JSON schema so the brief renders the same fields every time, and every recommendation stays decision support that staff accept, dismiss, or convert into a note or follow-up.',
+      },
+      {
+        date: 'Jul 10, 2026',
+        tag: 'PR #4',
+        title: 'Instrumented AI usage before claiming impact',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/4',
+        body: 'Added product analytics events for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created, plus an AI Ops Analytics section and an Experiment Readiness panel in the Command Center. The AI-suggested-reply experiment is not live yet; the instrumentation is ready so impact can be validated with real usage data instead of asserted up front. The PRD and event taxonomy live in content/prds/.',
+      },
       {
         date: 'May 08, 2026',
         tag: 'Build',
