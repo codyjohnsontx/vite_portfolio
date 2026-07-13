@@ -35,6 +35,12 @@ import ctxchatCommandCenter from '../assets/ctxchat/ctxchat-02-command-center-ov
 import ctxchatAiOpsAnalytics from '../assets/ctxchat/ctxchat-03-command-center-ai-ops-analytics.png';
 import ctxchatCustomers from '../assets/ctxchat/ctxchat-04-customers.png';
 import ctxchatTasks from '../assets/ctxchat/ctxchat-05-tasks.png';
+import oasisLanding from '../assets/oasis-race-control/oasis-race-control-01-landing.png';
+import oasisCheckIn from '../assets/oasis-race-control/oasis-race-control-02-check-in.png';
+import oasisTvBoard from '../assets/oasis-race-control/oasis-race-control-03-tv-board.png';
+import oasisPersonalBest from '../assets/oasis-race-control/oasis-race-control-04-personal-best.png';
+import oasisDriverPortal from '../assets/oasis-race-control/oasis-race-control-05-driver-portal.png';
+import oasisArchitecture from '../assets/oasis-race-control/oasis-race-control-06-architecture.png';
 
 const allProducts = [
   {
@@ -206,6 +212,104 @@ const allProducts = [
         title: 'Stabilize app wiring, lint config, and contributor docs',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/4',
         body: 'Cleans up the app foundation before adding more AI work: navigation, auth, billing display, session comparison, environment helpers, contributor docs, automated checks, and test coverage.',
+      },
+    ],
+  },
+  {
+    name: 'Oasis Race Control',
+    slug: 'oasis-race-control',
+    tier: 'flagship',
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.7 0.2 340)',
+    image: oasisLanding,
+    liveUrl: 'https://oasis-race-control.vercel.app',
+    role: 'Full-stack product builder',
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Neon Postgres', '.NET'],
+    oneLiner:
+      'Check-in and live-timing for a sim-racing venue: drivers scan a QR at their simulator to check in, a front-of-store TV shows who is fastest tonight, drivers see their own laps on their phone, and staff run the floor from a dashboard.',
+    audience:
+      'Drivers at Oasis Sim Racing, the front-of-store spectators watching the timing board, and the staff running the floor during a shift.',
+    jtbd:
+      'When a driver sits down at a simulator, they need to check in, set laps, and see where they stand tonight without staff walking each person through it, while the front of the store shows the standings and staff keep the floor moving.',
+    problem:
+      'A sim-racing venue runs on lap times and turnover, but the check-in, the timing board, and the driver’s own results were living in a placeholder theme that did not look like the business. This cycle was about making the app feel like Oasis Sim Racing and deciding, screen by screen, who each surface is for.',
+    coreWorkflow: [
+      'A driver scans the QR at their simulator and lands on a check-in screen with a glowing rig number, then drives as a guest or signs into a saved profile.',
+      'Laps ship from each simulator through a separate .NET rig agent, then show up on the driver’s phone portal and on the front-of-store TV.',
+      'The live-timing board ranks who is fastest tonight with a gold-highlighted leader and a running gap to P1.',
+      'When a driver beats their own best, the board fires a full-screen personal-best celebration with the new time.',
+      'Staff run check-ins, rig assignments, and the floor from a separate dashboard.',
+    ],
+    mvpScope: [
+      'Real Oasis Sim Racing brand applied across every customer screen: landing, QR check-in, live-timing board, and driver portal',
+      'Synthwave look with neon cyan and magenta on near-black, Orbitron and Rajdhani fonts, the real logo and helmet mark, and an app icon generated from the helmet',
+      'Staff dashboard kept deliberately plain, the same fonts and colors with no glows or gradients, so it stays fast to read during a shift',
+      'Timing numbers kept big, white, and monospace so they read across the room, with glow supplementing contrast instead of replacing it',
+      'Separate .NET rig agent that reads telemetry and ships laps from each simulator, hardened this cycle with config validation, background-loop error handling, and thread safety',
+    ],
+    evidenceSignal:
+      'This was a design, reliability, and documentation cycle, not a metrics cycle. The point was to apply the brand with intent: bold and celebratory for drivers and the front-of-store board, calm and readable for staff who use their screen mid-shift. Legibility came first, so the timing numbers stay high-contrast and the glow only supplements them. No engagement, retention, or conversion is claimed yet.',
+    nextStep:
+      'Run it through a real shift at the venue and watch where the branded screens help or get in the way, then fold in whatever the floor actually needs. Keep the rig agent and the timing board resilient as more simulators come online.',
+    standaloneMockStatus: 'in-progress',
+    visualAssets: {
+      note:
+        'Screenshots from the live app at oasis-race-control.vercel.app, using seeded demo drivers and sample lap times. The personal-best celebration is the real timing-board screen captured mid-celebration.',
+      items: [
+        {
+          label: 'Landing',
+          src: oasisLanding,
+          alt: 'Oasis Race Control landing page: the Oasis Sim Racing logo and helmet mark, a gradient Race Control headline, and a glowing My Laps call to action on a near-black synthwave background.',
+        },
+        {
+          label: 'Check-in',
+          src: oasisCheckIn,
+          alt: 'QR check-in screen showing a glowing RIG 01 number with guest, sign-in, and new-profile options for the driver’s phone.',
+        },
+        {
+          label: 'Live-timing board',
+          src: oasisTvBoard,
+          alt: 'Front-of-store Fastest Tonight timing board with a gold-highlighted leader, ranked drivers, big monospace lap times, and gaps to P1.',
+        },
+        {
+          label: 'Personal-best celebration',
+          src: oasisPersonalBest,
+          alt: 'Full-screen personal-best celebration on the timing board: New Personal Best, the driver name in a neon gradient, a large green lap time, and the improvement and new position.',
+        },
+        {
+          label: 'Driver portal',
+          src: oasisDriverPortal,
+          alt: 'Branded driver portal sign-in where a driver enters a display name and PIN to see tonight’s times, personal bests, and history.',
+        },
+        {
+          label: 'System architecture',
+          src: oasisArchitecture,
+          alt: 'System architecture diagram showing three tiers, the cloud with Vercel and Neon Postgres, the venue with sim PCs, the .NET rig agent, and the TV, and people on their own devices, connected only by outbound HTTPS.',
+        },
+      ],
+    },
+    updates: [
+      {
+        date: 'Jul 13, 2026',
+        tag: 'PR #5',
+        title: 'Documented how the system fits together',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/5',
+        body: 'Added a system-architecture doc with a diagram and endpoint tables covering three tiers: the Vercel and Neon cloud, the on-prem venue with the sim PCs and the .NET rig agent, and the people on their own phones plus the staff dashboard, connected only by outbound HTTPS.',
+      },
+      {
+        date: 'Jul 12, 2026',
+        tag: 'PR #4',
+        title: 'Applied the real Oasis Sim Racing brand across the app',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/4',
+        body: 'Replaced the placeholder theme with the real synthwave brand, neon cyan and magenta on near-black with the real logo, helmet mark, and Orbitron and Rajdhani fonts, across the landing page, the QR check-in, the live-timing board with its gold leader and full-screen personal-best celebration, and the driver portal. Kept the staff dashboard deliberately plain so it stays fast to read during a shift, and kept the timing numbers big and high-contrast so they read across the room.',
+      },
+      {
+        date: 'Jul 12, 2026',
+        tag: 'PR #3',
+        title: 'Hardened the .NET rig agent that ships laps',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/3',
+        body: 'Made the rig agent that reads telemetry and ships laps from each simulator more resilient: config validation on startup, error handling in the background loop so one bad cycle does not take it down, and thread safety around the shared state.',
       },
     ],
   },
