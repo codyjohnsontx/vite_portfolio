@@ -34,7 +34,9 @@ import ctxchatInboxBrief from '../assets/ctxchat/ctxchat-01-inbox-ai-ops-brief.p
 import ctxchatCommandCenter from '../assets/ctxchat/ctxchat-02-command-center-overview.png';
 import ctxchatAiOpsAnalytics from '../assets/ctxchat/ctxchat-03-command-center-ai-ops-analytics.png';
 import ctxchatCustomers from '../assets/ctxchat/ctxchat-04-customers.png';
-import ctxchatTasks from '../assets/ctxchat/ctxchat-05-tasks.png';
+import ctxchatDemoLogin from '../assets/ctxchat/ctxchat-06-demo-login.png';
+import ctxchatSmsBlocked from '../assets/ctxchat/ctxchat-07-sms-blocked-composer.png';
+import ctxchatTasksStatus from '../assets/ctxchat/ctxchat-08-tasks-status-views.png';
 import oasisLanding from '../assets/oasis-race-control/oasis-race-control-01-landing.png';
 import oasisCheckIn from '../assets/oasis-race-control/oasis-race-control-02-check-in.png';
 import oasisTvBoard from '../assets/oasis-race-control/oasis-race-control-03-tv-board.png';
@@ -310,6 +312,164 @@ const allProducts = [
         title: 'Hardened the .NET rig agent that ships laps',
         url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/3',
         body: 'Made the rig agent that reads telemetry and ships laps from each simulator more resilient: config validation on startup, error handling in the background loop so one bad cycle does not take it down, and thread safety around the shared state.',
+      },
+    ],
+  },
+  {
+    name: 'CTX Connect',
+    slug: 'ctx-chat',
+    tier: 'flagship',
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.68 0.14 205)',
+    image: ctxChat,
+    liveUrl: 'https://ctxconnect.vercel.app/inbox',
+    role: 'Full-stack product builder',
+    stack: [
+      'Next.js 16',
+      'TypeScript',
+      'Tailwind CSS',
+      'Prisma',
+      'Neon Postgres',
+      'Auth.js / NextAuth',
+      'Twilio SMS/MMS',
+      'OpenAI',
+      'Structured Outputs',
+      'Cloudflare Turnstile',
+      'Demo mode',
+      'Vercel cron',
+      'Product analytics',
+      'Experimentation',
+      'PWA',
+    ],
+    oneLiner:
+      'Dealership communication workspace for motorcycle teams that need customer texting, follow-ups, service updates, and accountability in one place.',
+    audience:
+      'General managers, assistant GMs, service advisors, sales staff, parts staff, and managers reviewing daily dealership communication performance.',
+    jtbd:
+      'When a customer conversation, service update, or follow-up is open, dealership staff need one shared workspace that preserves context, ownership, delivery status, and the next action before missed communication becomes missed revenue.',
+    problem:
+      'Independent dealership communication is fragmented across personal phones, calls, website leads, service notes, and memory. That makes it easy to lose customer context, miss follow-ups, and leave managers without visibility into open conversations.',
+    coreWorkflow: [
+      'Staff signs in through secure role-based access for sales, service, parts, managers, and admins.',
+      'Staff manages customer conversations from a shared inbox with linked vehicles, assignments, templates, internal notes, notifications, and SMS/MMS delivery status.',
+      'Staff creates follow-up tasks, sends service updates, reassigns ownership, and handles opt-in or opt-out states without leaving the customer thread.',
+      'Staff generates an AI Ops Brief on an open conversation, reviews the summary, customer need, risk level, escalation recommendation, and suggested reply, then accepts, dismisses, copies the reply, or converts it into a note or follow-up. Every action stays a human decision.',
+      'Managers review Command Center metrics for unread conversations, overdue follow-ups, unassigned threads, failed messages, and department exceptions, plus AI Ops Analytics for how the team actually uses the briefs.',
+    ],
+    mvpScope: [
+      'Public-facing Next.js site plus internal staff dashboard',
+      'Secure Auth.js staff login and role-based access for admin, manager, sales, service, and parts users',
+      'Shared inbox with customer profiles, linked vehicles, assignments, templates, tasks, notifications, and delivery status',
+      'Twilio SMS/MMS send and receive routes with webhook signature verification, opt-in/opt-out handling, and delivery failure alerts',
+      'Production-ready deployment structure with Vercel, Neon Postgres, Prisma, and Auth.js',
+    ],
+    evidenceSignal:
+      'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure. The latest build adds an OpenAI-backed AI Ops Brief with Structured Outputs, a product analytics event taxonomy for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created, and a PRD plus event taxonomy checked into content/prds/ before any impact is claimed. It also ships a one-click demo anyone can open with no credentials, with each risk priced separately: the AI ops brief runs live under a soft daily cap (estimated ~$0.40/day worst case) and SMS is blocked in demo. No measured usage yet.',
+    nextStep:
+      'Run the AI-suggested-reply experiment once real usage accumulates and validate impact with the instrumentation now in place. Beyond that, expand CTX Connect into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
+    visualAssets: {
+      note: 'Screenshots from the seeded demo environment. The one-click demo login, the SMS-blocked composer, and the AI Ops Brief are the live app in demo mode; the brief shown was generated live.',
+      items: [
+        {
+          label: 'One-click demo',
+          src: ctxchatDemoLogin,
+          alt: 'CTX Chat login with a View demo button that opens the seeded workspace with no credentials, and empty email and password fields (the printed demo credentials were removed).',
+        },
+        {
+          label: 'AI Ops Brief',
+          src: ctxchatInboxBrief,
+          alt: 'Inbox conversation with the AI Ops Brief panel showing summary, customer need, risk, escalation, suggested next action, and suggested reply.',
+        },
+        {
+          label: 'SMS blocked in demo',
+          src: ctxchatSmsBlocked,
+          alt: 'Conversation composer disabled in demo mode with the note that outbound SMS is turned off so no real texts are sent, while everything else stays live.',
+        },
+        {
+          label: 'Command Center',
+          src: ctxchatCommandCenter,
+          alt: 'Command Center dashboard with unread, waiting-on-staff, follow-up, SLA, and exception metrics for the dealership.',
+        },
+        {
+          label: 'AI Ops Analytics',
+          src: ctxchatAiOpsAnalytics,
+          alt: 'AI Ops Analytics panel showing briefs generated, acceptance rate, high-risk briefs, and follow-up conversions beside the Experiment Readiness panel.',
+        },
+        {
+          label: 'Customers',
+          src: ctxchatCustomers,
+          alt: 'Customer list with linked units, latest conversation status, and SMS opt-in state.',
+        },
+        {
+          label: 'Tasks with status views',
+          src: ctxchatTasksStatus,
+          alt: 'Tasks page with All, Open, In Progress, Done, and Canceled filter tabs with counts, tasks grouped into labeled sections, and inline status controls on each row.',
+        },
+      ],
+    },
+    standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'Jul 13, 2026',
+        tag: 'PR #8',
+        title: 'Made task rows open their conversation, added status views',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/8',
+        body: 'Task rows now open their linked conversation while keeping the inline status controls on the row. Added status filter tabs, All, Open, In Progress, Done, and Canceled, each with a count, plus grouped sections, and a back link that returns you to wherever you came from.',
+      },
+      {
+        date: 'Jul 13, 2026',
+        tag: 'Fix',
+        title: 'Fixed production deploys to run database migrations',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/commit/8ddfefb',
+        body: 'A fully tested feature still returned server errors in production. The build compiled the app but never applied the database migrations, so production ran new code against an old schema and every page that touched the changed tables threw. I traced it to the deploy pipeline and made migrations run as part of the build, so the schema and the code ship together. The build being green is not the same as it working for a user.',
+      },
+      {
+        date: 'Jul 13, 2026',
+        tag: 'Writeup',
+        title: 'Wrote up two decisions from this cycle',
+        url: '/blog/pricing-risk-in-a-public-demo',
+        body: 'A short case study on the two judgment calls behind this cycle: how to let anyone try an app that spends real money on every click, and why a green build still served users a 500.',
+      },
+      {
+        date: 'Jul 10, 2026',
+        tag: 'Build',
+        title: 'Shipped a one-click demo with per-risk guardrails',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/commit/179b769',
+        body: 'Added a View demo button that signs visitors into a pre-set demo account with no credentials. I priced each risk separately: the AI ops brief still runs live but a soft daily cap, default 20 briefs per rolling 24 hours, keeps expected OpenAI spend to an estimated ~$0.40/day; real SMS sending is blocked in demo, because the risk there is compliance, not cost. A Cloudflare Turnstile check gates the demo and fails closed in production, a nightly Vercel cron resets the demo data, and I removed the demo credentials that used to be printed on the login page. No measured usage yet.',
+      },
+      {
+        date: 'Jul 10, 2026',
+        tag: 'PR #4',
+        title: 'Added the AI Ops Brief, an OpenAI-backed inbox assistant',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/4',
+        body: 'The GM can generate a structured brief for any conversation: summary, customer need, risk level with reasons, escalation recommendation, suggested next action, suggested reply, and suggested follow-up. Generation uses OpenAI Structured Outputs against a strict JSON schema so the brief renders the same fields every time, and every recommendation stays decision support that staff accept, dismiss, or convert into a note or follow-up.',
+      },
+      {
+        date: 'Jul 10, 2026',
+        tag: 'PR #4',
+        title: 'Instrumented AI usage before claiming impact',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/4',
+        body: 'Added product analytics events for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created, plus an AI Ops Analytics section and an Experiment Readiness panel in the Command Center. The AI-suggested-reply experiment is not live yet; the instrumentation is ready so impact can be validated with real usage data instead of asserted up front. The PRD and event taxonomy live in content/prds/.',
+      },
+      {
+        date: 'May 08, 2026',
+        tag: 'Build',
+        title: 'Initial CTX Connect app committed and pushed',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/commit/64fb5b2',
+        body: 'The first full app build landed on main in the new ctxconnect repository. That established the standalone product with the shared inbox, Command Center, tasks, templates, and Twilio route structure.',
+      },
+      {
+        date: 'Current',
+        tag: 'Note',
+        title: 'Manager Command Center added for operational oversight',
+        body: 'The build includes a Command Center for unread conversations, overdue follow-ups, unassigned threads, failed messages, and exception states. That shifts the product from a simple inbox into a dealership operations surface.',
+      },
+      {
+        date: 'Current',
+        tag: 'Note',
+        title: 'SMS compliance and assignment workflow wired into the MVP',
+        body: 'The current build includes STOP and START handling, reassignment, internal notes, and follow-up creation inside conversation workflows. For dealership texting, accountability and baseline compliance need to exist from day one.',
       },
     ],
   },
@@ -816,122 +976,6 @@ const allProducts = [
         title: 'Seeded the MVP in a day',
         url: 'https://github.com/codyjohnsontx/windCast',
         body: 'Initial commit shipped the dashboard, spot list, scoring engine (utils/sessionScore.ts), and a Leaflet map with an animated wind-particle overlay. Forecasts ran on mock data so the UX could be designed against the full data shape before any network call existed; the provider interface was in place from day one so real sources could slot in without component changes.',
-      },
-    ],
-  },
-  {
-    name: 'CTX Connect',
-    slug: 'ctx-chat',
-    tier: 'flagship',
-    status: 'active-build',
-    year: '2026',
-    accent: 'oklch(0.68 0.14 205)',
-    image: ctxChat,
-    role: 'Full-stack product builder',
-    stack: [
-      'Next.js 16',
-      'TypeScript',
-      'Tailwind CSS',
-      'Prisma',
-      'PostgreSQL-ready schema',
-      'Auth.js / NextAuth',
-      'Twilio SMS/MMS',
-      'PWA',
-      'OpenAI',
-      'Structured Outputs',
-      'Product analytics',
-      'Experimentation',
-    ],
-    oneLiner:
-      'Dealership communication workspace for motorcycle teams that need customer texting, follow-ups, service updates, and accountability in one place.',
-    audience:
-      'General managers, assistant GMs, service advisors, sales staff, parts staff, and managers reviewing daily dealership communication performance.',
-    jtbd:
-      'When a customer conversation, service update, or follow-up is open, dealership staff need one shared workspace that preserves context, ownership, delivery status, and the next action before missed communication becomes missed revenue.',
-    problem:
-      'Independent dealership communication is fragmented across personal phones, calls, website leads, service notes, and memory. That makes it easy to lose customer context, miss follow-ups, and leave managers without visibility into open conversations.',
-    coreWorkflow: [
-      'Staff signs in through secure role-based access for sales, service, parts, managers, and admins.',
-      'Staff manages customer conversations from a shared inbox with linked vehicles, assignments, templates, internal notes, notifications, and SMS/MMS delivery status.',
-      'Staff creates follow-up tasks, sends service updates, reassigns ownership, and handles opt-in or opt-out states without leaving the customer thread.',
-      'Staff generates an AI Ops Brief on an open conversation, reviews the summary, customer need, risk level, escalation recommendation, and suggested reply, then accepts, dismisses, copies the reply, or converts it into a note or follow-up. Every action stays a human decision.',
-      'Managers review Command Center metrics for unread conversations, overdue follow-ups, unassigned threads, failed messages, and department exceptions, plus AI Ops Analytics for how the team actually uses the briefs.',
-    ],
-    mvpScope: [
-      'Public-facing Next.js site plus internal staff dashboard',
-      'Secure Auth.js staff login and role-based access for admin, manager, sales, service, and parts users',
-      'Shared inbox with customer profiles, linked vehicles, assignments, templates, tasks, notifications, and delivery status',
-      'Twilio SMS/MMS send and receive routes with webhook signature verification, opt-in/opt-out handling, and delivery failure alerts',
-      'Production-ready deployment structure with Vercel, Neon Postgres, Prisma, and Auth.js',
-    ],
-    evidenceSignal:
-      'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure. The latest build adds an OpenAI-backed AI Ops Brief with Structured Outputs, a product analytics event taxonomy for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created, and a PRD plus event taxonomy checked into content/prds/ before any impact is claimed.',
-    nextStep:
-      'Run the AI-suggested-reply experiment once real usage accumulates and validate impact with the instrumentation now in place. Beyond that, expand CTX Connect into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
-    visualAssets: {
-      note: 'Screenshots captured from the seeded demo environment. The AI Ops Brief shown was generated live by the app.',
-      items: [
-        {
-          label: 'AI Ops Brief',
-          src: ctxchatInboxBrief,
-          alt: 'Inbox conversation with the AI Ops Brief panel showing summary, customer need, risk, escalation, suggested next action, and suggested reply.',
-        },
-        {
-          label: 'Command Center',
-          src: ctxchatCommandCenter,
-          alt: 'Command Center dashboard with unread, waiting-on-staff, follow-up, SLA, and exception metrics for the dealership.',
-        },
-        {
-          label: 'AI Ops Analytics',
-          src: ctxchatAiOpsAnalytics,
-          alt: 'AI Ops Analytics panel showing briefs generated, acceptance rate, high-risk briefs, and follow-up conversions beside the Experiment Readiness panel.',
-        },
-        {
-          label: 'Customers',
-          src: ctxchatCustomers,
-          alt: 'Customer list with linked units, latest conversation status, and SMS opt-in state.',
-        },
-        {
-          label: 'Tasks',
-          src: ctxchatTasks,
-          alt: 'Task list of follow-ups connected to customers and conversations with priorities and due times.',
-        },
-      ],
-    },
-    standaloneMockStatus: 'in-progress',
-    updates: [
-      {
-        date: 'Jul 10, 2026',
-        tag: 'PR #4',
-        title: 'Added the AI Ops Brief, an OpenAI-backed inbox assistant',
-        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/4',
-        body: 'The GM can generate a structured brief for any conversation: summary, customer need, risk level with reasons, escalation recommendation, suggested next action, suggested reply, and suggested follow-up. Generation uses OpenAI Structured Outputs against a strict JSON schema so the brief renders the same fields every time, and every recommendation stays decision support that staff accept, dismiss, or convert into a note or follow-up.',
-      },
-      {
-        date: 'Jul 10, 2026',
-        tag: 'PR #4',
-        title: 'Instrumented AI usage before claiming impact',
-        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/4',
-        body: 'Added product analytics events for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created, plus an AI Ops Analytics section and an Experiment Readiness panel in the Command Center. The AI-suggested-reply experiment is not live yet; the instrumentation is ready so impact can be validated with real usage data instead of asserted up front. The PRD and event taxonomy live in content/prds/.',
-      },
-      {
-        date: 'May 08, 2026',
-        tag: 'Build',
-        title: 'Initial CTX Connect app committed and pushed',
-        url: 'https://github.com/codyjohnsontx/ctxconnect/commit/64fb5b2',
-        body: 'The first full app build landed on main in the new ctxconnect repository. That established the standalone product with the shared inbox, Command Center, tasks, templates, and Twilio route structure.',
-      },
-      {
-        date: 'Current',
-        tag: 'Note',
-        title: 'Manager Command Center added for operational oversight',
-        body: 'The build includes a Command Center for unread conversations, overdue follow-ups, unassigned threads, failed messages, and exception states. That shifts the product from a simple inbox into a dealership operations surface.',
-      },
-      {
-        date: 'Current',
-        tag: 'Note',
-        title: 'SMS compliance and assignment workflow wired into the MVP',
-        body: 'The current build includes STOP and START handling, reassignment, internal notes, and follow-up creation inside conversation workflows. For dealership texting, accountability and baseline compliance need to exist from day one.',
       },
     ],
   },

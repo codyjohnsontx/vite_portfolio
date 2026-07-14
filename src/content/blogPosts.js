@@ -1,5 +1,36 @@
 export const blogPosts = [
   {
+    slug: 'pricing-risk-in-a-public-demo',
+    title: 'A public demo of a paid-API app, and a build that was green but broken',
+    deck:
+      'Two decisions from this cycle on CTX Chat: how to let anyone try an app that spends real money on every click, and why a passing build still served users a 500.',
+    date: 'July 2026',
+    readingTime: '4 min read',
+    intro:
+      'CTX Chat is a dealership staff workspace: shared customer texting, follow-up tasks, service-lane status, and an AI ops brief per conversation. Two things I shipped recently were less about features and more about judgment calls, so I want to write them down. Neither has a measured result yet; both are decisions the product actually runs on.',
+    sections: [
+      {
+        heading: 'Letting anyone in, without letting anyone run up the bill',
+        body: [
+          'I wanted a recruiter or a dealer to try the app in one click, no signup. The catch is that two of the buttons carry real cost or real risk: generating an AI ops brief calls OpenAI, and sending a message calls Twilio and texts an actual person.',
+          'The old "demo" was worse than no demo. The login page printed a shared password for five seeded accounts, so anyone could sign in and hammer both paid paths. So I took the credentials off the page and added a "View demo" button that signs you into one pre-set demo account with no password.',
+          'Then I priced each risk instead of applying one blanket rule. The AI brief is cheap, about two cents a call, so I let it run live but put a soft daily cap on it (default 20 briefs per rolling 24 hours). Worst case that is an estimated ~$0.40/day, and that is an estimate from published pricing, not a measured bill. SMS is a different kind of risk: the problem there is not cost, it is texting a stranger, which is a compliance issue you cannot buy your way out of. So SMS is blocked outright in demo, with a note in the composer explaining why. A Cloudflare Turnstile check gates the demo button and fails closed in production, and a nightly job resets the demo data so it stays clean.',
+          'The point I keep coming back to: "add a demo" sounds like one task, but it is really a set of separate risk decisions wearing a trench coat. AI is cents, so cap it. SMS is compliance, so block it.',
+        ],
+      },
+      {
+        heading: 'The build was green. The app was broken.',
+        body: [
+          'A feature I had fully tested still returned server errors in production. Locally it was fine. The tests passed. The Vercel build was green.',
+          'The build compiled the new code but never applied the database migrations, so production was running new code against an old schema. Every page that touched the changed tables threw. Green build, broken app.',
+          'I traced it to the deploy pipeline and made migrations run as part of the build, so the schema and the code ship together. The lesson is not subtle, but it is easy to forget when the checkmark is green: "the build passed" is a statement about your code, and "it works" is a statement about a user. Those are not the same sentence.',
+        ],
+      },
+    ],
+    closing:
+      'Neither of these is a feature a user would notice, and there is no metric attached to either one yet. But they are the kind of decision the product runs on: who is allowed to spend your money, and whether a green checkmark means what you think it means.',
+  },
+  {
     slug: 'is-an-ai-medical-summary-lying-to-you',
     title: 'How do you know if an AI medical summary is lying to you?',
     deck:
