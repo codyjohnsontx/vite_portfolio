@@ -62,11 +62,7 @@ function Hero({ ready }) {
         );
       });
 
-      tl.from('.hero__support', { opacity: 0, y: 20, duration: 1 }, '-=0.95').from(
-        '.hero__affordance',
-        { opacity: 0, y: 14, duration: 0.8 },
-        '-=0.7',
-      );
+      tl.from('.hero__support', { opacity: 0, y: 20, duration: 1 }, '-=0.95');
     }, root);
 
     return () => ctx.revert();
@@ -116,9 +112,6 @@ function Hero({ ready }) {
         </h1>
       </div>
 
-      <div className="hero__affordance" data-hero style={{ opacity: 0 }} aria-hidden="true">
-        <span className="pill pill--mono">Drag</span>
-      </div>
     </section>
   );
 }
