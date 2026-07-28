@@ -243,31 +243,6 @@ function CaseStudies() {
   );
 }
 
-/* ------------------------------ toolkit ------------------------------ */
-
-function Toolkit() {
-  const ref = useReveal();
-  return (
-    <section className="bay--tight" id="toolkit">
-      <div className="shell">
-        <SectionHead num="04" eyebrow="Toolkit" title="What I bring to a team." />
-        <div className="toolkit" ref={ref} style={{ opacity: 0 }}>
-          {profile.toolkit.map((group) => (
-            <div className="toolkit__group" key={group.title}>
-              <h3 className="toolkit__title">{group.title}</h3>
-              <ul>
-                {group.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ----------------------------- experience ----------------------------- */
 
 function ExperienceList() {
@@ -275,7 +250,7 @@ function ExperienceList() {
   return (
     <section className="bay" id="experience">
       <div className="shell">
-        <SectionHead num="05" eyebrow="Experience" title="Where the reps came from." />
+        <SectionHead num="04" eyebrow="Experience" title="Where the reps came from." />
         <ol className="xp" ref={ref} style={{ opacity: 0 }}>
           {experience.map((job) => (
             <li className="xp__row" key={`${job.company}-${job.dates}`}>
@@ -338,8 +313,6 @@ export default function HomePage() {
       </section>
 
       <CaseStudies />
-
-      <Toolkit />
 
       <ExperienceList />
     </>

@@ -1,5 +1,5 @@
 /* =========================================================================
-   PAGES - hero, proof, work index, case cards, toolkit, timeline
+   PAGES - hero, proof, work index, case cards, timeline
    ========================================================================= */
 
 /* -------------------------------- hero -------------------------------- */
@@ -298,33 +298,6 @@
   border-top: 1px solid var(--glass-line-2);
 }
 .case-card__outcome { font-size: 0.85rem; color: var(--ink-3); }
-
-/* -------------------------------- toolkit -------------------------------- */
-
-.toolkit {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: clamp(24px, 3vw, 44px);
-}
-.toolkit__group { display: flex; flex-direction: column; gap: 14px; }
-.toolkit__title {
-  font-family: var(--display);
-  font-size: clamp(1.3rem, 2vw, 1.75rem);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  margin: 0;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--glass-line-2);
-}
-.toolkit__group ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-.toolkit__group li { font-size: 0.9375rem; color: var(--ink-2); }
 
 /* ------------------------------ experience ------------------------------ */
 
