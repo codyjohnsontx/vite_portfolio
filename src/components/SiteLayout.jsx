@@ -35,7 +35,16 @@ function getInitialTheme() {
 export default function SiteLayout() {
   const [theme, setTheme] = useState(getInitialTheme);
   const [loaded, setLoaded] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+
+  /* Owned here rather than in TopBar because the top fade needs it too. */
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -87,7 +96,11 @@ export default function SiteLayout() {
       <Cursor />
       <Preloader onDone={onLoaded} />
 
-      <TopBar theme={theme} onToggleTheme={toggleTheme} />
+      {/* Dissolves page content into the background as it approaches the
+          bar, so nothing ever slides up and collides with it. */}
+      <div className={'topfade' + (scrolled ? ' is-on' : '')} aria-hidden="true" />
+
+      <TopBar theme={theme} onToggleTheme={toggleTheme} scrolled={scrolled} />
 
       <main id="main" key={location.pathname}>
         <Outlet context={{ loaded }} />

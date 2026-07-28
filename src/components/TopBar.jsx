@@ -30,9 +30,8 @@ function ThemeToggle({ theme, onToggle }) {
   );
 }
 
-export default function TopBar({ theme, onToggleTheme }) {
+export default function TopBar({ theme, onToggleTheme, scrolled }) {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const overlayRef = useRef(null);
   const btnRef = useRef(null);
@@ -44,15 +43,6 @@ export default function TopBar({ theme, onToggleTheme }) {
   useEffect(() => {
     close();
   }, [location.pathname, close]);
-
-  /* Once content is running underneath, the bar's glyphs need their own
-     backing or they collide with whatever scrolls past. */
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   // overlay open/close: scroll lock, focus, escape, inert background
   useEffect(() => {
@@ -256,4 +246,5 @@ ThemeToggle.propTypes = {
 TopBar.propTypes = {
   theme: PropTypes.string.isRequired,
   onToggleTheme: PropTypes.func.isRequired,
+  scrolled: PropTypes.bool,
 };

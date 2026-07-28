@@ -113,5 +113,8 @@ void main() {
   // ordered-ish dither kills 8-bit banding across the large soft gradients
   col += (hash21(gl_FragCoord.xy + fract(uTime)) - 0.5) / 255.0;
 
-  fragColor = vec4(col * uIntensity, 1.0);
+  // Fade toward the base stop, not toward black: uColorB is the page
+  // canvas, so dimming the field settles onto the background in both art
+  // directions. Multiplying by intensity instead turned light mode grey.
+  fragColor = vec4(mix(uColorB, col, uIntensity), 1.0);
 }`;
