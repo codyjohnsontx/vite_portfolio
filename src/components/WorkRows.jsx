@@ -23,7 +23,9 @@ export default function WorkRows({ products, startIndex = 1 }) {
 
     const xTo = gsap.quickTo(float, 'x', { duration: 0.75, ease: 'power3.out' });
     const yTo = gsap.quickTo(float, 'y', { duration: 0.75, ease: 'power3.out' });
-    const rTo = gsap.quickTo(float, 'rotate', { duration: 1.1, ease: 'power3.out' });
+    // `rotation` is GSAP's transform channel; `rotate` targets the separate
+    // CSS rotate property and warns that it cannot be reset cleanly
+    const rTo = gsap.quickTo(float, 'rotation', { duration: 1.1, ease: 'power3.out' });
 
     let lastX = 0;
     const onMove = (e) => {

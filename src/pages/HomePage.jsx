@@ -62,9 +62,11 @@ function Hero({ ready }) {
         );
       });
 
-      tl.from('.hero__support', { opacity: 0, y: 20, duration: 1 }, '-=0.95')
-        .from('.hero__affordance', { opacity: 0, y: 14, duration: 0.8 }, '-=0.7')
-        .from('.hero__cue', { opacity: 0, duration: 0.8 }, '-=0.6');
+      tl.from('.hero__support', { opacity: 0, y: 20, duration: 1 }, '-=0.95').from(
+        '.hero__affordance',
+        { opacity: 0, y: 14, duration: 0.8 },
+        '-=0.7',
+      );
     }, root);
 
     return () => ctx.revert();
@@ -115,15 +117,7 @@ function Hero({ ready }) {
       </div>
 
       <div className="hero__affordance" data-hero style={{ opacity: 0 }} aria-hidden="true">
-        <span className="pill pill--mono pill--live">
-          <span className="dot" /> Hover
-        </span>
         <span className="pill pill--mono">Drag</span>
-      </div>
-
-      <div className="hero__cue" data-hero style={{ opacity: 0 }} aria-hidden="true">
-        <span className="mono">Scroll</span>
-        <span className="hero__cue-line" />
       </div>
     </section>
   );
