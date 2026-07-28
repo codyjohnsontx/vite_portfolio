@@ -340,7 +340,9 @@
   z-index: 6;
   width: clamp(240px, 22vw, 340px);
   aspect-ratio: 16 / 10;
-  margin: -14% 0 0 -50%;
+  /* Centring is done with xPercent/yPercent in JS, not percentage margins:
+     on a fixed element those resolve against the viewport width, not the
+     element's own box, which threw the preview ~720px off. */
   border-radius: 10px;
   overflow: hidden;
   opacity: 0;

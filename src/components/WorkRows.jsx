@@ -18,6 +18,9 @@ export default function WorkRows({ products, startIndex = 1 }) {
     if (prefersReducedMotion()) return undefined;
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined;
 
+    // centre the preview on the pointer, biased slightly above it
+    gsap.set(float, { xPercent: -50, yPercent: -58 });
+
     const xTo = gsap.quickTo(float, 'x', { duration: 0.75, ease: 'power3.out' });
     const yTo = gsap.quickTo(float, 'y', { duration: 0.75, ease: 'power3.out' });
     const rTo = gsap.quickTo(float, 'rotate', { duration: 1.1, ease: 'power3.out' });
