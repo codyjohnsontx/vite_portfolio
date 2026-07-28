@@ -1,5 +1,5 @@
 /* =========================================================================
-   PAGES - hero, marquee, proof, work index, case cards, toolkit, timeline
+   PAGES - hero, proof, work index, case cards, toolkit, timeline
    ========================================================================= */
 
 /* -------------------------------- hero -------------------------------- */
@@ -120,35 +120,6 @@
     text-shadow: none;
   }
 }
-
-/* ------------------------------- marquee ------------------------------- */
-
-.marquee {
-  overflow: hidden;
-  padding-block: clamp(18px, 2.4vw, 30px);
-  border-block: 1px solid var(--glass-line-2);
-  background: color-mix(in srgb, var(--void) 40%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  user-select: none;
-}
-.marquee__track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-}
-.marquee__item {
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(20px, 3vw, 44px);
-  padding-right: clamp(20px, 3vw, 44px);
-  font-family: var(--display);
-  font-size: clamp(1.4rem, 2.6vw, 2.4rem);
-  letter-spacing: -0.02em;
-  color: var(--ink-2);
-  white-space: nowrap;
-}
-.marquee__sep { color: var(--ink-4); font-size: 0.7em; }
 
 /* -------------------------------- proof -------------------------------- */
 

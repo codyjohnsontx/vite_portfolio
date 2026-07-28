@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import Marquee from '../components/Marquee';
 import WorkRows from '../components/WorkRows';
 import { useKineticText, useMagnetic, useReveal } from '../motion/hooks';
 import { gsap, prefersReducedMotion, splitChars } from '../motion/motion';
@@ -11,19 +10,6 @@ import { profile } from '../content/profile';
 import { conceptProducts, flagshipProducts } from '../content/projects';
 
 const HERO_LINES = ['Ambiguous', 'to shipped'];
-
-const MARQUEE = [
-  'Product ownership',
-  'Requirements',
-  'Acceptance criteria',
-  'RAG prototyping',
-  'React',
-  'TypeScript',
-  'Node.js',
-  'SQL',
-  'Release coordination',
-  'Operational metrics',
-];
 
 /* ------------------------------- hero ------------------------------- */
 
@@ -322,8 +308,6 @@ export default function HomePage() {
   return (
     <>
       <Hero ready={loaded} />
-
-      <Marquee items={MARQUEE} />
 
       <ProofStrip />
 
