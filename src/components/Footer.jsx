@@ -19,7 +19,6 @@ export default function Footer() {
             ref={mailRef}
             href="mailto:codyjohnsontx@gmail.com"
             className="pill pill--solid site-footer__mail"
-            data-cursor="Say hi"
           >
             codyjohnsontx@gmail.com
           </a>
@@ -31,11 +30,11 @@ export default function Footer() {
           <div>
             <span className="mono">Index</span>
             <ul>
-              <li><Link to="/" data-cursor="">Home</Link></li>
-              <li><Link to="/products" data-cursor="">Work</Link></li>
-              <li><Link to="/case-studies" data-cursor="">Case studies</Link></li>
-              <li><Link to="/blog" data-cursor="">Blog</Link></li>
-              <li><Link to="/dev-mode" data-cursor="">Dev Mode</Link></li>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/products">Work</Link></li>
+              <li><Link to="/case-studies">Case studies</Link></li>
+              <li><Link to="/blog">Blog</Link></li>
+              <li><Link to="/dev-mode">Dev Mode</Link></li>
             </ul>
           </div>
           <div>
@@ -43,7 +42,7 @@ export default function Footer() {
             <ul>
               {flagshipProducts.map((p) => (
                 <li key={p.slug}>
-                  <Link to={`/products/${p.slug}`} data-cursor="">{p.name}</Link>
+                  <Link to={`/products/${p.slug}`}>{p.name}</Link>
                 </li>
               ))}
             </ul>
@@ -57,7 +56,6 @@ export default function Footer() {
                     href={l.href}
                     target={l.external ? '_blank' : undefined}
                     rel={l.external ? 'noreferrer' : undefined}
-                    data-cursor=""
                   >
                     {l.label}
                     {l.external ? <span aria-hidden="true" className="site-footer__ext"> ↗</span> : null}

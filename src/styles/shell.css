@@ -56,40 +56,26 @@ main,
   background: var(--ink);
 }
 
+/* Fixed size, always. Hover only changes colour - the ring must never grow
+   over the thing it is pointing at. */
 .cursor__ring {
-  width: 38px;
-  height: 38px;
-  margin: -19px 0 0 -19px;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
   border-radius: 50%;
   border: 1px solid var(--ink-4);
-  background: var(--glass);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  display: grid;
-  place-items: center;
-  transition: border-color 0.4s var(--ease-out), background-color 0.4s var(--ease-out);
+  transition: border-color 0.35s var(--ease-out), background-color 0.35s var(--ease-out);
 }
 
 .cursor__ring[data-state='hover'] {
-  border-color: var(--ink-3);
-  background: var(--glass-2);
-}
-
-.cursor__label {
-  font-family: var(--mono);
-  font-size: 4.6px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink);
-  opacity: 0;
-  white-space: nowrap;
+  border-color: var(--ink-2);
+  background: color-mix(in srgb, var(--ink) 9%, transparent);
 }
 
 /* hide the native cursor only once ours is actually running */
 .has-custom-cursor,
 .has-custom-cursor a,
-.has-custom-cursor button,
-.has-custom-cursor [data-cursor] {
+.has-custom-cursor button {
   cursor: none;
 }
 
@@ -210,13 +196,13 @@ main,
 }
 
 .topbar__cluster {
-  /* shrink-wrap so the glass backing hugs the clock + icons instead of
-     stretching across the whole 1fr column */
+  /* shrink-wrap so the glass backing hugs the icons instead of stretching
+     across the whole 1fr column */
   width: fit-content;
   margin-left: auto;
   border-radius: var(--radius-pill);
   border: 1px solid transparent;
-  padding: 3px 4px 3px 14px;
+  padding: 3px 4px;
   transition: background-color 0.5s var(--ease-out), border-color 0.5s var(--ease-out);
 }
 .topbar.is-scrolled .topbar__cluster {
@@ -256,15 +242,6 @@ main,
 .topbar__menu-glyph.is-open i:first-child { transform: translateY(2.5px) rotate(45deg); }
 .topbar__menu-glyph.is-open i:last-child { width: 13px; transform: translateY(-2.5px) rotate(-45deg); }
 
-.topbar__clock {
-  display: inline-flex;
-  gap: 7px;
-  align-items: baseline;
-  color: var(--ink-3);
-  padding-right: 4px;
-}
-.topbar__clock-city { color: var(--ink-2); }
-
 .topbar__icon-btn {
   display: grid;
   place-items: center;
@@ -299,7 +276,6 @@ main,
 
 @media (max-width: 720px) {
   .topbar { padding: 12px 16px; }
-  .topbar__clock { display: none; }
   .topbar__wordmark { font-size: 1.05rem; padding: 4px 10px; }
 
   /* There isn't room for three separate glass islands on a phone, and

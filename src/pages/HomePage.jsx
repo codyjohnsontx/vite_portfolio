@@ -80,7 +80,6 @@ function Hero({ ready }) {
             className="pill hero__rail-item"
             data-hero
             style={{ opacity: 0 }}
-            data-cursor="View"
           >
             {p.name}
           </Link>
@@ -90,7 +89,6 @@ function Hero({ ready }) {
           className="pill hero__rail-item pill--solid"
           data-hero
           style={{ opacity: 0 }}
-          data-cursor="View"
         >
           All work
         </Link>
@@ -193,10 +191,10 @@ function LatestSignal() {
             showed the judge is too lenient, so its 81 percent score is not trusted yet.
           </p>
           <div className="signal-block__links">
-            <Link ref={ctaRef} to="/products/oncopath" className="arrow-link" data-cursor="Read">
+            <Link ref={ctaRef} to="/products/oncopath" className="arrow-link">
               Read the build <span className="glyph" aria-hidden="true">→</span>
             </Link>
-            <Link to="/products/oncopath/analysis" className="arrow-link" data-cursor="Read">
+            <Link to="/products/oncopath/analysis" className="arrow-link">
               PM analysis <span className="glyph" aria-hidden="true">→</span>
             </Link>
           </div>
@@ -251,7 +249,6 @@ function CaseStudies() {
               key={c.slug}
               to={`/case-studies/${c.slug}`}
               className="card case-card"
-              data-cursor="Read"
             >
               <div className="case-card__top">
                 <span className="mono">{c.company}</span>

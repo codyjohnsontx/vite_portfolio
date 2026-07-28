@@ -75,7 +75,6 @@ export default function WorkRows({ products, startIndex = 1 }) {
               onMouseEnter={() => setActive(p.slug)}
               onFocus={() => setActive(p.slug)}
               onBlur={() => setActive(null)}
-              data-cursor="View"
             >
               <span className="work__index mono tabular">
                 {String(startIndex + i).padStart(2, '0')}

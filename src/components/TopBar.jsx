@@ -13,31 +13,6 @@ const NAV = [
   { to: '/dev-mode', label: 'Dev Mode' },
 ];
 
-function LocalClock() {
-  const [now, setNow] = useState('');
-
-  useEffect(() => {
-    const tick = () => {
-      setNow(
-        new Intl.DateTimeFormat('en-US', {
-          timeZone: 'America/Chicago',
-          hour: 'numeric',
-          minute: '2-digit',
-        }).format(new Date()),
-      );
-    };
-    tick();
-    const id = setInterval(tick, 15000);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <span className="topbar__clock mono tabular">
-      <span className="topbar__clock-city">ATX</span> {now}
-    </span>
-  );
-}
-
 function ThemeToggle({ theme, onToggle }) {
   const ref = useMagnetic({ strength: 0.3 });
   const isDark = theme === 'dark';
@@ -49,7 +24,6 @@ function ThemeToggle({ theme, onToggle }) {
       onClick={onToggle}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       aria-pressed={!isDark}
-      data-cursor=""
     >
       <span className={'topbar__theme-glyph' + (isDark ? '' : ' is-light')} aria-hidden="true" />
     </button>
@@ -156,7 +130,6 @@ export default function TopBar({ theme, onToggleTheme }) {
             aria-expanded={open}
             aria-controls="site-menu"
             onClick={() => setOpen((v) => !v)}
-            data-cursor=""
           >
             {open ? 'Close' : 'Menu'}
             <span className={'topbar__menu-glyph' + (open ? ' is-open' : '')} aria-hidden="true">
@@ -167,19 +140,17 @@ export default function TopBar({ theme, onToggleTheme }) {
         </div>
 
         <div className="topbar__slot topbar__slot--center">
-          <Link to="/" className="topbar__wordmark" aria-label="Cody Johnson, home" data-cursor="">
+          <Link to="/" className="topbar__wordmark" aria-label="Cody Johnson, home">
             Cody Johnson
           </Link>
         </div>
 
         <div className="topbar__slot topbar__slot--end topbar__cluster">
-          <LocalClock />
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />
           <a
             href="mailto:codyjohnsontx@gmail.com"
             className="topbar__icon-btn"
             aria-label="Email Cody"
-            data-cursor="Say hi"
           >
             <svg viewBox="0 0 20 16" width="15" height="12" aria-hidden="true" fill="none">
               <rect x="0.6" y="0.6" width="18.8" height="14.8" rx="2.4" stroke="currentColor" strokeWidth="1.2" />
@@ -205,7 +176,6 @@ export default function TopBar({ theme, onToggleTheme }) {
                     ref={i === 0 ? firstLinkRef : undefined}
                     tabIndex={open ? 0 : -1}
                     className={({ isActive }) => 'menu__link' + (isActive ? ' is-active' : '')}
-                    data-cursor=""
                   >
                     <span className="menu__link-mask">
                       <span className="menu__link-inner">{item.label}</span>
@@ -225,7 +195,6 @@ export default function TopBar({ theme, onToggleTheme }) {
                   to={`/products/${p.slug}`}
                   className="pill menu__pill"
                   tabIndex={open ? 0 : -1}
-                  data-cursor=""
                 >
                   {p.name}
                 </Link>
@@ -234,7 +203,6 @@ export default function TopBar({ theme, onToggleTheme }) {
                 to="/products"
                 className="pill menu__pill pill--solid"
                 tabIndex={open ? 0 : -1}
-                data-cursor=""
               >
                 All work
               </Link>
@@ -250,7 +218,6 @@ export default function TopBar({ theme, onToggleTheme }) {
                   to={`/products/${p.slug}`}
                   className="card menu__card"
                   tabIndex={open ? 0 : -1}
-                  data-cursor="Open"
                 >
                   <span className="mono">{p.name}</span>
                   <p className="body">{latest?.title || p.oneLiner}</p>
@@ -268,7 +235,6 @@ export default function TopBar({ theme, onToggleTheme }) {
                 rel={l.external ? 'noreferrer' : undefined}
                 className="menu__foot-link mono"
                 tabIndex={open ? 0 : -1}
-                data-cursor=""
               >
                 {l.label}
                 {l.external ? <span aria-hidden="true"> ↗</span> : null}
