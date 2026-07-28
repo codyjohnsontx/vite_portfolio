@@ -1,73 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { gsap, prefersReducedMotion } from '../motion/motion';
 import { getStatusLabel } from '../content/productHelpers';
 
 /* Metalab-style index rows: name / description / disciplines separated by
-   hairlines. Hovering a row floats that product's screenshot under the
-   cursor with a little lag, and dims every other row. */
+   hairlines. Hovering a row lights it and dims the rest. */
 export default function WorkRows({ products, startIndex = 1 }) {
-  const listRef = useRef(null);
-  const floatRef = useRef(null);
   const [active, setActive] = useState(null);
 
-  useEffect(() => {
-    const float = floatRef.current;
-    if (!float) return undefined;
-    if (prefersReducedMotion()) return undefined;
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined;
-
-    // centre the preview on the pointer, biased slightly above it
-    gsap.set(float, { xPercent: -50, yPercent: -58 });
-
-    const xTo = gsap.quickTo(float, 'x', { duration: 0.75, ease: 'power3.out' });
-    const yTo = gsap.quickTo(float, 'y', { duration: 0.75, ease: 'power3.out' });
-    // `rotation` is GSAP's transform channel; `rotate` targets the separate
-    // CSS rotate property and warns that it cannot be reset cleanly
-    const rTo = gsap.quickTo(float, 'rotation', { duration: 1.1, ease: 'power3.out' });
-
-    let lastX = 0;
-    const onMove = (e) => {
-      xTo(e.clientX);
-      yTo(e.clientY);
-      // tilt into the direction of travel
-      rTo(gsap.utils.clamp(-11, 11, (e.clientX - lastX) * 0.6));
-      lastX = e.clientX;
-    };
-
-    window.addEventListener('pointermove', onMove, { passive: true });
-    return () => {
-      window.removeEventListener('pointermove', onMove);
-      gsap.killTweensOf(float);
-    };
-  }, []);
-
-  useEffect(() => {
-    const float = floatRef.current;
-    if (!float || prefersReducedMotion()) return;
-    gsap.to(float, {
-      opacity: active ? 1 : 0,
-      scale: active ? 1 : 0.86,
-      duration: 0.55,
-      ease: 'expo.out',
-    });
-  }, [active]);
-
-  const activeProduct = products.find((p) => p.slug === active);
-
   return (
-    <div className="work" ref={listRef} onMouseLeave={() => setActive(null)}>
-      <div className="work__float" ref={floatRef} aria-hidden="true">
-        {activeProduct?.image ? (
-          <img src={activeProduct.image} alt="" loading="lazy" decoding="async" />
-        ) : (
-          <div className="work__float-fallback">
-            <span className="mono">{activeProduct?.name}</span>
-          </div>
-        )}
-      </div>
-
+    <div className="work" onMouseLeave={() => setActive(null)}>
       <ul className={'work__list' + (active ? ' is-dimmed' : '')}>
         {products.map((p, i) => (
           <li key={p.slug} className={'work__row' + (active === p.slug ? ' is-active' : '')}>
