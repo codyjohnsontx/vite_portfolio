@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getStatusLabel } from '../content/productHelpers';
 
 /* Metalab-style index rows: name / description / disciplines separated by
    hairlines. Hovering a row lights it and dims the rest. */
@@ -24,12 +23,7 @@ export default function WorkRows({ products, startIndex = 1 }) {
                 {String(startIndex + i).padStart(2, '0')}
               </span>
 
-              <span className="work__name">
-                <h3 className="work__name-text h3">{p.name}</h3>
-                <span className={'work__status mono' + (p.status === 'active-build' ? ' is-live' : '')}>
-                  {getStatusLabel(p.status)}
-                </span>
-              </span>
+              <h3 className="work__name h3">{p.name}</h3>
 
               <span className="work__desc body">{p.oneLiner}</span>
 
