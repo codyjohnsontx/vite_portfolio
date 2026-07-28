@@ -1,0 +1,492 @@
+/* =========================================================================
+   SIGNAL - design system for the Cody Johnson portfolio
+   Dark-glass canvas, high-contrast Didone display, live WebGL aurora.
+   Art-directed light + dark. Every surface is a token; nothing is hardcoded.
+   ========================================================================= */
+
+:root {
+  /* ---- canvas + ink (dark is the default art direction) ---- */
+  --void: #08080a;
+  --void-2: #0e0e12;
+  --void-3: #15151b;
+  --ink: #f4f2ef;
+  --ink-2: rgba(244, 242, 239, 0.68);
+  --ink-3: rgba(244, 242, 239, 0.42);
+  --ink-4: rgba(244, 242, 239, 0.22);
+
+  /* ---- glass ---- */
+  --glass: rgba(255, 255, 255, 0.055);
+  --glass-2: rgba(255, 255, 255, 0.09);
+  --glass-line: rgba(255, 255, 255, 0.11);
+  --glass-line-2: rgba(255, 255, 255, 0.055);
+  --glass-blur: 20px;
+  --shadow-lift: 0 24px 70px -28px rgba(0, 0, 0, 0.9);
+
+  /* ---- accents: aurora violet + his ember ---- */
+  --violet: oklch(0.66 0.2 288);
+  --ember: oklch(0.7 0.19 42);
+  --accent: var(--violet);
+  --accent-ink: #ffffff;
+
+  /* ---- aurora field (linear RGB, fed straight to the shader) ----
+     The base stop is near-black on purpose: the violet and ember stops
+     should read as blooms lighting a dark room, not as a purple page. */
+  --aurora-a: 0.30 0.20 0.62;
+  --aurora-b: 0.030 0.028 0.045;
+  --aurora-c: 0.74 0.37 0.21;
+  --aurora-lift: 0.0;
+
+  /* ---- type ---- */
+  --display: 'Bodoni Moda', 'Didot', 'Bodoni 72', 'Times New Roman', serif;
+  --sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---- rhythm ---- */
+  --shell: 1440px;
+  --gutter: clamp(20px, 4.2vw, 72px);
+  --bay: clamp(88px, 12vw, 190px);
+  --radius: 14px;
+  --radius-pill: 999px;
+
+  /* ---- motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  color-scheme: dark;
+}
+
+/* ---- art-directed light mode: bone paper, ink type, pastel aurora ---- */
+[data-theme='light'] {
+  --void: #eeece7;
+  --void-2: #e6e3dc;
+  --void-3: #dcd8cf;
+  --ink: #0d0d10;
+  --ink-2: rgba(13, 13, 16, 0.7);
+  --ink-3: rgba(13, 13, 16, 0.46);
+  --ink-4: rgba(13, 13, 16, 0.16);
+
+  --glass: rgba(13, 13, 16, 0.045);
+  --glass-2: rgba(13, 13, 16, 0.08);
+  --glass-line: rgba(13, 13, 16, 0.12);
+  --glass-line-2: rgba(13, 13, 16, 0.06);
+  --shadow-lift: 0 24px 70px -30px rgba(40, 34, 24, 0.4);
+
+  --violet: oklch(0.5 0.19 288);
+  --ember: oklch(0.58 0.18 42);
+  --accent-ink: #ffffff;
+
+  --aurora-a: 0.70 0.65 0.93;
+  --aurora-b: 0.945 0.930 0.905;
+  --aurora-c: 0.97 0.79 0.63;
+  --aurora-lift: 1.0;
+
+  color-scheme: light;
+}
+
+/* ========================== reset + base ========================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.7s var(--ease-out), color 0.7s var(--ease-out);
+}
+
+/* Lenis drives scroll; give it the html hooks it expects. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+img,
+svg,
+canvas,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--void);
+  font-family: var(--mono);
+  font-size: 12px;
+  transform: translateY(-160%);
+  transition: transform 0.3s var(--ease-out);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* ========================== typography ========================== */
+
+.display,
+.h1,
+.h2,
+.h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.display {
+  font-size: clamp(3.4rem, 11.5vw, 12.5rem);
+  line-height: 0.87;
+  letter-spacing: -0.035em;
+}
+
+.h1 {
+  font-size: clamp(2.6rem, 7vw, 6.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+}
+
+.h2 {
+  font-size: clamp(2rem, 4.6vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.h3 {
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.serif-italic {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+  color: var(--ink-2);
+  text-wrap: pretty;
+  margin: 0;
+}
+
+.body {
+  font-size: clamp(0.95rem, 1.05vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--ink-2);
+  text-wrap: pretty;
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 400;
+}
+
+.mono--ink {
+  color: var(--ink);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ========================== layout ========================== */
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.bay {
+  padding-block: var(--bay);
+}
+
+.bay--tight {
+  padding-block: calc(var(--bay) * 0.55);
+}
+
+.hair {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--glass-line);
+}
+
+/* ========================== glass primitives ========================== */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 17px;
+  border-radius: var(--radius-pill);
+  background: var(--glass);
+  border: 1px solid var(--glass-line-2);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  font-size: 0.875rem;
+  letter-spacing: -0.005em;
+  color: var(--ink-2);
+  white-space: nowrap;
+  transition: background-color 0.4s var(--ease-out), color 0.4s var(--ease-out),
+    border-color 0.4s var(--ease-out);
+}
+
+a.pill:hover,
+button.pill:hover {
+  background: var(--glass-2);
+  color: var(--ink);
+  border-color: var(--glass-line);
+}
+
+.pill--mono {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+}
+
+.pill--solid {
+  background: var(--ink);
+  color: var(--void);
+  border-color: transparent;
+}
+a.pill--solid:hover,
+button.pill--solid:hover {
+  background: var(--ink);
+  color: var(--void);
+  opacity: 0.86;
+}
+
+.pill--live {
+  color: var(--ink);
+}
+.pill--live .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ember);
+  box-shadow: 0 0 0 0 color-mix(in oklch, var(--ember) 70%, transparent);
+  animation: pulse-dot 2.4s var(--ease-out) infinite;
+}
+
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--ember) 60%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 7px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.card {
+  border-radius: var(--radius);
+  background: var(--glass);
+  border: 1px solid var(--glass-line-2);
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+}
+
+/* ========================== links ========================== */
+
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  letter-spacing: -0.008em;
+  padding-bottom: 3px;
+  position: relative;
+}
+.arrow-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.5s var(--ease-out);
+}
+.arrow-link:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+.arrow-link .glyph {
+  display: inline-block;
+  transition: transform 0.5s var(--ease-out);
+}
+.arrow-link:hover .glyph {
+  transform: translateX(4px);
+}
+
+/* ========================== kinetic type ========================== */
+
+/* Masked line/word/char rise. The mask clips the child's travel so the
+   letterforms appear to swing up from behind a hard edge. */
+.kt-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.kt-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.kt-inner {
+  display: inline-block;
+  will-change: transform;
+}
+
+.kt-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* ========================== grain + vignette ========================== */
+
+/* One 160x160 turbulence tile, rasterised once and repeated. Animating the
+   transform of a tiled background is cheap; filtering the whole viewport is
+   not (it re-rasterises every frame and stalls the compositor). */
+.grain {
+  position: fixed;
+  inset: -100px;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.34;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  will-change: transform;
+  animation: grain-drift 5s steps(5) infinite;
+}
+[data-theme='light'] .grain {
+  opacity: 0.2;
+  mix-blend-mode: multiply;
+}
+
+@keyframes grain-drift {
+  0%   { transform: translate3d(0, 0, 0); }
+  20%  { transform: translate3d(-24px, -32px, 0); }
+  40%  { transform: translate3d(-48px, 16px, 0); }
+  60%  { transform: translate3d(24px, -40px, 0); }
+  80%  { transform: translate3d(-16px, 48px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 90% at 50% 42%,
+    transparent 38%,
+    color-mix(in srgb, var(--void) 72%, transparent) 100%
+  );
+}
+
+/* ========================== reduced motion ========================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain {
+    animation: none;
+  }
+}

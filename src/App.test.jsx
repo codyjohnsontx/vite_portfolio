@@ -26,14 +26,14 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'CTX Connect' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
-    expect(screen.getByText('Turning messy product asks into scoped, shippable work.')).toBeTruthy();
-    expect(screen.getByText(/Product manager \/ technical builder/i)).toBeTruthy();
-    expect(screen.getByText(/clear requirements/i)).toBeTruthy();
+    expect(screen.getByText('Ambiguous to shipped')).toBeTruthy();
+    expect(screen.getByText(/Product manager · Technical builder · Austin, TX/i)).toBeTruthy();
+    expect(screen.getByText(/actionable requirements/i)).toBeTruthy();
     expect(screen.getByText('Requirements clarity')).toBeTruthy();
     expect(screen.getByText('Cross-team execution')).toBeTruthy();
     expect(screen.getByText('Operational trust')).toBeTruthy();
     expect(screen.getByText('Measured outcomes')).toBeTruthy();
-    expect(screen.getByText('Latest update')).toBeTruthy();
+    expect(screen.getByText('Latest')).toBeTruthy();
     expect(
       screen.getByRole('heading', { name: 'OncoPath faithfulness eval built and calibrated' }),
     ).toBeTruthy();
@@ -69,7 +69,7 @@ describe('portfolio routes and metadata', () => {
     }
   });
 
-  it('migrates the legacy dark theme preference to ink', () => {
+  it('migrates the legacy dark theme preference to the dark art direction', () => {
     const descriptor = Object.getOwnPropertyDescriptor(window, 'localStorage');
     Object.defineProperty(window, 'localStorage', {
       configurable: true,
@@ -82,7 +82,7 @@ describe('portfolio routes and metadata', () => {
     try {
       renderApp('/');
 
-      expect(document.documentElement.getAttribute('data-theme')).toBe('ink');
+      expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     } finally {
       Object.defineProperty(window, 'localStorage', descriptor);
     }
@@ -159,18 +159,37 @@ describe('portfolio routes and metadata', () => {
   it('exposes Blog in the site navigation', () => {
     renderApp('/blog');
 
-    const blogLinks = screen.getAllByRole('link', { name: 'Blog' });
-    expect(blogLinks.some((link) => link.getAttribute('href') === '/blog')).toBe(true);
-    expect(blogLinks.some((link) => link.className.includes('active'))).toBe(true);
+    // The overlay menu is hidden from assistive tech until it is opened, so
+    // the persistent path to every section is the footer index.
+    const footerBlogLink = within(screen.getByRole('contentinfo')).getByRole('link', {
+      name: 'Blog',
+    });
+    expect(footerBlogLink.getAttribute('href')).toBe('/blog');
+
+    fireEvent.click(screen.getByRole('button', { name: /menu/i }));
+
+    const menuBlogLink = within(screen.getByRole('navigation', { name: 'Primary' })).getByRole(
+      'link',
+      { name: 'Blog' },
+    );
+    expect(menuBlogLink.getAttribute('href')).toBe('/blog');
+    expect(menuBlogLink.className).toContain('is-active');
   });
 
   it('renders Dev Mode from the dedicated route and navbar', () => {
     renderApp('/dev-mode');
 
     expect(screen.getByRole('heading', { name: 'Dev Mode' })).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Dev Mode' })).toBeTruthy();
     expect(screen.getByLabelText(/Dev Mode command/i)).toBeTruthy();
     expect(screen.queryByRole('contentinfo')).toBeNull();
+
+    // reachable from the overlay menu
+    fireEvent.click(screen.getByRole('button', { name: /menu/i }));
+    expect(
+      within(screen.getByRole('navigation', { name: 'Primary' })).getByRole('link', {
+        name: 'Dev Mode',
+      }),
+    ).toBeTruthy();
   });
 
   it('runs core Dev Mode commands', () => {
@@ -202,7 +221,11 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Product Owner | Product Manager | Digital Platform Operations')).toBeTruthy();
     expect(screen.getByText('Professional experience')).toBeTruthy();
     expect(screen.getByText(/directly contributing to a \$90K service revenue increase/i)).toBeTruthy();
-    expect(screen.getByText('CTX Connect')).toBeTruthy();
+    // The terminal accumulates output, so CTX Connect appears in both the
+    // earlier `products` listing and the experience entry.
+    expect(
+      within(document.querySelector('main')).getAllByText('CTX Connect').length,
+    ).toBeGreaterThan(0);
     expect(screen.getByText('Technical skills')).toBeTruthy();
     expect(screen.getByText('Harvard CS50')).toBeTruthy();
 
@@ -246,7 +269,6 @@ describe('portfolio routes and metadata', () => {
     renderApp('/products/track-tuner');
 
     expect(screen.getAllByText(/Active build/).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Independent build/)).toBeTruthy();
     expect(screen.getByText(/Update 12/)).toBeTruthy();
     const comparisonUpdateLink = screen.getByRole('link', {
       name: 'Ship Session Comparison v1',
@@ -277,9 +299,12 @@ describe('portfolio routes and metadata', () => {
       await waitFor(() =>
         expect(screen.getByRole('heading', { name: /Session Compare/i })).toBeTruthy(),
       );
-      expect(screen.getByText(/Session Comparison v1/i)).toBeTruthy();
-      expect(screen.getByText(/rules-based/i)).toBeTruthy();
-      expect(screen.getByText(/free previous-session comparison intact/i)).toBeTruthy();
+      // Scope to the page body: the overlay menu also lists the latest
+      // Track Tuner update, whose title contains the same phrase.
+      const main = within(document.querySelector('main'));
+      expect(main.getByText(/Session Comparison v1/i)).toBeTruthy();
+      expect(main.getByText(/rules-based/i)).toBeTruthy();
+      expect(main.getByText(/free previous-session comparison intact/i)).toBeTruthy();
     } finally {
       if (resizeObserverDescriptor) {
         Object.defineProperty(globalThis, 'ResizeObserver', resizeObserverDescriptor);

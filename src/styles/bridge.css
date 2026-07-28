@@ -1,0 +1,119 @@
+/* =========================================================================
+   BRIDGE - re-points the legacy stylesheet's tokens at the Signal palette.
+
+   legacy.css still owns the deep interior pages (product detail, PM
+   analysis, research, blog article, dev mode). Rather than rewrite ~1900
+   lines of working layout, its variables are aliased here so those pages
+   inherit the new canvas, type, and hairlines automatically.
+
+   Load order matters: legacy.css first, then signal/shell/pages, then this.
+   ========================================================================= */
+
+:root {
+  /* surfaces */
+  --bg: var(--void);
+  --bg-2: var(--void-2);
+
+  /* hairlines */
+  --rule: var(--glass-line);
+  --rule-2: var(--glass-line-2);
+
+  /* type stacks - legacy used --serif for display copy */
+  --serif: var(--display);
+
+  /* rhythm */
+  --grid-max: var(--shell);
+  --section-y: var(--bay);
+}
+
+/* The legacy theme scopes were named paper/ink and no longer match the
+   dark/light attribute, so they can never re-assert the old palette.
+   These keep them harmless if the attribute is ever set by hand. */
+[data-theme='paper'],
+[data-theme='ink'] {
+  --bg: var(--void);
+  --bg-2: var(--void-2);
+  --rule: var(--glass-line);
+  --rule-2: var(--glass-line-2);
+}
+
+/* Legacy container === new shell */
+.container {
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Legacy interior surfaces were opaque cream cards; on the aurora they need
+   to read as glass instead so the field shows through. */
+.prod-card,
+.prod-feature,
+.update,
+.exp-row,
+.case-row,
+.meta-row__item,
+.priority-card,
+.metric-card,
+.research-insight,
+.research-persona,
+.analysis-observability {
+  background-color: transparent;
+}
+
+.priority-card,
+.metric-card,
+.research-insight,
+.research-persona,
+.analysis-observability {
+  background: var(--glass);
+  border-color: var(--glass-line-2);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+/* legacy pages open below the fixed top bar */
+.page-hero {
+  padding-top: clamp(120px, 16vh, 190px);
+}
+
+/* legacy scroll-reveal is superseded by the GSAP hooks; make sure anything
+   still using it is visible rather than stuck at opacity 0 */
+.scroll-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* Display serif is for headings only. Legacy set .lead in the serif, which
+   at paragraph length is noticeably harder to read on a dark canvas. */
+.lead {
+  font-family: var(--sans);
+  font-weight: 400;
+}
+
+/* legacy heading utilities that the new type scale should own */
+.numeral {
+  font-family: var(--display);
+}
+
+.drop-cap::first-letter {
+  font-family: var(--display);
+}
+
+/* the old sticky sub-nav needs to clear the new bar */
+.sidenav {
+  top: clamp(96px, 13vh, 130px);
+}
+
+/* Legacy link styles are sized to their line box. Pad them out to a real
+   touch target on coarse pointers, same as the new components. */
+@media (pointer: coarse) {
+  .link-arrow,
+  .page-hero .crumbs a,
+  .feature-links a,
+  .update__body a,
+  .dev-output__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
