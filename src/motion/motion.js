@@ -76,7 +76,12 @@ export function scrollToTop(immediate = true) {
    --------------------------------------------------------------------- */
 
 export function splitChars(el) {
-  if (!el || el.dataset.split === 'chars') return [];
+  if (!el) return [];
+  /* Already split - a StrictMode rerun, or any effect re-fire after
+     ctx.revert(). Hand back the existing nodes so the caller can animate
+     them again instead of getting an empty set. */
+  if (el.dataset.split === 'chars') return [...el.querySelectorAll('.kt-char')];
+
   const source = el.textContent ?? '';
   el.dataset.split = 'chars';
   el.textContent = '';
@@ -106,7 +111,9 @@ export function splitChars(el) {
 }
 
 export function splitWords(el) {
-  if (!el || el.dataset.split === 'words') return [];
+  if (!el) return [];
+  if (el.dataset.split === 'words') return [...el.querySelectorAll('.kt-inner')];
+
   const source = el.textContent ?? '';
   el.dataset.split = 'words';
   el.textContent = '';

@@ -102,7 +102,9 @@ export default function SiteLayout() {
 
       <TopBar theme={theme} onToggleTheme={toggleTheme} scrolled={scrolled} />
 
-      <main id="main" key={location.pathname}>
+      {/* tabIndex -1 so the skip link can actually move focus here; without
+          it browsers scroll to the target but leave focus behind. */}
+      <main id="main" tabIndex={-1} key={location.pathname}>
         <Outlet context={{ loaded }} />
       </main>
 

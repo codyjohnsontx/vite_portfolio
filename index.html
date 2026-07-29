@@ -27,6 +27,24 @@
     <title>Cody Johnson | Product Manager</title>
     <meta name="theme-color" content="#08080a" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#eeece7" media="(prefers-color-scheme: light)" />
+    <!-- Applies the stored theme before first paint. React sets the same
+         attribute after mount, but that is a frame too late: a visitor who
+         chose light would otherwise get a dark flash on every load. Keep the
+         key and the accepted values in sync with SiteLayout. -->
+    <script>
+      (function () {
+        var theme = 'dark';
+        try {
+          var stored = window.localStorage.getItem('cj-theme');
+          if (stored === 'paper') stored = 'light';
+          else if (stored === 'ink') stored = 'dark';
+          if (stored === 'light' || stored === 'dark') theme = stored;
+        } catch (e) {
+          /* private mode - fall through to the default */
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Bodoni Moda: high-contrast Didone display. Instrument Sans: UI grotesque.

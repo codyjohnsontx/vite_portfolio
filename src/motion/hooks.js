@@ -23,10 +23,12 @@ export function useKineticText({
       return undefined;
     }
 
+    // Reveal before the guard: text with nothing to split still has to end
+    // up visible, since the element ships at opacity 0.
+    gsap.set(el, { opacity: 1 });
+
     const parts = mode === 'chars' ? splitChars(el) : splitWords(el);
     if (!parts.length) return undefined;
-
-    gsap.set(el, { opacity: 1 });
 
     const ctx = gsap.context(() => {
       gsap.fromTo(

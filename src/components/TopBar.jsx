@@ -49,10 +49,10 @@ export default function TopBar({ theme, onToggleTheme, scrolled }) {
     const overlay = overlayRef.current;
     if (!overlay) return undefined;
 
-    if (!open) {
-      startScroll();
-      return undefined;
-    }
+    /* No startScroll() here: on the first closed render that would release
+       the lock the preloader takes while it is still on screen. Closing the
+       overlay is handled by this effect's own cleanup. */
+    if (!open) return undefined;
 
     stopScroll();
     const backdrop = [document.querySelector('main'), document.querySelector('.site-footer')].filter(

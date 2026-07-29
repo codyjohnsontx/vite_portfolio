@@ -97,9 +97,12 @@ export default function Preloader({ onDone }) {
         );
     }, root);
 
-    // let the counter breathe for a beat even on a warm cache
+    /* `ready` can settle after teardown, and the timer it schedules would
+       then run finish() against an unmounted component. */
+    let cancelled = false;
     let graceful;
     ready.then(() => {
+      if (cancelled) return;
       graceful = setTimeout(finish, 300);
     });
 
@@ -109,6 +112,7 @@ export default function Preloader({ onDone }) {
     const ceiling = setTimeout(finish, 3500);
 
     return () => {
+      cancelled = true;
       clearTimeout(ceiling);
       clearTimeout(graceful);
       ctx.revert();

@@ -6,6 +6,7 @@ import { useKineticText, useMagnetic, useReveal } from '../motion/hooks';
 import { gsap, prefersReducedMotion, splitChars } from '../motion/motion';
 import { caseStudies } from '../content/caseStudies';
 import { experience } from '../content/experience';
+import { latestSignal } from '../content/latestSignal';
 import { profile } from '../content/profile';
 import { conceptProducts, flagshipProducts } from '../content/projects';
 
@@ -56,7 +57,8 @@ function Hero({ ready }) {
 
   return (
     <section className="hero" ref={rootRef} aria-labelledby="hero-title">
-      <div className="hero__rail" aria-label="Active builds">
+      {/* nav, not div: aria-label is ignored on a generic element */}
+      <nav className="hero__rail" aria-label="Active builds">
         {flagshipProducts.slice(0, 5).map((p) => (
           <Link
             key={p.slug}
@@ -76,7 +78,7 @@ function Hero({ ready }) {
         >
           All work
         </Link>
-      </div>
+      </nav>
 
       <p className="hero__support body" data-hero style={{ opacity: 0 }}>
         {profile.heroSupport}
@@ -153,23 +155,22 @@ function LatestSignal() {
           <span className="pill pill--mono pill--live">
             <span className="dot" /> Latest
           </span>
-          <span className="mono">July 2026</span>
+          <span className="mono">{latestSignal.date}</span>
         </div>
         <div className="signal-block__body">
-          <h2 className="h2">OncoPath faithfulness eval built and calibrated</h2>
-          <p className="lead">
-            OncoPath, an AI-assisted cancer trial explainer, now has an accuracy-evaluation
-            harness: a frozen test set of real trials, a validator fix that took usable output
-            from 0 to 100 percent, and a second-model faithfulness judge. Human calibration
-            showed the judge is too lenient, so its 81 percent score is not trusted yet.
-          </p>
+          <h2 className="h2">{latestSignal.title}</h2>
+          <p className="lead">{latestSignal.body}</p>
           <div className="signal-block__links">
-            <Link ref={ctaRef} to="/products/oncopath" className="arrow-link">
-              Read the build <span className="glyph" aria-hidden="true">→</span>
-            </Link>
-            <Link to="/products/oncopath/analysis" className="arrow-link">
-              PM analysis <span className="glyph" aria-hidden="true">→</span>
-            </Link>
+            {latestSignal.links.map((link, i) => (
+              <Link
+                key={link.to}
+                ref={i === 0 ? ctaRef : undefined}
+                to={link.to}
+                className="arrow-link"
+              >
+                {link.label} <span className="glyph" aria-hidden="true">→</span>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

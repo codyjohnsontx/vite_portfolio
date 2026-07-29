@@ -36,7 +36,15 @@ const lerp = (a, b, t) => a + (b - a) * t;
 export default function AuroraField({ intensity = 1 }) {
   const canvasRef = useRef(null);
   const intensityRef = useRef(intensity);
-  intensityRef.current = intensity;
+  // set by the render loop below so prop changes can wake a stopped loop
+  const wakeRef = useRef(null);
+
+  /* Writing a ref during render is a side effect that can run for renders
+     that never commit, so the sync happens here instead. */
+  useEffect(() => {
+    intensityRef.current = intensity;
+    wakeRef.current?.();
+  }, [intensity]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -122,6 +130,13 @@ export default function AuroraField({ intensity = 1 }) {
 
     const dpr = () => Math.min(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1.25 : 1.6);
 
+    /* Under reduced motion the loop stops once the field has settled, so
+       anything that changes what should be on screen has to ask for a
+       single repaint. A no-op while the loop is already running. */
+    const requestFrame = () => {
+      if (!raf && visible) raf = requestAnimationFrame(frame);
+    };
+
     const resize = () => {
       const r = dpr();
       const w = Math.round(canvas.clientWidth * r);
@@ -129,9 +144,11 @@ export default function AuroraField({ intensity = 1 }) {
       if (w === width && h === height) return;
       width = w;
       height = h;
+      // resizing the backing store clears it, so it must be redrawn
       canvas.width = w;
       canvas.height = h;
       gl.viewport(0, 0, w, h);
+      requestFrame();
     };
 
     const toField = (clientX, clientY) => {
@@ -172,11 +189,12 @@ export default function AuroraField({ intensity = 1 }) {
       // recedes to a dim wash so type stays legible on top of it.
       const past = Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1);
       heroFalloff = 1 - 0.8 * (past * past * (3 - 2 * past));
+      requestFrame();
     };
 
     const onVisibility = () => {
       visible = !document.hidden;
-      if (visible && !raf) raf = requestAnimationFrame(frame);
+      requestFrame();
     };
 
     // theme flips rewrite the CSS custom properties; re-read them
@@ -222,7 +240,10 @@ export default function AuroraField({ intensity = 1 }) {
       drag.x *= 0.975;
       drag.y *= 0.975;
 
-      fade = lerp(fade, intensityRef.current * heroFalloff, 0.06);
+      // reduced motion gets no easing, so a single woken frame lands exactly
+      // where it should instead of creeping toward it
+      const targetFade = intensityRef.current * heroFalloff;
+      fade = reduce ? targetFade : lerp(fade, targetFade, 0.06);
 
       gl.uniform2f(u.uRes, width, height);
       gl.uniform1f(u.uTime, reduce ? 0 : t);
@@ -238,14 +259,21 @@ export default function AuroraField({ intensity = 1 }) {
 
       gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-      // reduced motion: one settled frame, then stop the loop entirely
-      if (reduce && fade > 0.98) return;
+      // reduced motion: draw once, then idle until something wakes us
+      if (reduce) return;
       raf = requestAnimationFrame(frame);
     }
 
-    raf = requestAnimationFrame(frame);
+    wakeRef.current = requestFrame;
+    /* Start through requestFrame, not a bare requestAnimationFrame: the
+       resize()/onScroll() calls above may already have queued one, and
+       overwriting `raf` here would orphan it. An orphan survives cleanup and
+       then runs against the *next* mount's program, which WebGL rejects as
+       "location is not from the associated program". */
+    requestFrame();
 
     return () => {
+      wakeRef.current = null;
       if (raf) cancelAnimationFrame(raf);
       ro.disconnect();
       themeObserver.disconnect();
