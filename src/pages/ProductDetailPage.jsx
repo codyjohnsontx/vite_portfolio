@@ -633,7 +633,11 @@ export default function ProductDetailPage() {
                 <Shot
                   source={selectedVisualAsset.src}
                   alt={selectedVisualAsset.alt}
-                  sizes="100vw"
+                  /* the figure is width: min(100%, 1200px), so 100vw would
+                     overstate this on any wider viewport and pull the 2560w
+                     variant where 1280w is enough. A 2x display still resolves
+                     to 2400 and picks 2560w. */
+                  sizes="(max-width: 1200px) 100vw, 1200px"
                   eager
                   style={{
                     maxWidth: '100%',
