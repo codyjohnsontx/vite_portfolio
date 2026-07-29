@@ -125,7 +125,13 @@ export default function ProductResearchPage() {
               distance={26}
               duration={940}
             >
-              <Shot source={product.image} alt={product.name} sizes="(max-width: 900px) 90vw, 520px" />
+              {/* above the fold at every breakpoint, so not lazy */}
+              <Shot
+                source={product.image}
+                alt={product.name}
+                sizes="(max-width: 900px) 90vw, 520px"
+                eager
+              />
             </Reveal>
           </div>
         </div>

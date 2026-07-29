@@ -496,9 +496,11 @@ export default function ProductDetailPage() {
               {(p.updates ?? []).map((u, i) => (
                 <Reveal
                   as="article"
-                  /* Several updates can share one PR URL - CTX Connect has two
-                     from PR #4 - so the URL alone is not unique. */
-                  key={`${u.id || u.url || u.title || 'update'}-${i}`}
+                  /* 13 of the 61 updates share a PR URL with a sibling, so the
+                     URL alone is not unique. URL plus title is unique across
+                     all of them and, unlike an index, survives insertion and
+                     reordering. */
+                  key={`${u.url || 'update'}|${u.title || i}`}
                   className="update"
                   delay={(i % 4) * 80}
                 >
