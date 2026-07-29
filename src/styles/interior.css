@@ -1,0 +1,176 @@
+/* =========================================================================
+   INTERIOR - product detail, PM analysis and research chrome, rebuilt on the
+   Signal primitives. Loaded after legacy/bridge so it wins on equal
+   specificity. Shared deliberately: these three pages use the same shell.
+   ========================================================================= */
+
+/* ------------------------------ page hero ------------------------------ */
+
+.page-hero .crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: clamp(18px, 2.4vw, 30px);
+}
+.page-hero .crumbs a {
+  color: var(--ink-3);
+  transition: color 0.35s var(--ease-out);
+}
+.page-hero .crumbs a:hover {
+  color: var(--ink);
+}
+
+/* --------------------------- two-column shell --------------------------- */
+
+.pd-layout {
+  grid-template-columns: minmax(150px, 0.22fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 64px);
+}
+
+/* The side index used to stretch to the full height of the grid row, so
+   `position: sticky` had nothing to travel through and it read as a dead
+   gutter beside the content. Shrinking it to its own height is what makes
+   it stick. */
+.sidenav {
+  align-self: start;
+  position: sticky;
+  top: clamp(96px, 14vh, 140px);
+  gap: 2px;
+}
+
+.sidenav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0 7px 12px;
+  border-left: 1px solid var(--glass-line-2);
+  color: var(--ink-4);
+  transition: color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+}
+.sidenav a:hover {
+  color: var(--ink-2);
+  border-left-color: var(--ink-4);
+}
+.sidenav a.active {
+  color: var(--ink);
+  border-left-color: var(--accent);
+}
+.sidenav a .dash {
+  width: 10px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+  transition: width 0.4s var(--ease-out);
+}
+.sidenav a.active .dash {
+  width: 18px;
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  /* Legacy hid this entirely below 900px. On a page this long the index is
+     worth keeping, so it becomes a horizontal scroller across the top.
+     Selector matches legacy's specificity to override it. */
+  /* legacy sets `1fr` here, whose min is auto, so the track grows to fit the
+     nowrap row and blows the page out sideways. minmax(0, 1fr) lets the
+     scroller scroll instead. */
+  .pd-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pd-layout .sidenav {
+    display: flex;
+    position: static;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* Grid items default to min-width: auto, so without this the nowrap row
+       widens its track and pushes the whole document sideways instead of
+       scrolling inside itself. */
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    gap: 6px;
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--glass-line-2);
+    scrollbar-width: none;
+  }
+  .pd-layout .sidenav::-webkit-scrollbar { display: none; }
+  .pd-layout .sidenav a {
+    border-left: 0;
+    /* keeps the chips at a 44px touch target */
+    padding: 14px 15px;
+    border-radius: var(--radius-pill);
+    background: var(--glass);
+    border: 1px solid var(--glass-line-2);
+    white-space: nowrap;
+  }
+  .pd-layout .sidenav a .dash { display: none; }
+  .pd-layout .sidenav a.active {
+    background: var(--ink);
+    color: var(--void);
+    border-color: transparent;
+  }
+}
+
+/* ------------------------------ fact pairs ------------------------------ */
+
+.pd-grid {
+  gap: 1px;
+  margin-top: clamp(28px, 4vw, 48px);
+  background: var(--glass-line-2);
+  border: 1px solid var(--glass-line-2);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.pd-grid > * {
+  background: color-mix(in srgb, var(--void) 52%, transparent);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  padding: clamp(20px, 2.4vw, 30px);
+}
+
+@media (max-width: 800px) {
+  .pd-grid { grid-template-columns: 1fr; }
+}
+
+/* ------------------------------- updates ------------------------------- */
+
+.update {
+  padding-block: clamp(22px, 2.6vw, 32px);
+  border-top: 1px solid var(--glass-line-2);
+  border-bottom: 0;
+  transition: background-color 0.5s var(--ease-out);
+}
+.update:first-child { border-top: 1px solid var(--glass-line-2); }
+.update:last-child { border-bottom: 1px solid var(--glass-line-2); }
+
+.update__meta {
+  color: var(--ink-4);
+}
+
+.update__body h4 {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+
+.update__body a {
+  color: var(--ink);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.45s var(--ease-out);
+}
+.update__body a:hover {
+  background-size: 100% 1px;
+}

@@ -121,7 +121,7 @@ export default function ProductDetailPage() {
   return (
     <div className="fade-in">
       <Reveal as="section" className="page-hero" duration={900}>
-        <div className="container">
+        <div className="shell">
           <div className="crumbs">
             <Link to="/">Index</Link>
             <span>/</span>
@@ -185,7 +185,7 @@ export default function ProductDetailPage() {
       {p.image ? (
         <Reveal style={{ borderBottom: '1px solid var(--rule)' }} delay={80} distance={22}>
           <div
-            className="container"
+            className="shell"
             style={{ padding: 'clamp(24px, 3vw, 56px) var(--gutter)' }}
           >
             <div
@@ -229,10 +229,10 @@ export default function ProductDetailPage() {
       {p.featurePresentations?.length ? (
         <Reveal
           as="section"
-          className="section section--tight"
+          className="bay--tight"
           style={{ borderBottom: '1px solid var(--rule)' }}
         >
-          <div className="container">
+          <div className="shell">
             <Eyebrow>Feature presentations</Eyebrow>
             <h2 className="h2" style={{ margin: '12px 0 12px' }}>
               Working briefs and wireframes
@@ -292,10 +292,10 @@ export default function ProductDetailPage() {
       {p.visualAssets?.items?.length ? (
         <Reveal
           as="section"
-          className="section section--tight"
+          className="bay--tight"
           style={{ borderBottom: '1px solid var(--rule)' }}
         >
-          <div className="container">
+          <div className="shell">
             <Eyebrow>Visual proof</Eyebrow>
             <h2 className="h2" style={{ margin: '12px 0 12px' }}>
               {p.visualAssets.heading ?? 'Product screenshots'}
@@ -366,8 +366,8 @@ export default function ProductDetailPage() {
         </Reveal>
       ) : null}
 
-      <section className="section section--tight">
-        <div className="container pd-layout">
+      <section className="bay--tight">
+        <div className="shell pd-layout">
           <aside className="sidenav">
             {SECTIONS.map((it) => (
               <a
