@@ -110,7 +110,8 @@
   .link-arrow,
   .page-hero .crumbs a,
   .feature-links a,
-  .update__body a {
+  .update__body a,
+  .mono.small.uppercase a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
