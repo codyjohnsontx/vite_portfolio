@@ -110,8 +110,7 @@
   .link-arrow,
   .page-hero .crumbs a,
   .feature-links a,
-  .update__body a,
-  .dev-output__links a {
+  .update__body a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
