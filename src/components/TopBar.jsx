@@ -10,7 +10,6 @@ const NAV = [
   { to: '/products', label: 'Work' },
   { to: '/case-studies', label: 'Case Studies' },
   { to: '/blog', label: 'Blog' },
-  { to: '/dev-mode', label: 'Dev Mode' },
 ];
 
 function ThemeToggle({ theme, onToggle }) {

@@ -108,9 +108,7 @@ export default function SiteLayout() {
         <Outlet context={{ loaded }} />
       </main>
 
-      {/* Dev Mode is a full-screen terminal; the site chrome would break the
-          conceit, so it keeps its own ending. */}
-      {location.pathname.startsWith('/dev-mode') ? null : <Footer />}
+      <Footer />
     </>
   );
 }

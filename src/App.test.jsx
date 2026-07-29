@@ -176,86 +176,6 @@ describe('portfolio routes and metadata', () => {
     expect(menuBlogLink.className).toContain('is-active');
   });
 
-  it('renders Dev Mode from the dedicated route and navbar', () => {
-    renderApp('/dev-mode');
-
-    expect(screen.getByRole('heading', { name: 'Dev Mode' })).toBeTruthy();
-    expect(screen.getByLabelText(/Dev Mode command/i)).toBeTruthy();
-    expect(screen.queryByRole('contentinfo')).toBeNull();
-
-    // reachable from the overlay menu
-    fireEvent.click(screen.getByRole('button', { name: /menu/i }));
-    expect(
-      within(screen.getByRole('navigation', { name: 'Primary' })).getByRole('link', {
-        name: 'Dev Mode',
-      }),
-    ).toBeTruthy();
-  });
-
-  it('runs core Dev Mode commands', () => {
-    renderApp('/dev-mode');
-    const input = screen.getByLabelText(/Dev Mode command/i);
-
-    fireEvent.change(input, { target: { value: 'help' } });
-    fireEvent.submit(input.closest('form'));
-    expect(screen.getByText('Available commands')).toBeTruthy();
-
-    fireEvent.change(input, { target: { value: 'whoami' } });
-    fireEvent.submit(input.closest('form'));
-    expect(screen.getByText(/turns ambiguous asks into scoped, shippable work/i)).toBeTruthy();
-    expect(screen.getByText(/user stories/i)).toBeTruthy();
-    expect(screen.getAllByText(/acceptance criteria/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/prioritized backlogs/i)).toBeTruthy();
-    expect(screen.getByText(/release-ready workflows/i)).toBeTruthy();
-    expect(screen.getByText(/operational CRM \/ dealership command center/i)).toBeTruthy();
-    expect(screen.getByText(/Twilio SMS\/MMS routing/i)).toBeTruthy();
-
-    fireEvent.change(input, { target: { value: 'products' } });
-    fireEvent.submit(input.closest('form'));
-    expect(screen.getByText('Active builds')).toBeTruthy();
-    expect(screen.getByText(/run: product track-tuner/i)).toBeTruthy();
-
-    fireEvent.change(input, { target: { value: 'experience' } });
-    fireEvent.submit(input.closest('form'));
-    expect(screen.getByRole('heading', { name: 'Resume' })).toBeTruthy();
-    expect(screen.getByText('Product Owner | Product Manager | Digital Platform Operations')).toBeTruthy();
-    expect(screen.getByText('Professional experience')).toBeTruthy();
-    expect(screen.getByText(/directly contributing to a \$90K service revenue increase/i)).toBeTruthy();
-    // The terminal accumulates output, so CTX Connect appears in both the
-    // earlier `products` listing and the experience entry.
-    expect(
-      within(document.querySelector('main')).getAllByText('CTX Connect').length,
-    ).toBeGreaterThan(0);
-    expect(screen.getByText('Technical skills')).toBeTruthy();
-    expect(screen.getByText('Harvard CS50')).toBeTruthy();
-
-    fireEvent.change(input, { target: { value: 'contact' } });
-    fireEvent.submit(input.closest('form'));
-    expect(screen.getByText('codyjohnsontx@gmail.com')).toBeTruthy();
-
-    fireEvent.change(input, { target: { value: 'wat' } });
-    fireEvent.submit(input.closest('form'));
-    expect(screen.getByText('Command not found')).toBeTruthy();
-
-    fireEvent.change(input, { target: { value: 'clear' } });
-    fireEvent.submit(input.closest('form'));
-    expect(screen.queryByText('Available commands')).toBeNull();
-    expect(screen.queryByText('Command not found')).toBeNull();
-  });
-
-  it('renders Dev Mode product commands from product data', () => {
-    renderApp('/dev-mode');
-    const input = screen.getByLabelText(/Dev Mode command/i);
-    const trackTuner = products.find((product) => product.slug === 'track-tuner');
-
-    fireEvent.change(input, { target: { value: 'product track-tuner' } });
-    fireEvent.submit(input.closest('form'));
-
-    expect(screen.getByRole('heading', { name: trackTuner.name })).toBeTruthy();
-    expect(screen.getByText(trackTuner.oneLiner)).toBeTruthy();
-    expect(screen.getByText(trackTuner.audience)).toBeTruthy();
-  });
-
   products.forEach((product) => {
     it(`renders the product detail page for ${product.slug}`, () => {
       renderApp(`/products/${product.slug}`);
@@ -584,43 +504,9 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('link', { name: /View persona research/i })).toBeNull();
   });
 
-  it('exposes Track Tuner research from the PM analysis page and Dev Mode output', () => {
-    const firstRender = renderApp('/products/track-tuner/analysis');
+  it('exposes Track Tuner research from the PM analysis page', () => {
+    renderApp('/products/track-tuner/analysis');
     expect(screen.getAllByRole('link', { name: /View persona research/i }).length).toBeGreaterThan(0);
-
-    firstRender.unmount();
-    renderApp('/dev-mode');
-    const input = screen.getByLabelText(/Dev Mode command/i);
-
-    fireEvent.change(input, { target: { value: 'product track-tuner' } });
-    fireEvent.submit(input.closest('form'));
-
-    expect(screen.getByRole('link', { name: /View persona research/i })).toBeTruthy();
-
-    fireEvent.change(input, { target: { value: 'product ridesense' } });
-    fireEvent.submit(input.closest('form'));
-
-    expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
-    expect(
-      screen
-        .getAllByRole('link', { name: /View persona research/i })
-        .some((link) => link.getAttribute('href') === '/products/ridesense/research'),
-    ).toBe(true);
-  });
-
-  it('resolves the CTX product through both the ctx-connect alias and the ctx-chat slug', () => {
-    renderApp('/dev-mode');
-    const input = screen.getByLabelText(/Dev Mode command/i);
-
-    // Alias token: `product ctx-connect` maps back to the ctx-chat slug.
-    fireEvent.change(input, { target: { value: 'product ctx-connect' } });
-    fireEvent.submit(input.closest('form'));
-    expect(screen.getAllByRole('heading', { name: 'CTX Connect' })).toHaveLength(1);
-
-    // Raw slug still resolves via the fallback path.
-    fireEvent.change(input, { target: { value: 'product ctx-chat' } });
-    fireEvent.submit(input.closest('form'));
-    expect(screen.getAllByRole('heading', { name: 'CTX Connect' })).toHaveLength(2);
   });
 
   it('sends product analysis slugs without content to the not-found experience', () => {
@@ -681,6 +567,12 @@ describe('portfolio routes and metadata', () => {
 
   it('sends the archived Overlap product route to the not-found experience', () => {
     renderApp('/products/overlap-racing-radar');
+
+    expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
+  });
+
+  it('does not expose the dev mode route while it is being reworked', () => {
+    renderApp('/dev-mode');
 
     expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
   });
