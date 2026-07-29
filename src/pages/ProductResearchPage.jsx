@@ -6,6 +6,7 @@ import { Reveal } from '../components/ScrollReveal';
 import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
 import { getProductResearchBySlug } from '../content/productResearch';
+import Shot from '../components/Shot';
 
 const SECTIONS = [
   { id: 'problem', label: '01 Problem' },
@@ -124,7 +125,13 @@ export default function ProductResearchPage() {
               distance={26}
               duration={940}
             >
-              <img src={product.image} alt={product.name} />
+              {/* above the fold at every breakpoint, so not lazy */}
+              <Shot
+                source={product.image}
+                alt={product.name}
+                sizes="(max-width: 900px) 90vw, 520px"
+                eager
+              />
             </Reveal>
           </div>
         </div>

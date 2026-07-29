@@ -6,6 +6,7 @@ import { Reveal } from '../components/ScrollReveal';
 import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
 import { getProductResearchBySlug } from '../content/productResearch';
+import Shot from '../components/Shot';
 
 const SECTIONS = [
   { id: 'overview', label: '01 Overview' },
@@ -22,6 +23,11 @@ const HERO_IMAGE_STYLE = {
   width: 'auto',
   display: 'block',
 };
+
+/* Rendered widths, measured in the browser: the hero fills the content
+   column, gallery figures sit in a grid roughly a third of it. */
+const HERO_SIZES = '(max-width: 900px) 92vw, 1240px';
+const ASSET_SIZES = '(max-width: 900px) 90vw, 420px';
 
 const ASSET_IMAGE_STYLE = {
   width: '100%',
@@ -200,10 +206,10 @@ export default function ProductDetailPage() {
                   aria-label={`Open the live ${p.name} app`}
                   style={{ display: 'block', maxWidth: '100%' }}
                 >
-                  <img src={p.image} alt={p.name} style={HERO_IMAGE_STYLE} />
+                  <Shot source={p.image} alt={p.name} sizes={HERO_SIZES} style={HERO_IMAGE_STYLE} eager />
                 </a>
               ) : (
-                <img src={p.image} alt={p.name} style={HERO_IMAGE_STYLE} />
+                <Shot source={p.image} alt={p.name} sizes={HERO_SIZES} style={HERO_IMAGE_STYLE} eager />
               )}
             </div>
             {p.liveUrl ? (
@@ -331,7 +337,7 @@ export default function ProductDetailPage() {
                         display: 'block',
                       }}
                     >
-                      <img src={asset.src} alt={asset.alt} style={ASSET_IMAGE_STYLE} />
+                      <Shot source={asset.src} alt={asset.alt} sizes={ASSET_SIZES} style={ASSET_IMAGE_STYLE} />
                     </a>
                   ) : (
                     <button
@@ -344,7 +350,7 @@ export default function ProductDetailPage() {
                         cursor: 'zoom-in',
                       }}
                     >
-                      <img src={asset.src} alt={asset.alt} style={ASSET_IMAGE_STYLE} />
+                      <Shot source={asset.src} alt={asset.alt} sizes={ASSET_SIZES} style={ASSET_IMAGE_STYLE} />
                     </button>
                   )}
                   <figcaption
@@ -490,7 +496,11 @@ export default function ProductDetailPage() {
               {(p.updates ?? []).map((u, i) => (
                 <Reveal
                   as="article"
-                  key={u.url || u.id || u.title || `update-${i}`}
+                  /* 13 of the 61 updates share a PR URL with a sibling, so the
+                     URL alone is not unique. URL plus title is unique across
+                     all of them and, unlike an index, survives insertion and
+                     reordering. */
+                  key={`${u.url || 'update'}|${u.title || i}`}
                   className="update"
                   delay={(i % 4) * 80}
                 >
@@ -620,9 +630,15 @@ export default function ProductDetailPage() {
                     Close
                   </button>
                 </div>
-                <img
-                  src={selectedVisualAsset.src}
+                <Shot
+                  source={selectedVisualAsset.src}
                   alt={selectedVisualAsset.alt}
+                  /* the figure is width: min(100%, 1200px), so 100vw would
+                     overstate this on any wider viewport and pull the 2560w
+                     variant where 1280w is enough. A 2x display still resolves
+                     to 2400 and picks 2560w. */
+                  sizes="(max-width: 1200px) 100vw, 1200px"
+                  eager
                   style={{
                     maxWidth: '100%',
                     maxHeight: 'calc(100vh - 140px)',
