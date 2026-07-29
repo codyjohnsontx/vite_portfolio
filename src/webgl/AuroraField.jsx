@@ -197,17 +197,27 @@ export default function AuroraField({ intensity = 1 }) {
       requestFrame();
     };
 
-    // theme flips rewrite the CSS custom properties; re-read them
+    // theme flips rewrite the CSS custom properties; re-read them, then ask
+    // for a repaint so a stopped reduced-motion loop picks up the new palette
     const themeObserver = new MutationObserver(() => {
       stops = readStops();
+      requestFrame();
     });
     themeObserver.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['data-theme'],
     });
 
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
+    /* ResizeObserver catches layout-driven size changes the window event
+       misses, but constructing it unguarded throws where it is unavailable
+       and takes the whole field down. */
+    let ro = null;
+    if (typeof ResizeObserver === 'function') {
+      ro = new ResizeObserver(resize);
+      ro.observe(canvas);
+    } else {
+      window.addEventListener('resize', resize);
+    }
 
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     window.addEventListener('pointerdown', onPointerDown, { passive: true });
@@ -275,7 +285,8 @@ export default function AuroraField({ intensity = 1 }) {
     return () => {
       wakeRef.current = null;
       if (raf) cancelAnimationFrame(raf);
-      ro.disconnect();
+      if (ro) ro.disconnect();
+      else window.removeEventListener('resize', resize);
       themeObserver.disconnect();
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerdown', onPointerDown);

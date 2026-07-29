@@ -27,6 +27,7 @@ export default function Preloader({ onDone }) {
 
     const state = { value: 0 };
     let settled = false;
+    let exitTl;
 
     const paint = () => {
       const v = Math.round(state.value);
@@ -60,7 +61,10 @@ export default function Preloader({ onDone }) {
         ease: 'power2.inOut',
         onUpdate: paint,
         onComplete() {
-          gsap
+          /* Held so cleanup can stop it. Neither this nor the counter tween
+             lives inside the gsap.context, so ctx.revert() would leave them
+             running and done() would fire after teardown. */
+          exitTl = gsap
             .timeline({ onComplete: done })
             .to('.preloader__char', {
               yPercent: -120,
@@ -115,6 +119,9 @@ export default function Preloader({ onDone }) {
       cancelled = true;
       clearTimeout(ceiling);
       clearTimeout(graceful);
+      // killing the counter tween also stops it spawning a new exit timeline
+      gsap.killTweensOf(state);
+      exitTl?.kill();
       ctx.revert();
       startScroll();
     };
