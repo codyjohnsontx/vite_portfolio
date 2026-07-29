@@ -6,7 +6,6 @@ import BlogIndexPage from './pages/BlogIndexPage';
 import BlogPostPage from './pages/BlogPostPage';
 import CaseStudyIndexPage from './pages/CaseStudyIndexPage';
 import CaseStudyPage from './pages/CaseStudyPage';
-import DevModePage from './pages/DevModePage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import ProductAnalysisPage from './pages/ProductAnalysisPage';
@@ -59,7 +58,6 @@ function App() {
           <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
           <Route path="/blog" element={<BlogIndexPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
-          <Route path="/dev-mode" element={<DevModePage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

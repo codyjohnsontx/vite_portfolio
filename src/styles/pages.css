@@ -1,0 +1,336 @@
+/* =========================================================================
+   PAGES - hero, proof, work index, case cards, timeline
+   ========================================================================= */
+
+/* -------------------------------- hero -------------------------------- */
+
+/* Rail and headline share the tall middle row rather than stacking, so that
+   row is as tall as the taller of the two instead of their sum - which is
+   what keeps the display type above the fold at laptop heights. */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    'support support'
+    'rail    title';
+  gap: clamp(18px, 2.6vw, 36px);
+  padding: clamp(96px, 13vh, 150px) var(--gutter) clamp(30px, 4.5vh, 52px);
+  max-width: var(--shell);
+  margin-inline: auto;
+}
+
+.hero__rail {
+  grid-area: rail;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 7px;
+}
+.hero__rail-item { will-change: transform, opacity; }
+
+.hero__support {
+  grid-area: support;
+  max-width: 34ch;
+  justify-self: end;
+  align-self: start;
+  color: var(--ink-2);
+}
+
+.hero__title-block {
+  grid-area: title;
+  justify-self: end;
+  align-self: end;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  padding-bottom: clamp(6px, 2vh, 26px);
+}
+
+.hero__title {
+  font-size: clamp(3rem, 9.4vw, 10rem);
+}
+
+.hero__eyebrow { color: var(--ink-3); }
+
+.hero__title {
+  /* the headline sits on the aurora - blend keeps it feeling lit by the
+     field rather than pasted on top of it */
+  mix-blend-mode: plus-lighter;
+  text-shadow: 0 0 70px color-mix(in srgb, var(--void) 55%, transparent);
+}
+[data-theme='light'] .hero__title {
+  mix-blend-mode: normal;
+  text-shadow: none;
+}
+
+.hero__line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.09em;
+  margin-bottom: -0.09em;
+}
+.hero__line {
+  display: block;
+  will-change: transform;
+}
+.hero__line:last-child {
+  font-style: italic;
+}
+
+@media (max-width: 980px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: 'support' 'rail' 'title';
+    align-items: start;
+    gap: 30px;
+    padding-top: clamp(96px, 16vh, 140px);
+  }
+  .hero__rail {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .hero__title-block {
+    justify-self: start;
+    text-align: left;
+    align-items: flex-start;
+    align-self: center;
+    padding-bottom: 0;
+  }
+  .hero__support { max-width: 44ch; justify-self: start; }
+}
+
+/* The field is at full strength behind the hero, and on a phone the copy
+   sits directly on top of its brightest region - so give the hero text a
+   soft scrim of its own rather than dimming the artwork for everyone. */
+@media (max-width: 640px) {
+  .hero__support,
+  .hero__eyebrow {
+    text-shadow: 0 1px 18px color-mix(in srgb, var(--void) 85%, transparent);
+  }
+  [data-theme='light'] .hero__support,
+  [data-theme='light'] .hero__eyebrow {
+    text-shadow: none;
+  }
+}
+
+/* -------------------------------- proof -------------------------------- */
+
+.proof { padding-block: clamp(56px, 7vw, 96px); }
+.proof__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+  gap: 1px;
+  background: var(--glass-line-2);
+  border: 1px solid var(--glass-line-2);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.proof__item {
+  background: color-mix(in srgb, var(--void) 46%, transparent);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  padding: clamp(22px, 2.6vw, 34px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: background-color 0.5s var(--ease-out);
+}
+.proof__item:hover { background: color-mix(in srgb, var(--void-3) 62%, transparent); }
+.proof__num { color: var(--ink-4); }
+.proof__label {
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1.15;
+}
+.proof__item .body { font-size: 0.9rem; }
+
+/* ---------------------------- latest signal ---------------------------- */
+
+.signal-block__inner {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.32fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+  padding-block: clamp(36px, 5vw, 64px);
+  border-top: 1px solid var(--glass-line-2);
+  border-bottom: 1px solid var(--glass-line-2);
+}
+.signal-block__meta { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.signal-block__body { display: flex; flex-direction: column; gap: 18px; max-width: 62ch; }
+.signal-block__links { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 4px; }
+
+@media (max-width: 760px) {
+  .signal-block__inner { grid-template-columns: 1fr; }
+  .signal-block__meta { flex-direction: row; align-items: center; gap: 14px; }
+}
+
+/* ----------------------------- section head ----------------------------- */
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.28fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: start;
+  margin-bottom: clamp(38px, 5vw, 76px);
+}
+.head__index {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 0.5em;
+}
+.head__num { color: var(--ink-4); font-size: 12px; }
+.head__body { display: flex; flex-direction: column; gap: 20px; }
+.head__sub { max-width: 56ch; }
+
+@media (max-width: 760px) {
+  .head { grid-template-columns: 1fr; gap: 16px; }
+  .head__index { flex-direction: row; justify-content: space-between; padding-top: 0; }
+}
+
+/* ------------------------------- work rows ------------------------------- */
+
+.work { position: relative; }
+
+.work__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--glass-line-2);
+}
+
+.work__row { border-bottom: 1px solid var(--glass-line-2); }
+
+.work__link {
+  display: grid;
+  grid-template-columns: 52px minmax(180px, 0.9fr) minmax(0, 1.5fr) minmax(140px, 0.8fr) 28px;
+  gap: clamp(16px, 2.4vw, 40px);
+  align-items: center;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding: clamp(22px, 2.6vw, 34px) var(--gutter);
+  transition: opacity 0.45s var(--ease-out), background-color 0.5s var(--ease-out);
+}
+
+/* dim the field, light the one under the cursor */
+.work__list.is-dimmed .work__row { opacity: 0.34; }
+.work__list.is-dimmed .work__row.is-active { opacity: 1; }
+.work__row.is-active .work__link {
+  background: color-mix(in srgb, var(--void-3) 48%, transparent);
+}
+
+.work__index { color: var(--ink-4); }
+
+.work__name { margin: 0; }
+
+.work__desc {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  max-width: 52ch;
+}
+
+.work__stack { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.work__stack .mono { font-size: 10px; color: var(--ink-3); }
+
+.work__go {
+  color: var(--ink-4);
+  transition: color 0.4s var(--ease-out), transform 0.5s var(--ease-out);
+}
+.work__row.is-active .work__go { color: var(--ink); transform: translate(3px, -3px); }
+
+@media (max-width: 980px) {
+  .work__link {
+    grid-template-columns: 40px minmax(0, 1fr) 22px;
+    grid-template-areas:
+      'idx name go'
+      '.   desc desc'
+      '.   stack stack';
+    row-gap: 10px;
+    align-items: start;
+  }
+  .work__index { grid-area: idx; padding-top: 0.4em; }
+  .work__name { grid-area: name; }
+  .work__desc { grid-area: desc; }
+  .work__stack { grid-area: stack; }
+  .work__go { grid-area: go; padding-top: 0.4em; }
+  .work__list.is-dimmed .work__row { opacity: 1; }
+}
+
+/* ----------------------------- case studies ----------------------------- */
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+}
+.case-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(24px, 3vw, 40px);
+  min-height: clamp(300px, 34vw, 420px);
+  transition: background-color 0.5s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.case-card:hover {
+  background: var(--glass-2);
+  transform: translateY(-4px);
+}
+.case-card__top { display: flex; justify-content: space-between; gap: 14px; }
+.case-card__title { text-wrap: balance; }
+.case-card__tag { font-size: 0.9rem; }
+.case-card__foot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--glass-line-2);
+}
+.case-card__outcome { font-size: 0.85rem; color: var(--ink-3); }
+
+/* ------------------------------ experience ------------------------------ */
+
+.xp { list-style: none; margin: 0; padding: 0; }
+.xp__row {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.28fr) minmax(0, 1fr) minmax(160px, 0.36fr);
+  gap: clamp(18px, 3vw, 44px);
+  padding-block: clamp(26px, 3vw, 40px);
+  border-top: 1px solid var(--glass-line-2);
+  align-items: start;
+}
+.xp__row:last-child { border-bottom: 1px solid var(--glass-line-2); }
+.xp__what { display: flex; flex-direction: column; gap: 10px; max-width: 60ch; }
+.xp__role { color: var(--ink-3); }
+.xp__tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+
+@media (max-width: 900px) {
+  .xp__row { grid-template-columns: 1fr; gap: 14px; }
+  .xp__tags { justify-content: flex-start; }
+}
+
+/* ------------------------- touch target sizing -------------------------
+   Text links in the footer, menu and inline CTAs are only as tall as their
+   line box. On coarse pointers they get padded out to a 44px target. */
+@media (pointer: coarse) {
+  .site-footer__grid li a,
+  .menu__foot-link,
+  .arrow-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .site-footer__grid ul { gap: 0; }
+  .signal-block__links { gap: 20px; }
+}

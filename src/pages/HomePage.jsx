@@ -1,264 +1,332 @@
 import PropTypes from 'prop-types';
-import { Fragment, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { TypeAnimation } from 'react-type-animation';
-import {
-  ArrowGlyph,
-  Eyebrow,
-  SectionHead,
-} from '../components/Editorial';
-import FeatureProduct from '../components/FeatureProduct';
-import ProductList from '../components/ProductList';
-import { Reveal } from '../components/ScrollReveal';
+import { useEffect, useRef } from 'react';
+import { Link, useOutletContext } from 'react-router-dom';
+import WorkRows from '../components/WorkRows';
+import { useKineticText, useMagnetic, useReveal } from '../motion/hooks';
+import { gsap, prefersReducedMotion, splitChars } from '../motion/motion';
 import { caseStudies } from '../content/caseStudies';
+import { experience } from '../content/experience';
+import { latestSignal } from '../content/latestSignal';
+import { profile } from '../content/profile';
 import { conceptProducts, flagshipProducts } from '../content/projects';
 
-const HERO_HEADLINE = 'Turning messy product asks into scoped, shippable work.';
-const HERO_EYEBROW = 'Product Manager · Technical Builder';
-// Words rendered italic in the headline - kept separate from the copy so
-// changing HERO_HEADLINE doesn't silently drop or misplace the emphasis.
-const HERO_EMPHASIS = ['into'];
+const HERO_LINES = ['Ambiguous', 'to shipped'];
 
-function usePrefersReducedMotion() {
-  const [reduce, setReduce] = useState(
-    () =>
-      typeof window !== 'undefined' &&
-      typeof window.matchMedia === 'function' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  );
+/* ------------------------------- hero ------------------------------- */
+
+function Hero({ ready }) {
+  const rootRef = useRef(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    const root = rootRef.current;
+    if (!root || !ready) return undefined;
+
+    if (prefersReducedMotion()) {
+      gsap.set(root.querySelectorAll('[data-hero]'), { opacity: 1 });
       return undefined;
     }
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const onChange = () => setReduce(mq.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
 
-  return reduce;
-}
+    const ctx = gsap.context(() => {
+      const lines = gsap.utils.toArray('.hero__line');
+      const chars = lines.map((line) => splitChars(line));
 
-function MaskedHeadline({ text, emphasize }) {
-  const words = text.split(' ');
+      gsap.set('[data-hero]', { opacity: 1 });
+
+      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+
+      tl.from('.hero__eyebrow', { opacity: 0, y: 12, duration: 0.9 })
+        .from(
+          '.hero__rail-item',
+          { opacity: 0, x: -22, duration: 0.9, stagger: 0.055 },
+          '-=0.65',
+        );
+
+      chars.forEach((set, i) => {
+        tl.from(
+          set,
+          { yPercent: 118, duration: 1.35, stagger: 0.028 },
+          i === 0 ? '-=0.75' : '-=1.18',
+        );
+      });
+
+      tl.from('.hero__support', { opacity: 0, y: 20, duration: 1 }, '-=0.95');
+    }, root);
+
+    return () => ctx.revert();
+  }, [ready]);
+
   return (
-    <h1 className="display" style={{ margin: 0 }}>
-      {words.map((w, i) => (
-        <Fragment key={`${w}-${i}`}>
-          <span className="rise-mask">
-            <span
-              className="rise-word"
-              style={{ animationDelay: `${80 + i * 70}ms` }}
-              data-em={emphasize.includes(w) ? '' : undefined}
-            >
-              {w}
+    <section className="hero" ref={rootRef} aria-labelledby="hero-title">
+      {/* nav, not div: aria-label is ignored on a generic element */}
+      <nav className="hero__rail" aria-label="Active builds">
+        {flagshipProducts.slice(0, 5).map((p) => (
+          <Link
+            key={p.slug}
+            to={`/products/${p.slug}`}
+            className="pill hero__rail-item"
+            data-hero
+            style={{ opacity: 0 }}
+          >
+            {p.name}
+          </Link>
+        ))}
+        <Link
+          to="/products"
+          className="pill hero__rail-item pill--solid"
+          data-hero
+          style={{ opacity: 0 }}
+        >
+          All work
+        </Link>
+      </nav>
+
+      <p className="hero__support body" data-hero style={{ opacity: 0 }}>
+        {profile.heroSupport}
+      </p>
+
+      <div className="hero__title-block">
+        <span className="mono hero__eyebrow" data-hero style={{ opacity: 0 }}>
+          Product manager · Technical builder · Austin, TX
+        </span>
+        <h1 className="display hero__title" id="hero-title">
+          <span className="sr-only">Ambiguous to shipped</span>
+          {HERO_LINES.map((line) => (
+            <span className="hero__line-mask" key={line} aria-hidden="true">
+              <span className="hero__line" data-hero style={{ opacity: 0 }}>
+                {line}
+              </span>
             </span>
-          </span>{' '}
-        </Fragment>
-      ))}
-    </h1>
+          ))}
+        </h1>
+      </div>
+
+    </section>
   );
 }
 
-MaskedHeadline.propTypes = {
-  text: PropTypes.string.isRequired,
-  emphasize: PropTypes.arrayOf(PropTypes.string),
-};
+/* ------------------------------- proof ------------------------------- */
 
-MaskedHeadline.defaultProps = {
-  emphasize: [],
-};
+const PROOF = [
+  {
+    label: 'Requirements clarity',
+    body: 'Vague asks become user stories, acceptance criteria, validation rules, and delivery-ready scope.',
+  },
+  {
+    label: 'Cross-team execution',
+    body: 'Working across product, engineering, QA, design, operations, and stakeholder groups.',
+  },
+  {
+    label: 'Operational trust',
+    body: 'Active builds surface validation, readiness, monitoring, and failure states instead of hiding them.',
+  },
+  {
+    label: 'Measured outcomes',
+    body: 'Case studies tie decisions to launch metrics, retention, revenue, and data quality.',
+  },
+];
 
-function Hero() {
-  const reduceMotion = usePrefersReducedMotion();
+function ProofStrip() {
+  const ref = useReveal();
   return (
-    <section
-      className="section"
-      id="home"
-      style={{ paddingTop: 'clamp(64px, 9vw, 140px)' }}
-    >
-      <div className="container">
-        <div className="home-hero__copy">
-          <div className="hero-eyebrow mono uppercase">
-            {reduceMotion ? (
-              <span>{HERO_EYEBROW}</span>
-            ) : (
-              <TypeAnimation sequence={[HERO_EYEBROW]} speed={72} cursor />
-            )}
+    <section className="proof" ref={ref} style={{ opacity: 0 }} aria-label="How I work">
+      <div className="shell proof__grid">
+        {PROOF.map((item, i) => (
+          <div className="proof__item" key={item.label}>
+            <span className="mono tabular proof__num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 className="proof__label">{item.label}</h3>
+            <p className="body">{item.body}</p>
           </div>
-          <MaskedHeadline text={HERO_HEADLINE} emphasize={HERO_EMPHASIS} />
-          <Reveal
-            as="p"
-            className="hero-support"
-            delay={520}
-            distance={16}
-            duration={840}
-          >
-            Product manager / technical builder who translates stakeholder needs, user problems, and
-            engineering constraints into clear requirements, prioritized work, validation paths, and
-            release-ready workflows.
-          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------- latest signal --------------------------- */
+
+function LatestSignal() {
+  const ref = useReveal();
+  const ctaRef = useMagnetic({ strength: 0.22 });
+
+  return (
+    <section className="signal-block bay--tight" ref={ref} style={{ opacity: 0 }}>
+      <div className="shell signal-block__inner">
+        <div className="signal-block__meta">
+          <span className="pill pill--mono pill--live">
+            <span className="dot" /> Latest
+          </span>
+          <span className="mono">{latestSignal.date}</span>
+        </div>
+        <div className="signal-block__body">
+          <h2 className="h2">{latestSignal.title}</h2>
+          <p className="lead">{latestSignal.body}</p>
+          <div className="signal-block__links">
+            {latestSignal.links.map((link, i) => (
+              <Link
+                key={link.to}
+                ref={i === 0 ? ctaRef : undefined}
+                to={link.to}
+                className="arrow-link"
+              >
+                {link.label} <span className="glyph" aria-hidden="true">→</span>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function ProofStrip() {
-  const proofItems = [
-    {
-      label: 'Requirements clarity',
-      body: 'Vague asks become user stories, acceptance criteria, validation rules, and delivery-ready scope.',
-    },
-    {
-      label: 'Cross-team execution',
-      body: 'Experience working across product, engineering, QA, design, operations, and stakeholder groups.',
-    },
-    {
-      label: 'Operational trust',
-      body: 'Active builds surface validation, readiness, monitoring, and failure states instead of hiding them.',
-    },
-    {
-      label: 'Measured outcomes',
-      body: 'Case studies tie product decisions to launch metrics, retention, revenue, data quality, and workflow improvement.',
-    },
-  ];
+/* ------------------------------ section head ------------------------------ */
+
+function SectionHead({ num, eyebrow, title, sub }) {
+  const titleRef = useKineticText({ mode: 'words', stagger: 0.05 });
+  const subRef = useReveal({ delay: 0.15 });
 
   return (
-    <Reveal as="section" className="proof-strip" aria-label="Portfolio proof areas" delay={40}>
-      <div className="container proof-strip__inner">
-        {proofItems.map((item) => (
-          <div key={item.label} className="proof-strip__item">
-            <span className="mono small uppercase">{item.label}</span>
-            <p>{item.body}</p>
-          </div>
-        ))}
+    <header className="head">
+      <div className="head__index">
+        <span className="mono">{eyebrow}</span>
+        <span className="mono tabular head__num">{num}</span>
       </div>
-    </Reveal>
-  );
-}
-
-function LatestUpdate() {
-  return (
-    <Reveal
-      as="section"
-      className="latest-update"
-      aria-labelledby="latest-update-title"
-      delay={80}
-      duration={840}
-    >
-      <div className="container latest-update__inner">
-        <div className="latest-update__label mono uppercase">Latest update</div>
-        <div className="latest-update__copy">
-          <h2 id="latest-update-title" className="latest-update__title">
-            OncoPath faithfulness eval built and calibrated
-          </h2>
-          <p className="latest-update__body">
-            OncoPath, an AI-assisted cancer trial explainer, now has an accuracy-evaluation
-            harness: a frozen test set of real trials, a validator fix that took usable output
-            from 0 to 100 percent, and a second-model faithfulness judge. Human calibration
-            showed the judge is too lenient, so its 81 percent score is not trusted yet.
+      <div className="head__body">
+        <h2 className="h1" ref={titleRef} style={{ opacity: 0 }}>
+          {title}
+        </h2>
+        {sub ? (
+          <p className="lead head__sub" ref={subRef} style={{ opacity: 0 }}>
+            {sub}
           </p>
-        </div>
-        <div className="latest-update__links">
-          <Link to="/products/oncopath" className="link-arrow latest-update__link">
-            Read the build <ArrowGlyph />
-          </Link>
-          <Link to="/products/oncopath/analysis" className="link-arrow latest-update__link">
-            PM analysis <ArrowGlyph />
-          </Link>
-        </div>
+        ) : null}
       </div>
-    </Reveal>
+    </header>
   );
 }
 
-export default function HomePage() {
-  const navigate = useNavigate();
+/* ---------------------------- case studies ---------------------------- */
 
+function CaseStudies() {
+  const ref = useReveal();
   return (
-    <div className="fade-in">
-      <Hero />
-      <ProofStrip />
-      <LatestUpdate />
-
-      <section className="section" id="active">
-        <div className="container">
-          {flagshipProducts.map((p) => (
-            <FeatureProduct key={p.slug} p={p} />
+    <section className="bay" id="case-studies">
+      <div className="shell">
+        <SectionHead
+          num="03"
+          eyebrow="Case studies"
+          title="Shipped with other people, measured after launch."
+          sub="Two engagements where the product decisions are traceable to outcomes: scope, tradeoffs, and what the numbers did afterwards."
+        />
+        <div className="case-grid" ref={ref} style={{ opacity: 0 }}>
+          {caseStudies.map((c) => (
+            <Link
+              key={c.slug}
+              to={`/case-studies/${c.slug}`}
+              className="card case-card"
+            >
+              <div className="case-card__top">
+                <span className="mono">{c.company}</span>
+                <span className="mono">{c.role}</span>
+              </div>
+              <h3 className="h3 case-card__title">{c.title}</h3>
+              <p className="body case-card__tag">{c.tagline}</p>
+              <div className="case-card__foot">
+                <span className="body case-card__outcome">{c.featuredOutcome}</span>
+                <span className="arrow-link">
+                  Read <span className="glyph" aria-hidden="true">→</span>
+                </span>
+              </div>
+            </Link>
           ))}
         </div>
-      </section>
-
-      <Reveal as="section" className="section" id="concepts">
-        <div className="container">
-          <Reveal delay={80}>
-            <SectionHead
-              num="02"
-              eyebrow="Concepts & prototypes"
-              title={<>Smaller bets, sharper questions.</>}
-              sub="Concepts I prototyped to push on a single hypothesis: usability under pressure, lifecycle modeling, micro-interactions in social products."
-            />
-          </Reveal>
-          <ProductList
-            products={conceptProducts}
-            startIndex={flagshipProducts.length + 1}
-          />
-        </div>
-      </Reveal>
-
-      <Reveal as="section" className="section" id="case-studies">
-        <div className="container">
-          <Reveal className="section-head" style={{ marginBottom: 32 }}>
-            <div className="index">
-              <Eyebrow>Case studies</Eyebrow>
-              <span className="num">03</span>
-            </div>
-            <div>
-              <h2 className="sr-only">Case studies</h2>
-            </div>
-          </Reveal>
-          <div className="case-grid">
-            {caseStudies.map((c, index) => (
-              <Reveal
-                as="button"
-                key={c.slug}
-                type="button"
-                className="case-card"
-                delay={index * 90}
-                onClick={() => navigate(`/case-studies/${c.slug}`)}
-                style={{ textAlign: 'left', font: 'inherit' }}
-              >
-                <h3
-                  className="h3"
-                  style={{ margin: 0, fontSize: 'clamp(22px, 2.4vw, 32px)' }}
-                >
-                  {c.title}
-                </h3>
-                <p className="body" style={{ margin: 0, color: 'var(--ink-2)' }}>
-                  {c.tagline}
-                </p>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginTop: 'auto',
-                    paddingTop: 16,
-                  }}
-                >
-                  <span className="mono small uppercase">{c.company}</span>
-                  <span className="link-arrow" style={{ borderColor: 'transparent' }}>
-                    Read <ArrowGlyph />
-                  </span>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </Reveal>
-
-    </div>
+      </div>
+    </section>
   );
 }
+
+/* ----------------------------- experience ----------------------------- */
+
+function ExperienceList() {
+  const ref = useReveal();
+  return (
+    <section className="bay" id="experience">
+      <div className="shell">
+        <SectionHead num="04" eyebrow="Experience" title="Where the reps came from." />
+        <ol className="xp" ref={ref} style={{ opacity: 0 }}>
+          {experience.map((job) => (
+            <li className="xp__row" key={`${job.company}-${job.dates}`}>
+              <div className="xp__when">
+                <span className="mono">{job.dates}</span>
+              </div>
+              <div className="xp__what">
+                <h3 className="h3">{job.company}</h3>
+                <span className="mono xp__role">{job.role}</span>
+                <p className="body">{job.summary}</p>
+              </div>
+              <div className="xp__tags">
+                {job.tags.map((t) => (
+                  <span className="pill pill--mono" key={t}>{t}</span>
+                ))}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------- page -------------------------------- */
+
+export default function HomePage() {
+  const { loaded } = useOutletContext() ?? { loaded: true };
+
+  return (
+    <>
+      <Hero ready={loaded} />
+
+      <ProofStrip />
+
+      <LatestSignal />
+
+      <section className="bay" id="work">
+        <div className="shell">
+          <SectionHead
+            num="01"
+            eyebrow="Active builds"
+            title="Products I own end to end."
+            sub="Each one is live code with a real scope decision behind it. Open any row for the build log, the PM analysis, and what I would cut next."
+          />
+        </div>
+        <WorkRows products={flagshipProducts} startIndex={1} />
+      </section>
+
+      <section className="bay--tight" id="concepts">
+        <div className="shell">
+          <SectionHead
+            num="02"
+            eyebrow="Concepts & prototypes"
+            title="Smaller bets, sharper questions."
+            sub="Concepts prototyped to push on a single hypothesis: usability under pressure, lifecycle modeling, micro-interactions in social products."
+          />
+        </div>
+        <WorkRows products={conceptProducts} startIndex={flagshipProducts.length + 1} />
+      </section>
+
+      <CaseStudies />
+
+      <ExperienceList />
+    </>
+  );
+}
+
+Hero.propTypes = {
+  ready: PropTypes.bool,
+};
+
+SectionHead.propTypes = {
+  num: PropTypes.string.isRequired,
+  eyebrow: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
+  sub: PropTypes.string,
+};
