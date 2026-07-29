@@ -595,6 +595,31 @@ describe('portfolio routes and metadata', () => {
     expect(indexHtml).toContain('name="twitter:description"');
   });
 
+  /* Both of these were broken and produced no link card at all, so they are
+     pinned rather than left to regress. */
+  it('gives crawlers absolute canonical and Open Graph URLs', () => {
+    const indexHtml = readFileSync('index.html', 'utf8');
+    const attr = (re) => indexHtml.match(re)?.[1];
+
+    ['canonical', 'og:url', 'og:image', 'twitter:image'].forEach((key) => {
+      const value = attr(
+        new RegExp(`(?:rel|property|name)="${key}"[^>]*content="([^"]+)"|` +
+          `content="([^"]+)"[^>]*(?:rel|property|name)="${key}"`),
+      ) ?? indexHtml.match(new RegExp(`${key}"\\s+href="([^"]+)"`))?.[1];
+      expect(value, `${key} must be absolute`).toMatch(/^https:\/\//);
+    });
+  });
+
+  it('uses a raster Open Graph image, since no major platform renders SVG', () => {
+    const indexHtml = readFileSync('index.html', 'utf8');
+    const images = [...indexHtml.matchAll(/(?:og:image|twitter:image)"\s+content="([^"]+)"/g)].map(
+      (m) => m[1],
+    );
+
+    expect(images.length).toBeGreaterThan(0);
+    images.forEach((src) => expect(src).toMatch(/\.(jpg|jpeg|png)$/));
+  });
+
   it('saves the portfolio roadmap document', () => {
     const roadmap = readFileSync('docs/portfolio-roadmap.md', 'utf8');
     const pmBrief = readFileSync('docs/pm-positioning-brief.md', 'utf8');

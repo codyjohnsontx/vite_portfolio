@@ -4,26 +4,42 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="src/assets/surfboard.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="canonical" href="/" />
+    <!-- Open Graph needs absolute URLs; crawlers cannot resolve a relative
+         path, and the apex 307s to www, so www is the canonical host. -->
+    <link rel="canonical" href="https://www.cody-johnson.com/" />
     <meta
       name="description"
       content="Cody Johnson is a product operator building Track Tuner, RideSense, Wattsmith, and Diaz on Demand, with software engineering depth, business execution range, and recruiter-ready case studies."
     />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cody Johnson" />
     <meta property="og:title" content="Cody Johnson | Product Manager" />
     <meta
       property="og:description"
       content="Product-first portfolio featuring active builds, selected case studies, and execution proof across software, operations, and revenue systems."
     />
-    <meta property="og:url" content="/" />
-    <meta property="og:image" content="/social-share.svg" />
+    <meta property="og:url" content="https://www.cody-johnson.com/" />
+    <!-- JPEG, not SVG: LinkedIn, Facebook, Slack and X all decline to render
+         SVG previews, which left every shared link without a card. -->
+    <meta property="og:image" content="https://www.cody-johnson.com/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="2400" />
+    <meta property="og:image:height" content="1260" />
+    <meta
+      property="og:image:alt"
+      content="Cody Johnson's portfolio: the headline Ambiguous to shipped over a violet and amber gradient field."
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Cody Johnson | Product Manager" />
     <meta
       name="twitter:description"
       content="Product-first portfolio featuring active builds, selected case studies, and execution proof across software, operations, and revenue systems."
     />
-    <meta name="twitter:image" content="/social-share.svg" />
+    <meta name="twitter:image" content="https://www.cody-johnson.com/og-image.jpg" />
+    <meta
+      name="twitter:image:alt"
+      content="Cody Johnson's portfolio: the headline Ambiguous to shipped over a violet and amber gradient field."
+    />
     <title>Cody Johnson | Product Manager</title>
     <meta name="theme-color" content="#08080a" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#eeece7" media="(prefers-color-scheme: light)" />
