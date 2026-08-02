@@ -83,8 +83,13 @@
   transform: none;
 }
 
-/* Display serif is for headings only. Legacy set .lead in the serif, which
-   at paragraph length is noticeably harder to read on a dark canvas. */
+/* Display serif is for headings only; .lead is prose, so it stays sans.
+   This started as a legibility workaround for the old Didone display face and
+   was re-checked in the browser after the move to Source Serif 4. Legibility is
+   no longer the reason - Source Serif 4 holds up fine at .lead's ~22px on the
+   dark canvas. The reason now is hierarchy: a .lead sits directly above card
+   and section copy that is sans, so a serif .lead reads as a second heading
+   rather than as the intro paragraph it is. */
 .lead {
   font-family: var(--sans);
   font-weight: 400;

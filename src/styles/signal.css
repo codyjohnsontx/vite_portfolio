@@ -1,6 +1,6 @@
 /* =========================================================================
    SIGNAL - design system for the Cody Johnson portfolio
-   Dark-glass canvas, high-contrast Didone display, live WebGL aurora.
+   Dark-glass canvas, even-stroke transitional serif display, live WebGL aurora.
    Art-directed light + dark. Every surface is a token; nothing is hardcoded.
    ========================================================================= */
 
@@ -37,7 +37,7 @@
   --aurora-lift: 0.0;
 
   /* ---- type ---- */
-  --display: 'Bodoni Moda', 'Didot', 'Bodoni 72', 'Times New Roman', serif;
+  --display: 'Source Serif 4', 'Source Serif Pro', 'Iowan Old Style', Georgia, serif;
   --sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
