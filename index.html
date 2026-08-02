@@ -65,7 +65,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Source Serif 4: even-stroke display serif that holds up at paragraph size
          on the dark canvas. Instrument Sans: UI grotesque.
-         JetBrains Mono: meta labels and counters. -->
+         JetBrains Mono: meta labels and counters.
+
+         Two things about the Source Serif 4 request are deliberate. opsz 8..60
+         is that face's own optical-size axis range - signal.css sets
+         font-optical-sizing: auto, so the requested range has to match the
+         face rather than be carried over from a previous one. And the weight
+         ranges match the coverage the old display face had: legacy.css
+         declares font-weight 300 and 350 on some large display elements, and
+         those are meant to keep clamping up to 400, not render lighter. -->
     <link
       href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
