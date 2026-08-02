@@ -16,7 +16,7 @@ components. Two things that are easy to get wrong:
   `src/App.test.jsx` asserts its heading, body phrases, and link targets. Changing that
   copy means updating that test in the same commit.
 
-Optional per-product fields: `image`, `visualAssets`, `liveUrl`, and `year`. Cards without
+Optional per-product fields include `image`, `visualAssets`, `liveUrl`, and `year`. Cards without
 a screenshot simply omit `image` and `visualAssets` and render fine. `ProductList` requires
 `slug`, `accent`, `name`, `oneLiner`, `problem`, `audience`, and `stack`.
 

@@ -496,9 +496,9 @@ export default function ProductDetailPage() {
               {(p.updates ?? []).map((u, i) => (
                 <Reveal
                   as="article"
-                  /* 13 of the 61 updates share a PR URL with a sibling, so the
-                     URL alone is not unique. URL plus title is unique across
-                     all of them and, unlike an index, survives insertion and
+                  /* Some updates share a PR URL with a sibling entry, so the URL
+                     alone is not unique. URL plus title is unique across every
+                     update and, unlike an index, survives insertion and
                      reordering. */
                   key={`${u.url || 'update'}|${u.title || i}`}
                   className="update"
