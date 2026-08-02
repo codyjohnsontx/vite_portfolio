@@ -349,64 +349,6 @@ const allProducts = [
     ],
   },
   {
-    name: 'draftSpace',
-    slug: 'draftspace',
-    tier: 'flagship',
-    status: 'active-build',
-    year: '2026',
-    accent: 'oklch(0.66 0.16 265)',
-    role: 'Product Manager / Developer',
-    stack: [
-      'Next.js',
-      'React',
-      'TypeScript',
-      'three.js',
-      'Tailwind CSS',
-      'Zustand',
-      'IndexedDB',
-      'Cloudflare Workers',
-    ],
-    oneLiner:
-      'A system-design board you can tilt: flat it edits like any whiteboard, tilted the layers separate so a service reaching past its layer becomes a visible diagonal.',
-    audience:
-      'Engineers, product managers, and technical founders who sketch a system on a whiteboard and then have to explain which part talks to which.',
-    jtbd:
-      'When someone is designing or explaining a system, they need to see which connections cross a layer boundary without tracing every arrow by hand.',
-    problem:
-      'A whiteboard treats every box as equal. Architecture does not: data sits under services, services under clients. On a flat canvas that structure lives entirely in the arrows, so the one connection that skips a layer looks exactly like all the others.',
-    coreWorkflow: [
-      'Draw on an infinite canvas the way you would on any whiteboard: rectangles, ellipses, diamonds, selection, movement, resizing, clipboard, undo and redo, saved locally in the browser.',
-      'Give an element a node kind and a layer, data, services, or clients, and it renders as a datastore, queue, service, or decision instead of a plain box.',
-      'Draw connectors between ports. Routing is computed once as a pure function and drawn by both views, so the flat board and the tilted one cannot disagree.',
-      'Tilt the space and the tiers physically separate, so any connector crossing a layer reads as a diagonal.',
-      'Keep editing while tilted: select, drag on the tier plane with grid snapping, create connectors, delete. Every action runs through the same command store, so undo, autosave, and the live room work there too.',
-      'Open a temporary approval-based live room for cursors and shared edits when walking someone through the board.',
-    ],
-    mvpScope: [
-      'Local-first infinite canvas with pan, pointer-centered zoom, shape tools, selection, resize, clipboard, undo/redo, and IndexedDB persistence',
-      'Board schema v3 that adds connectors alongside elements and migrates v1 and v2 boards in place',
-      'Depth as the architectural tier: data at the bottom, services above, clients on top',
-      'One toggle between the 2D canvas and the 3D space over a single board document, with shared selection and a shared style inspector',
-      'Port-based connectors with orthogonal elbow routing, computed as pure functions and consumed by both renderers',
-      'Node kit rendering datastores, queues, services, and decisions from the shared shape factory, still carrying user styling',
-      'Temporary approval-based live rooms for cursors and shared edits without uploading a durable copy of the board',
-    ],
-    evidenceSignal:
-      'The 3D view is a working prototype rather than a demo reel: it shares the board document, the selection, the style inspector, and the command store with the 2D canvas, so undo, autosave, and live collaboration work in it with no new plumbing. Connectors were deliberately kept outside the existing element type so the 21 places that consume that type did not have to change. Covered by 130 unit tests and 51 end-to-end tests across Chromium, Firefox, and WebKit, including one that seeds an architecture board, toggles to 3D, drags a node, and asserts the move landed in storage and shows up unchanged in the 2D view. No users and no measured result yet.',
-    nextStep:
-      'Put the tilted view in front of people who actually draw architecture and find out whether the diagonal reads as "this crosses a layer" without being explained. Capture the flat board beside the separated tiers, since that side-by-side is the pitch. It is a working prototype, not a demo reel, but there are no users and no measured result yet.',
-    standaloneMockStatus: 'planned',
-    updates: [
-      {
-        date: 'Aug 02, 2026',
-        tag: 'PR #11',
-        title: 'Shipped the 3D space view',
-        url: 'https://github.com/codyjohnsontx/draftSpace/pull/11',
-        body: 'The same board document now opens as a flat whiteboard or as a tiered architecture diagram from one toggle. Depth is the architectural tier, data at the bottom, services above, clients on top, so tilting the space separates the layers and a connector that skips one becomes a visible diagonal. Board schema v3 adds connectors alongside elements and migrates v1 and v2 boards in place. Connectors live outside the existing element type on purpose, so the 21 consumers of that type were left alone, and one routing function feeds both renderers so the two views cannot drift. Editing in 3D dispatches through the existing command store, so undo, redo, autosave, and the live room work there without new plumbing.',
-      },
-    ],
-  },
-  {
     name: 'CTX Connect',
     slug: 'ctx-chat',
     tier: 'flagship',
@@ -561,6 +503,64 @@ const allProducts = [
         tag: 'Note',
         title: 'SMS compliance and assignment workflow wired into the MVP',
         body: 'The current build includes STOP and START handling, reassignment, internal notes, and follow-up creation inside conversation workflows. For dealership texting, accountability and baseline compliance need to exist from day one.',
+      },
+    ],
+  },
+  {
+    name: 'draftSpace',
+    slug: 'draftspace',
+    tier: 'flagship',
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.66 0.16 265)',
+    role: 'Product Manager / Developer',
+    stack: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'three.js',
+      'Tailwind CSS',
+      'Zustand',
+      'IndexedDB',
+      'Cloudflare Workers',
+    ],
+    oneLiner:
+      'A system-design board you can tilt: flat it edits like any whiteboard, tilted the layers separate so a service reaching past its layer becomes a visible diagonal.',
+    audience:
+      'Engineers, product managers, and technical founders who sketch a system on a whiteboard and then have to explain which part talks to which.',
+    jtbd:
+      'When someone is designing or explaining a system, they need to see which connections cross a layer boundary without tracing every arrow by hand.',
+    problem:
+      'A whiteboard treats every box as equal. Architecture does not: data sits under services, services under clients. On a flat canvas that structure lives entirely in the arrows, so the one connection that skips a layer looks exactly like all the others.',
+    coreWorkflow: [
+      'Draw on an infinite canvas the way you would on any whiteboard: rectangles, ellipses, diamonds, selection, movement, resizing, clipboard, undo and redo, saved locally in the browser.',
+      'Give an element a node kind and a layer, data, services, or clients, and it renders as a datastore, queue, service, or decision instead of a plain box.',
+      'Draw connectors between ports. Routing is computed once as a pure function and drawn by both views, so the flat board and the tilted one cannot disagree.',
+      'Tilt the space and the tiers physically separate, so any connector crossing a layer reads as a diagonal.',
+      'Keep editing while tilted: select, drag on the tier plane with grid snapping, create connectors, delete. Every action runs through the same command store, so undo, autosave, and the live room work there too.',
+      'Open a temporary approval-based live room for cursors and shared edits when walking someone through the board.',
+    ],
+    mvpScope: [
+      'Local-first infinite canvas with pan, pointer-centered zoom, shape tools, selection, resize, clipboard, undo/redo, and IndexedDB persistence',
+      'Board schema v3 that adds connectors alongside elements and migrates v1 and v2 boards in place',
+      'Depth as the architectural tier: data at the bottom, services above, clients on top',
+      'One toggle between the 2D canvas and the 3D space over a single board document, with shared selection and a shared style inspector',
+      'Port-based connectors with orthogonal elbow routing, computed as pure functions and consumed by both renderers',
+      'Node kit rendering datastores, queues, services, and decisions from the shared shape factory, still carrying user styling',
+      'Temporary approval-based live rooms for cursors and shared edits without uploading a durable copy of the board',
+    ],
+    evidenceSignal:
+      'The 3D view is a working prototype rather than a demo reel: it shares the board document, the selection, the style inspector, and the command store with the 2D canvas, so undo, autosave, and live collaboration work in it with no new plumbing. Connectors were deliberately kept outside the existing element type so the 21 places that consume that type did not have to change. Covered by 130 unit tests and 51 end-to-end tests across Chromium, Firefox, and WebKit, including one that seeds an architecture board, toggles to 3D, drags a node, and asserts the move landed in storage and shows up unchanged in the 2D view. No users and no measured result yet.',
+    nextStep:
+      'Put the tilted view in front of people who actually draw architecture and find out whether the diagonal reads as "this crosses a layer" without being explained. Capture the flat board beside the separated tiers, since that side-by-side is the pitch. It is a working prototype, not a demo reel, but there are no users and no measured result yet.',
+    standaloneMockStatus: 'planned',
+    updates: [
+      {
+        date: 'Aug 02, 2026',
+        tag: 'PR #11',
+        title: 'Shipped the 3D space view',
+        url: 'https://github.com/codyjohnsontx/draftSpace/pull/11',
+        body: 'The same board document now opens as a flat whiteboard or as a tiered architecture diagram from one toggle. Depth is the architectural tier, data at the bottom, services above, clients on top, so tilting the space separates the layers and a connector that skips one becomes a visible diagonal. Board schema v3 adds connectors alongside elements and migrates v1 and v2 boards in place. Connectors live outside the existing element type on purpose, so the 21 consumers of that type were left alone, and one routing function feeds both renderers so the two views cannot drift. Editing in 3D dispatches through the existing command store, so undo, redo, autosave, and the live room work there without new plumbing.',
       },
     ],
   },
