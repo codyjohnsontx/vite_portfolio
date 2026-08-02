@@ -44,6 +44,12 @@ import oasisPersonalBest from '../assets/oasis-race-control/oasis-race-control-0
 import oasisDriverPortal from '../assets/oasis-race-control/oasis-race-control-05-driver-portal.png?shot';
 import oasisArchitecture from '../assets/oasis-race-control/oasis-race-control-06-architecture.png?shot';
 
+/* Entry order is significant. This array flows into `flagshipProducts`, which two
+   fixed-size surfaces slice from the top: `flagshipProducts.slice(0, 3)` in
+   src/components/TopBar.jsx (the overlay menu) and `flagshipProducts.slice(0, 5)` in
+   src/pages/HomePage.jsx (the home hero rail). Inserting a flagship above an existing
+   one silently pushes the last entry off those surfaces. The first three flagship slugs
+   are pinned by a test in src/App.test.jsx. */
 const allProducts = [
   {
     name: 'Track Tuner',
@@ -1110,7 +1116,6 @@ const allProducts = [
       'Stripe billing lifecycle covering resubscribes, refunds, chargebacks, won disputes, and simultaneous checkouts',
       'Mux video delivery',
       'Admin publishing workflow',
-      'Developer auth bypass gated on a loopback database and shipped off in every example config',
     ],
     evidenceSignal:
       'Auth, entitlement, Stripe, and Mux are integrated, so this is a working subscription product rather than a static content library. The latest cycle went after the paths where money moves and access does not follow: a returning customer who cancelled and resubscribed used to pay and receive nothing, refunds and chargebacks left access switched on, a member who won a chargeback dispute stayed locked out for good, and two simultaneous checkouts could double-charge. It also closed a developer authentication bypass that depended on a single environment variable nothing in the repo set. The product is pre-launch: no customer has paid, so there is no measured result yet.',

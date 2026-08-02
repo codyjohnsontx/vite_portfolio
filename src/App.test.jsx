@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 import { blogPosts } from './content/blogPosts';
 import { caseStudies } from './content/caseStudies';
-import { allProducts, products } from './content/projects';
+import { allProducts, flagshipProducts, products } from './content/projects';
 
 function renderApp(initialEntry = '/') {
   return render(
@@ -115,6 +115,16 @@ describe('portfolio routes and metadata', () => {
     expect(products.some((product) => product.slug === 'overlap-racing-radar')).toBe(false);
     expect(products.some((product) => product.slug === 'strava-component-lifecycle')).toBe(false);
     expect(products.some((product) => product.slug === 'instagram-comment-gif-vault')).toBe(false);
+  });
+
+  /* The overlay menu renders only the first three flagships, so inserting a card
+     above CTX Connect silently drops it out of the site owner's own menu. */
+  it('keeps the overlay menu on the first three flagship products', () => {
+    expect(flagshipProducts.slice(0, 3).map((p) => p.slug)).toEqual([
+      'track-tuner',
+      'oasis-race-control',
+      'ctx-chat',
+    ]);
   });
 
   it('does not expose Overlap on primary public product surfaces', () => {
