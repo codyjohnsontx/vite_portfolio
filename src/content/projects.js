@@ -265,7 +265,7 @@ const allProducts = [
     evidenceSignal:
       'These have been design, reliability, and unattended-operation cycles, not metrics cycles. The wall board runs in a shop for hours with nobody watching it, so recovering by itself is the requirement rather than a nice-to-have; it was verified against a production build in a real browser at 1920x1080, including killing the server mid-rotation to watch it come back. League night went from an idea customers kept asking about to something the venue can run on a Wednesday. The scoring scale first shipped as an invented placeholder, labelled as a guess, and was corrected only after asking the venue what they actually score. No engagement, retention, or conversion is claimed, and no measured result exists yet.',
     nextStep:
-      'Run a real league night at the venue and watch what staff still do by hand that the app should be doing. Capture the wall board mid-rotation and the league standings on a phone. Keep the rig agent and the timing board resilient as more simulators come online.',
+      'Run a real league night at the venue and watch what staff still do by hand that the app should be doing. Capture the wall board mid-rotation and the league standings on a phone. Keep the rig agent and the timing board resilient as more simulators come online. These have been design, reliability, and unattended-operation cycles rather than metrics cycles: no engagement, retention, or conversion is claimed, and no measured result exists yet.',
     standaloneMockStatus: 'in-progress',
     visualAssets: {
       note:
@@ -394,7 +394,7 @@ const allProducts = [
     evidenceSignal:
       'The 3D view is a working prototype rather than a demo reel: it shares the board document, the selection, the style inspector, and the command store with the 2D canvas, so undo, autosave, and live collaboration work in it with no new plumbing. Connectors were deliberately kept outside the existing element type so the 21 places that consume that type did not have to change. Covered by 130 unit tests and 51 end-to-end tests across Chromium, Firefox, and WebKit, including one that seeds an architecture board, toggles to 3D, drags a node, and asserts the move landed in storage and shows up unchanged in the 2D view. No users and no measured result yet.',
     nextStep:
-      'Put the tilted view in front of people who actually draw architecture and find out whether the diagonal reads as "this crosses a layer" without being explained. Capture the flat board beside the separated tiers, since that side-by-side is the pitch.',
+      'Put the tilted view in front of people who actually draw architecture and find out whether the diagonal reads as "this crosses a layer" without being explained. Capture the flat board beside the separated tiers, since that side-by-side is the pitch. It is a working prototype, not a demo reel, but there are no users and no measured result yet.',
     standaloneMockStatus: 'planned',
     updates: [
       {
@@ -1120,14 +1120,14 @@ const allProducts = [
     updates: [
       {
         date: 'Aug 02, 2026',
-        tag: 'PR #6',
+        tag: 'DiazOnDemand PR #6',
         title: 'Gated the developer auth bypass on a loopback database',
         url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/6',
         body: 'The bypass that skips sign-in during development depended on a single environment variable that nothing in the repo set. A server pointed at anything other than a loopback database now refuses to start with the bypass enabled, whatever the configuration says. All four example config files ship with it off and an explicit warning next to it.',
       },
       {
         date: 'Aug 02, 2026',
-        tag: 'PR #7',
+        tag: 'DiazOnDemand PR #7',
         title: 'Made the Stripe billing lifecycle survive real customers',
         url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/7',
         body: 'Four ways a member could end up on the wrong side of the paywall, all closed. A customer who cancelled and came back paid and received nothing. Refunds and chargebacks left access switched on. A member who won a chargeback dispute stayed locked out permanently. Two checkouts started at once could double-charge, so checkout now takes a durable reservation. Access granted by hand is protected from being overwritten by Stripe. Nobody has paid yet, so this is correctness work before launch rather than a fix to a live incident.',
