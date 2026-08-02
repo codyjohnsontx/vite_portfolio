@@ -76,7 +76,8 @@ This file consolidates the strongest product-relevant evidence currently reflect
 ## Active builds to keep product-first
 
 - Track Tuner: audience, problem, and feature set are now strong enough for homepage-level detail, but it is still too early for a full polished case study.
-- Diaz on Demand: working MVP slices across web, API, mobile, billing, and admin make it credible publicly, but production hardening details should stay selective.
+- Diaz on Demand: working MVP slices across web, API, mobile, billing, and admin are worth showing publicly, but it is pre-launch and no customer has paid. The recent work fixed billing paths where money moved and access did not follow, so present it as correctness before launch, not as a live product, and keep other production hardening details selective.
+- draftSpace: the tilt from a flat whiteboard to separated architecture tiers is the clearest single idea to lead with, but it is a working prototype with no users, so keep it at card level rather than writing it up as a case study.
 
 ## Weak spots to handle carefully
 

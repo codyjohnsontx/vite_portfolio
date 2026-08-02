@@ -1,12 +1,9 @@
 /* The "Latest" block on the home page. Kept here with the rest of the
    content so the copy and its date can be updated without touching layout. */
 export const latestSignal = {
-  date: 'July 2026',
-  title: 'OncoPath faithfulness eval built and calibrated',
+  date: 'August 2026',
+  title: 'draftSpace: a system-design board you can tilt',
   body:
-    'OncoPath, an AI-assisted cancer trial explainer, now has an accuracy-evaluation harness: a frozen test set of real trials, a validator fix that took usable output from 0 to 100 percent, and a second-model faithfulness judge. Human calibration showed the judge is too lenient, so its 81 percent score is not trusted yet.',
-  links: [
-    { label: 'Read the build', to: '/products/oncopath' },
-    { label: 'PM analysis', to: '/products/oncopath/analysis' },
-  ],
+    'I shipped the first working prototype of the draftSpace 3D space view. Flat, the board edits like any whiteboard. Tilt it and the layers separate, data at the bottom, services above, clients on top, so a service reaching past its layer shows up as a diagonal instead of an arrow you have to trace. One board document, two views, sharing the same selection, undo, and autosave. No users and no measured result yet.',
+  links: [{ label: 'Read the build', to: '/products/draftspace' }],
 };
