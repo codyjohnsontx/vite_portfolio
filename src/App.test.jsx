@@ -35,21 +35,15 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Measured outcomes')).toBeTruthy();
     expect(screen.getByText('Latest')).toBeTruthy();
     expect(
-      screen.getByRole('heading', { name: 'OncoPath faithfulness eval built and calibrated' }),
+      screen.getByRole('heading', { name: 'draftSpace: a system-design board you can tilt' }),
     ).toBeTruthy();
-    expect(screen.getAllByText(/frozen test set/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/0 to 100 percent/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/faithfulness judge/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/not trusted yet/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/first working prototype/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/the layers separate/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/no measured result yet/i).length).toBeGreaterThan(0);
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
-        .some((link) => link.getAttribute('href') === '/products/oncopath'),
-    ).toBe(true);
-    expect(
-      screen
-        .getAllByRole('link', { name: /PM analysis/i })
-        .some((link) => link.getAttribute('href') === '/products/oncopath/analysis'),
+        .some((link) => link.getAttribute('href') === '/products/draftspace'),
     ).toBe(true);
   });
 

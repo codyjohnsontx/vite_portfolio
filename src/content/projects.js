@@ -227,21 +227,30 @@ const allProducts = [
     image: oasisLanding,
     liveUrl: 'https://oasis-race-control.vercel.app',
     role: 'Full-stack product builder',
-    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Neon Postgres', '.NET'],
+    stack: [
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'Neon Postgres',
+      'Postgres concurrency control',
+      '.NET',
+    ],
     oneLiner:
-      'Check-in and live-timing for a sim-racing venue: drivers scan a QR at their simulator to check in, a front-of-store TV shows who is fastest tonight, drivers see their own laps on their phone, and staff run the floor from a dashboard.',
+      'Check-in and live-timing for a sim-racing venue: drivers scan a QR at their simulator to check in, the front-of-store screen cycles every track’s leaderboard on its own, drivers compare their laps on their phone, and staff run the floor and league night from a dashboard.',
     audience:
-      'Drivers at Oasis Sim Racing, the front-of-store spectators watching the timing board, and the staff running the floor during a shift.',
+      'Drivers at Oasis Sim Racing, the league regulars racing weekly rounds, the front-of-store spectators watching the timing board, and the staff running the floor during a shift.',
     jtbd:
-      'When a driver sits down at a simulator, they need to check in, set laps, and see where they stand tonight without staff walking each person through it, while the front of the store shows the standings and staff keep the floor moving.',
+      'When a driver sits down at a simulator, they need to check in, set laps, and see where they stand tonight without staff walking each person through it, while the front of the store shows the standings without anyone tending it and staff keep the floor and the league season moving.',
     problem:
-      'A sim-racing venue runs on lap times and turnover, but the check-in, the timing board, and the driver’s own results were living in a placeholder theme that did not look like the business. This cycle was about making the app feel like Oasis Sim Racing and deciding, screen by screen, who each surface is for.',
+      'A sim-racing venue runs on lap times and turnover. The check-in, the timing board, and the driver’s own results started out in a placeholder theme that did not look like the business, the wall screen needed someone to babysit it, and league night was something customers kept asking for that the app had no concept of. Recent cycles have been about making each surface look like Oasis Sim Racing, deciding screen by screen who it is for, and then getting the wall board to run a full shift unattended.',
     coreWorkflow: [
       'A driver scans the QR at their simulator and lands on a check-in screen with a glowing rig number, then drives as a guest or signs into a saved profile.',
       'Laps ship from each simulator through a separate .NET rig agent, then show up on the driver’s phone portal and on the front-of-store TV.',
       'The live-timing board ranks who is fastest tonight with a gold-highlighted leader and a running gap to P1.',
+      'Left alone, that board cycles every track on a timer, skips tracks with no laps yet, and holds the last standings it saw if the timing feed drops.',
       'When a driver beats their own best, the board fires a full-screen personal-best celebration with the new time.',
-      'Staff run check-ins, rig assignments, and the floor from a separate dashboard.',
+      'On league night, weekly rounds roll into a monthly season, and drivers pull up full-field lap comparison on their phone after a race.',
+      'Staff run check-ins, rig assignments, the floor, and the season roll from a separate dashboard.',
     ],
     mvpScope: [
       'Real Oasis Sim Racing brand applied across every customer screen: landing, QR check-in, live-timing board, and driver portal',
@@ -249,11 +258,14 @@ const allProducts = [
       'Staff dashboard kept deliberately plain, the same fonts and colors with no glows or gradients, so it stays fast to read during a shift',
       'Timing numbers kept big, white, and monospace so they read across the room, with glow supplementing contrast instead of replacing it',
       'Separate .NET rig agent that reads telemetry and ships laps from each simulator, hardened this cycle with config validation, background-loop error handling, and thread safety',
+      'Unattended wall board that rotates through every track leaderboard on a timer, skips boards with no lap times instead of showing a blank screen, and recovers on its own when the timing feed comes back',
+      'League night end to end: weekly rounds rolling into monthly seasons, driver participation, season standings, a league board for the wall, a staff control that closes one month and opens the next in a single transaction, and full-field expandable lap comparison sized for a phone',
+      'Scoring on the venue’s real rule, 5/4/3/2/1 for the top five and one point for anyone who turns up, with a database lock on season rolling',
     ],
     evidenceSignal:
-      'This was a design, reliability, and documentation cycle, not a metrics cycle. The point was to apply the brand with intent: bold and celebratory for drivers and the front-of-store board, calm and readable for staff who use their screen mid-shift. Legibility came first, so the timing numbers stay high-contrast and the glow only supplements them. No engagement, retention, or conversion is claimed yet.',
+      'These have been design, reliability, and unattended-operation cycles, not metrics cycles. The wall board runs in a shop for hours with nobody watching it, so recovering by itself is the requirement rather than a nice-to-have; it was verified against a production build in a real browser at 1920x1080, including killing the server mid-rotation to watch it come back. League night went from an idea customers kept asking about to something the venue can run on a Wednesday. The scoring scale first shipped as an invented placeholder, labelled as a guess, and was corrected only after asking the venue what they actually score. No engagement, retention, or conversion is claimed, and no measured result exists yet.',
     nextStep:
-      'Run it through a real shift at the venue and watch where the branded screens help or get in the way, then fold in whatever the floor actually needs. Keep the rig agent and the timing board resilient as more simulators come online.',
+      'Run a real league night at the venue and watch what staff still do by hand that the app should be doing. Capture the wall board mid-rotation and the league standings on a phone. Keep the rig agent and the timing board resilient as more simulators come online.',
     standaloneMockStatus: 'in-progress',
     visualAssets: {
       note:
@@ -293,6 +305,27 @@ const allProducts = [
     },
     updates: [
       {
+        date: 'Aug 01, 2026',
+        tag: 'PR #16',
+        title: 'Corrected league scoring to the venue’s real rule',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/16',
+        body: 'League scoring first shipped on a placeholder scale I made up, and I labelled it as a guess. I asked the venue what they actually score and replaced it: 5/4/3/2/1 for the top five, one point for anyone who turns up. The same change added a database lock around rolling a season, with a concurrency test that fails without it.',
+      },
+      {
+        date: 'Aug 01, 2026',
+        tag: 'PR #15',
+        title: 'Built league night from nothing',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/15',
+        body: 'There was no league, season, round, or event anywhere in the schema before this. I added weekly rounds that roll into monthly seasons, driver participation, season standings, a staff control that closes one month and opens the next in a single transaction, a league board for the wall screen, and full-field expandable lap comparison sized for a phone so drivers can compare their laps against the field right after a race.',
+      },
+      {
+        date: 'Aug 01, 2026',
+        tag: 'PR #14',
+        title: 'Turned the wall screen into an unattended arcade board',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/14',
+        body: 'The front-of-store screen now runs itself. It cycles every track’s leaderboard on a timer with nobody touching it, skips tracks with no lap times instead of showing a blank board, holds the last standings it saw when the timing feed drops, and picks back up on its own when the feed returns. Verified against a production build in a real browser at 1920x1080, including killing the server mid-rotation to watch it recover.',
+      },
+      {
         date: 'Jul 13, 2026',
         tag: 'PR #5',
         title: 'Documented how the system fits together',
@@ -312,6 +345,64 @@ const allProducts = [
         title: 'Hardened the .NET rig agent that ships laps',
         url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/3',
         body: 'Made the rig agent that reads telemetry and ships laps from each simulator more resilient: config validation on startup, error handling in the background loop so one bad cycle does not take it down, and thread safety around the shared state.',
+      },
+    ],
+  },
+  {
+    name: 'draftSpace',
+    slug: 'draftspace',
+    tier: 'flagship',
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.66 0.16 265)',
+    role: 'Product Manager / Developer',
+    stack: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'three.js',
+      'Tailwind CSS',
+      'Zustand',
+      'IndexedDB',
+      'Cloudflare Workers',
+    ],
+    oneLiner:
+      'A system-design board you can tilt: flat it edits like any whiteboard, tilted the layers separate so a service reaching past its layer becomes a visible diagonal.',
+    audience:
+      'Engineers, product managers, and technical founders who sketch a system on a whiteboard and then have to explain which part talks to which.',
+    jtbd:
+      'When someone is designing or explaining a system, they need to see which connections cross a layer boundary without tracing every arrow by hand.',
+    problem:
+      'A whiteboard treats every box as equal. Architecture does not: data sits under services, services under clients. On a flat canvas that structure lives entirely in the arrows, so the one connection that skips a layer looks exactly like all the others.',
+    coreWorkflow: [
+      'Draw on an infinite canvas the way you would on any whiteboard: rectangles, ellipses, diamonds, selection, movement, resizing, clipboard, undo and redo, saved locally in the browser.',
+      'Give an element a node kind and a layer, data, services, or clients, and it renders as a datastore, queue, service, or decision instead of a plain box.',
+      'Draw connectors between ports. Routing is computed once as a pure function and drawn by both views, so the flat board and the tilted one cannot disagree.',
+      'Tilt the space and the tiers physically separate, so any connector crossing a layer reads as a diagonal.',
+      'Keep editing while tilted: select, drag on the tier plane with grid snapping, create connectors, delete. Every action runs through the same command store, so undo, autosave, and the live room work there too.',
+      'Open a temporary approval-based live room for cursors and shared edits when walking someone through the board.',
+    ],
+    mvpScope: [
+      'Local-first infinite canvas with pan, pointer-centered zoom, shape tools, selection, resize, clipboard, undo/redo, and IndexedDB persistence',
+      'Board schema v3 that adds connectors alongside elements and migrates v1 and v2 boards in place',
+      'Depth as the architectural tier: data at the bottom, services above, clients on top',
+      'One toggle between the 2D canvas and the 3D space over a single board document, with shared selection and a shared style inspector',
+      'Port-based connectors with orthogonal elbow routing, computed as pure functions and consumed by both renderers',
+      'Node kit rendering datastores, queues, services, and decisions from the shared shape factory, still carrying user styling',
+      'Temporary approval-based live rooms for cursors and shared edits without uploading a durable copy of the board',
+    ],
+    evidenceSignal:
+      'The 3D view is a working prototype rather than a demo reel: it shares the board document, the selection, the style inspector, and the command store with the 2D canvas, so undo, autosave, and live collaboration work in it with no new plumbing. Connectors were deliberately kept outside the existing element type so the 21 places that consume that type did not have to change. Covered by 130 unit tests and 51 end-to-end tests across Chromium, Firefox, and WebKit, including one that seeds an architecture board, toggles to 3D, drags a node, and asserts the move landed in storage and shows up unchanged in the 2D view. No users and no measured result yet.',
+    nextStep:
+      'Put the tilted view in front of people who actually draw architecture and find out whether the diagonal reads as "this crosses a layer" without being explained. Capture the flat board beside the separated tiers, since that side-by-side is the pitch.',
+    standaloneMockStatus: 'planned',
+    updates: [
+      {
+        date: 'Aug 02, 2026',
+        tag: 'PR #11',
+        title: 'Shipped the 3D space view',
+        url: 'https://github.com/codyjohnsontx/draftSpace/pull/11',
+        body: 'The same board document now opens as a flat whiteboard or as a tiered architecture diagram from one toggle. Depth is the architectural tier, data at the bottom, services above, clients on top, so tilting the space separates the layers and a connector that skips one becomes a visible diagonal. Board schema v3 adds connectors alongside elements and migrates v1 and v2 boards in place. Connectors live outside the existing element type on purpose, so the 21 consumers of that type were left alone, and one routing function feeds both renderers so the two views cannot drift. Editing in 3D dispatches through the existing command store, so undo, redo, autosave, and the live room work there without new plumbing.',
       },
     ],
   },
@@ -988,8 +1079,17 @@ const allProducts = [
     accent: 'oklch(0.62 0.18 240)',
     image: diazMa,
     role: 'Product Manager / Developer',
-    stack: ['React', 'TypeScript', 'Node.js', 'Stripe', 'Mux'],
-    oneLiner: 'Subscription training platform for structured martial arts courses across affiliate schools.',
+    stack: [
+      'React',
+      'TypeScript',
+      'Node.js',
+      'Stripe subscriptions and webhooks',
+      'Entitlement model',
+      'Mux signed playback',
+      'Clerk',
+    ],
+    oneLiner:
+      'Subscription training platform for structured martial arts courses across affiliate schools, pre-launch while the billing and access paths get proven out.',
     audience:
       'Martial arts students, coaches, and admins who need premium training content with clear progression and access control.',
     jtbd:
@@ -1000,21 +1100,38 @@ const allProducts = [
       'Member signs in and receives entitlement-based access.',
       'Learner enters a structured program and progresses through course lessons.',
       'Video playback and progress state remain synced across sessions.',
+      'Billing events move access in both directions: a resubscribe restores it, a refund or chargeback removes it, a won dispute gives it back, and access granted by hand is protected from being overwritten.',
       'Admins publish and manage course content while subscriptions stay gated through billing rules.',
     ],
     mvpScope: [
       'Membership and entitlement architecture',
       'Course progression model',
       'Stripe subscription integration',
+      'Stripe billing lifecycle covering resubscribes, refunds, chargebacks, won disputes, and simultaneous checkouts',
       'Mux video delivery',
       'Admin publishing workflow',
+      'Developer auth bypass gated on a loopback database and shipped off in every example config',
     ],
     evidenceSignal:
-      'Auth, entitlement, Stripe, and Mux are already integrated, creating a working subscription product foundation instead of a static content library.',
+      'Auth, entitlement, Stripe, and Mux are integrated, so this is a working subscription product rather than a static content library. The latest cycle went after the paths where money moves and access does not follow: a returning customer who cancelled and resubscribed used to pay and receive nothing, refunds and chargebacks left access switched on, a member who won a chargeback dispute stayed locked out for good, and two simultaneous checkouts could double-charge. It also closed a developer authentication bypass that depended on a single environment variable nothing in the repo set. The product is pre-launch: no customer has paid, so there is no measured result yet.',
     nextStep:
-      'Expand multi-academy LMS controls and validate onboarding + retention patterns across affiliate school cohorts.',
+      'Get it to launch: fill the catalogue, then run real payments through the fixed billing paths. Onboarding and retention patterns across affiliate school cohorts, and the broader multi-academy LMS controls, can only be validated once members are actually paying.',
     standaloneMockStatus: 'in-progress',
     updates: [
+      {
+        date: 'Aug 02, 2026',
+        tag: 'PR #6',
+        title: 'Gated the developer auth bypass on a loopback database',
+        url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/6',
+        body: 'The bypass that skips sign-in during development depended on a single environment variable that nothing in the repo set. A server pointed at anything other than a loopback database now refuses to start with the bypass enabled, whatever the configuration says. All four example config files ship with it off and an explicit warning next to it.',
+      },
+      {
+        date: 'Aug 02, 2026',
+        tag: 'PR #7',
+        title: 'Made the Stripe billing lifecycle survive real customers',
+        url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/7',
+        body: 'Four ways a member could end up on the wrong side of the paywall, all closed. A customer who cancelled and came back paid and received nothing. Refunds and chargebacks left access switched on. A member who won a chargeback dispute stayed locked out permanently. Two checkouts started at once could double-charge, so checkout now takes a durable reservation. Access granted by hand is protected from being overwritten by Stripe. Nobody has paid yet, so this is correctness work before launch rather than a fix to a live incident.',
+      },
       {
         date: 'May 01, 2026',
         tag: 'PR #10',
