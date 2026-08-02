@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://www.coderabbit.ai/integrations/schema.v2.json
 # CodeRabbit configuration
 #
 # Goal: keep the full review quality Cody values, while cutting the number of
