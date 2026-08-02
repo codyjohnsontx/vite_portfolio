@@ -16,14 +16,15 @@ components. Two things that are easy to get wrong:
   `src/App.test.jsx` asserts its heading, body phrases, and link targets. Changing that
   copy means updating that test in the same commit.
 
-Optional per-product fields include `image`, `visualAssets`, `liveUrl`, and `year`. Cards without
-a screenshot simply omit `image` and `visualAssets` and render fine. `ProductList` requires
-`slug`, `accent`, `name`, `oneLiner`, `problem`, `audience`, and `stack`.
+For the per-product record shape, which fields exist and which are optional, read
+`src/content/projects.js` alongside the `ProductList` propTypes in
+`src/components/ProductList.jsx`. For the supported `status` values, read
+`src/content/productHelpers.js`.
 
-`status` only has two supported values in `src/content/productHelpers.js`
-(`active-build`, `prototype`); anything else logs a warning and renders "Unknown status".
-Nothing currently renders it, so express lifecycle nuance ("pre-launch", "prototype") in the
-copy rather than inventing a new status string.
+Two things those files will not tell you. Nothing currently renders `status`, so express
+lifecycle nuance ("pre-launch", "prototype") in the copy rather than inventing a new status
+value. And a product with no screenshot should omit `image` and `visualAssets` rather than
+carry a placeholder path.
 
 ## Maintaining this file
 
