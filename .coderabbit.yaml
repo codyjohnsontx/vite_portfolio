@@ -39,15 +39,32 @@ reviews:
   # Source, tests and documentation are deliberately NOT filtered: today's most
   # useful comments were on markdown, and that is worth paying for.
   #
-  # Two deliberate non-filters:
-  #   - package-lock.json is left reviewable. A lockfile is where transitive
-  #     dependencies, integrity hashes and registry URLs change, and it is the
-  #     input CodeRabbit's dependency-vulnerability scanning reads. Filtering it
-  #     turns that scanning off.
-  #   - *.svg is left reviewable. SVG is text, it diffs readably, and it can
-  #     carry inline <script>, on* handlers or javascript: hrefs. This repo
-  #     tracks SVGs, so it matters here.
+  # CodeRabbit ships a default ignore list of ~100 patterns - lock files,
+  # binaries, generated code, media - that applies whether or not this file
+  # mentions them. Both `!**/package-lock.json` and `!**/*.svg` are in it. So
+  # simply leaving something out of the exclusions below does NOT get it
+  # reviewed; the built-in default still skips it. An entry WITHOUT a leading
+  # `!` is the documented override that forces a default-ignored path back into
+  # review.
   path_filters:
+    # LOAD-BEARING. Both entries below are force-includes overriding a
+    # CodeRabbit default exclusion. Deleting either silently turns off the
+    # review it exists to buy - nothing will fail, the file just stops being
+    # read.
+    #
+    # The lockfile is where transitive dependencies, integrity hashes and
+    # registry URLs change, and it is the input CodeRabbit's
+    # dependency-vulnerability scanning reads. Skipping it disables that
+    # scanning.
+    - "package-lock.json"
+    # SVG is text, it diffs readably, and it can carry inline <script>, on*
+    # handlers or javascript: hrefs. This repo tracks SVGs, so it matters here.
+    # Deliberately not grouped with the inert raster formats below.
+    - "**/*.svg"
+
+    # Exclusions. Several of these restate a CodeRabbit default; they are kept
+    # written down so the intent survives a change to those defaults.
+    #
     # Vite build output. Git-ignored, listed as a guard against a stray commit.
     - "!**/dist/**"
     # Raster screenshots and photos under src/assets, docs/assets and public.
