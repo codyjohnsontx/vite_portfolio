@@ -62,11 +62,14 @@ reviews:
     # down.
     - "**/package-lock.json"
 
-    # SVG stays on CodeRabbit's default ignore list. It can carry inline
-    # <script>, on* handlers or javascript: hrefs, but only once it is inlined
-    # into the page, and this repo's tracked SVGs are static files nothing
-    # imports. If an SVG is ever inlined into the app, where that script content
-    # could execute, revisit this and force-include `**/*.svg`.
+    # SVG stays on CodeRabbit's default ignore list. The inlined SVG in this
+    # repo is JavaScript source - literal <svg> markup in src/content/*.js
+    # rendered through dangerouslySetInnerHTML - which CodeRabbit reviews as
+    # source anyway, so a `*.svg` filter neither helps nor hurts it. The tracked
+    # .svg files are static and unreferenced by any source, so they are never
+    # inlined and nothing in them can execute. Force-including `**/*.svg` would
+    # be warranted only if a standalone .svg file were inlined or otherwise
+    # executed rather than served as a static image. That is not the case today.
 
     # Exclusions. Several of these restate a CodeRabbit default; they are kept
     # written down so the intent survives a change to those defaults.
