@@ -47,9 +47,10 @@ reviews:
   # `!` is the documented override that forces a default-ignored path back into
   # review.
   path_filters:
-    # LOAD-BEARING. The entry below is a force-include overriding a CodeRabbit
-    # default exclusion. Deleting it silently turns off the review it exists to
-    # buy - nothing will fail, the file just stops being read.
+    # LOAD-BEARING. Both entries below are force-includes overriding a
+    # CodeRabbit default exclusion. Deleting either silently turns off the
+    # review it exists to buy - nothing will fail, the file just stops being
+    # read.
     #
     # The lockfile is where transitive dependencies, integrity hashes and
     # registry URLs change, and it is the input CodeRabbit's
@@ -62,14 +63,19 @@ reviews:
     # down.
     - "**/package-lock.json"
 
-    # SVG stays on CodeRabbit's default ignore list. The inlined SVG in this
-    # repo is JavaScript source - literal <svg> markup in src/content/*.js
-    # rendered through dangerouslySetInnerHTML - which CodeRabbit reviews as
-    # source anyway, so a `*.svg` filter neither helps nor hurts it. The tracked
-    # .svg files are static and unreferenced by any source, so they are never
-    # inlined and nothing in them can execute. Force-including `**/*.svg` would
-    # be warranted only if a standalone .svg file were inlined or otherwise
-    # executed rather than served as a static image. That is not the case today.
+    # SVG is text, it diffs readably, and `!**/*.svg` is on CodeRabbit's default
+    # ignore list, so this entry is what buys the review.
+    #
+    # It is force-included because these files are served from this site's own
+    # origin. Vite copies public/ to the site root, so public/vite.svg ships to
+    # production and is reachable at /vite.svg. An SVG served from our origin
+    # can carry inline <script>, on* handlers or javascript: hrefs that execute
+    # in that origin when the file is navigated to directly. Judging the risk by
+    # how a component consumes the file misses that path entirely.
+    #
+    # Cost is negligible: two rarely-changed files. Deliberately not grouped
+    # with the inert raster formats below.
+    - "**/*.svg"
 
     # Exclusions. Several of these restate a CodeRabbit default; they are kept
     # written down so the intent survives a change to those defaults.
