@@ -26,6 +26,16 @@ lifecycle nuance ("pre-launch", "prototype") in the copy rather than inventing a
 value. And a product with no screenshot should omit `image` and `visualAssets` rather than
 carry a placeholder path.
 
+## CodeRabbit reviews
+
+CodeRabbit reviews a pull request once, when it is opened, and does not re-review
+automatically. That is deliberate: `reviews.auto_review.auto_incremental_review` is
+`false` in `.coderabbit.yaml`.
+
+Any pull request that gained commits after it was opened must be re-reviewed by
+commenting `@coderabbitai review` before it is merged. Skipping that merges those
+commits unreviewed.
+
 ## Maintaining this file
 
 Keep this file for knowledge useful to almost every future agent session in this project.

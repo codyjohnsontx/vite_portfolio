@@ -1,0 +1,100 @@
+# yaml-language-server: $schema=https://www.coderabbit.ai/integrations/schema.v2.json
+# CodeRabbit configuration
+#
+# Goal: keep the full review quality Cody values, while cutting the number of
+# review runs and the amount of noise each one has to chew through.
+#
+# Schema confirmed against docs.coderabbit.ai. Defaults noted so it is obvious
+# what is actually being changed and what is just written down for clarity.
+
+reviews:
+  # Already the default. Stated explicitly so nobody "tunes" it to assertive
+  # later and wonders where the noise came from.
+  profile: chill
+
+  auto_review:
+    enabled: true
+
+    # THE ONE THAT MATTERS.
+    # Default is true: CodeRabbit re-reviews as new commits land. Our workflow
+    # pushes fix rounds after the first review, so that spends a second review
+    # on a pull request we are still working on.
+    #
+    # With this off, CodeRabbit reviews a pull request once, when it is opened,
+    # and never re-reviews on its own.
+    #
+    # REQUIREMENT: any pull request that gained commits after it was opened
+    # must be re-reviewed by commenting `@coderabbitai review` before it is
+    # merged. Merging without that comment merges those commits unreviewed.
+    auto_incremental_review: false
+
+    # Already the default. Draft pull requests are not reviewed, which is what
+    # makes "open early as a draft" safe if we ever want it.
+    drafts: false
+
+  # Skip what nobody should be reviewing. The rule is what a file can do, not
+  # what it looks like: build output and raster images are inert, so reviewing
+  # them costs quota and returns nothing.
+  #
+  # Source, tests and documentation are deliberately NOT filtered: today's most
+  # useful comments were on markdown, and that is worth paying for.
+  #
+  # CodeRabbit ships a default ignore list of ~100 patterns - lock files,
+  # binaries, generated code, media - that applies whether or not this file
+  # mentions them. Both `!**/package-lock.json` and `!**/*.svg` are in it. So
+  # simply leaving something out of the exclusions below does NOT get it
+  # reviewed; the built-in default still skips it. An entry WITHOUT a leading
+  # `!` is the documented override that forces a default-ignored path back into
+  # review.
+  path_filters:
+    # LOAD-BEARING. Both entries below are force-includes overriding a
+    # CodeRabbit default exclusion. Deleting either silently turns off the
+    # review it exists to buy - nothing will fail, the file just stops being
+    # read.
+    #
+    # The lockfile is where transitive dependencies, integrity hashes and
+    # registry URLs change, and it is the input CodeRabbit's
+    # dependency-vulnerability scanning reads. Skipping it disables that
+    # scanning.
+    #
+    # Written in the documented `**/` form. A bare `package-lock.json` matches
+    # only because the lockfile happens to sit at the repo root, and a
+    # load-bearing entry should not rest on a layout assumption nobody wrote
+    # down.
+    - "**/package-lock.json"
+
+    # SVG is text, it diffs readably, and `!**/*.svg` is on CodeRabbit's default
+    # ignore list, so this entry is what buys the review.
+    #
+    # It is force-included because these files are served from this site's own
+    # origin. Vite copies public/ to the site root, so public/vite.svg ships to
+    # production and is reachable at /vite.svg. An SVG served from our origin
+    # can carry inline <script>, on* handlers or javascript: hrefs that execute
+    # in that origin when the file is navigated to directly. Judging the risk by
+    # how a component consumes the file misses that path entirely.
+    #
+    # Cost is negligible: two rarely-changed files. Deliberately not grouped
+    # with the inert raster formats below.
+    - "**/*.svg"
+
+    # Exclusions. Several of these restate a CodeRabbit default; they are kept
+    # written down so the intent survives a change to those defaults.
+    #
+    # Vite build output. Git-ignored, listed as a guard against a stray commit.
+    - "!**/dist/**"
+    # Raster screenshots and photos under src/assets, docs/assets and public.
+    - "!**/*.png"
+    - "!**/*.jpg"
+    - "!**/*.jpeg"
+    - "!**/*.webp"
+    # Binary resume in public/resume. The plain-text resume beside it stays
+    # reviewable - it is copy, and copy gets reviewed.
+    - "!**/*.pdf"
+
+  # Keep. This is the summary Cody actually reads.
+  high_level_summary: true
+
+  # Keep. The status line is how we tell a finished review from a running one.
+  review_status: true
+
+  poem: false
