@@ -47,20 +47,26 @@ reviews:
   # `!` is the documented override that forces a default-ignored path back into
   # review.
   path_filters:
-    # LOAD-BEARING. Both entries below are force-includes overriding a
-    # CodeRabbit default exclusion. Deleting either silently turns off the
-    # review it exists to buy - nothing will fail, the file just stops being
-    # read.
+    # LOAD-BEARING. The entry below is a force-include overriding a CodeRabbit
+    # default exclusion. Deleting it silently turns off the review it exists to
+    # buy - nothing will fail, the file just stops being read.
     #
     # The lockfile is where transitive dependencies, integrity hashes and
     # registry URLs change, and it is the input CodeRabbit's
     # dependency-vulnerability scanning reads. Skipping it disables that
     # scanning.
-    - "package-lock.json"
-    # SVG is text, it diffs readably, and it can carry inline <script>, on*
-    # handlers or javascript: hrefs. This repo tracks SVGs, so it matters here.
-    # Deliberately not grouped with the inert raster formats below.
-    - "**/*.svg"
+    #
+    # Written in the documented `**/` form. A bare `package-lock.json` matches
+    # only because the lockfile happens to sit at the repo root, and a
+    # load-bearing entry should not rest on a layout assumption nobody wrote
+    # down.
+    - "**/package-lock.json"
+
+    # SVG stays on CodeRabbit's default ignore list. It can carry inline
+    # <script>, on* handlers or javascript: hrefs, but only once it is inlined
+    # into the page, and this repo's tracked SVGs are static files nothing
+    # imports. If an SVG is ever inlined into the app, where that script content
+    # could execute, revisit this and force-include `**/*.svg`.
 
     # Exclusions. Several of these restate a CodeRabbit default; they are kept
     # written down so the intent survives a change to those defaults.
