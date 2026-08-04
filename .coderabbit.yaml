@@ -57,6 +57,18 @@ reviews:
   #
   # If a force-include ever looks necessary, stop and raise it rather than
   # adding one here.
+  #
+  # Known and accepted gap: SVG files sit on CodeRabbit's default ignore list,
+  # so they go unreviewed here. That is worth knowing because Vite copies
+  # public/ to the live site root, so anything in public/ ships to production
+  # and is served from the site's own origin, and an origin-served SVG can
+  # carry inline script that executes when the file is navigated to directly.
+  #
+  # The force-include that used to cover SVGs was removed anyway: a single
+  # include narrows the ENTIRE review to only what it matches, so
+  # force-including SVGs meant nothing else in the repository was reviewed at
+  # all. That is far worse than SVGs going unreviewed. The tradeoff was
+  # considered and decided, not overlooked. Do not re-add the include.
   path_filters:
     # Exclusions. Several of these restate a CodeRabbit default; they are kept
     # written down so the intent survives a change to those defaults.
