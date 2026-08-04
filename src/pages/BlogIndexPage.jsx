@@ -34,7 +34,7 @@ export default function BlogIndexPage() {
               delay={i * 90}
             >
               <span className="numeral" style={{ fontSize: 60 }}>
-                0{i + 1}
+                {String(i + 1).padStart(2, '0')}
               </span>
               <div>
                 <Eyebrow>

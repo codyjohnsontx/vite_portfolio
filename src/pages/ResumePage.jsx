@@ -114,7 +114,7 @@ export default function ResumePage() {
                   }}
                 >
                   <span className="mono small" style={{ color: 'var(--ink-3)' }}>
-                    0{i + 1}
+                    {String(i + 1).padStart(2, '0')}
                   </span>
                   <span>
                     <span style={{ fontFamily: 'var(--serif)', fontSize: 19 }}>

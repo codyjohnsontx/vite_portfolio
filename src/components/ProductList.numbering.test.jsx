@@ -21,7 +21,7 @@ describe('ProductList numbering', () => {
         <ProductList products={products} />
       </MemoryRouter>,
     );
-    const nums = [...container.querySelectorAll('.num')].map((n) => n.textContent.trim());
+    const nums = [...container.querySelectorAll('.num')].map((n) => n.textContent);
     expect(nums).toEqual([
       '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
     ]);
