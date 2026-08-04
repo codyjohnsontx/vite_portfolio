@@ -75,7 +75,7 @@ Texas Malibu | Sales Lead | Apr 2021 - May 2025
 
 PROJECTS
 
-CTX Connect | Internal Dealership Operations & Messaging Platform
+Attend | Internal Dealership Operations & Messaging Platform
 Product Owner / Builder | React, TypeScript, Node.js, PostgreSQL, Operational Analytics
 - Defined product requirements for an internal dealership platform connecting sales,
   service, inventory, customer messaging, payments, and operational reporting into

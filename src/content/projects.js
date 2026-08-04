@@ -355,7 +355,7 @@ const allProducts = [
     ],
   },
   {
-    name: 'CTX Connect',
+    name: 'Attend',
     slug: 'ctx-chat',
     tier: 'flagship',
     status: 'active-build',
@@ -406,14 +406,14 @@ const allProducts = [
     evidenceSignal:
       'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure. The latest build adds an OpenAI-backed AI Ops Brief with Structured Outputs, a product analytics event taxonomy for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created, and a PRD plus event taxonomy checked into content/prds/ before any impact is claimed. It also ships a one-click demo anyone can open with no credentials, with each risk priced separately: the AI ops brief runs live under a soft daily cap (estimated ~$0.40/day worst case) and SMS is blocked in demo. No measured usage yet.',
     nextStep:
-      'Run the AI-suggested-reply experiment once real usage accumulates and validate impact with the instrumentation now in place. Beyond that, expand CTX Connect into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
+      'Run the AI-suggested-reply experiment once real usage accumulates and validate impact with the instrumentation now in place. Beyond that, expand Attend into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
     visualAssets: {
       note: 'Screenshots from the seeded demo environment. The one-click demo login, the SMS-blocked composer, and the AI Ops Brief are the live app in demo mode; the brief shown was generated live.',
       items: [
         {
           label: 'One-click demo',
           src: ctxchatDemoLogin,
-          alt: 'CTX Chat login with a View demo button that opens the seeded workspace with no credentials, and empty email and password fields (the printed demo credentials were removed).',
+          alt: 'Attend login with a View demo button that opens the seeded workspace with no credentials, and empty email and password fields (the printed demo credentials were removed).',
         },
         {
           label: 'AI Ops Brief',
@@ -494,7 +494,7 @@ const allProducts = [
       {
         date: 'May 08, 2026',
         tag: 'Build',
-        title: 'Initial CTX Connect app committed and pushed',
+        title: 'Initial Attend app committed and pushed',
         url: 'https://github.com/codyjohnsontx/ctxconnect/commit/64fb5b2',
         body: 'The first full app build landed on main in the new ctxconnect repository. That established the standalone product with the shared inbox, Command Center, tasks, templates, and Twilio route structure.',
       },

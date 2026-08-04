@@ -49,7 +49,7 @@ Tailor the master PM resume in 15 to 20 minutes without rewriting it from scratc
 
 ### Private interview note
 
-For digital platform roles, lead with Lambda Curry for product-owner delivery, CTX Chat for message/workflow ownership and operational visibility, Wattsmith for validation/readiness thinking, and RideSense/Track Tuner for platform trust, observability, and guardrails.
+For digital platform roles, lead with Lambda Curry for product-owner delivery, Attend for message/workflow ownership and operational visibility, Wattsmith for validation/readiness thinking, and RideSense/Track Tuner for platform trust, observability, and guardrails.
 
 ## Final check before sending
 

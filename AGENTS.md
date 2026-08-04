@@ -26,6 +26,27 @@ lifecycle nuance ("pre-launch", "prototype") in the copy rather than inventing a
 value. And a product with no screenshot should omit `image` and `visualAssets` rather than
 carry a placeholder path.
 
+## The resume exists in four places, and they drift
+
+`src/content/resumeContent.js` drives the `/resume` page. The three files in
+`public/resume/` are separate hand-maintained artifacts, not generated from it, so a
+content change has to be applied to each one.
+
+The PDF is the exception worth knowing: it is not hand-written, it is Chrome's
+print-to-PDF of `cody-johnson-product-manager-resume.html` (its metadata still reads
+`Skia/PDF`), and `src/content/resumeMeta.js` points the download button at the PDF, not
+the HTML. So editing the HTML alone silently leaves the file recruiters actually download
+stale. Regenerate with:
+
+```
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+  --no-pdf-header-footer --print-to-pdf=public/resume/Cody-Johnson-Product-Manager-Resume.pdf \
+  "file://$PWD/public/resume/cody-johnson-product-manager-resume.html"
+```
+
+The HTML's `@media print` block already strips the card chrome. Confirm the result is
+still 5 US Letter pages before committing; a page-count change means the print CSS moved.
+
 ## CodeRabbit reviews
 
 CodeRabbit reviews a pull request once, when it is opened, and does not re-review
