@@ -34,9 +34,11 @@ content change has to be applied to each one.
 
 The PDF is the exception worth knowing: it is not hand-written, it is Chrome's
 print-to-PDF of `cody-johnson-product-manager-resume.html` (its metadata still reads
-`Skia/PDF`), and `src/content/resumeMeta.js` points the download button at the PDF, not
-the HTML. So editing the HTML alone silently leaves the file recruiters actually download
-stale. Regenerate with:
+`Skia/PDF`). No component links to it, but it ships from `public/`, so it is served as a
+static asset at `/resume/Cody-Johnson-Product-Manager-Resume.pdf` and stays reachable and
+shareable. `src/content/resumeMeta.js` records that path in `downloadPath` and is
+currently imported by nothing. So editing the HTML alone silently leaves a live public
+artifact stale. Regenerate with:
 
 ```
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
