@@ -354,6 +354,10 @@ const allProducts = [
       },
     ],
   },
+  /* The product is Attend, but the `ctx-chat` slug and the ctxconnect URLs below (live app,
+     commits, PRs) deliberately keep the retired CTX Connect / CTX Chat name: the route is
+     public and the repository was never renamed, so aligning those identifiers with the
+     product name breaks live inbound links and this page's own evidence links. */
   {
     name: 'Attend',
     slug: 'ctx-chat',
