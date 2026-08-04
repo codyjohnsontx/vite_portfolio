@@ -8,9 +8,16 @@
 # what is actually being changed and what is just written down for clarity.
 
 reviews:
-  # Already the default. Stated explicitly so nobody "tunes" it to assertive
-  # later and wonders where the noise came from.
-  profile: chill
+  # MUST stay explicit, and must stay `assertive`.
+  #
+  # Omitting this key does NOT inherit the organization setting. A repo with a
+  # config file falls back to CodeRabbit's own `chill` default, which silently
+  # makes every review shallower. Deleting this line therefore does not restore
+  # the org setting; it downgrades the review with nothing to show for it.
+  #
+  # Review depth is the thing Cody values here. If review volume needs to come
+  # down, cut the number of runs, not the depth of each one.
+  profile: assertive
 
   auto_review:
     enabled: true
@@ -39,44 +46,18 @@ reviews:
   # Source, tests and documentation are deliberately NOT filtered: today's most
   # useful comments were on markdown, and that is worth paying for.
   #
-  # CodeRabbit ships a default ignore list of ~100 patterns - lock files,
-  # binaries, generated code, media - that applies whether or not this file
-  # mentions them. Both `!**/package-lock.json` and `!**/*.svg` are in it. So
-  # simply leaving something out of the exclusions below does NOT get it
-  # reviewed; the built-in default still skips it. An entry WITHOUT a leading
-  # `!` is the documented override that forces a default-ignored path back into
-  # review.
+  # EVERY entry below must begin with `!`.
+  #
+  # An entry without a leading `!` is an INCLUDE, and a single include narrows
+  # the entire review to only what it matches. Every other file is then skipped
+  # as "excluded by none and included by none". This file previously carried two
+  # such entries, which reduced the whole portfolio review to the lockfile and
+  # SVG files. Nothing fails when that happens; the review just quietly stops
+  # covering the code.
+  #
+  # If a force-include ever looks necessary, stop and raise it rather than
+  # adding one here.
   path_filters:
-    # LOAD-BEARING. Both entries below are force-includes overriding a
-    # CodeRabbit default exclusion. Deleting either silently turns off the
-    # review it exists to buy - nothing will fail, the file just stops being
-    # read.
-    #
-    # The lockfile is where transitive dependencies, integrity hashes and
-    # registry URLs change, and it is the input CodeRabbit's
-    # dependency-vulnerability scanning reads. Skipping it disables that
-    # scanning.
-    #
-    # Written in the documented `**/` form. A bare `package-lock.json` matches
-    # only because the lockfile happens to sit at the repo root, and a
-    # load-bearing entry should not rest on a layout assumption nobody wrote
-    # down.
-    - "**/package-lock.json"
-
-    # SVG is text, it diffs readably, and `!**/*.svg` is on CodeRabbit's default
-    # ignore list, so this entry is what buys the review.
-    #
-    # It is force-included because these files are served from this site's own
-    # origin. Vite copies public/ to the site root, so public/vite.svg ships to
-    # production and is reachable at /vite.svg. An SVG served from our origin
-    # can carry inline <script>, on* handlers or javascript: hrefs that execute
-    # in that origin when the file is navigated to directly. Judging the risk by
-    # how a component consumes the file misses that path entirely.
-    #
-    # Cost is negligible: two rarely-changed files. Deliberately not grouped
-    # with the inert raster formats below.
-    - "**/*.svg"
-
     # Exclusions. Several of these restate a CodeRabbit default; they are kept
     # written down so the intent survives a change to those defaults.
     #
