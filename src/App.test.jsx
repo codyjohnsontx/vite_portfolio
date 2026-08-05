@@ -495,6 +495,22 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('link', { name: /Read PM analysis/i })).toBeNull();
   });
 
+  /* The gallery images are captures of the renamed Attend app. Their pixels are not
+     testable here, so this pins the two things that are: every screenshot still reaches
+     the page with alt text, and the retired CTX Chat product name stays off it. The
+     ctxconnect URLs and the ctx-chat slug are public identifiers and deliberately stay. */
+  it('renders the Attend screenshot gallery without the retired product name', () => {
+    renderApp('/products/ctx-chat');
+
+    const gallery = screen.getByRole('heading', { name: 'Product screenshots' }).closest('div');
+    const shots = within(gallery).getAllByRole('img');
+    expect(shots.length).toBe(7);
+    shots.forEach((shot) => expect(shot.getAttribute('alt')).toBeTruthy());
+    expect(within(gallery).getByLabelText('Zoom Tasks with status views')).toBeTruthy();
+
+    expect(document.body.textContent).not.toMatch(/CTX\s*Chat/i);
+  });
+
   it('shows the research CTA only for products with research content', () => {
     const firstRender = renderApp('/products/track-tuner');
     expect(screen.getByRole('link', { name: /View persona research/i })).toBeTruthy();
