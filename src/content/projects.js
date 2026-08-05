@@ -1,5 +1,5 @@
 import diazMa from '../assets/diazma.png?shot';
-import ctxChat from '../assets/ctxChat.png?shot';
+import attendCard from '../assets/attend.png?shot';
 import rideSense from '../assets/ridesense.png?shot';
 import trackTunerHomepage from '../assets/track-tuner/track-tuner-homepage.jpg?shot';
 import trackTunerSessionDetailCompareCta from '../assets/track-tuner/session-detail-compare-cta.png?shot';
@@ -30,13 +30,13 @@ import oncopathResults from '../assets/oncopath/oncopath-02-results.png?shot';
 import oncopathTrialExplanation from '../assets/oncopath/oncopath-03-trial-explanation.png?shot';
 import oncopathDiscussionSheet from '../assets/oncopath/oncopath-04-discussion-sheet.png?shot';
 import oncopathEvalTerminal from '../assets/oncopath/oncopath-05-eval-terminal.png?shot';
-import ctxchatInboxBrief from '../assets/ctxchat/ctxchat-01-inbox-ai-ops-brief.png?shot';
-import ctxchatCommandCenter from '../assets/ctxchat/ctxchat-02-command-center-overview.png?shot';
-import ctxchatAiOpsAnalytics from '../assets/ctxchat/ctxchat-03-command-center-ai-ops-analytics.png?shot';
-import ctxchatCustomers from '../assets/ctxchat/ctxchat-04-customers.png?shot';
-import ctxchatDemoLogin from '../assets/ctxchat/ctxchat-06-demo-login.png?shot';
-import ctxchatSmsBlocked from '../assets/ctxchat/ctxchat-07-sms-blocked-composer.png?shot';
-import ctxchatTasksStatus from '../assets/ctxchat/ctxchat-08-tasks-status-views.png?shot';
+import attendInboxBrief from '../assets/attend/attend-01-inbox-ai-ops-brief.png?shot';
+import attendCommandCenter from '../assets/attend/attend-02-command-center-overview.png?shot';
+import attendAiOpsAnalytics from '../assets/attend/attend-03-command-center-ai-ops-analytics.png?shot';
+import attendCustomers from '../assets/attend/attend-04-customers.png?shot';
+import attendDemoLogin from '../assets/attend/attend-06-demo-login.png?shot';
+import attendSmsBlocked from '../assets/attend/attend-07-sms-blocked-composer.png?shot';
+import attendTasksStatus from '../assets/attend/attend-08-tasks-status-views.png?shot';
 import oasisLanding from '../assets/oasis-race-control/oasis-race-control-01-landing.png?shot';
 import oasisCheckIn from '../assets/oasis-race-control/oasis-race-control-02-check-in.png?shot';
 import oasisTvBoard from '../assets/oasis-race-control/oasis-race-control-03-tv-board.png?shot';
@@ -365,7 +365,7 @@ const allProducts = [
     status: 'active-build',
     year: '2026',
     accent: 'oklch(0.68 0.14 205)',
-    image: ctxChat,
+    image: attendCard,
     liveUrl: 'https://ctxconnect.vercel.app/inbox',
     role: 'Full-stack product builder',
     stack: [
@@ -412,41 +412,41 @@ const allProducts = [
     nextStep:
       'Run the AI-suggested-reply experiment once real usage accumulates and validate impact with the instrumentation now in place. Beyond that, expand Attend into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
     visualAssets: {
-      note: 'Screenshots from the seeded demo environment. The one-click demo login, the SMS-blocked composer, and the AI Ops Brief are the live app in demo mode; the brief shown was generated live.',
+      note: 'Screenshots from the seeded demo environment. The one-click demo login and the SMS-blocked composer are the live app in demo mode; the AI Ops Briefs shown carry the seeded demo content.',
       items: [
         {
           label: 'One-click demo',
-          src: ctxchatDemoLogin,
+          src: attendDemoLogin,
           alt: 'Attend login with a View demo button that opens the seeded workspace with no credentials, and empty email and password fields (the printed demo credentials were removed).',
         },
         {
           label: 'AI Ops Brief',
-          src: ctxchatInboxBrief,
+          src: attendInboxBrief,
           alt: 'Inbox conversation with the AI Ops Brief panel showing summary, customer need, risk, escalation, suggested next action, and suggested reply.',
         },
         {
           label: 'SMS blocked in demo',
-          src: ctxchatSmsBlocked,
+          src: attendSmsBlocked,
           alt: 'Conversation composer disabled in demo mode with the note that outbound SMS is turned off so no real texts are sent, while everything else stays live.',
         },
         {
           label: 'Command Center',
-          src: ctxchatCommandCenter,
+          src: attendCommandCenter,
           alt: 'Command Center dashboard with unread, waiting-on-staff, follow-up, SLA, and exception metrics for the dealership.',
         },
         {
           label: 'AI Ops Analytics',
-          src: ctxchatAiOpsAnalytics,
-          alt: 'AI Ops Analytics panel showing briefs generated, acceptance rate, high-risk briefs, and follow-up conversions beside the Experiment Readiness panel.',
+          src: attendAiOpsAnalytics,
+          alt: 'AI Ops Analytics panel showing briefs generated, acceptance rate, high-risk briefs, and follow-ups and notes used, above the latest AI brief for each conversation.',
         },
         {
           label: 'Customers',
-          src: ctxchatCustomers,
+          src: attendCustomers,
           alt: 'Customer list with linked units, latest conversation status, and SMS opt-in state.',
         },
         {
           label: 'Tasks with status views',
-          src: ctxchatTasksStatus,
+          src: attendTasksStatus,
           alt: 'Tasks page with All, Open, In Progress, Done, and Canceled filter tabs with counts, tasks grouped into labeled sections, and inline status controls on each row.',
         },
       ],
