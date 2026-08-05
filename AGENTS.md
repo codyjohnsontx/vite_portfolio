@@ -65,6 +65,14 @@ use the seeded gm login, demo screens use the seeded demo service advisor. Captu
 2x device pixels: 1440x900 viewport for most shots, 1280x860 for the login, 1280x900
 for tasks-status-views, 1710x826 for the card image.
 
+`attend-08-tasks-status-views.png` needs one state the seed does not give you. Under the
+seeded demo service advisor every task starts Open, so In Progress, Done, and Canceled
+all read zero and only one labeled section renders. Before capturing, use the app's own
+inline status controls to move at least one task into each of those three statuses, so
+all four labeled sections are visible. Shooting the default state leaves the image no
+longer supporting its `Tasks with status views` label, its alt text, or the PR #8 update
+entry in `src/content/projects.js`.
+
 ## CodeRabbit reviews
 
 CodeRabbit reviews a pull request once, when it is opened, and does not re-review
