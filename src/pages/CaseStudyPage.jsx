@@ -57,7 +57,7 @@ function CaseListSection({ num, title, items }) {
                   className="mono small"
                   style={{ color: 'var(--ink-3)', minWidth: 32 }}
                 >
-                  0{i + 1}
+                  {String(i + 1).padStart(2, '0')}
                 </span>
                 <span
                   className="body"
@@ -163,7 +163,7 @@ export default function CaseStudyPage() {
                     }}
                   >
                     <span className="mono small" style={{ color: 'var(--ink-3)' }}>
-                      0{i + 1}
+                      {String(i + 1).padStart(2, '0')}
                     </span>
                     <span className="body" style={{ color: 'var(--ink)' }}>{h}</span>
                   </li>

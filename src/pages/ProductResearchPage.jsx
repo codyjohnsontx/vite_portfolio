@@ -28,7 +28,7 @@ function ResearchList({ items }) {
     <ul className="research-list">
       {items.map((item, index) => (
         <li key={item}>
-          <span className="mono small">0{index + 1}</span>
+          <span className="mono small">{String(index + 1).padStart(2, '0')}</span>
           <span>{item}</span>
         </li>
       ))}
@@ -187,7 +187,9 @@ export default function ProductResearchPage() {
                     className="research-dimension"
                     delay={(index % 4) * 90}
                   >
-                    <span className="research-dimension__index">0{index + 1}</span>
+                    <span className="research-dimension__index">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
                     <h3>{dimension.label}</h3>
                     <p>{dimension.detail}</p>
                   </Reveal>
@@ -307,7 +309,7 @@ export default function ProductResearchPage() {
                     className="research-insight"
                     delay={(index % 4) * 90}
                   >
-                    <span className="numeral">0{index + 1}</span>
+                    <span className="numeral">{String(index + 1).padStart(2, '0')}</span>
                     <div>
                       <h3>{insight.title}</h3>
                       <p>{insight.detail}</p>

@@ -425,7 +425,7 @@ export default function ProductDetailPage() {
                       className="numeral"
                       style={{ fontSize: 36, color: p.accent }}
                     >
-                      0{i + 1}
+                      {String(i + 1).padStart(2, '0')}
                     </span>
                     <p
                       className="body"
@@ -461,7 +461,7 @@ export default function ProductDetailPage() {
                       className="mono small"
                       style={{ color: 'var(--ink-3)', minWidth: 32 }}
                     >
-                      0{i + 1}
+                      {String(i + 1).padStart(2, '0')}
                     </span>
                     <span
                       style={{

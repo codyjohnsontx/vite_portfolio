@@ -35,7 +35,7 @@ function AnalysisList({ items, className = '' }) {
       {items.map((item, index) => (
         <li key={item}>
           <span className="mono small" style={{ color: 'var(--ink-3)', minWidth: 36 }}>
-            0{index + 1}
+            {String(index + 1).padStart(2, '0')}
           </span>
           <span className="body" style={{ color: 'var(--ink)' }}>
             {item}

@@ -38,7 +38,9 @@ export default function ProductList({ products, startIndex = 1 }) {
             tabIndex={0}
             aria-expanded={isOpen}
           >
-            <span className="num">0{startIndex + i}</span>
+            <span className="num">
+              {String(startIndex + i).padStart(2, '0')}
+            </span>
             <div className="prod-card__main">
               <h3 className="prod-card__title">{p.name}</h3>
               <p className="prod-card__one">{p.oneLiner}</p>
