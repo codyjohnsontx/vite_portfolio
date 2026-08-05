@@ -3,11 +3,11 @@ export const blogPosts = [
     slug: 'pricing-risk-in-a-public-demo',
     title: 'A public demo of a paid-API app, and a build that was green but broken',
     deck:
-      'Two decisions from this cycle on CTX Chat: how to let anyone try an app that spends real money on every click, and why a passing build still served users a 500.',
+      'Two decisions from this cycle on Attend: how to let anyone try an app that spends real money on every click, and why a passing build still served users a 500.',
     date: 'July 2026',
     readingTime: '4 min read',
     intro:
-      'CTX Chat is a dealership staff workspace: shared customer texting, follow-up tasks, service-lane status, and an AI ops brief per conversation. Two things I shipped recently were less about features and more about judgment calls, so I want to write them down. Neither has a measured result yet; both are decisions the product actually runs on.',
+      'Attend is a dealership staff workspace: shared customer texting, follow-up tasks, service-lane status, and an AI ops brief per conversation. Two things I shipped recently were less about features and more about judgment calls, so I want to write them down. Neither has a measured result yet; both are decisions the product actually runs on.',
     sections: [
       {
         heading: 'Letting anyone in, without letting anyone run up the bill',

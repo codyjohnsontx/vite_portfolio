@@ -15,17 +15,17 @@ Cody Johnson is a product operator with software engineering depth and product-o
 1. Lead with the operating pattern: clarify, scope, sequence, ship, validate.
 2. Use active products as proof of current product judgment.
 3. Use Lambda Curry as the strongest cross-functional product-owner case.
-4. Use HSNBA, CTX Chat, RideSense, and Wattsmith as proof of operational reliability, validation, metrics, and trust-building.
+4. Use HSNBA, Attend, RideSense, and Wattsmith as proof of operational reliability, validation, metrics, and trust-building.
 5. Frame engineering fluency as a way to reduce ambiguity and communicate better with technical teams.
 
 ## Schwab-aligned product-owner signals
 
-- Cross-functional delivery: Lambda Curry, CTX Chat, active product work.
+- Cross-functional delivery: Lambda Curry, Attend, active product work.
 - User stories and acceptance criteria: Lambda Curry and resume content.
 - Backlog sequencing: Lambda Curry, Wattsmith roadmap, Track Tuner prioritization.
-- Platform health and issue awareness: CTX Chat delivery failure alerts, RideSense sync hardening, Track Tuner AI observability, Wattsmith export readiness.
-- Compliance-aware execution: CTX Chat STOP/START handling, RideSense privacy-safe observability, validation-heavy export flows.
-- Metrics and operational reporting: Lambda Curry outcomes, CTX Chat Command Center, HSNBA data-quality outcomes.
+- Platform health and issue awareness: Attend delivery failure alerts, RideSense sync hardening, Track Tuner AI observability, Wattsmith export readiness.
+- Compliance-aware execution: Attend STOP/START handling, RideSense privacy-safe observability, validation-heavy export flows.
+- Metrics and operational reporting: Lambda Curry outcomes, Attend Command Center, HSNBA data-quality outcomes.
 
 ## Messaging rules
 

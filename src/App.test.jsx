@@ -24,7 +24,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'OncoPath' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'CTX Connect' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Attend' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
     expect(screen.getByText('Ambiguous to shipped')).toBeTruthy();
     expect(screen.getByText(/Product manager · Technical builder · Austin, TX/i)).toBeTruthy();
@@ -118,7 +118,7 @@ describe('portfolio routes and metadata', () => {
   });
 
   /* The overlay menu renders only the first three flagships, so inserting a card
-     above CTX Connect silently drops it out of the site owner's own menu. */
+     above Attend silently drops it out of the site owner's own menu. */
   it('keeps the overlay menu on the first three flagship products', () => {
     expect(flagshipProducts.slice(0, 3).map((p) => p.slug)).toEqual([
       'track-tuner',
@@ -384,10 +384,10 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('link', { name: /Read PM analysis/i })).toBeNull();
   });
 
-  it('renders the CTX Connect PM analysis page', () => {
+  it('renders the Attend PM analysis page', () => {
     renderApp('/products/ctx-chat/analysis');
 
-    expect(screen.getByRole('heading', { name: /CTX Connect PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Attend PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getByText(/A dealership-specific communication tool/i)).toBeTruthy();
   });
