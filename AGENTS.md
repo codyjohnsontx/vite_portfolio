@@ -7,7 +7,7 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 ## Content is data, not JSX
 
 Every public claim on the site lives in `src/content/*.js`. Update copy there, not in
-components. Two things that are easy to get wrong:
+components. A few things that are easy to get wrong:
 
 - There is no separate changelog module. Each product's `updates` array in
   `src/content/projects.js` is the update feed, rendered by the `04 Updates` section of

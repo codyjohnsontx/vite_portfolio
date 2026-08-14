@@ -625,7 +625,7 @@ const allProducts = [
         tag: 'PR #16',
         title: 'Kept the selection when a duplicate is refused',
         url: 'https://github.com/codyjohnsontx/draftSpace/pull/16',
-        body: 'Pressing duplicate on something the board would not copy cleared the selection anyway, so the shapes you were holding dropped out from under you and there was nothing left to try again on. The selection only changes now when copies actually came back. The same pass made the connector tool cheaper to hold armed, since it re-measures the ports under the pointer on every move, and put the connector label limit in one place instead of three.',
+        body: 'Pressing duplicate on something the board would not copy cleared the selection anyway, so the shapes you were holding dropped out from under you and there was nothing left to try again on. The selection only changes now when copies actually came back. The same pass made the connector tool cheaper to hold armed, since it had been re-measuring the ports under the pointer on every move, and put the connector label limit in one place instead of three.',
       },
       {
         date: 'Aug 10, 2026',
