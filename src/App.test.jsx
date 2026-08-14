@@ -189,10 +189,11 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
-  /* Each product's `updates` array is its own update feed and the newest entry has
-     to sit first, on the page and in the overlay menu card that reads updates[0].
-     Adding an entry in the wrong position is silent, so the newest entry and its
-     pull request link are pinned for every feed. */
+  /* Each product's `updates` array is its own feed, and the newest entry has to sit
+     first: the page renders the feed in array order, and the overlay menu card for
+     the first three flagships reads updates[0]. Putting an entry in the wrong
+     position is silent, so the Track Tuner, Attend, draftSpace, and Diaz on Demand
+     feeds pin their newest entry's date, tag, title, and pull request link below. */
   const NEWEST_UPDATES = [
     {
       slug: 'track-tuner',
