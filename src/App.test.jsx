@@ -35,15 +35,15 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Measured outcomes')).toBeTruthy();
     expect(screen.getByText('Latest')).toBeTruthy();
     expect(
-      screen.getByRole('heading', { name: 'draftSpace: a system-design board you can tilt' }),
+      screen.getByRole('heading', { name: 'Attend: the inbox ranks by risk, not by what came in last' }),
     ).toBeTruthy();
-    expect(screen.getAllByText(/first working prototype/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/the layers separate/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/no measured result yet/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/briefs every open conversation on its own/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/how much of the queue is briefed/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/no measured result/i).length).toBeGreaterThan(0);
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
-        .some((link) => link.getAttribute('href') === '/products/draftspace'),
+        .some((link) => link.getAttribute('href') === '/products/ctx-chat'),
     ).toBe(true);
   });
 

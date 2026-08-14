@@ -2,8 +2,8 @@
    content so the copy and its date can be updated without touching layout. */
 export const latestSignal = {
   date: 'August 2026',
-  title: 'draftSpace: a system-design board you can tilt',
+  title: 'Attend: the inbox ranks by risk, not by what came in last',
   body:
-    'I shipped the first working prototype of the draftSpace 3D space view. Flat, the board edits like any whiteboard. Tilt it and the layers separate, data at the bottom, services above, clients on top, so a service reaching past its layer shows up as a diagonal instead of an arrow you have to trace. One board document, two views, sharing the same selection, undo, and autosave. No users and no measured result yet.',
-  links: [{ label: 'Read the build', to: '/products/draftspace' }],
+    'Attend used to write a brief only when someone asked for one, and the inbox sorted newest first. Now a background pass briefs every open conversation on its own and the list ranks by what those briefs found, so the thread most likely to cost the store sits at the top instead of wherever it happened to land. A line above the list says how much of the queue is briefed and how old the newest brief is, anyone can run a pass on demand, and a brief written before the latest messages is labelled as an earlier one rather than passed off as current. Sending the suggested reply is still a person’s decision. No dealership is using it yet and there is no measured result.',
+  links: [{ label: 'Read the build', to: '/products/ctx-chat' }],
 };

@@ -15,6 +15,11 @@ components. Two things that are easy to get wrong:
 - `src/content/latestSignal.js` drives the home page "Latest" block, and
   `src/App.test.jsx` asserts its heading, body phrases, and link targets. Changing that
   copy means updating that test in the same commit.
+- `ProductDetailPage.jsx` splits `nextStep` on the first period and renders that sentence
+  as the `05 What's next` headline, then repeats the whole field below it. So the first
+  sentence has to stand alone as a headline, and `nextStep` cannot open with a decimal.
+- `src/App.test.jsx` also asserts the retired CTX Chat name never renders on the Attend
+  page, so copy about the rename has to describe it without quoting the old name.
 
 For the per-product record shape, which fields exist and which are optional, read
 `src/content/projects.js` alongside the `ProductList` propTypes in
