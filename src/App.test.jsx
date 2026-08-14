@@ -196,7 +196,7 @@ describe('portfolio routes and metadata', () => {
   const NEWEST_UPDATES = [
     {
       slug: 'track-tuner',
-      meta: /Update 16/,
+      meta: /Merged · Update 16/,
       title: 'Cover database functions that never decide who can run them',
       url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/38',
     },
