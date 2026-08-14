@@ -639,7 +639,7 @@ const allProducts = [
         tag: 'PR #13',
         title: 'Made connectors usable on the flat canvas',
         url: 'https://github.com/codyjohnsontx/draftSpace/pull/13',
-        body: 'Connectors existed on the board but the only way to make one was dragging a port in the tilted view, and once it existed you could not select it, delete it, or restyle it. The flat canvas now has a connector tool: hovering shows the port a press would take, the edge routes live while you drag, and a second edge between the same pair is refused. An edge is selected by its actual routed line rather than its bounding box, deleted as one undoable step, and given a stroke colour and width, arrowheads at either end or both, and a label placed halfway along the route. Edges follow their shapes during a move or resize instead of snapping into place on release.',
+        body: 'Connectors existed on the board but the only way to make one was dragging a port in the tilted view, and once it existed you could not select it, delete it, or restyle it. The flat canvas now has a connector tool: hovering shows the port a press would take, the edge routes live while you drag, and a second edge between the same pair is refused. An edge is selected by its actual routed line rather than its bounding box, deleted as one undoable step, and given a stroke color and width, arrowheads at either end or both, and a label placed halfway along the route. Edges follow their shapes during a move or resize instead of snapping into place on release.',
       },
       {
         date: 'Aug 02, 2026',
@@ -1202,7 +1202,7 @@ const allProducts = [
     evidenceSignal:
       'Auth, entitlement, Stripe, and Mux are integrated, so this is a working subscription product rather than a static content library. The latest cycle went after the paths where money moves and access does not follow: a returning customer who cancelled and resubscribed used to pay and receive nothing, refunds and chargebacks left access switched on, a member who won a chargeback dispute stayed locked out for good, and two simultaneous checkouts could double-charge. It also closed a developer authentication bypass that depended on a single environment variable nothing in the repo set, took the paid lesson video identifiers out of the payloads served to anyone who asked, leaving a signed URL as the only handle a member gets, and replaced the hard playback error on lessons that were never filmed with a state that says so. A mobile app has started as well: an emailed sign-in code and an app shell, running on the Expo SDK that store-installed Expo Go actually accepts. The product is pre-launch: no customer has paid, so there is no measured result yet.',
     nextStep:
-      'Get it to launch: film the sixteen published lessons currently marked not filmed, fill out the rest of the catalogue, then run real payments through the fixed billing paths. Onboarding and retention patterns across affiliate school cohorts, and the broader multi-academy LMS controls, can only be validated once members are actually paying.',
+      'Get it to launch: fill the catalogue, then run real payments through the fixed billing paths. Onboarding and retention patterns across affiliate school cohorts, and the broader multi-academy LMS controls, can only be validated once members are actually paying.',
     standaloneMockStatus: 'in-progress',
     updates: [
       {
@@ -1210,14 +1210,14 @@ const allProducts = [
         tag: 'DiazOnDemand PR #23',
         title: 'Moved the mobile app to the Expo SDK the store actually ships',
         url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/23',
-        body: 'The owner could not open his own app on a phone. The store ships only the newest Expo Go, and that build refuses to run an SDK 52 project. The app moved to SDK 54, where store-installed Expo Go has been frozen since May 2026, rather than to the newest SDK, which would have put it straight back out of reach.',
+        body: 'The owner could not open his own app on a phone. The store ships only the newest Expo Go, and that build refuses to run an SDK 52 project. The app moved to SDK 54, which that build does run, rather than to the newest SDK, which would have put it straight back out of reach.',
       },
       {
         date: 'Aug 05, 2026',
         tag: 'DiazOnDemand PR #19',
         title: 'Showed an honest not-filmed state instead of a broken player',
         url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/19',
-        body: 'The seeded catalogue published 67 lessons, and 16 of them pointed at hand-written video identifiers for videos that do not exist. Each one loaded the player and then failed with a hard "Video does not exist". A lesson whose video cannot play now says it has not been filmed yet, which is the true statement, rather than looking broken.',
+        body: 'Published lessons could point at hand-written video identifiers for videos that do not exist. Each one loaded the player and then failed with a hard "Video does not exist". A lesson whose video cannot play now says it has not been filmed yet, which is the true statement, rather than looking broken.',
       },
       {
         date: 'Aug 04, 2026',
