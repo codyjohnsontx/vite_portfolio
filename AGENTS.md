@@ -26,10 +26,12 @@ For the per-product record shape, which fields exist and which are optional, rea
 `src/components/ProductList.jsx`. For the supported `status` values, read
 `src/content/productHelpers.js`.
 
-Two things those files will not tell you. Nothing currently renders `status`, so express
-lifecycle nuance ("pre-launch", "prototype") in the copy rather than inventing a new status
-value. And a product with no screenshot should omit `image` and `visualAssets` rather than
-carry a placeholder path.
+Two things those files will not tell you. Nothing currently renders `status` or
+`evidenceSignal`; both are defined in `src/content/projects.js` and consumed by no
+component. So express lifecycle nuance ("pre-launch", "prototype") in the copy rather than
+inventing a new status value, and treat `evidenceSignal` as an internal note whose text
+reaches no rendered surface, so editing it does not change the site. And a product with no
+screenshot should omit `image` and `visualAssets` rather than carry a placeholder path.
 
 ## The resume exists in four places, and they drift
 

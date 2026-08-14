@@ -189,6 +189,47 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
+  /* Each product's `updates` array is its own update feed and the newest entry has
+     to sit first, on the page and in the overlay menu card that reads updates[0].
+     Adding an entry in the wrong position is silent, so the newest entry and its
+     pull request link are pinned for every feed. */
+  const NEWEST_UPDATES = [
+    {
+      slug: 'track-tuner',
+      meta: /Update 16/,
+      title: 'Cover database functions that never decide who can run them',
+      url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/38',
+    },
+    {
+      slug: 'ctx-chat',
+      meta: /Aug 14, 2026 · PR #19/,
+      title: 'Made deactivating a staff account end their access',
+      url: 'https://github.com/codyjohnsontx/ctxconnect/pull/19',
+    },
+    {
+      slug: 'draftspace',
+      meta: /Aug 14, 2026 · PR #16/,
+      title: 'Kept the selection when a duplicate is refused',
+      url: 'https://github.com/codyjohnsontx/draftSpace/pull/16',
+    },
+    {
+      slug: 'diaz-on-demand',
+      meta: /Aug 14, 2026 · DiazOnDemand PR #23/,
+      title: 'Moved the mobile app to the Expo SDK the store actually ships',
+      url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/23',
+    },
+  ];
+
+  NEWEST_UPDATES.forEach(({ slug, meta, title, url }) => {
+    it(`leads the ${slug} update feed with its newest entry`, () => {
+      renderApp(`/products/${slug}`);
+
+      const [firstUpdate] = document.querySelectorAll('.update');
+      expect(within(firstUpdate).getByText(meta)).toBeTruthy();
+      expect(within(firstUpdate).getByRole('link', { name: title }).getAttribute('href')).toBe(url);
+    });
+  });
+
   it('renders the Track Tuner Session Comparison v1 update and screenshots', () => {
     renderApp('/products/track-tuner');
 
