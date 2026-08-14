@@ -11,7 +11,10 @@ components. A few things that are easy to get wrong:
 
 - There is no separate changelog module. Each product's `updates` array in
   `src/content/projects.js` is the update feed, rendered by the `04 Updates` section of
-  `src/pages/ProductDetailPage.jsx`. Newest entry first.
+  `src/pages/ProductDetailPage.jsx`. Newest entry first, and for the Track Tuner, Attend,
+  draftSpace, and Diaz on Demand feeds `src/App.test.jsx` pins the newest entry's date,
+  tag, title, and pull request link, so adding an entry to one of those means updating
+  that test in the same commit.
 - `src/content/latestSignal.js` drives the home page "Latest" block, and
   `src/App.test.jsx` asserts its heading, body phrases, and link targets. Changing that
   copy means updating that test in the same commit.
