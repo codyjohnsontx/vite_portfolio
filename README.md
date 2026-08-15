@@ -40,7 +40,9 @@ npm test
 
 ## Continuous integration
 
-Pull requests and pushes to `main` have to pass `npm run lint`, `npm test`, and `npm run build` in GitHub Actions. See `.github/workflows/ci.yml` for the job itself.
+`npm run lint`, `npm test`, and `npm run build` run in GitHub Actions on every pull request and on every push to `main`. See `.github/workflows/ci.yml` for the job itself.
+
+The workflow reports status, it does not block merges. Making it enforcing takes a branch protection rule or ruleset on `main` that marks the `checks` job a required status check, and that is a repository setting rather than a file in this repo. Until someone adds it, a pull request with a red or still-pending run stays mergeable.
 
 ## Deployment
 
