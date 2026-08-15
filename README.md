@@ -38,6 +38,12 @@ npm run build
 npm test
 ```
 
+## Continuous integration
+
+`npm run lint`, `npm test`, and `npm run build` run in GitHub Actions on every pull request and on every push to `main`. See `.github/workflows/ci.yml` for the job itself.
+
+The workflow reports status, it does not block merges. Making it enforcing takes a branch protection rule or ruleset on `main` that marks the `checks` job a required status check, and that is a repository setting rather than a file in this repo. Until someone adds it, a pull request with a red or still-pending run stays mergeable.
+
 ## Deployment
 
 This app uses `BrowserRouter`, so deep links like `/products/track-tuner` and `/case-studies/:slug` require SPA rewrites in production.
