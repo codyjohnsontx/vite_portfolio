@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # package.json declares no engines field, so the floor comes from the
+          # dev dependencies in package-lock.json. The binding ones are
+          # jsdom 28.1.0 (^20.19.0 || ^22.12.0 || >=24.0.0) and vitest 4.0.18
+          # (^20.0.0 || ^22.0.0 || >=24.0.0); vite 5.2.6 is looser
+          # (^18.0.0 || >=20.0.0). 22 satisfies all three and resolves to the
+          # latest 22.x, which is above jsdom's 22.12 minimum.
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm test
+
+      - run: npm run build
