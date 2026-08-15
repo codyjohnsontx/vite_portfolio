@@ -7,24 +7,34 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 ## Content is data, not JSX
 
 Every public claim on the site lives in `src/content/*.js`. Update copy there, not in
-components. Two things that are easy to get wrong:
+components. A few things that are easy to get wrong:
 
 - There is no separate changelog module. Each product's `updates` array in
   `src/content/projects.js` is the update feed, rendered by the `04 Updates` section of
-  `src/pages/ProductDetailPage.jsx`. Newest entry first.
+  `src/pages/ProductDetailPage.jsx`. Newest entry first, and for the Track Tuner, Attend,
+  draftSpace, and Diaz on Demand feeds `src/App.test.jsx` pins the newest entry's date,
+  tag, title, and pull request link, so adding an entry to one of those means updating
+  that test in the same commit.
 - `src/content/latestSignal.js` drives the home page "Latest" block, and
   `src/App.test.jsx` asserts its heading, body phrases, and link targets. Changing that
   copy means updating that test in the same commit.
+- `ProductDetailPage.jsx` splits `nextStep` on the first period and renders that sentence
+  as the `05 What's next` headline, then repeats the whole field below it. So the first
+  sentence has to stand alone as a headline, and `nextStep` cannot open with a decimal.
+- `src/App.test.jsx` also asserts the retired CTX Chat name never renders on the Attend
+  page, so copy about the rename has to describe it without quoting the old name.
 
 For the per-product record shape, which fields exist and which are optional, read
 `src/content/projects.js` alongside the `ProductList` propTypes in
 `src/components/ProductList.jsx`. For the supported `status` values, read
 `src/content/productHelpers.js`.
 
-Two things those files will not tell you. Nothing currently renders `status`, so express
-lifecycle nuance ("pre-launch", "prototype") in the copy rather than inventing a new status
-value. And a product with no screenshot should omit `image` and `visualAssets` rather than
-carry a placeholder path.
+Two things those files will not tell you. Nothing currently renders `status` or
+`evidenceSignal`; both are defined in `src/content/projects.js` and consumed by no
+component. So express lifecycle nuance ("pre-launch", "prototype") in the copy rather than
+inventing a new status value, and treat `evidenceSignal` as an internal note whose text
+reaches no rendered surface, so editing it does not change the site. And a product with no
+screenshot should omit `image` and `visualAssets` rather than carry a placeholder path.
 
 ## The resume exists in four places, and they drift
 

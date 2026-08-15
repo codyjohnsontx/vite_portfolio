@@ -85,7 +85,7 @@ const allProducts = [
       'Early AI recommendation engine prototype with grounding and refusal guardrails',
     ],
     evidenceSignal:
-      'The product has moved beyond basic logging into a setup-learning loop: free users can compare against the previous session, while Pro users can choose a same-vehicle baseline and review deterministic comparison signals with context warnings instead of causal claims.',
+      'The product has moved beyond basic logging into a setup-learning loop: free users can compare against the previous session, while Pro users can choose a same-vehicle baseline and review deterministic comparison signals with context warnings instead of causal claims. That loop now holds for a real track day: two sessions logged on the same day with Start Time left blank compare in the order they were run, and the database the sessions live in builds from the repository rather than from a hosting dashboard.',
     nextStep:
       'Validate whether Session Comparison v1 helps users return after repeat track days, then decide whether CSV import, richer telemetry summaries, saved takeaways, or coach-facing comparison workflows should come next.',
     standaloneMockStatus: 'in-progress',
@@ -137,6 +137,34 @@ const allProducts = [
       ],
     },
     updates: [
+      {
+        date: 'Merged',
+        tag: 'Update 16',
+        title: 'Cover database functions that never decide who can run them',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/38',
+        body: 'A database function that runs with its owner’s privileges is callable by anyone until its own migration says otherwise, and nothing checked that. A test now reads the permissions on each of those functions and fails when one has never been granted or revoked, so a new one cannot ship quietly open to anyone holding the app’s public API key.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 15',
+        title: 'Build a fresh database from the repository',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/36',
+        body: 'The core tables were created by hand in the hosting dashboard and no migration ever created them, so a clean checkout could not start a working database and a fresh project answered every request with permission denied. Migrations now create the schema and grant the roles the app actually uses, so the database comes from the repository instead of from memory.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 14',
+        title: 'Compare same-day sessions logged without a start time',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/34',
+        body: 'Two sessions logged on the same day with Start Time left blank did not order correctly, so the second one could compare against the wrong session or show no comparison at all. The lookup now sorts by the same rule the rest of the app uses instead of leaning on a start time that may not be there, and a session that saved only a baseline row still renders its diff. An end-to-end test logs two same-day sessions with the field blank and checks what was actually written.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 13',
+        title: 'Stop primary calls to action rendering invisible',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/33',
+        body: 'The main call to action was white text on a white pill: a stylesheet rule set outside the app’s cascade layers was beating the one meant to color it. Every rule now sits in a declared layer, and a test fails the build if one escapes again.',
+      },
       {
         date: 'Merged',
         tag: 'Update 12',
@@ -388,29 +416,32 @@ const allProducts = [
     oneLiner:
       'Dealership communication workspace for motorcycle teams that need customer texting, follow-ups, service updates, and accountability in one place.',
     audience:
-      'General managers, assistant GMs, service advisors, sales staff, parts staff, and managers reviewing daily dealership communication performance.',
+      'Service advisors working a lane full of open threads first, then sales and parts staff, with general managers and assistant GMs reviewing daily dealership communication performance.',
     jtbd:
       'When a customer conversation, service update, or follow-up is open, dealership staff need one shared workspace that preserves context, ownership, delivery status, and the next action before missed communication becomes missed revenue.',
     problem:
-      'Independent dealership communication is fragmented across personal phones, calls, website leads, service notes, and memory. That makes it easy to lose customer context, miss follow-ups, and leave managers without visibility into open conversations.',
+      'Independent dealership communication is fragmented across personal phones, calls, website leads, service notes, and memory. That makes it easy to lose customer context, miss follow-ups, and leave managers without visibility into open conversations. Collecting it into one inbox only moves the problem if the inbox still sorts by whatever arrived last, so the thread that costs the store the most sits wherever it happens to land.',
     coreWorkflow: [
-      'Staff signs in through secure role-based access for sales, service, parts, managers, and admins.',
+      'Staff signs in through secure role-based access for sales, service, parts, managers, and admins. Deactivating an account, or changing its role or department, takes effect on that person’s next request.',
       'Staff manages customer conversations from a shared inbox with linked vehicles, assignments, templates, internal notes, notifications, and SMS/MMS delivery status.',
       'Staff creates follow-up tasks, sends service updates, reassigns ownership, and handles opt-in or opt-out states without leaving the customer thread.',
-      'Staff generates an AI Ops Brief on an open conversation, reviews the summary, customer need, risk level, escalation recommendation, and suggested reply, then accepts, dismisses, copies the reply, or converts it into a note or follow-up. Every action stays a human decision.',
+      'A background pass writes an AI Ops Brief for every open conversation, so the inbox ranks by what those briefs found rather than by recency, and a line above the list reports how much of the queue is briefed and how old the newest brief is. Anyone can run a pass on demand, and a brief written before the latest messages is labelled as an earlier one.',
+      'Staff reads the brief for a thread, the summary, customer need, risk level, escalation recommendation, and suggested reply, then accepts, dismisses, copies the reply, or converts it into a note or follow-up. Every action stays a human decision.',
       'Managers review Command Center metrics for unread conversations, overdue follow-ups, unassigned threads, failed messages, and department exceptions, plus AI Ops Analytics for how the team actually uses the briefs.',
     ],
     mvpScope: [
       'Public-facing Next.js site plus internal staff dashboard',
       'Secure Auth.js staff login and role-based access for admin, manager, sales, service, and parts users',
       'Shared inbox with customer profiles, linked vehicles, assignments, templates, tasks, notifications, and delivery status',
+      'Ambient brief pass on a schedule and on demand, with the inbox ranked by brief risk, a coverage line over the list, and stale briefs labelled as earlier ones',
+      'Deactivation and role changes that land on the next request instead of waiting for a session to expire',
       'Twilio SMS/MMS send and receive routes with webhook signature verification, opt-in/opt-out handling, and delivery failure alerts',
       'Production-ready deployment structure with Vercel, Neon Postgres, Prisma, and Auth.js',
     ],
     evidenceSignal:
-      'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure. The latest build adds an OpenAI-backed AI Ops Brief with Structured Outputs, a product analytics event taxonomy for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created, and a PRD plus event taxonomy checked into content/prds/ before any impact is claimed. It also ships a one-click demo anyone can open with no credentials, with each risk priced separately: the AI ops brief runs live under a soft daily cap (estimated ~$0.40/day worst case) and SMS is blocked in demo. No measured usage yet.',
+      'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure. The AI Ops Brief is no longer something a manager asks for one thread at a time: a scheduled pass briefs the whole open queue through OpenAI Structured Outputs, the inbox ranks by what those briefs flagged, and coverage and brief age are stated above the list instead of assumed. Access control moved in the same direction, so a deactivated account is refused on its next request rather than holding a working session for up to thirty days. Product analytics events for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created are in place, with the PRD and event taxonomy checked into content/prds/ before any impact is claimed. It also ships a one-click demo anyone can open with no credentials, with each risk priced separately: the brief runs live under a soft daily cap (estimated ~$0.40/day worst case) and SMS is blocked in demo. No measured usage yet.',
     nextStep:
-      'Run the AI-suggested-reply experiment once real usage accumulates and validate impact with the instrumentation now in place. Beyond that, expand Attend into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
+      'Put the ranked inbox in front of a service advisor for a full shift and find out whether the briefs push the right thread to the top. The other half of that question is what an unhelpful brief costs now that nobody asked for it. The suggested-reply experiment still needs real usage behind it before any impact claim. Beyond that, expand Attend into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
     visualAssets: {
       note: 'Screenshots from the seeded demo environment. The one-click demo login and the SMS-blocked composer are the live app in demo mode; the AI Ops Briefs shown carry the seeded demo content.',
       items: [
@@ -422,7 +453,7 @@ const allProducts = [
         {
           label: 'AI Ops Brief',
           src: attendInboxBrief,
-          alt: 'Inbox conversation with the AI Ops Brief panel showing summary, customer need, risk, escalation, suggested next action, and suggested reply.',
+          alt: 'Attend inbox ranked by what the AI flagged, with a coverage line reading 8 of 11 briefed and a Run pass control, beside an open conversation and its AI Ops Brief panel showing summary, customer need, risk, escalation, suggested next action, and suggested reply.',
         },
         {
           label: 'SMS blocked in demo',
@@ -453,6 +484,27 @@ const allProducts = [
     },
     standaloneMockStatus: 'in-progress',
     updates: [
+      {
+        date: 'Aug 14, 2026',
+        tag: 'PR #19',
+        title: 'Made deactivating a staff account end their access',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/19',
+        body: 'Turning off an account only stopped that person signing in again. The session they already had kept working, for up to thirty days, and so did the role and department stamped into it. Every page, server action, and API request now resolves the account behind the session, so a deactivated or deleted person is refused on their next request and a changed role or department takes effect on the same request. Someone who signs in on an inactive account is told why rather than dropped at a generic failure.',
+      },
+      {
+        date: 'Aug 04, 2026',
+        tag: 'PR #17',
+        title: 'Renamed the product to Attend',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/17',
+        body: 'The product had been carrying two names, one in the interface and one on the repository, and neither of them said what it does. It is Attend everywhere a person sees it now: app, login, metadata, install manifest, and docs, with the decision recorded alongside the code, and the messaging points at service advisors as the people it is for. The repository name and the public route slug were deliberately left alone so existing links keep working.',
+      },
+      {
+        date: 'Aug 03, 2026',
+        tag: 'PR #15',
+        title: 'Briefed every conversation, then ranked the inbox by risk',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/15',
+        body: 'The brief used to be something you asked for, one thread at a time, which meant it only helped on the threads you already knew to open. A pass now runs over the whole open queue on a schedule, and the inbox orders by what those briefs flagged, risk and escalation ahead of unread and staff priority, instead of by whatever arrived last. A line above the list says how many conversations are briefed and how old the newest brief is, so nobody has to guess whether the ranking is current, a Run pass control covers the rest on demand, and a brief written before the latest messages is marked as an earlier brief rather than shown as if it still holds.',
+      },
       {
         date: 'Jul 13, 2026',
         tag: 'PR #8',
@@ -545,7 +597,8 @@ const allProducts = [
     coreWorkflow: [
       'Draw on an infinite canvas the way you would on any whiteboard: rectangles, ellipses, diamonds, selection, movement, resizing, clipboard, undo and redo, saved locally in the browser.',
       'Give an element a node kind and a layer, data, services, or clients, and it renders as a datastore, queue, service, or decision instead of a plain box.',
-      'Draw connectors between ports. Routing is computed once as a pure function and drawn by both views, so the flat board and the tilted one cannot disagree.',
+      'Wire two shapes together with the connector tool on the flat canvas: hovering shows the port a press would take, the edge routes live while you drag, and once it exists you can select it, restyle it, put arrowheads on either end, and label it. Routing is computed once as a pure function and drawn by both views, so the flat board and the tilted one cannot disagree.',
+      'Duplicate, copy, and paste a group and the connectors inside it come along, rebound to the copies and undone in one step. An edge with only one end in the selection is dropped rather than left pointing at the original.',
       'Tilt the space and the tiers physically separate, so any connector crossing a layer reads as a diagonal.',
       'Keep editing while tilted: select, drag on the tier plane with grid snapping, create connectors, delete. Every action runs through the same command store, so undo, autosave, and the live room work there too.',
       'Open a temporary approval-based live room for cursors and shared edits when walking someone through the board.',
@@ -556,15 +609,38 @@ const allProducts = [
       'Depth as the architectural tier: data at the bottom, services above, clients on top',
       'One toggle between the 2D canvas and the 3D space over a single board document, with shared selection and a shared style inspector',
       'Port-based connectors with orthogonal elbow routing, computed as pure functions and consumed by both renderers',
+      'Connector tool on the flat canvas with port snapping, a live routed preview, selection on the routed line, per-edge stroke and width, arrowheads at either end, and labels placed along the route',
+      'Duplicate, copy, and paste that carry the connectors inside a selection and rebind them to the copies',
       'Node kit rendering datastores, queues, services, and decisions from the shared shape factory, still carrying user styling',
       'Temporary approval-based live rooms for cursors and shared edits without uploading a durable copy of the board',
     ],
     evidenceSignal:
-      'The 3D view is a working prototype rather than a demo reel: it shares the board document, the selection, the style inspector, and the command store with the 2D canvas, so undo, autosave, and live collaboration work in it with no new plumbing. Connectors were deliberately kept outside the existing element type so the 21 places that consume that type did not have to change. Covered by 130 unit tests and 51 end-to-end tests across Chromium, Firefox, and WebKit, including one that seeds an architecture board, toggles to 3D, drags a node, and asserts the move landed in storage and shows up unchanged in the 2D view. No users and no measured result yet.',
+      'The 3D view is a working prototype rather than a demo reel: it shares the board document, the selection, the style inspector, and the command store with the 2D canvas, so undo, autosave, and live collaboration work in it with no new plumbing. Connectors were deliberately kept outside the existing element type so the 21 places that consume that type did not have to change; they are now first-class on the flat canvas too, drawn with their own tool, selectable on the routed line, stylable, and carried through duplicate and paste. Covered by 219 unit tests and 69 end-to-end tests, including one that seeds an architecture board, toggles to 3D, drags a node, and asserts the move landed in storage and shows up unchanged in the 2D view. No users and no measured result yet.',
     nextStep:
       'Put the tilted view in front of people who actually draw architecture and find out whether the diagonal reads as "this crosses a layer" without being explained. Capture the flat board beside the separated tiers, since that side-by-side is the pitch. It is a working prototype, not a demo reel, but there are no users and no measured result yet.',
     standaloneMockStatus: 'planned',
     updates: [
+      {
+        date: 'Aug 14, 2026',
+        tag: 'PR #16',
+        title: 'Kept the selection when a duplicate is refused',
+        url: 'https://github.com/codyjohnsontx/draftSpace/pull/16',
+        body: 'Pressing duplicate on something the board would not copy cleared the selection anyway, so the shapes you were holding dropped out from under you and there was nothing left to try again on. The selection only changes now when copies actually came back. The same pass made the connector tool cheaper to hold armed, since it had been re-measuring the ports under the pointer on every move, and put the connector label limit in one place instead of three.',
+      },
+      {
+        date: 'Aug 10, 2026',
+        tag: 'PR #14',
+        title: 'Kept connectors attached through duplicate, copy, and paste',
+        url: 'https://github.com/codyjohnsontx/draftSpace/pull/14',
+        body: 'Copying a group of shapes left their connectors behind, so the copy arrived as loose boxes with the structure stripped out. A connector with both ends inside the selection now travels with it, rebound to the new shapes and applied as a single step, so one undo takes the shapes and the edges back together. An edge with only one end copied is dropped rather than left pointing at the original, and a pasted payload is checked entry by entry so a hand-edited one cannot alias two copies to the same shape or abort the rest of the paste.',
+      },
+      {
+        date: 'Aug 06, 2026',
+        tag: 'PR #13',
+        title: 'Made connectors usable on the flat canvas',
+        url: 'https://github.com/codyjohnsontx/draftSpace/pull/13',
+        body: 'Connectors existed on the board but the only way to make one was dragging a port in the tilted view, and once it existed you could not select it, delete it, or restyle it. The flat canvas now has a connector tool: hovering shows the port a press would take, the edge routes live while you drag, and a second edge between the same pair is refused. An edge is selected by its actual routed line rather than its bounding box, deleted as one undoable step, and given a stroke color and width, arrowheads at either end or both, and a label placed halfway along the route. Edges follow their shapes during a move or resize instead of snapping into place on release.',
+      },
       {
         date: 'Aug 02, 2026',
         tag: 'PR #11',
@@ -1097,6 +1173,7 @@ const allProducts = [
       'Entitlement model',
       'Mux signed playback',
       'Clerk',
+      'Expo / React Native',
     ],
     oneLiner:
       'Subscription training platform for structured martial arts courses across affiliate schools, pre-launch while the billing and access paths get proven out.',
@@ -1107,9 +1184,9 @@ const allProducts = [
     problem:
       'Without a dedicated learning product, premium training content is hard to organize, monetize, and scale across schools.',
     coreWorkflow: [
-      'Member signs in and receives entitlement-based access.',
+      'Member signs in and receives entitlement-based access. On mobile, that is an emailed code rather than a password, landing in the app shell.',
       'Learner enters a structured program and progresses through course lessons.',
-      'Video playback and progress state remain synced across sessions.',
+      'Video playback and progress state remain synced across sessions. Playback runs from a signed URL, so the underlying video identifier for a paid lesson never leaves the server, and a lesson that has not been filmed says so instead of opening a player that fails.',
       'Billing events move access in both directions: a resubscribe restores it, a refund or chargeback removes it, a won dispute gives it back, and access granted by hand is protected from being overwritten.',
       'Admins publish and manage course content while subscriptions stay gated through billing rules.',
     ],
@@ -1118,15 +1195,44 @@ const allProducts = [
       'Course progression model',
       'Stripe subscription integration',
       'Stripe billing lifecycle covering resubscribes, refunds, chargebacks, won disputes, and simultaneous checkouts',
-      'Mux video delivery',
+      'Mux video delivery, signed-only for paid lessons, with a not-filmed state for lessons that have no playable video',
+      'Expo mobile app with email-code sign-in and an app shell',
       'Admin publishing workflow',
     ],
     evidenceSignal:
-      'Auth, entitlement, Stripe, and Mux are integrated, so this is a working subscription product rather than a static content library. The latest cycle went after the paths where money moves and access does not follow: a returning customer who cancelled and resubscribed used to pay and receive nothing, refunds and chargebacks left access switched on, a member who won a chargeback dispute stayed locked out for good, and two simultaneous checkouts could double-charge. It also closed a developer authentication bypass that depended on a single environment variable nothing in the repo set. The product is pre-launch: no customer has paid, so there is no measured result yet.',
+      'Auth, entitlement, Stripe, and Mux are integrated, so this is a working subscription product rather than a static content library. The latest cycle went after the paths where money moves and access does not follow: a returning customer who cancelled and resubscribed used to pay and receive nothing, refunds and chargebacks left access switched on, a member who won a chargeback dispute stayed locked out for good, and two simultaneous checkouts could double-charge. It also closed a developer authentication bypass that depended on a single environment variable nothing in the repo set, took the paid lesson video identifiers out of the payloads served to anyone who asked, leaving a signed URL as the only handle a member gets, and replaced the hard playback error on lessons that were never filmed with a state that says so. A mobile app has started as well: an emailed sign-in code and an app shell, running on the Expo SDK that store-installed Expo Go actually accepts. The product is pre-launch: no customer has paid, so there is no measured result yet.',
     nextStep:
       'Get it to launch: fill the catalogue, then run real payments through the fixed billing paths. Onboarding and retention patterns across affiliate school cohorts, and the broader multi-academy LMS controls, can only be validated once members are actually paying.',
     standaloneMockStatus: 'in-progress',
     updates: [
+      {
+        date: 'Aug 14, 2026',
+        tag: 'DiazOnDemand PR #23',
+        title: 'Moved the mobile app to the Expo SDK the store actually ships',
+        url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/23',
+        body: 'The owner could not open his own app on a phone. The store ships only the newest Expo Go, and that build refuses to run an SDK 52 project. The app moved to SDK 54, which that build does run, rather than to the newest SDK, which would have put it straight back out of reach.',
+      },
+      {
+        date: 'Aug 05, 2026',
+        tag: 'DiazOnDemand PR #19',
+        title: 'Showed an honest not-filmed state instead of a broken player',
+        url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/19',
+        body: 'Published lessons could point at hand-written video identifiers for videos that do not exist. Each one loaded the player and then failed with a hard "Video does not exist". A lesson whose video cannot play now says it has not been filmed yet, which is the true statement, rather than looking broken.',
+      },
+      {
+        date: 'Aug 04, 2026',
+        tag: 'DiazOnDemand PR #17',
+        title: 'Added a mobile sign-in screen and app shell',
+        url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/17',
+        body: 'The first piece of the mobile app: enter an email, get a code, land in the app shell. The sign-in screen reads the same whether or not an account exists for that address, so it cannot be used to find out who is a member.',
+      },
+      {
+        date: 'Aug 03, 2026',
+        tag: 'DiazOnDemand PR #9',
+        title: 'Stopped handing out paid lesson video identifiers',
+        url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/9',
+        body: 'The public program and course pages returned the raw video identifiers for paid lessons, so anyone could read them without an account. Those identifiers are gone from the payloads served to unauthenticated callers, a signed URL is now the only handle a member gets, and a video delivered under the wrong access policy is refused when it arrives rather than stored and served. The identifiers already handed out still have to be rotated at the video host, which the repository cannot do for itself.',
+      },
       {
         date: 'Aug 02, 2026',
         tag: 'DiazOnDemand PR #6',

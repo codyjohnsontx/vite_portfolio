@@ -245,7 +245,7 @@ export const productAnalyses = [
       'Dealership communication is scattered across personal cell phones, calls, email, website leads, DMS notes, and memory. That fragmentation leads directly to missed follow-ups, unclear ownership, weak visibility for managers, and lost sales or service satisfaction when no one is sure who is supposed to respond next.',
     users: {
       primary:
-        'General managers, assistant GMs, service advisors, sales staff, and parts staff working customer conversations throughout the day.',
+        'Service advisors working customer conversations throughout the day, then sales staff and parts staff, with general managers and assistant GMs reviewing alongside them.',
       secondary:
         'Managers and admin users reviewing response coverage, unread backlog, overdue follow-ups, and department exceptions.',
       buyer:

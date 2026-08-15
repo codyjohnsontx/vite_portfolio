@@ -35,15 +35,15 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Measured outcomes')).toBeTruthy();
     expect(screen.getByText('Latest')).toBeTruthy();
     expect(
-      screen.getByRole('heading', { name: 'draftSpace: a system-design board you can tilt' }),
+      screen.getByRole('heading', { name: 'Attend: the inbox ranks by risk, not by what came in last' }),
     ).toBeTruthy();
-    expect(screen.getAllByText(/first working prototype/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/the layers separate/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/no measured result yet/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/briefs every open conversation on its own/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/how much of the queue is briefed/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/no measured result/i).length).toBeGreaterThan(0);
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
-        .some((link) => link.getAttribute('href') === '/products/draftspace'),
+        .some((link) => link.getAttribute('href') === '/products/ctx-chat'),
     ).toBe(true);
   });
 
@@ -186,6 +186,48 @@ describe('portfolio routes and metadata', () => {
 
       expect(screen.getByRole('heading', { name: 'How it works end-to-end' })).toBeTruthy();
       expect(screen.getByText(product.oneLiner)).toBeTruthy();
+    });
+  });
+
+  /* Each product's `updates` array is its own feed, and the newest entry has to sit
+     first: the page renders the feed in array order, and the overlay menu card for
+     the first three flagships reads updates[0]. Putting an entry in the wrong
+     position is silent, so the Track Tuner, Attend, draftSpace, and Diaz on Demand
+     feeds pin their newest entry's date, tag, title, and pull request link below. */
+  const NEWEST_UPDATES = [
+    {
+      slug: 'track-tuner',
+      meta: /Merged · Update 16/,
+      title: 'Cover database functions that never decide who can run them',
+      url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/38',
+    },
+    {
+      slug: 'ctx-chat',
+      meta: /Aug 14, 2026 · PR #19/,
+      title: 'Made deactivating a staff account end their access',
+      url: 'https://github.com/codyjohnsontx/ctxconnect/pull/19',
+    },
+    {
+      slug: 'draftspace',
+      meta: /Aug 14, 2026 · PR #16/,
+      title: 'Kept the selection when a duplicate is refused',
+      url: 'https://github.com/codyjohnsontx/draftSpace/pull/16',
+    },
+    {
+      slug: 'diaz-on-demand',
+      meta: /Aug 14, 2026 · DiazOnDemand PR #23/,
+      title: 'Moved the mobile app to the Expo SDK the store actually ships',
+      url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/23',
+    },
+  ];
+
+  NEWEST_UPDATES.forEach(({ slug, meta, title, url }) => {
+    it(`leads the ${slug} update feed with its newest entry`, () => {
+      renderApp(`/products/${slug}`);
+
+      const [firstUpdate] = document.querySelectorAll('.update');
+      expect(within(firstUpdate).getByText(meta)).toBeTruthy();
+      expect(within(firstUpdate).getByRole('link', { name: title }).getAttribute('href')).toBe(url);
     });
   });
 
