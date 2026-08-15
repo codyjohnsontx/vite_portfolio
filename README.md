@@ -38,6 +38,10 @@ npm run build
 npm test
 ```
 
+## Continuous integration
+
+Pull requests and pushes to `main` have to pass `npm run lint`, `npm test`, and `npm run build` in GitHub Actions. See `.github/workflows/ci.yml` for the job itself.
+
 ## Deployment
 
 This app uses `BrowserRouter`, so deep links like `/products/track-tuner` and `/case-studies/:slug` require SPA rewrites in production.
