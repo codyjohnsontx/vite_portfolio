@@ -140,7 +140,7 @@ export default function Preloader({ onDone }) {
           ))}
         </div>
         <div className="preloader__meta">
-          <span className="mono">Product manager · technical builder</span>
+          <span className="mono">Technical product owner · software engineer</span>
           <span className="mono tabular" ref={countRef}>
             000
           </span>

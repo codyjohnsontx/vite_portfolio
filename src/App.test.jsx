@@ -72,7 +72,7 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getByText(/Assistant General Manager \(Part-time, Operations & E-commerce\)/i))
       .toBeTruthy();
-    expect(screen.getByText(/That platform became Attend\./i)).toBeTruthy();
+    expect(screen.getByText(/the internal dealership platform that became Attend/i)).toBeTruthy();
   });
 
   it('falls back when localStorage is unavailable during initial render', () => {

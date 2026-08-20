@@ -5,7 +5,7 @@ export const profile = {
   headline:
     'Technical Product Owner | Software Engineer | Digital & Operational Systems',
   heroSupport:
-    'I work across technical operations, real-time systems, and data workflows: reproducing issues, comparing expected against actual behavior, defining validation criteria, and improving reliability from what a system actually does under load and failure. Extensive hands-on motorsports experience behind that, so vehicle setup, track environments, simulator systems, and telemetry are familiar ground rather than a domain I had to read up on.',
+    'I work across technical operations, real-time systems, and data workflows: reproducing issues, comparing expected against actual behavior, defining validation criteria, and improving reliability from what a system actually does under failure. Extensive hands-on motorsports experience sits behind that, so vehicle setup, telemetry, and simulator systems are familiar ground rather than a domain I read up on.',
   summary:
     'I do my best work when the request is messy at first: define the real need, break it into deliverable pieces, clarify acceptance criteria and failure conditions, coordinate tradeoffs, and keep the work moving until the result holds up in practice against real data and real failure.',
   footerNote:

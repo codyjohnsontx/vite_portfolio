@@ -4,7 +4,7 @@ export const experience = [
     role: 'Assistant General Manager (Part-time, Operations & E-commerce)',
     dates: 'Jul 2025 - May 2026',
     summary:
-      'Owned service, inventory, customer communication, repair tracking, and billing workflows in a high-volume motorcycle dealership, watching repair status, queue age, and service capacity to find the problems worth investigating. Defined the direction and requirements for an internal dealership platform connecting messaging, service workflows, payments, inventory, task ownership, and management reporting. That platform became Attend.',
+      'Owned service, inventory, customer communication, repair tracking, and billing workflows in a high-volume motorcycle dealership, watching repair status, queue age, and service capacity to find the problems worth investigating. I also defined the internal dealership platform that became Attend.',
     evidence: [
       'Monitored repair status, vehicle readiness, queue age, service capacity, and operational bottlenecks to identify issues requiring investigation or corrective action.',
       'Analyzed service capacity, aging work, revenue trends, and throughput to prioritize workflow and staffing changes, contributing to a $90,000 service revenue increase in one month.',
