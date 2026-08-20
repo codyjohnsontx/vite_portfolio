@@ -86,7 +86,7 @@ function Hero({ ready }) {
 
       <div className="hero__title-block">
         <span className="mono hero__eyebrow" data-hero style={{ opacity: 0 }}>
-          Product manager · Technical builder · Austin, TX
+          Technical product owner · Software engineer · Austin, TX
         </span>
         <h1 className="display hero__title" id="hero-title">
           <span className="sr-only">Ambiguous to shipped</span>
@@ -108,16 +108,16 @@ function Hero({ ready }) {
 
 const PROOF = [
   {
+    label: 'Issue reproduction',
+    body: 'Working with engineering and QA, a vague report becomes reproduction conditions, expected against actual behavior, and a severity call somebody can act on.',
+  },
+  {
     label: 'Requirements clarity',
     body: 'Vague asks become user stories, acceptance criteria, validation rules, and delivery-ready scope.',
   },
   {
-    label: 'Cross-team execution',
-    body: 'Working across product, engineering, QA, design, operations, and stakeholder groups.',
-  },
-  {
-    label: 'Operational trust',
-    body: 'Active builds surface validation, readiness, monitoring, and failure states instead of hiding them.',
+    label: 'Reliability under failure',
+    body: 'Active builds define what happens on disconnects, restarts, interrupted delivery, and duplicate events, instead of assuming the happy path.',
   },
   {
     label: 'Measured outcomes',

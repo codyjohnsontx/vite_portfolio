@@ -104,8 +104,8 @@ export const blogPosts = [
       {
         heading: 'The feature is not the model',
         body: [
-          'When I added AI-shaped workflows to Track Tuner and RideSense, the model was never the whole feature. The real feature was the loop around it: what context gets loaded, what the user is trying to decide, what evidence can support that decision, and what a bad answer could cost.',
-          'For Track Tuner, Race Engineer should not behave like a generic motorsports chatbot. The useful version reasons from session history, setup changes, track conditions, and rider or driver feedback. If that evidence is not there, the product should not pretend. It should stay general, ask for more context, or refuse to give a setup recommendation that sounds more personal than the data supports.',
+          'When I added AI-shaped workflows to Trackday Tuner and RideSense, the model was never the whole feature. The real feature was the loop around it: what context gets loaded, what the user is trying to decide, what evidence can support that decision, and what a bad answer could cost.',
+          'For Trackday Tuner, Race Engineer should not behave like a generic motorsports chatbot. The useful version reasons from session history, setup changes, track conditions, and rider or driver feedback. If that evidence is not there, the product should not pretend. It should stay general, ask for more context, or refuse to give a setup recommendation that sounds more personal than the data supports.',
           'That makes the scope less flashy and more important. Session history, recommendation feedback, refusal behavior, repeated-prompt handling, and request observability are part of the feature. Without them, the AI is just language sitting on top of weak product judgment.',
         ],
       },
@@ -113,7 +113,7 @@ export const blogPosts = [
         heading: 'Trust starts with evidence boundaries',
         body: [
           'I keep coming back to a simple line: the product should not act like it has evidence it does not have. That sounds obvious, but a lot of AI interfaces are built to blur that line. They answer smoothly even when the underlying context is thin.',
-          "In Track Tuner, that means Race Engineer should not talk as if it knows a rider's personal setup history unless those sessions are actually loaded. In RideSense, grounded Q&A should stay tied to computed training signals and recover cleanly when model output is malformed. In both products, trust depends on the system being honest about its inputs.",
+          "In Trackday Tuner, that means Race Engineer should not talk as if it knows a rider's personal setup history unless those sessions are actually loaded. In RideSense, grounded Q&A should stay tied to computed training signals and recover cleanly when model output is malformed. In both products, trust depends on the system being honest about its inputs.",
           'The requirement is not just "answer the question." The requirement is closer to: answer from the right evidence, expose enough of the basis for the answer, and do not create false precision where the product only has a loose signal.',
         ],
       },
@@ -129,7 +129,7 @@ export const blogPosts = [
         heading: 'Observability should respect privacy',
         body: [
           'AI features also need a way to learn from usage. If refusals spike, if requests fail, or if users keep asking a question the product cannot answer well, I need to know that. But observability should not become a lazy excuse to store everything.',
-          'For Track Tuner, privacy-safe request observability is a product decision. I want enough signal to understand Race Engineer behavior without keeping sensitive prompt text by default. Patterns, failure modes, refusal counts, and safety decisions are useful. Raw user context is often more than the product needs to retain.',
+          'For Trackday Tuner, privacy-safe request observability is a product decision. I want enough signal to understand Race Engineer behavior without keeping sensitive prompt text by default. Patterns, failure modes, refusal counts, and safety decisions are useful. Raw user context is often more than the product needs to retain.',
           'This is where engineering fluency helps the product work. The tradeoff is not abstract. You have to know what data helps debugging, what data creates risk, and what a user would reasonably expect the product to keep private.',
         ],
       },
@@ -137,7 +137,7 @@ export const blogPosts = [
         heading: 'The PM work is deciding where confidence ends',
         body: [
           'A strong AI feature is not one that answers everything. It is one that knows where the product should stop. That stopping point depends on the user, the domain, the evidence, and the cost of being wrong.',
-          'In Track Tuner, Race Engineer should become more useful as structured session history compounds. In RideSense, AI should explain computed training signals without pretending to replace a coach or invent missing context. The trust boundary is not a disclaimer at the bottom of the page. It is part of the product.',
+          'In Trackday Tuner, Race Engineer should become more useful as structured session history compounds. In RideSense, AI should explain computed training signals without pretending to replace a coach or invent missing context. The trust boundary is not a disclaimer at the bottom of the page. It is part of the product.',
           'That is the part of AI product work I care about most. The model can generate language. The product has to earn trust.',
         ],
       },
@@ -149,18 +149,18 @@ export const blogPosts = [
     slug: 'mvp-sequencing-memory-before-intelligence',
     title: 'MVP sequencing: memory before intelligence',
     deck:
-      'Track Tuner gets more interesting when it becomes intelligent, but it gets useful first by becoming a better memory system for what changed and what happened next.',
+      'Trackday Tuner gets more interesting when it becomes intelligent, but it gets useful first by becoming a better memory system for what changed and what happened next.',
     date: 'May 2026',
     readingTime: '5 min read',
     intro:
-      'The exciting version of Track Tuner is easy to describe: telemetry, comparisons, setup recommendations, and a Race Engineer that helps a rider or driver decide what to change next. The useful first version starts smaller. It helps the user remember the setup, the conditions, the feedback, and the next decision while the day is still moving.',
+      'The exciting version of Trackday Tuner is easy to describe: telemetry, comparisons, setup recommendations, and a Race Engineer that helps a rider or driver decide what to change next. The useful first version starts smaller. It helps the user remember the setup, the conditions, the feedback, and the next decision while the day is still moving.',
     sections: [
       {
         heading: 'A sharper wedge beats a bigger promise',
         body: [
-          'A big product promise can hide a weak starting point. If Track Tuner launches as a broad motorsports intelligence platform, it asks users to trust the product before the product has earned much context. If it launches as a disciplined trackside logbook, it can solve a real problem immediately and create the foundation for smarter workflows later.',
+          'A big product promise can hide a weak starting point. If Trackday Tuner launches as a broad motorsports intelligence platform, it asks users to trust the product before the product has earned much context. If it launches as a disciplined trackside logbook, it can solve a real problem immediately and create the foundation for smarter workflows later.',
           'That is why the sequence matters: setup logging first, telemetry workflows second, AI recommendations after the product has useful history to reason from. This is not lowering the ambition. It is putting the ambition in the right order.',
-          'The first question is not "how advanced can this become?" It is "what is the smallest useful loop someone will repeat?" For Track Tuner, that loop is capture, compare, decide, and come back with better context next session.',
+          'The first question is not "how advanced can this become?" It is "what is the smallest useful loop someone will repeat?" For Trackday Tuner, that loop is capture, compare, decide, and come back with better context next session.',
         ],
       },
       {
@@ -168,7 +168,7 @@ export const blogPosts = [
         body: [
           'Track day riders, HPDE drivers, and club racers already experiment. They change tire pressure, suspension settings, alignment, brake points, line choice, and pace. The missing piece is not motivation. It is structured memory under pressure.',
           'Notes apps capture fragments. Photos capture a moment. Spreadsheets are flexible but slow. Pro telemetry can be powerful, but it often asks for hardware, expertise, and review time that do not fit a short paddock window.',
-          'Track Tuner should sit between those worlds. Fast enough to use in the five minutes that matter, structured enough to make the next comparison real. The product wins when logging is easier than guessing and more useful than scattered notes.',
+          'Trackday Tuner should sit between those worlds. Fast enough to use in the five minutes that matter, structured enough to make the next comparison real. The product wins when logging is easier than guessing and more useful than scattered notes.',
         ],
       },
       {
@@ -190,9 +190,9 @@ export const blogPosts = [
       {
         heading: 'The right MVP makes later features stronger',
         body: [
-          'A good MVP does not just reduce scope. It creates leverage. If Track Tuner captures setup, conditions, feedback, and decisions cleanly, later features become easier to build and easier to trust. Comparisons have better inputs. Charts have real history. Exports have structure. AI recommendations have evidence.',
+          'A good MVP does not just reduce scope. It creates leverage. If Trackday Tuner captures setup, conditions, feedback, and decisions cleanly, later features become easier to build and easier to trust. Comparisons have better inputs. Charts have real history. Exports have structure. AI recommendations have evidence.',
           'That is the difference between cutting scope and sequencing scope. Cutting scope asks what can be removed. Sequencing scope asks what should come first so the product gets stronger with each release.',
-          'For Track Tuner, memory before intelligence is the practical path. It solves the immediate problem, protects trust, and gives the product a stronger base for the advanced workflows that make the idea worth building.',
+          'For Trackday Tuner, memory before intelligence is the practical path. It solves the immediate problem, protects trust, and gives the product a stronger base for the advanced workflows that make the idea worth building.',
         ],
       },
     ],

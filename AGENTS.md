@@ -6,12 +6,14 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 
 ## Content is data, not JSX
 
-Every public claim on the site lives in `src/content/*.js`. Update copy there, not in
-components. A few things that are easy to get wrong:
+Nearly every public claim on the site lives in `src/content/*.js`. Update copy there, not
+in components. The exception is the positioning copy, which is hardcoded in the components
+and in `index.html`; see "The resume story is spread across the site" below. A few things
+that are easy to get wrong:
 
 - There is no separate changelog module. Each product's `updates` array in
   `src/content/projects.js` is the update feed, rendered by the `04 Updates` section of
-  `src/pages/ProductDetailPage.jsx`. Newest entry first, and for the Track Tuner, Attend,
+  `src/pages/ProductDetailPage.jsx`. Newest entry first, and for the Trackday Tuner, Attend,
   draftSpace, and Diaz on Demand feeds `src/App.test.jsx` pins the newest entry's date,
   tag, title, and pull request link, so adding an entry to one of those means updating
   that test in the same commit.
@@ -36,13 +38,32 @@ inventing a new status value, and treat `evidenceSignal` as an internal note who
 reaches no rendered surface, so editing it does not change the site. And a product with no
 screenshot should omit `image` and `visualAssets` rather than carry a placeholder path.
 
-## The resume exists in four places, and they drift
+## The resume story is spread across the site, and it drifts
 
-`src/content/resumeContent.js` drives the `/resume` page. Of the three files in
-`public/resume/`, the HTML and the TXT are separate hand-maintained artifacts, not
-generated from it, so a content change has to be applied to both. The PDF is generated
-from the HTML, so a resume change means updating `resumeContent.js` and those two files,
-then regenerating the PDF.
+`src/content/resumeContent.js` renders nowhere. `ResumePage.jsx` exists but `/resume` is
+not routed in `src/App.jsx`, and a test in `src/App.test.jsx` pins that it stays
+unexposed; it was unrouted deliberately in ff0ac60 and kept "for later". So editing
+`resumeContent.js` alone changes nothing a visitor sees, and re-exposing the page is a
+product decision, not a content fix.
+
+What actually renders the resume story is the home page: `src/content/experience.js`
+(company, role, dates, `summary`, `tags` only, never `evidence`) plus the hardcoded hero
+eyebrow, `HERO_LINES`, and `PROOF` array in `src/pages/HomePage.jsx`, the positioning line
+in `src/components/Preloader.jsx`, `profile.heroSupport`, and the titles and descriptions
+in `index.html`. Everything else in `src/content/profile.js` is dead: only `heroSupport`
+and `contactLinks` have a consumer, and `toolkit` lost its last one when Dev Mode was
+deleted. Nothing on the site renders a skills or strengths list at all.
+
+Two pieces of that story are deliberately absent rather than missing: the Texas Malibu role
+and the CTX Motoworks eBay liquidation bullet. `src/App.test.jsx` pins both out of the
+rendered output and out of both `experience.js` and `resumeContent.js`, so a content pass
+that "restores" them from an older source fails the suite.
+
+Of the three files in `public/resume/`, the HTML and the TXT are separate hand-maintained
+artifacts, not generated from `resumeContent.js`, so a content change has to be applied to
+both. They are unlinked but served, so they go stale silently. The PDF is generated from
+the HTML, so a resume change means updating `resumeContent.js` and those two files, then
+regenerating the PDF.
 
 The PDF is the exception worth knowing: it is not hand-written, it is Chrome's
 print-to-PDF of `cody-johnson-product-manager-resume.html` (its metadata still reads
@@ -58,8 +79,9 @@ artifact stale. Regenerate with:
   "file://$PWD/public/resume/cody-johnson-product-manager-resume.html"
 ```
 
-The HTML's `@media print` block already strips the card chrome. Confirm the result is
-still 5 US Letter pages before committing; a page-count change means the print CSS moved.
+The HTML's `@media print` block already strips the card chrome. The current resume prints
+to 4 US Letter pages. Check the count before committing: it should only move when the
+content did, so an unexplained change means the print CSS moved.
 
 ## Attend screenshots
 

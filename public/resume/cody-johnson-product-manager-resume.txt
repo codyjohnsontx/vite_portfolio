@@ -1,5 +1,5 @@
 Cody Johnson
-Product Owner | Product Manager | Digital Platform Operations
+Technical Product Owner | Software Engineer | Digital & Operational Systems
 Austin, Texas
 LinkedIn: https://www.linkedin.com/in/codyjohnsontx/
 GitHub:   https://github.com/codyjohnsontx
@@ -7,147 +7,134 @@ Site:     https://cody-johnson.com
 
 
 SUMMARY
-Technical Product Owner with experience building and improving digital platforms,
-internal tools, automation workflows, and analytics products. Skilled at translating
-business needs into user stories, acceptance criteria, backlog priorities, and
-release-ready requirements for engineering teams. Background spans product ownership,
-software engineering, operational systems, data workflows, and stakeholder
-communication, with a focus on platform reliability, workflow clarity, and
-data-informed execution.
+Technical Product Owner and Software Engineer with experience across technical
+operations, real-time systems, data collection and validation, software testing,
+troubleshooting, and process improvement. Hands-on background building and improving
+software systems, analyzing operational and performance data, reproducing and
+documenting issues, defining validation criteria, and improving reliability based on
+observed behavior. Experienced partnering with engineering and QA teams to investigate
+failures, validate changes, and support technically complex operational workflows.
+Brings extensive hands-on motorsports experience and familiarity with vehicle setup,
+track environments, simulator systems, telemetry, and performance data.
 
 
 PROFESSIONAL EXPERIENCE
 
-CTX Motoworks | Assistant General Manager, Operations & E-commerce (Full-time) | Jul 2025 - May 2026
-- Owned service, inventory, and e-commerce workflows as product systems; mapped
-  intake, service, billing, and inventory lifecycles to identify bottlenecks and
-  ship process improvements.
-- Used operational data, queue age, capacity signals, and revenue trends to
-  prioritize staffing and workflow changes, directly contributing to a $90K service
-  revenue increase in one month.
-- Led internal platform direction for a Dealerspike alternative with integrated chat,
-  payments, inventory workflows, and a Command Center analytics dashboard for KPI
-  visibility and faster GM decision-making.
-- Defined product requirements for catalog structure, data models, workflow design,
-  and dashboard reporting to support scalable e-commerce and service operations.
-- Designed and launched an aged-inventory liquidation workflow on eBay, defining
-  pricing logic, listing cadence, and SKU prioritization; generated $20K in three
-  months and improved inventory turnover.
-- Collaborated across sales, service, parts, and leadership teams to document
-  workflows, clarify ownership, and improve execution across daily operations.
-
 Lambda Curry | Product Owner (Contract, Full-time) | May 2025 - Feb 2026
-- Owned backlog refinement, sprint priorities, user stories, acceptance criteria, and
-  release coordination across e-commerce, consumer, and B2B product initiatives.
-- Partnered with engineering, QA, and stakeholders to clarify requirements, manage
-  dependencies, resolve scope questions, and keep delivery aligned with business
-  priorities.
-- Defined feature scope and acceptance criteria for a checkout redesign and
-  friction-reduction initiative, contributing to a 12% first-week sales lift at
-  launch and measurable funnel improvement.
+- Guided multiple software products across consumer, e-commerce, B2B, and healthcare
+  domains through requirements definition, development, testing, release, and
+  iteration.
+- Partnered with engineering and QA to reproduce issues, compare expected and actual
+  behavior, identify edge cases, assess impact, and validate completed changes.
+- Translated business goals, user behavior, product data, and stakeholder feedback
+  into technical requirements, user stories, acceptance criteria, and prioritized
+  work.
+- Wrote PRDs and detailed requirements documenting workflows, dependencies, failure
+  conditions, edge cases, validation criteria, and success metrics.
+- Triaged defects by confirming reproduction conditions, documenting observed
+  behavior, assessing severity and business impact, and coordinating resolution.
+- Defined requirements and success criteria for a checkout redesign that contributed
+  to a 12% first-week sales lift.
 - Used behavioral data, conversion trends, and retention patterns to prioritize fixes
   and product improvements, driving 10-25% retention improvement across a
   multi-product platform.
-- Wrote PRDs for higher-risk features to lock scope early, define success metrics,
-  document validation criteria, and secure stakeholder sign-off before engineering
-  began.
-- Communicated delivery status, risks, blockers, and scope changes across teams to
-  support predictable sprint execution and release readiness.
+
+CTX Motoworks | Assistant General Manager (Part-time, Operations & E-commerce) | Jul 2025 - May 2026
+- Owned and improved service, inventory, customer communication, repair tracking,
+  billing, and operational workflows in a high-volume motorcycle dealership
+  environment.
+- Monitored repair status, vehicle readiness, queue age, service capacity, and
+  operational bottlenecks to identify issues requiring investigation or corrective
+  action.
+- Analyzed service capacity, aging work, revenue trends, and throughput to prioritize
+  workflow and staffing changes, contributing to a $90,000 service revenue increase in
+  one month.
+- Investigated recurring service and workflow problems, documented findings, and
+  coordinated resolution across technicians, service advisors, parts staff, and
+  management.
+- Gathered feedback across sales, service, parts, customers, and leadership to
+  identify workflow failures, clarify ownership, and define process improvements.
+- Defined product direction and requirements for an internal dealership platform
+  connecting customer messaging, service workflows, payments, inventory, task
+  ownership, and management reporting. That platform became Attend, below.
 
 Humane Society of New Braunfels (HSNBA) | Software Engineer (Volunteer, Full-stack & SQL Automation) | Apr 2024 - Present
-- Built Python automation tools and data workflows to process and classify 19,000+
-  records, reducing manual data entry by 65% and data errors by 95%.
-- Designed transformation logic and repeatable classification workflows to support
-  reporting accuracy, geospatial analysis, and operational decision-making.
-- Integrated external GIS data sources and APIs into internal workflows to enable
-  automated district-level reporting.
-- Documented data-handling logic and process steps to improve repeatability,
-  auditability, and future workflow maintenance.
-
-Texas Malibu | Sales Lead | Apr 2021 - May 2025
-- Implemented inventory management digitalization across 3 stores, increasing
-  operational efficiency.
-- Analyzed market trends and customer behavior data to drive strategic decisions,
-  contributing to 10.1% market share growth in central Texas.
-- Improved client satisfaction scores by 15% within 6 months through structured
-  training on sales technique, product knowledge, and customer relationships.
+- Built Python and SQL tools for collecting, cleaning, validating, and processing
+  operational data, reducing manual data entry by 65% and data errors by 95%.
+- Built repeatable workflows to process and classify more than 19,000 animal-control
+  records for reporting, geospatial analysis, grant planning, and operational
+  decision-making.
+- Developed validation logic to identify missing, inconsistent, duplicate, and
+  incorrectly classified records before downstream analysis.
+- Integrated external GIS datasets and APIs into internal systems to automate
+  classification and reporting.
+- Investigated data-quality issues and documented transformation rules, validation
+  logic, and system behavior to improve reliability, auditability, and
+  maintainability.
 
 
 PROJECTS
 
+Oasis Race Control | Real-Time Sim Racing Operations Platform
+Product Engineer / PM | .NET, PostgreSQL, Real-Time Data, iRacing SDK, Distributed
+Systems
+- Defined and built a real-time platform connecting 20+ simulator stations, driver
+  sessions, timing data, customer displays, and venue staff.
+- Integrated live session and telemetry data from the iRacing SDK and designed
+  workflows for reliable event capture, delivery, and storage.
+- Defined system behavior for simulator disconnects, application restarts,
+  interrupted data delivery, incomplete sessions, duplicate events, and recovery
+  scenarios.
+- Designed safeguards to prevent conflicting simulator assignments and maintain data
+  consistency during continuous venue operation.
+- Troubleshoot software and integration issues by tracing behavior across client
+  applications, event delivery, backend services, and simulator systems.
+- Prioritized reliability improvements based on real-world operator behavior,
+  simulator failures, reconnects, and live-session edge cases.
+
+Trackday Tuner | AI-Assisted Race Setup and Session Platform
+Product Engineer / PM | Next.js, TypeScript, Supabase, Tailwind CSS, OpenAI
+- Defined and built a motorsports data platform for recording vehicle setup, track
+  conditions, rider observations, session performance, and setup changes.
+- Designed structured data models connecting suspension settings, vehicle
+  configuration, environmental conditions, rider feedback, and historical outcomes.
+- Built workflows for comparing setup changes against observed vehicle behavior and
+  performance across sessions.
+- Developed retrieval-based analysis grounded in historical session and setup data
+  rather than generic recommendations.
+- Designed the product around real-world trackside workflows where consistent
+  observations, rapid data capture, and comparison between runs are critical.
+
 Attend | Internal Dealership Operations & Messaging Platform
-Product Owner / Builder | React, TypeScript, Node.js, PostgreSQL, Operational Analytics
-- Defined product requirements for an internal dealership platform connecting sales,
-  service, inventory, customer messaging, payments, and operational reporting into
-  one workflow layer.
-- Designed the platform around real operational bottlenecks, including lead
-  follow-up, service status visibility, aged inventory, quote management, and
-  GM-level KPI reporting.
-- Scoped a Command Center dashboard to monitor service capacity, revenue
-  opportunities, follow-up risk, inventory movement, and workflow blockers for
-  faster decision-making.
-- Created user flows and data models for customer records, inventory items, service
-  jobs, messages, payment status, and task ownership across departments.
-- Prioritized MVP features based on operational impact, workflow urgency, and
-  leadership visibility, balancing near-term usability with long-term platform
-  scalability.
-
-RideSense | Cross-Provider Cycling Training Insights Platform
-Developer | Next.js, React, TypeScript, Tailwind CSS, shadcn/ui, Python, Supabase
-Postgres, SQLite, OpenAI, pytest, Playwright
-- Built an analytics product that unifies fragmented cycling training data into a
-  single activity timeline for performance tracking, trend analysis, and
-  data-driven training decisions.
-- Developed a similarity-scored deduplication engine to collapse duplicate workout
-  records across providers and prevent double-counted training load.
-- Designed data models for provider connections, sync runs, raw activities, canonical
-  activities, zone distributions, and evidence-backed Q&A records.
-- Implemented deterministic analytics for weekly load, zone breakdowns, multi-week
-  trends, regression detection, and evidence-backed AI responses.
-- Built authenticated dashboard, sync, profile, ask, and connections flows with
-  smoke coverage using pytest and Playwright.
-
-Track Tuner | AI-Assisted Race Setup and Telemetry Platform
-Developer | Next.js, TypeScript, Node.js, RAG, OpenAI API
-- Defined and built a telemetry logging platform that captures session data, vehicle
-  setup, rider feedback, and track conditions to identify performance trends.
-- Developed a RAG-based recommendation flow that connects historical session data to
-  contextual setup suggestions.
-- Validated product direction with real riders and refined data models, feature
-  scope, and trackside usability from user feedback.
-
-Windcast | Wind Sports Forecasting and Session Planning Platform
-Developer | React, TypeScript, Vite, Tailwind CSS, Leaflet, Open-Meteo API
-- Built a mobile-first forecasting app that helps kiteboarders, wing foilers, and
-  downwind foilers evaluate wind conditions and identify the best session windows.
-- Developed a spot-specific scoring engine that evaluates wind speed, gust spread,
-  wind direction, rain risk, unsafe launch conditions, and local thresholds to
-  classify forecast windows as fire, good, maybe, poor, or sketchy.
-- Implemented a forecast provider architecture with mock data support and Open-Meteo
-  integration, normalizing hourly wind, gust, direction, rain probability, and
-  temperature into reusable domain models.
-- Built an interactive Leaflet map with saved spot markers, tap-anywhere forecast
-  lookup, forecast-hour controls, and map-based discovery workflows.
-- Created saved-spot management with local persistence, sport-specific wind ranges,
-  unsafe directions, launch notes, unit preferences, and import/export support.
+Product Engineer / PM | React, TypeScript, Node.js, PostgreSQL, Operational Analytics
+- Defined and built a shared operations platform for service teams managing customer
+  communication, follow-up work, service updates, tasks, and parts notifications.
+- Translated recurring operational failures into workflows for task ownership,
+  communication tracking, escalation, customer records, and workload visibility.
+- Designed AI-assisted workflows that summarize conversations, identify likely next
+  actions, and prioritize work based on urgency.
+- Used operational patterns and staff feedback to identify missed follow-ups, stalled
+  work, ownership gaps, delayed responses, and reliability improvements.
 
 
 TECHNICAL SKILLS
-Frontend:           TypeScript, React, Tailwind CSS, shadcn/ui, Figma
-Backend:            Node.js, Express, RESTful APIs, Medusa
-Testing:            Vitest, Playwright
-Database/Analytics: PostgreSQL, MongoDB, SQL, Google Analytics, Google Tag Manager,
-                    Operational Metrics, Reporting, Data Workflows
-Product Management: User Stories, Acceptance Criteria, Backlog Management, Agile,
-                    Scrum, Kanban, Jira, Linear, Confluence, Excel, PowerPoint,
-                    Roadmap Planning, PRD Writing, Release Planning, OKRs, KPIs,
-                    A/B Testing, Funnel Analysis
-Platform Ops:       Process Documentation, Root Cause Analysis, Production Issue
-                    Support, Workflow Optimization, Stakeholder Communication,
-                    Cross-Functional Delivery
-AI & Automation:    Python, LLM API Integration, RAG, Agentic Workflows, Vector
-                    Databases, Embeddings, LangChain, MCP
-Other:              Stripe, Mux, iRacing SDK, Unity
+Programming & Systems:    Python, TypeScript, JavaScript, .NET, Node.js, Express.js,
+                          React, REST APIs, Distributed Systems, Real-Time Systems
+Testing & Troubleshooting: Software Testing, Defect Triage, Issue Reproduction, Root
+                          Cause Analysis, UAT, Acceptance Criteria Validation,
+                          Playwright, Vitest, Production Support
+Data & Analysis:          SQL, PostgreSQL, MongoDB, Data Collection, Data Validation,
+                          Data Quality, Operational Metrics, Reporting, Behavioral
+                          Data, Data Workflows
+Product & Engineering:    Technical Requirements, User Stories, Acceptance Criteria,
+                          PRDs, Backlog Management, Release Validation,
+                          Cross-Functional Engineering Collaboration, Agile, Scrum,
+                          Jira, Linear
+AI & Automation:          LLM API Integration, RAG, Agentic Workflows, Vector
+                          Databases, Embeddings, LangChain, MCP
+Motorsports & Simulation: iRacing SDK, Simulator Systems, Telemetry, Performance
+                          Data, Vehicle Setup, Suspension Setup, Track Environments
+Other:                    Tailwind CSS, shadcn/ui, Figma, Unity
 
 
 EDUCATION & CERTIFICATIONS

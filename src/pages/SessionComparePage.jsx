@@ -64,14 +64,14 @@ export default function SessionComparePage() {
       <div className="sc-page">
         <div className="sc-backbar">
           <Link to={`/products/${product.slug}`}>← Back to {product.name}</Link>
-          <span>Track Tuner / Features / Session Compare</span>
+          <span>Trackday Tuner / Features / Session Compare</span>
         </div>
 
         <header className="sc-hero">
           <p className="sc-hero__eyebrow">Shipped feature · PM case study</p>
           <h1 className="sc-hero__title">Session Compare</h1>
           <p className="sc-hero__lead">
-            Session Comparison v1 moves Track Tuner from setup logging toward a setup-learning
+            Session Comparison v1 moves Trackday Tuner from setup logging toward a setup-learning
             workflow. Pro users can choose a baseline session from the same vehicle and compare
             setup deltas, conditions, lap-summary metrics, and context warnings in one rules-based
             flow. The feature avoids causal claims and keeps the free previous-session comparison

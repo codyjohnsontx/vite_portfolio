@@ -5,7 +5,9 @@ import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 import { blogPosts } from './content/blogPosts';
 import { caseStudies } from './content/caseStudies';
+import { experience } from './content/experience';
 import { allProducts, flagshipProducts, products } from './content/projects';
+import { resumeContent } from './content/resumeContent';
 
 function renderApp(initialEntry = '/') {
   return render(
@@ -20,18 +22,20 @@ describe('portfolio routes and metadata', () => {
     renderApp('/');
 
     expect(screen.getAllByRole('heading', { level: 1 }).length).toBeGreaterThan(0);
-    expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Trackday Tuner' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'OncoPath' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Attend' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
     expect(screen.getByText('Ambiguous to shipped')).toBeTruthy();
-    expect(screen.getByText(/Product manager · Technical builder · Austin, TX/i)).toBeTruthy();
-    expect(screen.getByText(/actionable requirements/i)).toBeTruthy();
+    expect(
+      screen.getByText(/Technical product owner · Software engineer · Austin, TX/i),
+    ).toBeTruthy();
+    expect(screen.getByText(/reproducing issues, comparing expected against actual behavior/i)).toBeTruthy();
+    expect(screen.getByText('Issue reproduction')).toBeTruthy();
     expect(screen.getByText('Requirements clarity')).toBeTruthy();
-    expect(screen.getByText('Cross-team execution')).toBeTruthy();
-    expect(screen.getByText('Operational trust')).toBeTruthy();
+    expect(screen.getByText('Reliability under failure')).toBeTruthy();
     expect(screen.getByText('Measured outcomes')).toBeTruthy();
     expect(screen.getByText('Latest')).toBeTruthy();
     expect(
@@ -45,6 +49,34 @@ describe('portfolio routes and metadata', () => {
         .getAllByRole('link', { name: /Read the build/i })
         .some((link) => link.getAttribute('href') === '/products/ctx-chat'),
     ).toBe(true);
+  });
+
+  /* Both removals were explicit owner instructions during the 2026-08 resume
+     refresh, and both were once rendered copy. Pinned so they cannot drift back
+     in with a future content pass. */
+  it('keeps the retired Texas Malibu role and the eBay bullet off the site', () => {
+    renderApp('/');
+
+    expect(screen.queryByText(/Texas Malibu/i)).toBeNull();
+    expect(screen.queryByText(/aged-inventory liquidation/i)).toBeNull();
+    const allRoles = [...experience, ...resumeContent.experience];
+
+    expect(allRoles.some((job) => job.company === 'Texas Malibu')).toBe(false);
+    expect(
+      allRoles.some((job) =>
+        [job.summary ?? '', ...(job.evidence ?? []), ...(job.bullets ?? [])].some((line) =>
+          /eBay/i.test(line),
+        ),
+      ),
+    ).toBe(false);
+  });
+
+  it('states the CTX Motoworks role as part-time and points its platform at Attend', () => {
+    renderApp('/');
+
+    expect(screen.getByText(/Assistant General Manager \(Part-time, Operations & E-commerce\)/i))
+      .toBeTruthy();
+    expect(screen.getByText(/the internal dealership platform that became Attend/i)).toBeTruthy();
   });
 
   it('falls back when localStorage is unavailable during initial render', () => {
@@ -92,12 +124,12 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('button', { name: /^all$/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /apps/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /product features/i })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: /Track Tuner/ })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Trackday Tuner/ })).toBeTruthy();
   });
 
   it('does not collapse product cards when keyboard users press Enter on the nested project link', () => {
     renderApp('/products');
-    const trackTunerCard = screen.getByRole('button', { name: /Track Tuner/i });
+    const trackTunerCard = screen.getByRole('button', { name: /Trackday Tuner/i });
 
     fireEvent.keyDown(trackTunerCard, { key: 'Enter' });
     expect(trackTunerCard.getAttribute('aria-expanded')).toBe('true');
@@ -192,7 +224,7 @@ describe('portfolio routes and metadata', () => {
   /* Each product's `updates` array is its own feed, and the newest entry has to sit
      first: the page renders the feed in array order, and the overlay menu card for
      the first three flagships reads updates[0]. Putting an entry in the wrong
-     position is silent, so the Track Tuner, Attend, draftSpace, and Diaz on Demand
+     position is silent, so the Trackday Tuner, Attend, draftSpace, and Diaz on Demand
      feeds pin their newest entry's date, tag, title, and pull request link below. */
   const NEWEST_UPDATES = [
     {
@@ -231,7 +263,7 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
-  it('renders the Track Tuner Session Comparison v1 update and screenshots', () => {
+  it('renders the Trackday Tuner Session Comparison v1 update and screenshots', () => {
     renderApp('/products/track-tuner');
 
     expect(screen.getAllByText(/Active build/).length).toBeGreaterThan(0);
@@ -252,7 +284,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Setup deltas')).toBeTruthy();
   });
 
-  it('renders the Track Tuner Session Compare brief when ResizeObserver is unavailable', async () => {
+  it('renders the Trackday Tuner Session Compare brief when ResizeObserver is unavailable', async () => {
     const resizeObserverDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'ResizeObserver');
     Object.defineProperty(globalThis, 'ResizeObserver', {
       configurable: true,
@@ -266,7 +298,7 @@ describe('portfolio routes and metadata', () => {
         expect(screen.getByRole('heading', { name: /Session Compare/i })).toBeTruthy(),
       );
       // Scope to the page body: the overlay menu also lists the latest
-      // Track Tuner update, whose title contains the same phrase.
+      // Trackday Tuner update, whose title contains the same phrase.
       const main = within(document.querySelector('main'));
       expect(main.getByText(/Session Comparison v1/i)).toBeTruthy();
       expect(main.getByText(/rules-based/i)).toBeTruthy();
@@ -384,10 +416,10 @@ describe('portfolio routes and metadata', () => {
     await waitFor(() => expect(document.activeElement).toBe(zoomButton));
   });
 
-  it('renders the Track Tuner PM analysis page', () => {
+  it('renders the Trackday Tuner PM analysis page', () => {
     renderApp('/products/track-tuner/analysis');
 
-    expect(screen.getByRole('heading', { name: /Track Tuner PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Trackday Tuner PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
     expect(screen.getAllByText(/Session Comparison v1/i).length).toBeGreaterThan(0);
@@ -399,10 +431,10 @@ describe('portfolio routes and metadata', () => {
     ).toBeNull();
   });
 
-  it('renders the Track Tuner research page', () => {
+  it('renders the Trackday Tuner research page', () => {
     renderApp('/products/track-tuner/research');
 
-    expect(screen.getByRole('heading', { name: /Track Tuner research system/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Trackday Tuner research system/i })).toBeTruthy();
     expect(screen.getAllByText('Progression Addict').length).toBeGreaterThan(0);
     expect(screen.getByText('First-Track Learner')).toBeTruthy();
     expect(screen.getByText('Coach Operator')).toBeTruthy();
@@ -566,7 +598,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('link', { name: /View persona research/i })).toBeNull();
   });
 
-  it('exposes Track Tuner research from the PM analysis page', () => {
+  it('exposes Trackday Tuner research from the PM analysis page', () => {
     renderApp('/products/track-tuner/analysis');
     expect(screen.getAllByRole('link', { name: /View persona research/i }).length).toBeGreaterThan(0);
   });
