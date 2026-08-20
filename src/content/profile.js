@@ -1,13 +1,13 @@
 export const profile = {
   name: 'Cody Johnson',
-  targetRole: 'Product Manager',
+  targetRole: 'Technical Product Owner',
   location: 'Austin, Texas',
   headline:
-    'Turning ambiguous product asks into scoped, shippable work.',
+    'Technical Product Owner | Software Engineer | Digital & Operational Systems',
   heroSupport:
-    'I work across product, engineering, operations, and stakeholder needs to clarify scope, write actionable requirements, sequence delivery, and ship workflows that are understandable, measurable, and ready for real users.',
+    'I work across technical operations, real-time systems, and data workflows: reproducing issues, comparing expected against actual behavior, defining validation criteria, and improving reliability from what a system actually does under load and failure. Extensive hands-on motorsports experience behind that, so vehicle setup, track environments, simulator systems, and telemetry are familiar ground rather than a domain I had to read up on.',
   summary:
-    'I do my best work when the request is messy at first: define the real need, break it into deliverable pieces, clarify acceptance criteria, coordinate tradeoffs, and keep the work moving until the result holds up in practice.',
+    'I do my best work when the request is messy at first: define the real need, break it into deliverable pieces, clarify acceptance criteria and failure conditions, coordinate tradeoffs, and keep the work moving until the result holds up in practice against real data and real failure.',
   footerNote:
     'Built as a focused portfolio for active products, selected case studies, and supporting execution proof.',
   contactLinks: [
@@ -43,20 +43,24 @@ export const profile = {
   ],
   toolkit: [
     {
-      title: 'Product ownership',
-      items: ['Backlog refinement', 'User stories', 'Acceptance criteria', 'Roadmap sequencing'],
+      title: 'Testing & troubleshooting',
+      items: ['Issue reproduction', 'Defect triage', 'Root cause analysis', 'Acceptance criteria validation'],
     },
     {
-      title: 'Cross-functional execution',
-      items: ['Stakeholder alignment', 'Engineering handoff', 'QA clarification', 'Release coordination'],
+      title: 'Product & engineering',
+      items: ['Technical requirements', 'User stories', 'PRDs', 'Release validation'],
     },
     {
-      title: 'Platform trust',
-      items: ['Validation logic', 'Operational metrics', 'Issue investigation', 'Readiness checks'],
+      title: 'Data & systems',
+      items: ['SQL', 'Data validation', 'Operational metrics', 'Real-time systems'],
     },
     {
-      title: 'Technical fluency',
-      items: ['React', 'TypeScript', 'Node.js', 'SQL', 'RAG prototyping'],
+      title: 'AI & automation',
+      items: ['LLM API integration', 'RAG', 'Agentic workflows', 'Embeddings', 'MCP'],
+    },
+    {
+      title: 'Motorsports & simulation',
+      items: ['iRacing SDK', 'Telemetry', 'Vehicle setup', 'Suspension setup', 'Track environments'],
     },
   ],
 };

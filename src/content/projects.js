@@ -60,7 +60,7 @@ const allProducts = [
     accent: 'oklch(0.62 0.18 30)',
     image: trackTunerHomepage,
     role: 'Product Manager / Developer',
-    stack: ['React', 'TypeScript', 'Node.js', 'RAG prototypes'],
+    stack: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS', 'OpenAI', 'RAG prototypes'],
     oneLiner:
       'Motorsport setup logger that helps riders and drivers compare sessions, understand setup deltas, and make better trackside decisions without overreading weak data.',
     audience:
@@ -68,9 +68,10 @@ const allProducts = [
     jtbd:
       'When a session ends, users need to log what changed and decide what to adjust next without guessing.',
     problem:
-      'Scattered notes and memory-driven tuning make it difficult to learn from past sessions and improve consistently.',
+      'Setup work at a track day happens between runs, in the paddock, with about ten minutes to do it. What gets recorded is scattered notes and memory, so the suspension settings, tire pressures, track and weather conditions, and what the vehicle was actually doing on corner exit never land in the same place. By the next event nobody can say which change produced which result, so the next change is a guess.',
     coreWorkflow: [
-      'Capture suspension settings, tire pressures, environment, and session notes right after each run.',
+      'Capture suspension settings, vehicle configuration, tire pressures, track and weather conditions, and rider observations right after each run, while the run is still fresh.',
+      'Each session stores those settings against the conditions and the feedback from the same run, so a later comparison is between a setup change and what the vehicle actually did, not between two sets of loose notes.',
       'Keep the free previous-session comparison on the session detail page for the fastest "what changed since last time?" check.',
       'Use the Pro Session Comparison page to choose a same-vehicle baseline and compare setup deltas, conditions, context flags, and available lap-summary metrics.',
       'Treat comparison strength labels and warnings as guardrails so users do not assume a setup caused a result.',
@@ -80,6 +81,7 @@ const allProducts = [
       'Setup logging first, telemetry workflows second',
       'Bike and car setup capture',
       'Condition, environment, and feedback timeline',
+      'Structured data model connecting suspension settings, vehicle configuration, environmental conditions, rider feedback, and historical outcomes',
       'Free previous-session setup comparison',
       'Pro same-vehicle Session Comparison v1 with baseline picker, strength labels, context flags, lap metrics, and setup deltas',
       'Early AI recommendation engine prototype with grounding and refusal guardrails',
@@ -268,6 +270,8 @@ const allProducts = [
       'Neon Postgres',
       'Postgres concurrency control',
       '.NET',
+      'iRacing SDK',
+      'Idempotent ingestion',
     ],
     oneLiner:
       'Check-in and live-timing for a sim-racing venue: drivers scan a QR at their simulator to check in, the front-of-store screen cycles every track’s leaderboard on its own, drivers compare their laps on their phone, and staff run the floor and league night from a dashboard.',
@@ -276,10 +280,12 @@ const allProducts = [
     jtbd:
       'When a driver sits down at a simulator, they need to check in, set laps, and see where they stand tonight without staff walking each person through it, while the front of the store shows the standings without anyone tending it and staff keep the floor and the league season moving.',
     problem:
-      'A sim-racing venue runs on lap times and turnover. The check-in, the timing board, and the driver’s own results started out in a placeholder theme that did not look like the business, the wall screen needed someone to babysit it, and league night was something customers kept asking for that the app had no concept of. Recent cycles have been about making each surface look like Oasis Sim Racing, deciding screen by screen who it is for, and then getting the wall board to run a full shift unattended.',
+      'A sim-racing venue runs on lap times and turnover, and almost everything that produces a lap time can fail in the middle of a shift. A simulator gets closed and reopened, a rig PC loses the network, the timing feed drops, the same lap gets detected twice, a driver moves to a different rig without telling anyone, and two phones scan the same QR at the same moment. The board on the wall has to keep making sense through all of that with nobody standing next to it, because the alternative is a staff member babysitting a screen instead of running the floor. On top of that, the check-in, the timing board, and the driver’s own results started out in a placeholder theme that did not look like the business, and league night was something customers kept asking for that the app had no concept of.',
     coreWorkflow: [
       'A driver scans the QR at their simulator and lands on a check-in screen with a glowing rig number, then drives as a guest or signs into a saved profile.',
-      'Laps ship from each simulator through a separate .NET rig agent, then show up on the driver’s phone portal and on the front-of-store TV.',
+      'Laps ship from each simulator through a separate .NET rig agent. Each lap is written to a durable local queue the moment it is detected and only cleared once the backend has accepted or deduplicated it, so a network outage or an agent restart does not lose a lap and the same lap arriving twice does not become two.',
+      'Check-in becomes a two-step confirmation when it needs to be. If the driver is already checked in on another rig, or the rig still has a finished driver on it, the app names the conflict and asks them to confirm the move or the takeover before it commits, and the swap lands in a single database transaction that leaves laps on closed assignments alone.',
+      'Those laps then show up on the driver’s phone portal and on the front-of-store TV.',
       'The live-timing board ranks who is fastest tonight with a gold-highlighted leader and a running gap to P1.',
       'Left alone, that board cycles every track on a timer, skips tracks with no laps yet, and holds the last standings it saw if the timing feed drops.',
       'When a driver beats their own best, the board fires a full-screen personal-best celebration with the new time.',
@@ -291,7 +297,9 @@ const allProducts = [
       'Synthwave look with neon cyan and magenta on near-black, Orbitron and Rajdhani fonts, the real logo and helmet mark, and an app icon generated from the helmet',
       'Staff dashboard kept deliberately plain, the same fonts and colors with no glows or gradients, so it stays fast to read during a shift',
       'Timing numbers kept big, white, and monospace so they read across the room, with glow supplementing contrast instead of replacing it',
-      'Separate .NET rig agent that reads telemetry and ships laps from each simulator, hardened this cycle with config validation, background-loop error handling, and thread safety',
+      'Separate .NET rig agent that reads iRacing telemetry and ships laps from each simulator, hardened with config validation, background-loop error handling, and thread safety around the state its telemetry thread and flush loop share',
+      'Durable, idempotent lap queue on the rig agent so a network outage or an agent restart never drops a lap, matched by idempotent ingestion on the backend so a retried lap is recorded once',
+      'Two-step check-in that surfaces rig conflicts, a driver already seated elsewhere or a rig still holding a finished driver, before committing anything, with an atomic Postgres function behind it and a losing race between two phones answered with a retry rather than a double booking',
       'Unattended wall board that rotates through every track leaderboard on a timer, skips boards with no lap times instead of showing a blank screen, and recovers on its own when the timing feed comes back',
       'League night end to end: weekly rounds rolling into monthly seasons, driver participation, season standings, a league board for the wall, a staff control that closes one month and opens the next in a single transaction, and full-field expandable lap comparison sized for a phone',
       'Scoring on the venue’s real rule, 5/4/3/2/1 for the top five and one point for anyone who turns up, with a database lock on season rolling',
@@ -420,7 +428,7 @@ const allProducts = [
     jtbd:
       'When a customer conversation, service update, or follow-up is open, dealership staff need one shared workspace that preserves context, ownership, delivery status, and the next action before missed communication becomes missed revenue.',
     problem:
-      'Independent dealership communication is fragmented across personal phones, calls, website leads, service notes, and memory. That makes it easy to lose customer context, miss follow-ups, and leave managers without visibility into open conversations. Collecting it into one inbox only moves the problem if the inbox still sorts by whatever arrived last, so the thread that costs the store the most sits wherever it happens to land.',
+      'This is the internal dealership platform I scoped from inside the business while running operations at CTX Motoworks: customer messaging, service workflows, payments, inventory, task ownership, and management reporting in one place. The failures it was built against were the ones I kept watching happen on the floor, missed follow-ups, work that stalled with nobody owning it, and a customer waiting on a reply nobody knew was outstanding. Independent dealership communication is fragmented across personal phones, calls, website leads, service notes, and memory. That makes it easy to lose customer context, miss follow-ups, and leave managers without visibility into open conversations. Collecting it into one inbox only moves the problem if the inbox still sorts by whatever arrived last, so the thread that costs the store the most sits wherever it happens to land.',
     coreWorkflow: [
       'Staff signs in through secure role-based access for sales, service, parts, managers, and admins. Deactivating an account, or changing its role or department, takes effect on that person’s next request.',
       'Staff manages customer conversations from a shared inbox with linked vehicles, assignments, templates, internal notes, notifications, and SMS/MMS delivery status.',
@@ -433,6 +441,7 @@ const allProducts = [
       'Public-facing Next.js site plus internal staff dashboard',
       'Secure Auth.js staff login and role-based access for admin, manager, sales, service, and parts users',
       'Shared inbox with customer profiles, linked vehicles, assignments, templates, tasks, notifications, and delivery status',
+      'Task ownership, escalation, parts and service notifications, and workload visibility, so a stalled thread has a name against it rather than sitting between people',
       'Ambient brief pass on a schedule and on demand, with the inbox ranked by brief risk, a coverage line over the list, and stale briefs labelled as earlier ones',
       'Deactivation and role changes that land on the next request instead of waiting for a session to expire',
       'Twilio SMS/MMS send and receive routes with webhook signature verification, opt-in/opt-out handling, and delivery failure alerts',
