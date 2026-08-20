@@ -60,7 +60,7 @@ const allProducts = [
     accent: 'oklch(0.62 0.18 30)',
     image: trackTunerHomepage,
     role: 'Product Manager / Developer',
-    stack: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS', 'OpenAI', 'RAG prototypes'],
+    stack: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS', 'OpenAI', 'Embeddings', 'RAG'],
     oneLiner:
       'Motorsport setup logger that helps riders and drivers compare sessions, understand setup deltas, and make better trackside decisions without overreading weak data.',
     audience:
@@ -75,7 +75,8 @@ const allProducts = [
       'Keep the free previous-session comparison on the session detail page for the fastest "what changed since last time?" check.',
       'Use the Pro Session Comparison page to choose a same-vehicle baseline and compare setup deltas, conditions, context flags, and available lap-summary metrics.',
       'Treat comparison strength labels and warnings as guardrails so users do not assume a setup caused a result.',
-      'Use Race Engineer only where the app has enough session context to keep guidance grounded.',
+      'Ask Race Engineer a setup question and it embeds the question, scores it by cosine similarity against a prebuilt setup-knowledge index, and keeps only the closest few passages, filtered to the vehicle being asked about so car material never comes back to answer a bike question.',
+      'Near-duplicate passages are dropped before the model sees them, and thin retrieved context produces a refusal instead of a confident-sounding guess.',
     ],
     mvpScope: [
       'Setup logging first, telemetry workflows second',
@@ -84,7 +85,8 @@ const allProducts = [
       'Structured data model connecting suspension settings, vehicle configuration, environmental conditions, rider feedback, and historical outcomes',
       'Free previous-session setup comparison',
       'Pro same-vehicle Session Comparison v1 with baseline picker, strength labels, context flags, lap metrics, and setup deltas',
-      'Early AI recommendation engine prototype with grounding and refusal guardrails',
+      'Race Engineer retrieval built on OpenAI embeddings and cosine similarity over a prebuilt setup-knowledge index, filtered by vehicle type, capped at the closest four passages, with near-duplicates dropped above a similarity threshold',
+      'Refusal guardrails so thin retrieved context yields no answer rather than a plausible one, with the scoring, vehicle filtering, and dedupe covered by unit tests instead of checked by eye',
     ],
     evidenceSignal:
       'The product has moved beyond basic logging into a setup-learning loop: free users can compare against the previous session, while Pro users can choose a same-vehicle baseline and review deterministic comparison signals with context warnings instead of causal claims. That loop now holds for a real track day: two sessions logged on the same day with Start Time left blank compare in the order they were run, and the database the sessions live in builds from the repository rather than from a hosting dashboard.',
@@ -285,6 +287,7 @@ const allProducts = [
       'A driver scans the QR at their simulator and lands on a check-in screen with a glowing rig number, then drives as a guest or signs into a saved profile.',
       'Check-in becomes a two-step confirmation when it needs to be. If the driver is already checked in on another rig, or the rig still has a finished driver on it, the app names the conflict and asks them to confirm the move or the takeover before it commits, and the swap lands in a single database transaction that leaves laps on closed assignments alone.',
       'Laps ship from each simulator through a separate .NET rig agent, then show up on the driver’s phone portal and on the front-of-store TV.',
+      'That agent reads iRacing telemetry straight out of the sim’s shared memory, bounds-checking every header and buffer it maps, so a malformed or unexpected block is rejected as bad telemetry rather than parsed into a lap that never happened.',
       'Each lap is written to a durable local queue the moment it is detected and only cleared once the backend has accepted or deduplicated it, so a network outage or an agent restart does not lose a lap, and the same lap arriving twice is recorded once.',
       'The live-timing board ranks who is fastest tonight with a gold-highlighted leader and a running gap to P1.',
       'Left alone, that board cycles every track on a timer, skips tracks with no laps yet, and holds the last standings it saw if the timing feed drops.',
@@ -304,6 +307,7 @@ const allProducts = [
       'Unattended wall board that rotates through every track leaderboard on a timer, skips boards with no lap times instead of showing a blank screen, and recovers on its own when the timing feed comes back',
       'League night end to end: weekly rounds rolling into monthly seasons, driver participation, season standings, a league board for the wall, a staff control that closes one month and opens the next in a single transaction, and full-field expandable lap comparison sized for a phone',
       'Scoring on the venue’s real rule, 5/4/3/2/1 for the top five and one point for anyone who turns up, with a database lock on season rolling',
+      'Integration tests that run check-in and lap ingestion against a real database, so the conflict, takeover, and duplicate-event paths are exercised rather than assumed, plus a concurrency test that fails without the season-rolling lock',
     ],
     evidenceSignal:
       'These have been design, reliability, and unattended-operation cycles, not metrics cycles. The wall board runs in a shop for hours with nobody watching it, so recovering by itself is the requirement rather than a nice-to-have; it was verified against a production build in a real browser at 1920x1080, including killing the server mid-rotation to watch it come back. League night went from an idea customers kept asking about to something the venue can run on a Wednesday. The scoring scale first shipped as an invented placeholder, labelled as a guess, and was corrected only after asking the venue what they actually score. No engagement, retention, or conversion is claimed, and no measured result exists yet.',
@@ -447,6 +451,7 @@ const allProducts = [
       'Deactivation and role changes that land on the next request instead of waiting for a session to expire',
       'Twilio SMS/MMS send and receive routes with webhook signature verification, opt-in/opt-out handling, and delivery failure alerts',
       'Production-ready deployment structure with Vercel, Neon Postgres, Prisma, and Auth.js',
+      'Tests written against the behavior that would actually cost something: a revoked session losing access on the next request, the demo spend cap holding, message delivery, and role-based access to a conversation',
     ],
     evidenceSignal:
       'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure. The AI Ops Brief is no longer something a manager asks for one thread at a time: a scheduled pass briefs the whole open queue through OpenAI Structured Outputs, the inbox ranks by what those briefs flagged, and coverage and brief age are stated above the list instead of assumed. Access control moved in the same direction, so a deactivated account is refused on its next request rather than holding a working session for up to thirty days. Product analytics events for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created are in place, with the PRD and event taxonomy checked into content/prds/ before any impact is claimed. It also ships a one-click demo anyone can open with no credentials, with each risk priced separately: the brief runs live under a soft daily cap (estimated ~$0.40/day worst case) and SMS is blocked in demo. No measured usage yet.',
