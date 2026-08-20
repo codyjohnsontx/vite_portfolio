@@ -92,7 +92,7 @@ Systems
 - Prioritized reliability improvements based on real-world operator behavior,
   simulator failures, reconnects, and live-session edge cases.
 
-Track Tuner | AI-Assisted Race Setup and Session Platform
+Trackday Tuner | AI-Assisted Race Setup and Session Platform
 Product Engineer / PM | Next.js, TypeScript, Supabase, Tailwind CSS, OpenAI
 - Defined and built a motorsports data platform for recording vehicle setup, track
   conditions, rider observations, session performance, and setup changes.

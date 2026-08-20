@@ -67,15 +67,15 @@ This file consolidates the strongest product-relevant evidence currently reflect
 ## Digital Product Owner Fit
 
 - Ambiguous asks to actionable work: Lambda Curry translated stakeholder requests into requirements, user stories, acceptance criteria, and release validation.
-- Backlog and sequencing: Lambda Curry sprint priorities; Wattsmith trust-before-AI roadmap; Track Tuner compare workflow sequencing.
+- Backlog and sequencing: Lambda Curry sprint priorities; Wattsmith trust-before-AI roadmap; Trackday Tuner compare workflow sequencing.
 - Cross-functional execution: Lambda Curry with client stakeholders, engineering, QA/design; Attend across sales, service, parts, and leadership; HSNBA with operations and GIS partners.
-- Production/platform trust: RideSense OAuth hardening and fallback behavior; Track Tuner privacy-safe AI observability; Wattsmith reusable palette, drag/drop composition, accessibility fixes, export readiness, and Wattsmith automated export verification; Attend failed-message visibility.
+- Production/platform trust: RideSense OAuth hardening and fallback behavior; Trackday Tuner privacy-safe AI observability; Wattsmith reusable palette, drag/drop composition, accessibility fixes, export readiness, and Wattsmith automated export verification; Attend failed-message visibility.
 - Metrics and monitoring: Lambda Curry conversion/retention signals; Attend unread/overdue/failed-message metrics; HSNBA data error reduction.
 - Compliance-aware habits: Attend STOP/START handling; privacy-safe AI observability; explicit validation before export; file-format verification before app-acceptance claims.
 
 ## Active builds to keep product-first
 
-- Track Tuner: audience, problem, and feature set are now strong enough for homepage-level detail, but it is still too early for a full polished case study.
+- Trackday Tuner: audience, problem, and feature set are now strong enough for homepage-level detail, but it is still too early for a full polished case study.
 - Diaz on Demand: working MVP slices across web, API, mobile, billing, and admin are worth showing publicly, but it is pre-launch and no customer has paid. The recent work fixed billing paths where money moved and access did not follow, so present it as correctness before launch, not as a live product, and keep other production hardening details selective.
 - draftSpace: the tilt from a flat whiteboard to separated architecture tiers is the clearest single idea to lead with, but it is a working prototype with no users, so keep it at card level rather than writing it up as a case study.
 

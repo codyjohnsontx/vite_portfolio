@@ -23,13 +23,13 @@ export default function SessionCompareWireframesPage() {
       <div className="scw-page">
         <div className="scw-backbar">
           <Link to={`/products/${product.slug}/session-compare`}>← Back to Session Compare deck</Link>
-          <span>Track Tuner / Session Compare / Wireframes</span>
+          <span>Trackday Tuner / Session Compare / Wireframes</span>
         </div>
 
         <header className="scw-header">
           <h1 className="scw-title">Session Compare: Wireframe Storyboard</h1>
           <p className="scw-intro">
-            Low-fi exploration that shaped Track Tuner&rsquo;s shipped Session Comparison v1
+            Low-fi exploration that shaped Trackday Tuner&rsquo;s shipped Session Comparison v1
             workflow. The final release kept the manual-first, same-vehicle comparison model,
             context warnings, Pro gate, and changed-fields-first setup deltas.
           </p>

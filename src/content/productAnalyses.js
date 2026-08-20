@@ -1,11 +1,11 @@
 export const productAnalyses = [
   {
     slug: 'track-tuner',
-    title: 'Track Tuner PM analysis',
+    title: 'Trackday Tuner PM analysis',
     tagline:
       'A mobile-first setup logging product for riders and drivers who need faster trackside decisions than notes apps can support.',
     summary:
-      'Track Tuner is built around one narrow but recurring motorsport workflow: riders and drivers make setup changes every session, then struggle to understand what actually changed. The feature sequencing turns a broad "better setup advice" ask into a narrower deliverable compare workflow with explicit guardrails. The product now has a stronger setup-learning loop: free users keep the previous-session comparison, while Pro users can choose a same-vehicle baseline and review deterministic comparison signals with context warnings instead of causal claims.',
+      'Trackday Tuner is built around one narrow but recurring motorsport workflow: riders and drivers make setup changes every session, then struggle to understand what actually changed. The feature sequencing turns a broad "better setup advice" ask into a narrower deliverable compare workflow with explicit guardrails. The product now has a stronger setup-learning loop: free users keep the previous-session comparison, while Pro users can choose a same-vehicle baseline and review deterministic comparison signals with context warnings instead of causal claims.',
     problem:
       'Track day riders and HPDE or club drivers make tire, suspension, alignment, and sag changes between sessions, but the value of each change is comparative. A single session note is not enough. The real question is what changed versus last time, whether it improved the car or bike, and what to try next with only a few minutes before going back out.',
     users: {

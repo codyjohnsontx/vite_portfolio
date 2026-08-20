@@ -134,10 +134,10 @@ export const resumeContent = {
       ],
     },
   ],
-  selectedProjects: ['Oasis Race Control', 'Track Tuner', 'Attend', 'RideSense'],
+  selectedProjects: ['Oasis Race Control', 'Trackday Tuner', 'Attend', 'RideSense'],
   activeBuilds: [
     'Oasis Race Control: real-time sim-racing operations platform connecting 20+ simulator stations, driver sessions, iRacing SDK timing and telemetry, front-of-store displays, and venue staff, with defined behavior for simulator disconnects, application restarts, interrupted delivery, and recovery.',
-    'Track Tuner: motorsports data platform for recording vehicle setup, track conditions, rider observations, and session performance, with structured comparison between setup changes and observed vehicle behavior and a retrieval-based analysis grounded in the rider’s own session history.',
+    'Trackday Tuner: motorsports data platform for recording vehicle setup, track conditions, rider observations, and session performance, with structured comparison between setup changes and observed vehicle behavior and a retrieval-based analysis grounded in the rider’s own session history.',
     'Attend: shared dealership operations platform for service teams managing customer communication, follow-up work, service updates, tasks, and parts notifications, with AI-assisted briefs that summarize conversations and rank the queue by what they flag.',
     'RideSense: cross-provider cycling training insights platform with similarity-scored deduplication, canonical activity modeling, deterministic weekly load and zone analytics, and evidence-backed AI responses.',
   ],

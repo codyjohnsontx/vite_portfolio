@@ -51,8 +51,14 @@ import oasisArchitecture from '../assets/oasis-race-control/oasis-race-control-0
    one silently pushes the last entry off those surfaces. The first three flagship slugs
    are pinned by a test in src/App.test.jsx. */
 const allProducts = [
+  /* The product is Trackday Tuner - the name the shipped app gives itself in its own
+     metadata title, the name on the resume, and the name of the trackday_tuner repository -
+     but the `track-tuner` slug below, the routes built from it, and the src/assets/track-tuner
+     paths deliberately keep the shorter name: those routes are public and renaming them
+     breaks live inbound links. This mirrors the Attend entry further down, which is
+     displayed as Attend while living on the `ctx-chat` slug. */
   {
-    name: 'Track Tuner',
+    name: 'Trackday Tuner',
     slug: 'track-tuner',
     tier: 'flagship',
     status: 'active-build',
@@ -99,7 +105,7 @@ const allProducts = [
         eyebrow: 'Shipped feature · PM brief',
         title: 'Session Compare',
         summary:
-          'Shipped Session Comparison v1 for Track Tuner: a Pro workflow where users choose a same-vehicle baseline and compare setup changes, conditions, lap-summary metrics, and context warnings without treating the result as proof of causation.',
+          'Shipped Session Comparison v1 for Trackday Tuner: a Pro workflow where users choose a same-vehicle baseline and compare setup changes, conditions, lap-summary metrics, and context warnings without treating the result as proof of causation.',
         links: [
           { label: 'Read the brief', href: '/products/track-tuner/session-compare' },
           {

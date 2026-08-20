@@ -22,7 +22,7 @@ describe('portfolio routes and metadata', () => {
     renderApp('/');
 
     expect(screen.getAllByRole('heading', { level: 1 }).length).toBeGreaterThan(0);
-    expect(screen.getByRole('heading', { name: 'Track Tuner' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Trackday Tuner' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'OncoPath' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
@@ -124,12 +124,12 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('button', { name: /^all$/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /apps/i })).toBeTruthy();
     expect(screen.getByRole('button', { name: /product features/i })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: /Track Tuner/ })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Trackday Tuner/ })).toBeTruthy();
   });
 
   it('does not collapse product cards when keyboard users press Enter on the nested project link', () => {
     renderApp('/products');
-    const trackTunerCard = screen.getByRole('button', { name: /Track Tuner/i });
+    const trackTunerCard = screen.getByRole('button', { name: /Trackday Tuner/i });
 
     fireEvent.keyDown(trackTunerCard, { key: 'Enter' });
     expect(trackTunerCard.getAttribute('aria-expanded')).toBe('true');
@@ -224,7 +224,7 @@ describe('portfolio routes and metadata', () => {
   /* Each product's `updates` array is its own feed, and the newest entry has to sit
      first: the page renders the feed in array order, and the overlay menu card for
      the first three flagships reads updates[0]. Putting an entry in the wrong
-     position is silent, so the Track Tuner, Attend, draftSpace, and Diaz on Demand
+     position is silent, so the Trackday Tuner, Attend, draftSpace, and Diaz on Demand
      feeds pin their newest entry's date, tag, title, and pull request link below. */
   const NEWEST_UPDATES = [
     {
@@ -263,7 +263,7 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
-  it('renders the Track Tuner Session Comparison v1 update and screenshots', () => {
+  it('renders the Trackday Tuner Session Comparison v1 update and screenshots', () => {
     renderApp('/products/track-tuner');
 
     expect(screen.getAllByText(/Active build/).length).toBeGreaterThan(0);
@@ -284,7 +284,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Setup deltas')).toBeTruthy();
   });
 
-  it('renders the Track Tuner Session Compare brief when ResizeObserver is unavailable', async () => {
+  it('renders the Trackday Tuner Session Compare brief when ResizeObserver is unavailable', async () => {
     const resizeObserverDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'ResizeObserver');
     Object.defineProperty(globalThis, 'ResizeObserver', {
       configurable: true,
@@ -298,7 +298,7 @@ describe('portfolio routes and metadata', () => {
         expect(screen.getByRole('heading', { name: /Session Compare/i })).toBeTruthy(),
       );
       // Scope to the page body: the overlay menu also lists the latest
-      // Track Tuner update, whose title contains the same phrase.
+      // Trackday Tuner update, whose title contains the same phrase.
       const main = within(document.querySelector('main'));
       expect(main.getByText(/Session Comparison v1/i)).toBeTruthy();
       expect(main.getByText(/rules-based/i)).toBeTruthy();
@@ -416,10 +416,10 @@ describe('portfolio routes and metadata', () => {
     await waitFor(() => expect(document.activeElement).toBe(zoomButton));
   });
 
-  it('renders the Track Tuner PM analysis page', () => {
+  it('renders the Trackday Tuner PM analysis page', () => {
     renderApp('/products/track-tuner/analysis');
 
-    expect(screen.getByRole('heading', { name: /Track Tuner PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Trackday Tuner PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
     expect(screen.getAllByText(/Session Comparison v1/i).length).toBeGreaterThan(0);
@@ -431,10 +431,10 @@ describe('portfolio routes and metadata', () => {
     ).toBeNull();
   });
 
-  it('renders the Track Tuner research page', () => {
+  it('renders the Trackday Tuner research page', () => {
     renderApp('/products/track-tuner/research');
 
-    expect(screen.getByRole('heading', { name: /Track Tuner research system/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Trackday Tuner research system/i })).toBeTruthy();
     expect(screen.getAllByText('Progression Addict').length).toBeGreaterThan(0);
     expect(screen.getByText('First-Track Learner')).toBeTruthy();
     expect(screen.getByText('Coach Operator')).toBeTruthy();
@@ -598,7 +598,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('link', { name: /View persona research/i })).toBeNull();
   });
 
-  it('exposes Track Tuner research from the PM analysis page', () => {
+  it('exposes Trackday Tuner research from the PM analysis page', () => {
     renderApp('/products/track-tuner/analysis');
     expect(screen.getAllByRole('link', { name: /View persona research/i }).length).toBeGreaterThan(0);
   });

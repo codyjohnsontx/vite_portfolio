@@ -1,11 +1,11 @@
 export const productResearch = [
   {
     slug: 'track-tuner',
-    title: 'Track Tuner research system',
+    title: 'Trackday Tuner research system',
     tagline:
       'A persona and prioritization framework for turning trackside setup behavior into a clearer product strategy.',
     summary:
-      'The research frames Track Tuner as a product between lightweight lap timers and pro telemetry suites: fast enough for a five-minute paddock window, structured enough to support better setup decisions over time, and trustworthy enough for AI guidance only when the user history can support it.',
+      'The research frames Trackday Tuner as a product between lightweight lap timers and pro telemetry suites: fast enough for a five-minute paddock window, structured enough to support better setup decisions over time, and trustworthy enough for AI guidance only when the user history can support it.',
     strategicProblem:
       'Track day riders and club drivers are already experimenting with tire pressure, suspension, alignment, and riding or driving line. The gap is not motivation; it is structured memory. Notes apps capture fragments, while pro telemetry tools demand hardware, expertise, and time that many users do not have between sessions.',
     designPhilosophy:
@@ -73,7 +73,7 @@ export const productResearch = [
         featurePriorities: ['Session diff', 'Setup timeline', 'Race Engineer'],
         jtbd:
           'When I come off track, I want to understand what changed and choose the next adjustment before the next session starts.',
-        productMeaning: 'Track Tuner becomes the memory system for steady improvement.',
+        productMeaning: 'Trackday Tuner becomes the memory system for steady improvement.',
       },
       {
         name: 'First-Track Learner',
@@ -86,7 +86,7 @@ export const productResearch = [
         featurePriorities: ['Guided setup capture', 'Trackside checklist', 'Plain-language AI'],
         jtbd:
           'When I am learning the rhythm of a track day, I need the app to tell me what is worth writing down.',
-        productMeaning: 'Track Tuner is a confidence layer that reduces overwhelm.',
+        productMeaning: 'Trackday Tuner is a confidence layer that reduces overwhelm.',
       },
       {
         name: 'Data-Driven Amateur',
@@ -99,7 +99,7 @@ export const productResearch = [
         featurePriorities: ['Advanced comparison', 'Charts', 'Export'],
         jtbd:
           'When I review a weekend, I want to see the pattern instead of rereading disconnected notes.',
-        productMeaning: 'Track Tuner is a lightweight analytics layer.',
+        productMeaning: 'Trackday Tuner is a lightweight analytics layer.',
       },
       {
         name: 'Garage Engineer',
@@ -112,7 +112,7 @@ export const productResearch = [
         featurePriorities: ['Setup modules', 'Garage history', 'Team notes'],
         jtbd:
           'When a rider reports a symptom, I need to see the exact setup state before recommending a change.',
-        productMeaning: 'Track Tuner is a shared source of setup truth.',
+        productMeaning: 'Trackday Tuner is a shared source of setup truth.',
       },
       {
         name: 'Social Competitor',
@@ -125,7 +125,7 @@ export const productResearch = [
         featurePriorities: ['Shareable summaries', 'Private groups', 'Leader context'],
         jtbd:
           'When I talk with paddock friends, I want to share the useful lesson without dumping my whole logbook.',
-        productMeaning: 'Track Tuner is a controlled collaboration surface.',
+        productMeaning: 'Trackday Tuner is a controlled collaboration surface.',
       },
       {
         name: 'Coach Operator',
@@ -138,7 +138,7 @@ export const productResearch = [
         featurePriorities: ['Coach dashboard', 'Student reports', 'Organizer templates'],
         jtbd:
           'When I review a student, I need enough context to connect feedback, setup, and next drill.',
-        productMeaning: 'Track Tuner becomes an operating layer for instruction.',
+        productMeaning: 'Trackday Tuner becomes an operating layer for instruction.',
       },
     ],
     matrix: {

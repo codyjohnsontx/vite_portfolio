@@ -22,8 +22,8 @@ Cody Johnson is a product operator with software engineering depth and product-o
 
 - Cross-functional delivery: Lambda Curry, Attend, active product work.
 - User stories and acceptance criteria: Lambda Curry and resume content.
-- Backlog sequencing: Lambda Curry, Wattsmith roadmap, Track Tuner prioritization.
-- Platform health and issue awareness: Attend delivery failure alerts, RideSense sync hardening, Track Tuner AI observability, Wattsmith export readiness.
+- Backlog sequencing: Lambda Curry, Wattsmith roadmap, Trackday Tuner prioritization.
+- Platform health and issue awareness: Attend delivery failure alerts, RideSense sync hardening, Trackday Tuner AI observability, Wattsmith export readiness.
 - Compliance-aware execution: Attend STOP/START handling, RideSense privacy-safe observability, validation-heavy export flows.
 - Metrics and operational reporting: Lambda Curry outcomes, Attend Command Center, HSNBA data-quality outcomes.
 

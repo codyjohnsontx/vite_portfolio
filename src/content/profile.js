@@ -21,7 +21,7 @@ export const profile = {
   ],
   proofThemes: [
     {
-      stat: 'Track Tuner',
+      stat: 'Trackday Tuner',
       title: 'AI-assisted setup tuning',
       body: 'Designed the MVP around setup logging first, then layered in RAG-based recommendations using historical setup, condition, and feedback data.',
     },
