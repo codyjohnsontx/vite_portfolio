@@ -56,7 +56,7 @@ export const profile = {
     },
     {
       title: 'AI & automation',
-      items: ['LLM API integration', 'RAG', 'Agentic workflows', 'Embeddings', 'MCP'],
+      items: ['LLM API integration', 'RAG', 'Agentic workflows', 'Embeddings'],
     },
     {
       title: 'Motorsports & simulation',

@@ -59,10 +59,14 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.queryByText(/Texas Malibu/i)).toBeNull();
     expect(screen.queryByText(/aged-inventory liquidation/i)).toBeNull();
-    expect(experience.some((job) => job.company === 'Texas Malibu')).toBe(false);
+    const allRoles = [...experience, ...resumeContent.experience];
+
+    expect(allRoles.some((job) => job.company === 'Texas Malibu')).toBe(false);
     expect(
-      [...experience, ...resumeContent.experience].some((job) =>
-        [...(job.evidence ?? []), ...(job.bullets ?? [])].some((line) => /eBay/i.test(line)),
+      allRoles.some((job) =>
+        [job.summary ?? '', ...(job.evidence ?? []), ...(job.bullets ?? [])].some((line) =>
+          /eBay/i.test(line),
+        ),
       ),
     ).toBe(false);
   });
