@@ -2,7 +2,9 @@
 
 ## Core positioning
 
-Cody Johnson is a product operator with software engineering depth and product-owner execution strength. The portfolio should show that he can turn ambiguous asks into scoped, shippable work: clear requirements, user stories, acceptance criteria, prioritized backlogs, validation paths, and release-ready workflows.
+Cody Johnson is a technical product owner and software engineer working on digital and operational systems. The portfolio should show that he can turn ambiguous asks into scoped, shippable work and then show the result holding up: reproduction conditions, expected against actual behavior, requirements and acceptance criteria, validation paths, and the disconnect, restart, and duplicate-event handling underneath real-time and operational systems. Hands-on motorsports experience is stated plainly rather than left implied by the projects.
+
+Where the same work can be framed as a business outcome or as investigation, validation, and system behavior, the second framing wins.
 
 ## Audience
 
@@ -30,8 +32,8 @@ Cody Johnson is a product operator with software engineering depth and product-o
 ## Messaging rules
 
 - Lead with products in active build and the operator mindset behind them.
-- Avoid opening with "software engineer" unless it directly supports a product execution point.
-- Prefer "clarified the problem," "aligned stakeholders," and "improved the customer path" over tool-by-tool descriptions.
+- State technical product ownership and engineering together; the hero and the preloader both open with the pair.
+- Prefer "reproduced the failure," "defined what happens when it breaks," and "validated it against real data" over tool-by-tool descriptions.
 - Use metrics where available, but do not manufacture them.
 - Keep the site selective and product-first.
 
@@ -63,6 +65,7 @@ Client delivery and operational environments show the ability to build clarity w
 ## What to cut
 
 - Generic "problem solver" positioning
+- Skills, strengths, and toolkit lists: the resume tells, the site shows. Capability areas belong inside project copy as evidence that the work happened, which is also why `/resume` stays unrouted.
 - Empty portfolio filler
 - Technology lists with no connection to outcomes
 - Case studies that are really just build logs

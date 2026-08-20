@@ -4,6 +4,8 @@
 
 This file consolidates the strongest product-relevant evidence currently reflected in the portfolio. It is meant to serve as a working source of truth when updating the public site, adjusting the resume, or preparing for interviews.
 
+The Texas Malibu role and the CTX Motoworks eBay liquidation work were cut from the site and the resume on the owner's instruction, so they are deliberately absent below. `src/App.test.jsx` pins both out; do not restore them here as evidence to draw on.
+
 ## Ranked case study shortlist
 
 1. Lambda Curry
@@ -13,21 +15,16 @@ This file consolidates the strongest product-relevant evidence currently reflect
 
 2. CTX Motoworks
    - Strong proof that product thinking extends beyond software tickets into service operations, revenue systems, and e-commerce strategy.
-   - Quantitative signals are strong: $90K monthly service revenue improvement, satisfaction gains, and $20K cash from inventory liquidation.
+   - Quantitative signals are strong: $90K monthly service revenue improvement and satisfaction gains.
 
 3. HSNBA
    - Strong quantitative outcome set: 65 percent less manual entry, 95 percent fewer data errors, and 19,000 plus records analyzed.
    - Strong proof of systems thinking, operational leverage, and partnership-driven delivery.
 
-4. Texas Malibu
-   - Strong business-side evidence that keeps the story from sounding purely technical.
-   - Better as supporting proof than as a primary case study.
-
 ## Experience evidence by PM signal
 
 ### Discovery and problem framing
 
-- Texas Malibu: analyzed market trends and customer behavior to support business decisions.
 - Lambda Curry: identified vague task definition and undefined launch success as delivery risks, not just project-management inconveniences.
 - CTX Motoworks: identified workflow bottlenecks in service and inventory as a prioritization problem.
 
@@ -48,18 +45,15 @@ This file consolidates the strongest product-relevant evidence currently reflect
 - Lambda Curry: owned ceremonies, blocker removal, dependency coordination, and delivery visibility.
 - CTX Motoworks: redesigned service and inventory workflow using operating data and queue management.
 - HSNBA: Python and SQL automation plus validation and GIS workflows.
-- Texas Malibu: digitized inventory processes and enabled more consistent team execution.
 
 ### Measurement and outcomes
 
 - Lambda Curry: 12 percent first-week sales increase tied to a client deployment.
-- CTX Motoworks: $90K service revenue increase in one month and $20K cash generated from aged inventory.
+- CTX Motoworks: $90K service revenue increase in one month.
 - HSNBA: 65 percent reduction in manual data entry and 95 percent reduction in data errors.
-- Texas Malibu: customer-driven merchandising and process work tied to regional market share growth and 15 percent client satisfaction improvement.
 
 ### Customer empathy and business context
 
-- Texas Malibu: direct customer and market exposure.
 - Lambda Curry: stakeholder expectation management and iterative post-launch improvement.
 - CTX Motoworks: direct ownership of service, inventory, and e-commerce operating decisions.
 - HSNBA: mission-driven operational constraints and reporting needs.

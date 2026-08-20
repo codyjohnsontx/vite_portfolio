@@ -6,8 +6,10 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 
 ## Content is data, not JSX
 
-Every public claim on the site lives in `src/content/*.js`. Update copy there, not in
-components. A few things that are easy to get wrong:
+Nearly every public claim on the site lives in `src/content/*.js`. Update copy there, not
+in components. The exception is the positioning copy, which is hardcoded in the components
+and in `index.html`; see "The resume story is spread across the site" below. A few things
+that are easy to get wrong:
 
 - There is no separate changelog module. Each product's `updates` array in
   `src/content/projects.js` is the update feed, rendered by the `04 Updates` section of
@@ -36,7 +38,7 @@ inventing a new status value, and treat `evidenceSignal` as an internal note who
 reaches no rendered surface, so editing it does not change the site. And a product with no
 screenshot should omit `image` and `visualAssets` rather than carry a placeholder path.
 
-## The resume exists in four places, and they drift
+## The resume story is spread across the site, and it drifts
 
 `src/content/resumeContent.js` renders nowhere. `ResumePage.jsx` exists but `/resume` is
 not routed in `src/App.jsx`, and a test in `src/App.test.jsx` pins that it stays
@@ -51,6 +53,11 @@ in `src/components/Preloader.jsx`, `profile.heroSupport`, and the titles and des
 in `index.html`. Everything else in `src/content/profile.js` is dead: only `heroSupport`
 and `contactLinks` have a consumer, and `toolkit` lost its last one when Dev Mode was
 deleted. Nothing on the site renders a skills or strengths list at all.
+
+Two pieces of that story are deliberately absent rather than missing: the Texas Malibu role
+and the CTX Motoworks eBay liquidation bullet. `src/App.test.jsx` pins both out of the
+rendered output and out of both `experience.js` and `resumeContent.js`, so a content pass
+that "restores" them from an older source fails the suite.
 
 Of the three files in `public/resume/`, the HTML and the TXT are separate hand-maintained
 artifacts, not generated from `resumeContent.js`, so a content change has to be applied to

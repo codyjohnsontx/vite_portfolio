@@ -2,7 +2,7 @@
 
 ## Goal
 
-Tailor the master PM resume in 15 to 20 minutes without rewriting it from scratch.
+Tailor the master resume in 15 to 20 minutes without rewriting it from scratch. The master copy is the technical product owner resume in `public/resume/`; see AGENTS.md for which files are hand-maintained and which is generated.
 
 ## Default process
 
@@ -53,7 +53,7 @@ For digital platform roles, lead with Lambda Curry for product-owner delivery, A
 
 ## Final check before sending
 
-- Is Product Manager or a close variant visible in the headline?
+- Is Technical Product Owner, or a close variant of the target title, visible in the headline?
 - Is there a metric or concrete outcome in the top half?
 - Does the summary sound like the target role, not a generic background paragraph?
 - Do the top bullets support the same story as the portfolio homepage?
