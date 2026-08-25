@@ -13,10 +13,10 @@ that are easy to get wrong:
 
 - There is no separate changelog module. Each product's `updates` array in
   `src/content/projects.js` is the update feed, rendered by the `04 Updates` section of
-  `src/pages/ProductDetailPage.jsx`. Newest entry first, and for the Trackday Tuner, Attend,
-  draftSpace, and Diaz on Demand feeds `src/App.test.jsx` pins the newest entry's date,
-  tag, title, and pull request link, so adding an entry to one of those means updating
-  that test in the same commit.
+  `src/pages/ProductDetailPage.jsx`. Newest entry first, and for the Trackday Tuner, Oasis
+  Race Control, Attend, draftSpace, and Diaz on Demand feeds `src/App.test.jsx` pins the
+  newest entry's date, tag, title, and pull request link, so adding an entry to one of
+  those means updating that test in the same commit.
 - `src/content/latestSignal.js` drives the home page "Latest" block, and
   `src/App.test.jsx` asserts its heading, body phrases, and link targets. Changing that
   copy means updating that test in the same commit.
@@ -104,6 +104,15 @@ inline status controls to move at least one task into each of those three status
 all four labeled sections are visible. Shooting the default state leaves the image no
 longer supporting its `Tasks with status views` label, its alt text, or the PR #8 update
 entry in `src/content/projects.js`.
+
+## Oasis wall board screenshot
+
+`src/assets/oasis-race-control/oasis-race-control-03-tv-board.png` is the live app's `/tv`
+captured with the browser viewport emulated at 1272x601 at 2x device pixels, the venue wall's
+real resolution, and its alt text and the `visualAssets.note` in `src/content/projects.js`
+say so. The board rotates on a timer and opens on a standby screen when nothing has landed
+tonight, so wait for a track board with rows before capturing, and retake at the same
+viewport or the alt text stops being true.
 
 ## CodeRabbit reviews
 

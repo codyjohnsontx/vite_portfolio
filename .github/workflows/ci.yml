@@ -18,13 +18,12 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          # package.json declares no engines field, so the floor comes from the
-          # dev dependencies in package-lock.json. The binding ones are
-          # jsdom 28.1.0 (^20.19.0 || ^22.12.0 || >=24.0.0) and vitest 4.0.18
-          # (^20.0.0 || ^22.0.0 || >=24.0.0); vite 5.2.6 is looser
-          # (^18.0.0 || >=20.0.0). 22 satisfies all three and resolves to the
-          # latest 22.x, which is above jsdom's 22.12 minimum.
-          node-version: '22'
+          # Reads `engines.node` from package.json, the same field Vercel builds
+          # on, so CI and production run the same major. The binding dev
+          # dependencies are jsdom 28.1.0 (^20.19.0 || ^22.12.0 || >=24.0.0) and
+          # vitest 4.0.18 (^20.0.0 || ^22.0.0 || >=24.0.0); vite 5.2.6 is looser
+          # (^18.0.0 || >=20.0.0). 24.x satisfies all three.
+          node-version-file: package.json
           cache: npm
 
       - run: npm ci
