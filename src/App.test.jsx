@@ -226,35 +226,36 @@ describe('portfolio routes and metadata', () => {
      the first three flagships reads updates[0]. Putting an entry in the wrong
      position is silent, so the Trackday Tuner, Oasis Race Control, Attend, draftSpace,
      and Diaz on Demand feeds pin their newest entry's date, tag, title, and pull request
-     link below. */
+     link below. The meta values are exact strings, not regexes, so "Update 17" cannot be
+     satisfied by "Update 170". */
   const NEWEST_UPDATES = [
     {
       slug: 'track-tuner',
-      meta: /Merged · Update 17/,
+      meta: 'Merged · Update 17',
       title: 'Provision the photo bucket from the repository',
       url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/50',
     },
     {
       slug: 'oasis-race-control',
-      meta: /Aug 25, 2026 · PR #21/,
+      meta: 'Aug 25, 2026 · PR #21',
       title: 'Fitted the wall board to the venue’s real screen',
       url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/21',
     },
     {
       slug: 'ctx-chat',
-      meta: /Aug 14, 2026 · PR #19/,
+      meta: 'Aug 14, 2026 · PR #19',
       title: 'Made deactivating a staff account end their access',
       url: 'https://github.com/codyjohnsontx/ctxconnect/pull/19',
     },
     {
       slug: 'draftspace',
-      meta: /Aug 14, 2026 · PR #16/,
+      meta: 'Aug 14, 2026 · PR #16',
       title: 'Kept the selection when a duplicate is refused',
       url: 'https://github.com/codyjohnsontx/draftSpace/pull/16',
     },
     {
       slug: 'diaz-on-demand',
-      meta: /Aug 14, 2026 · DiazOnDemand PR #23/,
+      meta: 'Aug 14, 2026 · DiazOnDemand PR #23',
       title: 'Moved the mobile app to the Expo SDK the store actually ships',
       url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/23',
     },

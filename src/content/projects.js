@@ -152,7 +152,7 @@ const allProducts = [
         tag: 'Update 17',
         title: 'Provision the photo bucket from the repository',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/50',
-        body: 'Adding a bike with a photo failed on any freshly built database with Bucket not found: the storage bucket the garage form uploads to had only ever existed in the hosting dashboard, so a database built from the repository had no working garage. The bucket is now declared in the repository config, public to read and images only, with a migration adding policies so a rider can create, replace, and delete photos only inside their own folder. An end-to-end test proves it on a from-scratch stack, failing before and passing after, including a rider being refused when overwriting another rider’s photo, and a unit guard pins the bucket and its owner-only policies. This was one of the prerequisites for opening signup.',
+        body: 'Adding a bike with a photo failed on any freshly built database with Bucket not found: the storage bucket the garage form uploads to had only ever existed in the hosting dashboard, so a database built from the repository had no working garage. The bucket is now declared in the repository config, public to read and images only, with a migration adding policies so a rider can create, replace, and delete photos only inside their own folder. An end-to-end test proves it on a from-scratch stack, failing before and passing after, including a rider being refused when writing outside their own folder, and a unit guard pins the bucket and its owner-only policies. This was one of the prerequisites for opening signup.',
       },
       {
         date: 'Merged',
@@ -317,7 +317,7 @@ const allProducts = [
       'Durable, idempotent lap queue on the rig agent so a network outage or an agent restart never drops a lap, matched by idempotent ingestion on the backend so a retried lap is recorded once',
       'Two-step check-in that names a rig conflict, a driver already seated elsewhere or a rig still holding a finished driver, and asks for confirmation before committing anything',
       'Atomic Postgres check-in, so two phones racing for the same rig produce one booking and a retry rather than a double booking',
-      'Every lap stamped at capture time with the assignment that was active when it was driven, so a lap driven with nobody checked in is kept as unattributed and a database constraint, not a query filter, keeps it off every leaderboard',
+      'Every lap stamped at capture time with the assignment the rig knew was active when it was driven, so a lap driven with nobody checked in is kept as unattributed and a database constraint, not a query filter, keeps it off every leaderboard',
       'Unattended wall board that rotates through every track leaderboard on a timer, skips boards with no lap times instead of showing a blank screen, and recovers on its own when the timing feed comes back',
       'League night end to end: weekly rounds rolling into monthly seasons, driver participation, season standings, a league board for the wall, a staff control that closes one month and opens the next in a single transaction, and full-field expandable lap comparison sized for a phone',
       'Scoring on the venue’s real rule, 5/4/3/2/1 for the top five and one point for anyone who turns up, with a database lock on season rolling',
@@ -377,7 +377,7 @@ const allProducts = [
         tag: 'PR #20',
         title: 'Stopped crediting laps to the next driver who sat down',
         url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/20',
-        body: 'Laps driven while nobody was checked in on a simulator were credited to whoever checked in next, so someone else’s time went up on the wall under their name. The rig agent now stamps every lap with the assignment that was active when it was driven, and the backend checks that stamp against rig ownership and the assignment window, allowing for a drifting rig clock. A lap that belongs to nobody is kept as unattributed, and a database constraint, rather than a query filter, makes it impossible to rank. Staff see those laps in an Unclaimed laps list on the dashboard instead of a bucket nobody can open. One residual is deliberately left open and pinned by a test: an assignment closed on the server without the rig hearing about it can still credit the departed driver for up to 15 minutes.',
+        body: 'Laps driven while nobody was checked in on a simulator were credited to whoever checked in next, so someone else’s time went up on the wall under their name. The rig agent now stamps every lap with the assignment it knew was active when the lap was driven, and the backend checks that stamp against rig ownership and the assignment window, allowing for a drifting rig clock. A lap that belongs to nobody is kept as unattributed, and a database constraint, rather than a query filter, makes it impossible to rank. Staff see those laps in an Unclaimed laps list on the dashboard instead of a bucket nobody can open. One residual is deliberately left open and pinned by a test: an assignment closed on the server without the rig hearing about it can still credit the departed driver for up to 15 minutes.',
       },
       {
         date: 'Aug 01, 2026',
