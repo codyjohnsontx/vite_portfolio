@@ -152,7 +152,7 @@ const allProducts = [
         tag: 'Update 17',
         title: 'Provision the photo bucket from the repository',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/50',
-        body: 'Adding a bike with a photo failed on any freshly built database with Bucket not found: the storage bucket the garage form uploads to had only ever existed in the hosting dashboard, so a database built from the repository had no working garage. The bucket is now declared in the repository config, public to read and images only, with a migration adding policies so a rider can create, replace, and delete photos only inside their own folder. An end-to-end test proves it on a from-scratch stack, failing before and passing after, including a rider being refused when overwriting another rider’s photo, and a unit guard pins the bucket and all four policies. This was one of the prerequisites for opening signup.',
+        body: 'Adding a bike with a photo failed on any freshly built database with Bucket not found: the storage bucket the garage form uploads to had only ever existed in the hosting dashboard, so a database built from the repository had no working garage. The bucket is now declared in the repository config, public to read and images only, with a migration adding policies so a rider can create, replace, and delete photos only inside their own folder. An end-to-end test proves it on a from-scratch stack, failing before and passing after, including a rider being refused when overwriting another rider’s photo, and a unit guard pins the bucket and its owner-only policies. This was one of the prerequisites for opening signup.',
       },
       {
         date: 'Merged',
@@ -370,7 +370,7 @@ const allProducts = [
         tag: 'PR #21',
         title: 'Fitted the wall board to the venue’s real screen',
         url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/21',
-        body: 'The front-of-store board was built at fixed pixel sizes tuned near 1920x1080, and the wall in the venue renders it at 1272x601, so rows bunched together and car names printed as two letters and an ellipsis. Every length on the board now comes from one unit derived from the screen, the columns divide the width proportionally, and a row can no longer shrink below the text it holds. I measured it in the browser at exactly 1272x601 and at seven other viewports: all six boards in the rotation show ten rows with no overlapping rows and no clipped text. Layout only, nothing about the queries or the rotation changed.',
+        body: 'The front-of-store board was built at fixed pixel sizes tuned near 1920x1080, and the wall in the venue renders it at 1272x601, so rows bunched together and car names printed as two letters and an ellipsis. Every length on the board now comes from one unit derived from the screen, the columns divide the width proportionally, and a row can no longer shrink below the text it holds. I measured it in the browser at exactly 1272x601 and at seven other viewports: every board type in the rotation shows ten rows with no overlapping rows and no clipped text. Layout only, nothing about the queries or the rotation changed.',
       },
       {
         date: 'Aug 24, 2026',
