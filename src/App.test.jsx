@@ -224,14 +224,21 @@ describe('portfolio routes and metadata', () => {
   /* Each product's `updates` array is its own feed, and the newest entry has to sit
      first: the page renders the feed in array order, and the overlay menu card for
      the first three flagships reads updates[0]. Putting an entry in the wrong
-     position is silent, so the Trackday Tuner, Attend, draftSpace, and Diaz on Demand
-     feeds pin their newest entry's date, tag, title, and pull request link below. */
+     position is silent, so the Trackday Tuner, Oasis Race Control, Attend, draftSpace,
+     and Diaz on Demand feeds pin their newest entry's date, tag, title, and pull request
+     link below. */
   const NEWEST_UPDATES = [
     {
       slug: 'track-tuner',
-      meta: /Merged · Update 16/,
-      title: 'Cover database functions that never decide who can run them',
-      url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/38',
+      meta: /Merged · Update 17/,
+      title: 'Provision the photo bucket from the repository',
+      url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/50',
+    },
+    {
+      slug: 'oasis-race-control',
+      meta: /Aug 25, 2026 · PR #21/,
+      title: 'Fitted the wall board to the venue’s real screen',
+      url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/21',
     },
     {
       slug: 'ctx-chat',

@@ -149,6 +149,13 @@ const allProducts = [
     updates: [
       {
         date: 'Merged',
+        tag: 'Update 17',
+        title: 'Provision the photo bucket from the repository',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/50',
+        body: 'Adding a bike with a photo failed on any freshly built database with Bucket not found: the storage bucket the garage form uploads to had only ever existed in the hosting dashboard, so a database built from the repository had no working garage. The bucket is now declared in the repository config, public to read and images only, with a migration adding policies so a rider can create, replace, and delete photos only inside their own folder. An end-to-end test proves it on a from-scratch stack, failing before and passing after, including a rider being refused when overwriting another rider’s photo, and a unit guard pins the bucket and all four policies. This was one of the prerequisites for opening signup.',
+      },
+      {
+        date: 'Merged',
         tag: 'Update 16',
         title: 'Cover database functions that never decide who can run them',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/38',
@@ -310,6 +317,7 @@ const allProducts = [
       'Durable, idempotent lap queue on the rig agent so a network outage or an agent restart never drops a lap, matched by idempotent ingestion on the backend so a retried lap is recorded once',
       'Two-step check-in that names a rig conflict, a driver already seated elsewhere or a rig still holding a finished driver, and asks for confirmation before committing anything',
       'Atomic Postgres check-in, so two phones racing for the same rig produce one booking and a retry rather than a double booking',
+      'Every lap stamped at capture time with the assignment that was active when it was driven, so a lap driven with nobody checked in is kept as unattributed and a database constraint, not a query filter, keeps it off every leaderboard',
       'Unattended wall board that rotates through every track leaderboard on a timer, skips boards with no lap times instead of showing a blank screen, and recovers on its own when the timing feed comes back',
       'League night end to end: weekly rounds rolling into monthly seasons, driver participation, season standings, a league board for the wall, a staff control that closes one month and opens the next in a single transaction, and full-field expandable lap comparison sized for a phone',
       'Scoring on the venue’s real rule, 5/4/3/2/1 for the top five and one point for anyone who turns up, with a database lock on season rolling',
@@ -318,11 +326,11 @@ const allProducts = [
     evidenceSignal:
       'These have been design, reliability, and unattended-operation cycles, not metrics cycles. The wall board runs in a shop for hours with nobody watching it, so recovering by itself is the requirement rather than a nice-to-have; it was verified against a production build in a real browser at 1920x1080, including killing the server mid-rotation to watch it come back. League night went from an idea customers kept asking about to something the venue can run on a Wednesday. The scoring scale first shipped as an invented placeholder, labelled as a guess, and was corrected only after asking the venue what they actually score. No engagement, retention, or conversion is claimed, and no measured result exists yet.',
     nextStep:
-      'Run a real league night at the venue and watch what staff still do by hand that the app should be doing. Capture the wall board mid-rotation and the league standings on a phone. Keep the rig agent and the timing board resilient as more simulators come online. These have been design, reliability, and unattended-operation cycles rather than metrics cycles: no engagement, retention, or conversion is claimed, and no measured result exists yet.',
+      'Run a real league night at the venue and watch what staff still do by hand that the app should be doing. Capture the league standings on a phone. Keep the rig agent and the timing board resilient as more simulators come online. These have been design, reliability, and unattended-operation cycles rather than metrics cycles: no engagement, retention, or conversion is claimed, and no measured result exists yet.',
     standaloneMockStatus: 'in-progress',
     visualAssets: {
       note:
-        'Screenshots from the live app at oasis-race-control.vercel.app, using seeded demo drivers and sample lap times. The personal-best celebration is the real timing-board screen captured mid-celebration.',
+        'Screenshots from the live app at oasis-race-control.vercel.app, using seeded demo drivers and sample lap times. The live-timing board was captured mid-rotation at 1272x601, the resolution of the wall in the venue. The personal-best celebration is the real timing-board screen captured mid-celebration.',
       items: [
         {
           label: 'Landing',
@@ -337,7 +345,7 @@ const allProducts = [
         {
           label: 'Live-timing board',
           src: oasisTvBoard,
-          alt: 'Front-of-store Fastest Tonight timing board with a gold-highlighted leader, ranked drivers, big monospace lap times, and gaps to P1.',
+          alt: 'Front-of-store all-time best laps board for Spa-Francorchamps at the venue wall’s 1272x601: ten numbered rows with a gold-highlighted leader, driver and car columns, big monospace lap times, gaps to P1, empty slots seven through ten, and a board 8 of 9 rotation indicator.',
         },
         {
           label: 'Personal-best celebration',
@@ -357,6 +365,20 @@ const allProducts = [
       ],
     },
     updates: [
+      {
+        date: 'Aug 25, 2026',
+        tag: 'PR #21',
+        title: 'Fitted the wall board to the venue’s real screen',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/21',
+        body: 'The front-of-store board was built at fixed pixel sizes tuned near 1920x1080, and the wall in the venue renders it at 1272x601, so rows bunched together and car names printed as two letters and an ellipsis. Every length on the board now comes from one unit derived from the screen, the columns divide the width proportionally, and a row can no longer shrink below the text it holds. I measured it in the browser at exactly 1272x601 and at seven other viewports: all six boards in the rotation show ten rows with no overlapping rows and no clipped text. Layout only, nothing about the queries or the rotation changed.',
+      },
+      {
+        date: 'Aug 24, 2026',
+        tag: 'PR #20',
+        title: 'Stopped crediting laps to the next driver who sat down',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/20',
+        body: 'Laps driven while nobody was checked in on a simulator were credited to whoever checked in next, so someone else’s time went up on the wall under their name. The rig agent now stamps every lap with the assignment that was active when it was driven, and the backend checks that stamp against rig ownership and the assignment window, allowing for a drifting rig clock. A lap that belongs to nobody is kept as unattributed, and a database constraint, rather than a query filter, makes it impossible to rank. Staff see those laps in an Unclaimed laps list on the dashboard instead of a bucket nobody can open. One residual is deliberately left open and pinned by a test: an assignment closed on the server without the rig hearing about it can still credit the departed driver for up to 15 minutes.',
+      },
       {
         date: 'Aug 01, 2026',
         tag: 'PR #16',
