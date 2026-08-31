@@ -164,10 +164,13 @@ export default function ProductDetailPage() {
               </Link>
             </div>
           ) : null}
+          {/* A build can have more than one piece written about it, so the
+              label names the piece: "Read the note" twice over would give two
+              hero links one accessible name and two destinations. */}
           {relatedWriting.map((piece) => (
             <div key={piece.href} style={{ marginTop: 12 }}>
               <Link to={piece.href} className="link-arrow">
-                Read the {KIND_LABEL[piece.kind].toLowerCase()} <ArrowGlyph />
+                Read the {KIND_LABEL[piece.kind].toLowerCase()}: {piece.title} <ArrowGlyph />
               </Link>
             </div>
           ))}

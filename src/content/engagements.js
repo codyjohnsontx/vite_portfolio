@@ -1,4 +1,5 @@
 import { getCaseStudyBySlug } from './caseStudies';
+import { products } from './projects';
 
 /* Client engagements: work with no live app, no repository and no update feed,
    so they are not products and never had a row in the work index. The only door
@@ -43,3 +44,7 @@ export const engagements = ENGAGEMENT_SEED.map(({ slug, caseStudySlug, accent })
 export function getEngagementBySlug(slug) {
   return engagements.find((engagement) => engagement.slug === slug);
 }
+
+/* Every subject the work index lists: products followed by engagements, so the
+   engagements sort to the end of it. */
+export const workSubjects = [...products, ...engagements];

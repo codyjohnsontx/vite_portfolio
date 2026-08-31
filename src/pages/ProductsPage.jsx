@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Eyebrow } from '../components/Editorial';
 import ProductList from '../components/ProductList';
 import { Reveal } from '../components/ScrollReveal';
-import { workSubjects } from '../content/writing';
+import { workSubjects } from '../content/engagements';
 
 /* The work index lists every subject, not only the ones with a repository:
    the two client engagements are work too, and until they had a row here the

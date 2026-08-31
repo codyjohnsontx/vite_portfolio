@@ -1,4 +1,16 @@
 {
+  "redirects": [
+    {
+      "source": "/case-studies",
+      "destination": "/notes",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/notes",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

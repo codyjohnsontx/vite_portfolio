@@ -3,7 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow } from '../components/Editorial';
 import { Reveal } from '../components/ScrollReveal';
 import { getCaseStudyBySlug } from '../content/caseStudies';
-import { KIND_LABEL, getSubjectsForWriting, getWritingForSubject } from '../content/writing';
+import { getRelatedForWriting } from '../content/writing';
 import RelatedLinks from '../components/RelatedLinks';
 
 function CaseSection({ num, title, body }) {
@@ -97,27 +97,7 @@ export default function CaseStudyPage() {
   const c = study;
   const s = c.sections;
   const href = `/case-studies/${c.slug}`;
-  /* Both directions at once: the work this study is about, and anything else
-     written about the same work. An engagement's own study is the page its
-     subject row opens, so getSubjectsForWriting drops it rather than linking
-     this page to itself. */
-  const related = [
-    ...getSubjectsForWriting(href).map((subject) => ({
-      href: subject.href,
-      label: subject.label,
-      title: subject.name,
-    })),
-    ...(c.subjects ?? []).flatMap((subjectSlug) =>
-      getWritingForSubject(subjectSlug, href).map((piece) => ({
-        href: piece.href,
-        label: KIND_LABEL[piece.kind],
-        title: piece.title,
-        note: piece.deck,
-      })),
-    ),
-  ].filter(
-    (item, i, all) => all.findIndex((other) => other.href === item.href) === i,
-  );
+  const { items: related, heading: relatedHeading } = getRelatedForWriting(href);
 
   return (
     <div className="fade-in">
@@ -239,7 +219,7 @@ export default function CaseStudyPage() {
           <div className="container">
             <Eyebrow>Related</Eyebrow>
             <h2 className="h2" style={{ margin: '12px 0 32px' }}>
-              The work behind this.
+              {relatedHeading}
             </h2>
             <RelatedLinks items={related} />
           </div>

@@ -1,7 +1,7 @@
 import { blogPosts } from './blogPosts';
 import { caseStudies } from './caseStudies';
-import { engagements, getEngagementBySlug } from './engagements';
-import { getProductBySlug, products } from './projects';
+import { getEngagementBySlug } from './engagements';
+import { getProductBySlug } from './projects';
 
 /* One list, two kinds. `kind` is derived from which array a record came from
    rather than hand-written on it, so it cannot drift: a record in
@@ -19,6 +19,11 @@ export const NOTE = 'note';
 export const KIND_LABEL = {
   [CASE_STUDY]: 'Case study',
   [NOTE]: 'Note',
+};
+
+export const RELATED_HEADING = {
+  withSubject: 'The work behind this.',
+  writingOnly: 'More on the same work.',
 };
 
 export const writing = [
@@ -93,4 +98,46 @@ export function getSubjectsForWriting(href) {
     .filter((subject) => Boolean(subject) && subject.href !== href);
 }
 
-export const workSubjects = [...products, ...engagements];
+/* Everything a piece of writing should link out to, in the order it reads: the
+   work it came out of first, then anything else written about that same work.
+
+   Both call sites - a case study and a note - need exactly this, so the
+   assembly lives here rather than being copied into each page. Two things it
+   has to get right. A page never lists itself: getSubjectsForWriting drops an
+   engagement whose own case study is the page its subject row opens, and
+   getWritingForSubject takes the same href to drop the sibling row. And the
+   dedupe is by href, keeping the first occurrence, so a subject always outranks
+   a writing row that points at the same place.
+
+   `heading` comes back with the items because it is a claim about them: "the
+   work behind this" is only true while a subject row survived. On the two
+   engagement case studies every surviving row is another essay, so the block
+   says so instead. */
+export function getRelatedForWriting(href) {
+  const piece = getWritingByHref(href);
+  if (!piece) return { items: [], heading: RELATED_HEADING.writingOnly };
+
+  const subjects = getSubjectsForWriting(href).map((subject) => ({
+    href: subject.href,
+    label: subject.label,
+    title: subject.name,
+  }));
+
+  const siblings = piece.subjects.flatMap((subjectSlug) =>
+    getWritingForSubject(subjectSlug, href).map((sibling) => ({
+      href: sibling.href,
+      label: KIND_LABEL[sibling.kind],
+      title: sibling.title,
+      note: sibling.deck,
+    })),
+  );
+
+  const items = [...subjects, ...siblings].filter(
+    (item, i, all) => all.findIndex((other) => other.href === item.href) === i,
+  );
+
+  return {
+    items,
+    heading: subjects.length ? RELATED_HEADING.withSubject : RELATED_HEADING.writingOnly,
+  };
+}
