@@ -75,6 +75,11 @@ export default function OasisTenancyDiagramsPage() {
           </div>
         </header>
 
+        {/* The only source for this markup is DIAGRAM_STATES, whose every value is a
+            module-level template literal built from literals in
+            src/content/oasisTenancyDiagrams.js. Its helpers interpolate their arguments
+            unescaped, so keep it that way: no route param, request, fetched, or
+            user-provided value may reach these strings. */}
         <div
           className="otd-canvas"
           key={active.id}

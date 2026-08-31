@@ -7,11 +7,15 @@
    carries classes rather than inline styles and the whole board can reflow at
    narrow widths. */
 
+/* `city` is optional on purpose. The single venue that exists today has no
+   location recorded anywhere in this repo, and naming one would put an invented
+   fact next to the hardcoded-timezone note. The franchise states pass the three
+   cities the written decision itself uses as its examples. */
 const rigStack = (venue, city, rigs) => `
   <div class="otd-card otd-card--venue">
     <p class="otd-card__kicker">Venue</p>
     <p class="otd-card__title">${venue}</p>
-    <p class="otd-card__sub">${city}</p>
+    ${city ? `<p class="otd-card__sub">${city}</p>` : ''}
     <div class="otd-chips">
       ${rigs.map((r) => `<span class="otd-chip">${r}</span>`).join('')}
       <span class="otd-chip otd-chip--ghost">+ the rest</span>
@@ -89,7 +93,7 @@ export const STATE_TODAY_HTML = `
     <div class="otd-board">
       <div class="otd-col">
         <p class="otd-col__label">Floor</p>
-        ${rigStack('Oasis Sim Racing', 'Austin, Texas', ['Rig 01', 'Rig 02', 'Rig 03', 'Rig 04'])}
+        ${rigStack('Oasis Sim Racing', '', ['Rig 01', 'Rig 02', 'Rig 03', 'Rig 04'])}
       </div>
 
       ${arrow('laps')}
