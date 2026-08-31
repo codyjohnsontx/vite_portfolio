@@ -3,6 +3,8 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow } from '../components/Editorial';
 import { Reveal } from '../components/ScrollReveal';
 import { getCaseStudyBySlug } from '../content/caseStudies';
+import { KIND_LABEL, getSubjectsForWriting, getWritingForSubject } from '../content/writing';
+import RelatedLinks from '../components/RelatedLinks';
 
 function CaseSection({ num, title, body }) {
   return (
@@ -94,6 +96,28 @@ export default function CaseStudyPage() {
   if (!study) return <Navigate to="/not-found" replace />;
   const c = study;
   const s = c.sections;
+  const href = `/case-studies/${c.slug}`;
+  /* Both directions at once: the work this study is about, and anything else
+     written about the same work. An engagement's own study is the page its
+     subject row opens, so getSubjectsForWriting drops it rather than linking
+     this page to itself. */
+  const related = [
+    ...getSubjectsForWriting(href).map((subject) => ({
+      href: subject.href,
+      label: subject.label,
+      title: subject.name,
+    })),
+    ...(c.subjects ?? []).flatMap((subjectSlug) =>
+      getWritingForSubject(subjectSlug, href).map((piece) => ({
+        href: piece.href,
+        label: KIND_LABEL[piece.kind],
+        title: piece.title,
+        note: piece.deck,
+      })),
+    ),
+  ].filter(
+    (item, i, all) => all.findIndex((other) => other.href === item.href) === i,
+  );
 
   return (
     <div className="fade-in">
@@ -102,7 +126,7 @@ export default function CaseStudyPage() {
           <div className="crumbs">
             <Link to="/">Index</Link>
             <span>/</span>
-            <Link to="/case-studies">Case Studies</Link>
+            <Link to="/notes">Notes</Link>
             <span>/</span>
             <span>{c.company}</span>
           </div>
@@ -210,6 +234,18 @@ export default function CaseStudyPage() {
       <CaseListSection num="07" title="Outcomes" items={s.outcomes} />
       <CaseListSection num="08" title="Lessons" items={s.lessons} />
 
+      {related.length ? (
+        <Reveal as="section" className="section section--tight">
+          <div className="container">
+            <Eyebrow>Related</Eyebrow>
+            <h2 className="h2" style={{ margin: '12px 0 32px' }}>
+              The work behind this.
+            </h2>
+            <RelatedLinks items={related} />
+          </div>
+        </Reveal>
+      ) : null}
+
       <Reveal as="section" className="section section--tight">
         <Reveal
           className="container"
@@ -223,8 +259,8 @@ export default function CaseStudyPage() {
             gap: 16,
           }}
         >
-          <Link className="link-arrow" to="/case-studies">
-            ← All case studies
+          <Link className="link-arrow" to="/notes">
+            ← All notes
           </Link>
           <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
             Discuss this work <ArrowGlyph />

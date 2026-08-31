@@ -5,6 +5,8 @@ import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 import { blogPosts } from './content/blogPosts';
 import { caseStudies } from './content/caseStudies';
+import { engagements } from './content/engagements';
+import { KIND_LABEL, writing } from './content/writing';
 import { experience } from './content/experience';
 import { allProducts, flagshipProducts, products } from './content/projects';
 import { resumeContent } from './content/resumeContent';
@@ -170,12 +172,15 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('link', { name: /Overlap/ })).toBeNull();
   });
 
-  it('renders the cases index page', () => {
-    renderApp('/case-studies');
+  it('renders every case study and note on the merged notes index', () => {
+    renderApp('/notes');
 
-    expect(screen.getByText(/ambiguous needs became scoped work/i)).toBeTruthy();
-    caseStudies.forEach((study) => {
-      expect(screen.getByRole('heading', { name: study.title })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /^Notes\.$/ })).toBeTruthy();
+    writing.forEach((piece) => {
+      expect(screen.getByRole('heading', { name: piece.title })).toBeTruthy();
+      expect(
+        screen.getByRole('link', { name: new RegExp(piece.title, 'i') }).getAttribute('href'),
+      ).toBe(piece.href);
     });
   });
 
@@ -189,9 +194,12 @@ describe('portfolio routes and metadata', () => {
     ];
     const hrefs = (nodes) => Array.from(nodes, (node) => node.getAttribute('href'));
 
-    const indexPage = renderApp('/case-studies');
+    const indexPage = renderApp('/notes');
 
-    expect(hrefs(document.querySelectorAll('main .case-row'))).toEqual(newestFirst);
+    // Case studies are pinned above the notes, so they are the first rows.
+    expect(hrefs(document.querySelectorAll('main .case-row')).slice(0, newestFirst.length)).toEqual(
+      newestFirst,
+    );
     // The index numbers entries by position, so the newest study reads 01.
     expect(document.querySelector('main .case-row .numeral').textContent).toBe('01');
 
@@ -203,37 +211,47 @@ describe('portfolio routes and metadata', () => {
     );
   });
 
-  it('renders the blog index page with starter posts', () => {
-    renderApp('/blog');
+  /* The two kinds share the same row markup, so the tag and the order are the
+     only things telling a reader that a case study is not a short essay. */
+  it('pins case studies above notes and tags every row with its kind', () => {
+    const { container } = renderApp('/notes');
 
-    expect(screen.getByRole('heading', { name: /Product notes/i })).toBeTruthy();
-    expect(screen.getByText(/Short product notes on trust, sequencing, scope/i)).toBeTruthy();
-    blogPosts.forEach((post) => {
-      expect(screen.getByRole('heading', { name: post.title })).toBeTruthy();
-      expect(screen.getByRole('link', { name: new RegExp(post.title, 'i') }).getAttribute('href')).toBe(
-        `/blog/${post.slug}`,
-      );
-    });
+    const kinds = [...container.querySelectorAll('.writing-kind')].map((n) => n.textContent);
+    expect(kinds).toEqual(writing.map((piece) => KIND_LABEL[piece.kind]));
+    expect(kinds.slice(0, caseStudies.length).every((k) => k === 'Case study')).toBe(true);
+    expect(kinds.slice(caseStudies.length).every((k) => k === 'Note')).toBe(true);
+    expect(blogPosts.length).toBeGreaterThan(0);
   });
 
-  it('exposes Blog in the site navigation', () => {
+  it('redirects both retired index paths to the merged notes index', () => {
+    const fromCaseStudies = renderApp('/case-studies');
+    expect(screen.getByRole('heading', { name: /^Notes\.$/ })).toBeTruthy();
+
+    fromCaseStudies.unmount();
     renderApp('/blog');
+    expect(screen.getByRole('heading', { name: /^Notes\.$/ })).toBeTruthy();
+  });
+
+  it('exposes Notes in the site navigation', () => {
+    renderApp('/notes');
 
     // The overlay menu is hidden from assistive tech until it is opened, so
     // the persistent path to every section is the footer index.
-    const footerBlogLink = within(screen.getByRole('contentinfo')).getByRole('link', {
-      name: 'Blog',
+    const footerNotesLink = within(screen.getByRole('contentinfo')).getByRole('link', {
+      name: 'Notes',
     });
-    expect(footerBlogLink.getAttribute('href')).toBe('/blog');
+    expect(footerNotesLink.getAttribute('href')).toBe('/notes');
 
     fireEvent.click(screen.getByRole('button', { name: /menu/i }));
 
-    const menuBlogLink = within(screen.getByRole('navigation', { name: 'Primary' })).getByRole(
-      'link',
-      { name: 'Blog' },
-    );
-    expect(menuBlogLink.getAttribute('href')).toBe('/blog');
-    expect(menuBlogLink.className).toContain('is-active');
+    const primary = within(screen.getByRole('navigation', { name: 'Primary' }));
+    const menuNotesLink = primary.getByRole('link', { name: 'Notes' });
+    expect(menuNotesLink.getAttribute('href')).toBe('/notes');
+    expect(menuNotesLink.className).toContain('is-active');
+
+    // Two words, not three: the retired sections are gone from the nav.
+    expect(primary.queryByRole('link', { name: 'Case Studies' })).toBeNull();
+    expect(primary.queryByRole('link', { name: 'Blog' })).toBeNull();
   });
 
   products.forEach((product) => {
@@ -739,6 +757,71 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getAllByText(/backlog priorities/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/delivery visibility/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/success metrics/i).length).toBeGreaterThan(0);
+  });
+
+  /* The trip that started this work: someone looking for "the Oasis thing"
+     used to dead-end on the product page, which carried no route at all to the
+     tenancy decision. Both directions are one click now. */
+  it('links the Oasis build to its tenancy case study and back', () => {
+    const fromProduct = renderApp('/products/oasis-race-control');
+    const productMain = within(document.querySelector('main'));
+    const toStudy = productMain.getAllByRole('link', {
+      name: /One database or many|Read the case study/i,
+    });
+    expect(toStudy.length).toBeGreaterThan(0);
+    toStudy.forEach((link) => {
+      expect(link.getAttribute('href')).toBe('/case-studies/oasis-multi-tenancy');
+    });
+
+    fromProduct.unmount();
+    renderApp('/case-studies/oasis-multi-tenancy');
+    expect(
+      within(document.querySelector('main'))
+        .getByRole('link', { name: /Oasis Race Control/i })
+        .getAttribute('href'),
+    ).toBe('/products/oasis-race-control');
+  });
+
+  it('links a note to the build it came out of, and the build back to it', () => {
+    const fromNote = renderApp('/blog/mvp-sequencing-memory-before-intelligence');
+    expect(
+      within(document.querySelector('main'))
+        .getByRole('link', { name: /Trackday Tuner/i })
+        .getAttribute('href'),
+    ).toBe('/products/track-tuner');
+
+    fromNote.unmount();
+    renderApp('/products/track-tuner');
+    const backToNote = within(document.querySelector('main')).getAllByRole('link', {
+      name: /MVP sequencing: memory before intelligence/i,
+    });
+    expect(backToNote.length).toBeGreaterThan(0);
+    backToNote.forEach((link) => {
+      expect(link.getAttribute('href')).toBe(
+        '/blog/mvp-sequencing-memory-before-intelligence',
+      );
+    });
+  });
+
+  /* Client engagements have no live app and no repository, so they were never
+     products; the only door to them used to be a nav word that no longer
+     exists. Their row opens the case study. */
+  it('lists the client engagements in the work index', () => {
+    renderApp('/products');
+
+    engagements.forEach((engagement) => {
+      const row = within(document.querySelector('main')).getByRole('heading', {
+        name: engagement.name,
+      });
+      expect(row).toBeTruthy();
+    });
+
+    const openStudy = within(document.querySelector('main')).getAllByRole('link', {
+      name: /Read the case study/i,
+    });
+    expect(openStudy.map((link) => link.getAttribute('href')).sort()).toEqual(
+      engagements.map((engagement) => engagement.href).sort(),
+    );
   });
 
   blogPosts.forEach((post) => {

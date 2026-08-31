@@ -215,7 +215,7 @@ function CaseStudies() {
           num="03"
           eyebrow="Case studies"
           title="Shipped with other people, measured after launch."
-          sub="Two engagements where the product decisions are traceable to outcomes: scope, tradeoffs, and what the numbers did afterwards."
+          sub="Engagements and architecture calls where the product decisions are traceable to outcomes: scope, tradeoffs, and what the numbers did afterwards."
         />
         <div className="case-grid" ref={ref} style={{ opacity: 0 }}>
           {caseStudies.map((c) => (

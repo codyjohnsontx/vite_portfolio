@@ -66,17 +66,23 @@ export default function ProductList({ products, startIndex = 1 }) {
                       </p>
                     </div>
                     <div>
-                      <Eyebrow>Stack</Eyebrow>
-                      <div style={{ marginTop: 8 }}>
-                        <StackRow items={p.stack} />
-                      </div>
-                      <div style={{ marginTop: 16 }}>
+                      {/* An engagement has no stack to list: what is known
+                          about it is the case study, not a repository. */}
+                      {p.stack?.length ? (
+                        <>
+                          <Eyebrow>Stack</Eyebrow>
+                          <div style={{ marginTop: 8 }}>
+                            <StackRow items={p.stack} />
+                          </div>
+                        </>
+                      ) : null}
+                      <div style={{ marginTop: p.stack?.length ? 16 : 0 }}>
                         <Link
-                          to={`/products/${p.slug}`}
+                          to={p.href || `/products/${p.slug}`}
                           className="link-arrow"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          Open project <ArrowGlyph />
+                          {p.ctaLabel || 'Open project'} <ArrowGlyph />
                         </Link>
                       </div>
                     </div>
@@ -111,7 +117,11 @@ ProductList.propTypes = {
       oneLiner: PropTypes.string.isRequired,
       problem: PropTypes.string.isRequired,
       audience: PropTypes.string.isRequired,
-      stack: PropTypes.arrayOf(PropTypes.string).isRequired,
+      /* Optional so an engagement, which has no repository, no live app and
+         no update feed, can share this row. */
+      stack: PropTypes.arrayOf(PropTypes.string),
+      href: PropTypes.string,
+      ctaLabel: PropTypes.string,
       brandDisclaimer: PropTypes.string,
     }),
   ).isRequired,

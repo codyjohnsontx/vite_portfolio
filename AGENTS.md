@@ -38,14 +38,43 @@ inventing a new status value, and treat `evidenceSignal` as an internal note who
 reaches no rendered surface, so editing it does not change the site. And a product with no
 screenshot should omit `image` and `visualAssets` rather than carry a placeholder path.
 
-## Case studies, and the diagram pages hung off them
+## Notes: one index, two kinds
 
-`src/content/caseStudies.js` is rendered by `CaseStudyPage.jsx` and listed in plain array
-order by both `CaseStudyIndexPage.jsx` and the home page's case studies section, and the
-index numbers entries by array position, so order is content. The array is authored newest
-first, and `src/App.test.jsx` pins that order plus the leading `01` numeral, so a new case
-study goes at the top of the array and that test changes in the same commit. Five fields
-the existing entries carry reach no rendered surface:
+`/notes` is the only writing section. `src/content/writing.js` is the merged list rendered by
+`NotesIndexPage.jsx`: case studies from `caseStudies.js` first, then notes from `blogPosts.js`,
+each carrying a `kind` derived from which array it came from rather than hand-written on the
+record. Order is by hand and deliberately not by date - case studies have no date (`timeframe` is
+free text like "Architecture decision"), so a date-ordered list would either invent one or sort the
+strongest work to the bottom. The merged list keeps each source array's own order, case studies
+first and then the notes, and the index numbers rows by position across the whole list, so array
+order in both source files is content. Within `caseStudies.js` that order is newest first, so a new
+case study goes at the top of that array; `src/App.test.jsx` pins that order plus the leading `01`
+numeral on the first row of `/notes`, and the home page's case studies section renders the same
+array order, so a new study changes that test in the same commit.
+
+Two things not to undo. The `Case study` / `Note` tag on each row and the pinning of case studies
+above the notes are the only signals separating a tenancy decision from a short essay, because both
+kinds render through the identical `case-row` markup. And `/case-studies` and `/blog` are redirects
+to `/notes`, while every item URL beneath them (`/case-studies/:slug`, `/blog/:slug`,
+`/case-studies/:slug/diagrams`) is public and unchanged; do not "tidy" those onto a `/notes/:slug`
+prefix.
+
+`subjects` on a case study or a blog post is the link between writing and the work it came out of:
+product slugs from `projects.js` or engagement slugs from `engagements.js`, read in both directions
+by `getWritingForSubject` and `getSubjectsForWriting`. It is what puts the `06 Decisions & writing`
+block on a product page and the `Related` block on a case study or note. Adding a piece of writing
+without `subjects` silently orphans it from the work index.
+
+`src/content/engagements.js` holds the two client engagements (Lambda Curry, HSNBA), which have no
+app and no repository. They are derived from their case studies rather than restating them, and
+they appear as rows in `/products` behind the `Engagements` filter, opening the case study instead
+of a product page. `ProductList` renders them because `stack` is optional and `href` / `ctaLabel`
+override the default product link.
+
+## Case study fields, and the diagram pages hung off them
+
+`src/content/caseStudies.js` is rendered by `CaseStudyPage.jsx`. Five fields the existing entries
+carry reach no rendered surface:
 `sections.usersStakeholders`, `sections.constraints`, `sections.ownership`,
 `sections.metrics`, and `sections.confidentialityNote`. Writing them changes nothing, so a
 new entry should carry only what renders. `sections.context`, `.problem`, and `.goal` are the

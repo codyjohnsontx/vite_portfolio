@@ -1,10 +1,8 @@
 import { Suspense, lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import ScrollManager from './components/ScrollManager';
 import SiteLayout from './components/SiteLayout';
-import BlogIndexPage from './pages/BlogIndexPage';
 import BlogPostPage from './pages/BlogPostPage';
-import CaseStudyIndexPage from './pages/CaseStudyIndexPage';
 import CaseStudyPage from './pages/CaseStudyPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -12,6 +10,7 @@ import ProductAnalysisPage from './pages/ProductAnalysisPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import ProductResearchPage from './pages/ProductResearchPage';
 import ProductsPage from './pages/ProductsPage';
+import NotesIndexPage from './pages/NotesIndexPage';
 
 const RideSenseWireframesPage = lazy(() => import('./pages/RideSenseWireframesPage'));
 const SessionComparePage = lazy(() => import('./pages/SessionComparePage'));
@@ -55,7 +54,12 @@ function App() {
             }
           />
           <Route path="/products/:slug" element={<ProductDetailPage />} />
-          <Route path="/case-studies" element={<CaseStudyIndexPage />} />
+          <Route path="/notes" element={<NotesIndexPage />} />
+          {/* The two indexes merged into /notes. Every item URL underneath them
+              is public and stays exactly where it was, so only the two index
+              paths redirect. */}
+          <Route path="/case-studies" element={<Navigate to="/notes" replace />} />
+          <Route path="/blog" element={<Navigate to="/notes" replace />} />
           <Route
             path="/case-studies/:slug/diagrams"
             element={
@@ -65,7 +69,6 @@ function App() {
             }
           />
           <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
-          <Route path="/blog" element={<BlogIndexPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
           <Route path="*" element={<NotFoundPage />} />

@@ -1,6 +1,9 @@
+/* `subjects` works exactly as it does in caseStudies.js: the product or
+   engagement slugs this note is about, read in both directions. */
 export const blogPosts = [
   {
     slug: 'pricing-risk-in-a-public-demo',
+    subjects: ['ctx-chat'],
     title: 'A public demo of a paid-API app, and a build that was green but broken',
     deck:
       'Two decisions from this cycle on Attend: how to let anyone try an app that spends real money on every click, and why a passing build still served users a 500.',
@@ -32,6 +35,7 @@ export const blogPosts = [
   },
   {
     slug: 'is-an-ai-medical-summary-lying-to-you',
+    subjects: ['oncopath'],
     title: 'How do you know if an AI medical summary is lying to you?',
     deck:
       'The judge scored OncoPath at 81 percent faithful. Calibrating that judge against my own labels proved the number is not trustworthy yet, and finding that out was the point.',
@@ -93,6 +97,7 @@ export const blogPosts = [
   },
   {
     slug: 'ai-trust-boundaries-before-ai-features',
+    subjects: ['track-tuner', 'ridesense'],
     title: 'AI trust boundaries before AI features',
     deck:
       'The hard part of an AI feature is deciding what the product is allowed to know, when it should stop, and how much confidence the user has actually earned from the evidence.',
@@ -147,6 +152,7 @@ export const blogPosts = [
   },
   {
     slug: 'mvp-sequencing-memory-before-intelligence',
+    subjects: ['track-tuner'],
     title: 'MVP sequencing: memory before intelligence',
     deck:
       'Trackday Tuner gets more interesting when it becomes intelligent, but it gets useful first by becoming a better memory system for what changed and what happened next.',
@@ -201,6 +207,7 @@ export const blogPosts = [
   },
   {
     slug: 'operational-friction-is-product-scope',
+    subjects: ['lambda-curry', 'hsnba'],
     title: 'Operational friction is product scope',
     deck:
       'A lot of product work starts as operational drag: repeated manual work, unclear handoffs, weak reporting, and decisions that have to be renegotiated every day.',

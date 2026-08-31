@@ -174,3 +174,98 @@
 .update__body a:hover {
   background-size: 100% 1px;
 }
+
+/* -------------------------- related writing --------------------------- */
+/* Used on three surfaces - product detail, case study, note - so it has to
+   sit on the Signal primitives rather than on any one page's grid. */
+
+.related {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.related__row {
+  border-top: 1px solid var(--glass-line-2);
+}
+.related__row:last-child {
+  border-bottom: 1px solid var(--glass-line-2);
+}
+
+.related__link {
+  display: grid;
+  grid-template-columns: minmax(0, 150px) minmax(0, 1fr) auto;
+  gap: clamp(14px, 2vw, 32px);
+  align-items: baseline;
+  padding-block: clamp(20px, 2.4vw, 28px);
+  color: inherit;
+  text-decoration: none;
+  transition: padding-left 0.35s var(--ease-out);
+}
+.related__link:hover {
+  padding-left: 12px;
+}
+
+.related__label {
+  color: var(--ink-4);
+}
+
+.related__body {
+  display: block;
+  min-width: 0;
+}
+
+.related__title {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(19px, 1.9vw, 25px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.related__note {
+  display: block;
+  margin-top: 8px;
+  max-width: 62ch;
+  color: var(--ink-3);
+}
+
+.related__go {
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .related__link {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .related__go {
+    display: none;
+  }
+}
+
+/* ---------------------------- writing index ---------------------------- */
+/* The merged index carries two kinds in one list, so a row has to say which
+   one it is. The tag is the one signal that separates the strongest work from
+   a short note once both share the same row markup. */
+
+.writing-kind {
+  display: inline-block;
+  margin-right: 12px;
+  padding: 3px 9px;
+  border: 1px solid color-mix(in oklab, var(--accent) 45%, transparent);
+  border-radius: var(--radius-pill);
+  color: color-mix(in oklab, var(--accent) 85%, var(--ink));
+}
+
+/* Everything after the group label is a note, and reads quieter. */
+.writing-group ~ .case-row .writing-kind {
+  border-color: var(--glass-line-2);
+  color: var(--ink-4);
+}
+
+.writing-group {
+  padding-top: clamp(48px, 6vw, 84px);
+  padding-bottom: clamp(8px, 1vw, 16px);
+}
