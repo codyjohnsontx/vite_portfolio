@@ -40,9 +40,12 @@ screenshot should omit `image` and `visualAssets` rather than carry a placeholde
 
 ## Case studies, and the diagram pages hung off them
 
-`src/content/caseStudies.js` is rendered by `CaseStudyPage.jsx` and listed by
-`CaseStudyIndexPage.jsx`, and the index numbers entries by array position, so order is
-content. Five fields the existing entries carry reach no rendered surface:
+`src/content/caseStudies.js` is rendered by `CaseStudyPage.jsx` and listed in plain array
+order by both `CaseStudyIndexPage.jsx` and the home page's case studies section, and the
+index numbers entries by array position, so order is content. The array is authored newest
+first, and `src/App.test.jsx` pins that order plus the leading `01` numeral, so a new case
+study goes at the top of the array and that test changes in the same commit. Five fields
+the existing entries carry reach no rendered surface:
 `sections.usersStakeholders`, `sections.constraints`, `sections.ownership`,
 `sections.metrics`, and `sections.confidentialityNote`. Writing them changes nothing, so a
 new entry should carry only what renders. `sections.context`, `.problem`, and `.goal` are the

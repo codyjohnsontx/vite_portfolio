@@ -179,6 +179,30 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
+  it('lists the case studies newest first on the index and the home page', () => {
+    // The order is authored, not derived, so it is pinned here: both surfaces
+    // render src/content/caseStudies.js in plain array order.
+    const newestFirst = [
+      '/case-studies/oasis-multi-tenancy',
+      '/case-studies/hsnba-automation-and-gis',
+      '/case-studies/lambda-curry-scope-monitoring',
+    ];
+    const hrefs = (nodes) => Array.from(nodes, (node) => node.getAttribute('href'));
+
+    const indexPage = renderApp('/case-studies');
+
+    expect(hrefs(document.querySelectorAll('main .case-row'))).toEqual(newestFirst);
+    // The index numbers entries by position, so the newest study reads 01.
+    expect(document.querySelector('main .case-row .numeral').textContent).toBe('01');
+
+    indexPage.unmount();
+    renderApp('/');
+
+    expect(hrefs(document.querySelectorAll('#case-studies a[href^="/case-studies/"]'))).toEqual(
+      newestFirst,
+    );
+  });
+
   it('renders the blog index page with starter posts', () => {
     renderApp('/blog');
 
