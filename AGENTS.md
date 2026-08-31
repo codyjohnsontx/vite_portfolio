@@ -55,15 +55,17 @@ Three pages now render hand-drawn wireframes from raw HTML strings:
 `OasisTenancyDiagramsPage` (`/case-studies/:slug/diagrams`, which redirects for any slug but
 `oasis-multi-tenancy`), where React owns a toggle between views. Three things to know before
 adding another. Their hand-drawn look depends on Caveat and Kalam, which are requested by
-the single Google Fonts `<link>` in `index.html` and used nowhere else on the site; every
-declaration that names them also carries `'Segoe Print', 'Bradley Hand', 'Noteworthy'`
-before the generic `cursive` keyword, because bare `cursive` is Comic Sans MS on Windows.
+the single Google Fonts `<link>` in `index.html` and used nowhere else on the site. The
+hand-maintained stylesheets and the RideSense page's inline style name `'Segoe Print',
+'Bradley Hand', 'Noteworthy'` before the generic `cursive` keyword, because bare `cursive`
+is Comic Sans MS on Windows; `src/content/sessionCompareWireframes.js` deliberately does
+not, because it is generated from a Claude Design export and kept byte-faithful to it.
 The paper canvas these use sits under the site TopBar, which is `position: fixed`, 80px
 tall, and draws unreadable shell-palette chrome over light backgrounds;
 `OasisTenancyDiagramsPage.css` fixes that with a `::before` strip painted `var(--void)`,
 which `main`'s stacking context puts behind the bar in both themes. And the muted tones the
-two older pages use (`#7a766c`, `#8a8a8a`, `#b4b0a6`) fail WCAG AA against their own
-backgrounds; the tokens at the top of `OasisTenancyDiagramsPage.css` are the measured
+Session Compare wireframes use (`#7a766c`, `#8a8a8a`, `#b4b0a6`) fail WCAG AA against their
+own backgrounds; the tokens at the top of `OasisTenancyDiagramsPage.css` are the measured
 replacements. Verify reflow in a browser rather than by reading the CSS - fixed-width phone
 frames happen to fit at 390 and a board of columns does not.
 
