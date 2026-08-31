@@ -206,9 +206,9 @@
   padding-left: 12px;
 }
 
-.related__label {
-  color: var(--ink-4);
-}
+/* The label is the only thing naming what kind of link the row is, so it keeps
+   the --ink-3 its .mono class already gives it rather than dropping to the
+   decorative --ink-4. */
 
 .related__body {
   display: block;
@@ -259,10 +259,14 @@
   color: color-mix(in oklab, var(--accent) 85%, var(--ink));
 }
 
-/* Everything after the group label is a note, and reads quieter. */
+/* Everything after the group label is a note, and reads quieter: neutral
+   rather than accented. Quieter is as far as it goes - the tag has to stay at
+   least as legible as the date beside it, so it holds the same --ink-3 the
+   surrounding .mono eyebrow uses. --ink-4 is the decorative token (0.16 alpha
+   in light mode) and washes the tag out to nothing on the bone background. */
 .writing-group ~ .case-row .writing-kind {
-  border-color: var(--glass-line-2);
-  color: var(--ink-4);
+  border-color: var(--glass-line);
+  color: var(--ink-3);
 }
 
 .writing-group {
