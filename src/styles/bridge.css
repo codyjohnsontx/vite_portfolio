@@ -112,7 +112,6 @@
 /* Legacy link styles are sized to their line box. Pad them out to a real
    touch target on coarse pointers, same as the new components. */
 @media (pointer: coarse) {
-  .link-arrow,
   .page-hero .crumbs a,
   .feature-links a,
   .update__body a,
@@ -125,6 +124,7 @@
      container: inline-flex would make the arrow a sibling flex item, centred
      beside the wrapped text instead of trailing its last line. */
   .link-arrow {
+    min-height: 44px;
     display: inline-block;
     align-content: center;
   }

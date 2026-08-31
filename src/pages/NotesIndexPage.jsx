@@ -64,7 +64,7 @@ export default function NotesIndexPage() {
                   </p>
                 </div>
                 <div className="case-row__cta" style={{ textAlign: 'right' }}>
-                  <span className="link-arrow" style={{ borderColor: 'transparent' }}>
+                  <span className="link-arrow link-arrow--bare">
                     Read <ArrowGlyph />
                   </span>
                 </div>
