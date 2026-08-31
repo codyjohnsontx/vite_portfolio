@@ -18,6 +18,7 @@ const SessionComparePage = lazy(() => import('./pages/SessionComparePage'));
 const SessionCompareWireframesPage = lazy(
   () => import('./pages/SessionCompareWireframesPage'),
 );
+const OasisTenancyDiagramsPage = lazy(() => import('./pages/OasisTenancyDiagramsPage'));
 
 function App() {
   return (
@@ -55,6 +56,14 @@ function App() {
           />
           <Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/case-studies" element={<CaseStudyIndexPage />} />
+          <Route
+            path="/case-studies/:slug/diagrams"
+            element={
+              <Suspense fallback={null}>
+                <OasisTenancyDiagramsPage />
+              </Suspense>
+            }
+          />
           <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
           <Route path="/blog" element={<BlogIndexPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />

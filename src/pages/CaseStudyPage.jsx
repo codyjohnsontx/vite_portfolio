@@ -171,6 +171,32 @@ export default function CaseStudyPage() {
               </ul>
             </Reveal>
           </div>
+
+          {c.diagrams ? (
+            <Reveal
+              delay={260}
+              style={{
+                marginTop: 56,
+                paddingTop: 32,
+                borderTop: '1px solid var(--rule)',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+                gap: 24,
+                flexWrap: 'wrap',
+              }}
+            >
+              <div style={{ maxWidth: '60ch' }}>
+                <Eyebrow>System design</Eyebrow>
+                <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
+                  {c.diagrams.blurb}
+                </p>
+              </div>
+              <Link className="link-arrow" to={c.diagrams.path}>
+                {c.diagrams.label} <ArrowGlyph />
+              </Link>
+            </Reveal>
+          ) : null}
         </div>
       </Reveal>
 

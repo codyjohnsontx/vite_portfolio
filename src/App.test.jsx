@@ -632,6 +632,81 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
+  it('renders the Oasis tenancy case study with the argument that decided it', () => {
+    renderApp('/case-studies/oasis-multi-tenancy');
+
+    expect(
+      screen.getByRole('heading', {
+        name: /One database or many: picking a tenancy model for a sim racing platform/i,
+      }),
+    ).toBeTruthy();
+    const main = within(document.querySelector('main'));
+    expect(main.getAllByText(/Thirteen turned up/).length).toBeGreaterThan(0);
+    expect(main.getByText(/exactly one open league round/)).toBeTruthy();
+    expect(main.getByText(/One direction you can walk back/)).toBeTruthy();
+    expect(main.getByText(/an actual clause, written by an actual lawyer/i)).toBeTruthy();
+  });
+
+  it('offers the system design diagrams from the tenancy case study only', () => {
+    const withDiagrams = renderApp('/case-studies/oasis-multi-tenancy');
+
+    expect(screen.getByText('System design')).toBeTruthy();
+    expect(
+      screen
+        .getByRole('link', { name: /View the system design wireframes/i })
+        .getAttribute('href'),
+    ).toBe('/case-studies/oasis-multi-tenancy/diagrams');
+
+    withDiagrams.unmount();
+    renderApp('/case-studies/lambda-curry-scope-monitoring');
+    expect(screen.queryByText('System design')).toBeNull();
+    expect(screen.queryByRole('link', { name: /system design wireframes/i })).toBeNull();
+  });
+
+  it('renders all three tenancy states on the system design diagrams route', async () => {
+    renderApp('/case-studies/oasis-multi-tenancy/diagrams');
+
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'One database or many' })).toBeTruthy(),
+    );
+
+    // The default state is the single venue that exists today, including the
+    // three schema assumptions that stop being true with a second one.
+    expect(screen.getByRole('heading', { name: /Today · one venue/i })).toBeTruthy();
+    expect(screen.getByText(/One open round in the whole table/)).toBeTruthy();
+    expect(screen.getByText(/Every venue is in Chicago/)).toBeTruthy();
+    expect(
+      screen.getByText(/Rig numbers and driver names are globally unique/),
+    ).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', { name: /Shared database/i }));
+    expect(
+      screen.getByRole('heading', { name: /One shared database, with a venue column/i }),
+    ).toBeTruthy();
+    expect(screen.getAllByText(/venue filter left off/).length).toBeGreaterThan(0);
+
+    fireEvent.click(screen.getByRole('button', { name: /Database per franchise/i }));
+    expect(
+      screen.getByRole('heading', { name: /A database per franchise/i }),
+    ).toBeTruthy();
+    expect(screen.getAllByText(/N independent driver namespaces/).length).toBeGreaterThan(0);
+    expect(
+      screen.getByText(/migration runs per deploy, with partial failure semantics/),
+    ).toBeTruthy();
+
+    // The reversibility argument stays on screen whichever state is selected.
+    expect(screen.getByText(/Shared → separate, later/)).toBeTruthy();
+    expect(screen.getByText(/Separate → shared, later/)).toBeTruthy();
+  });
+
+  it('sends other case study slugs away from the diagrams route', async () => {
+    renderApp('/case-studies/lambda-curry-scope-monitoring/diagrams');
+
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy(),
+    );
+  });
+
   it('renders the Lambda Curry product-owner proof points', () => {
     renderApp('/case-studies/lambda-curry-scope-monitoring');
 
