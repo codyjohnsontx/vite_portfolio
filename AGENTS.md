@@ -53,7 +53,11 @@ empty section. The optional `diagrams` field (`{ path, label, blurb }`) is what 
 Three pages now render hand-drawn wireframes from raw HTML strings with React owning the
 toggle: `RideSenseWireframesPage`, `SessionCompareWireframesPage`, and
 `OasisTenancyDiagramsPage` (`/case-studies/:slug/diagrams`, which redirects for any slug but
-`oasis-multi-tenancy`). Two things to know before adding another. The paper canvas these use
+`oasis-multi-tenancy`). Three things to know before adding another. Their hand-drawn look
+depends on Caveat and Kalam, which are requested by the single Google Fonts `<link>` in
+`index.html` and used nowhere else on the site; every declaration that names them also carries
+`'Segoe Print', 'Bradley Hand', 'Noteworthy'` before the generic `cursive` keyword, because
+bare `cursive` is Comic Sans MS on Windows. The paper canvas these use
 sits under the site TopBar, which is `position: fixed`, 80px tall, and draws unreadable
 shell-palette chrome over light backgrounds; `OasisTenancyDiagramsPage.css` fixes that with a
 `::before` strip painted `var(--void)`, which `main`'s stacking context puts behind the bar in
