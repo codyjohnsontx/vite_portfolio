@@ -417,7 +417,7 @@ const WIREFRAMES_BODY = `
   </div>
 
   <div class="legend">
-    <span style="font-family:'Caveat'; font-weight:700; font-size:20px; color:var(--wf-ink);">Legend</span>
+    <span style="font-family:'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive; font-weight:700; font-size:20px; color:var(--wf-ink);">Legend</span>
     <span class="key"><span class="sw"></span> container / card</span>
     <span class="key"><span class="sw" style="border-style:dashed; border-color:var(--wf-pencil);"></span> media / chart placeholder</span>
     <span class="key"><span class="sw line"></span> text block</span>

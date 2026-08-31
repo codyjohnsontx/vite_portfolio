@@ -43,7 +43,7 @@
 }
 
 .scw-title {
-  font: 700 42px/1 'Caveat', cursive;
+  font: 700 42px/1 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   color: #2b2b2b;
   margin: 0;
 }
@@ -63,7 +63,7 @@
 }
 
 .scw-tab {
-  font-family: 'Caveat', cursive;
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-size: 21px;
   font-weight: 700;
   padding: 7px 22px;
@@ -93,7 +93,7 @@
   gap: 18px;
   margin-top: 20px;
   align-items: center;
-  font: 600 15px 'Caveat', cursive;
+  font: 600 15px 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   color: #6b6b6b;
 }
 

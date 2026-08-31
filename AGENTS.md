@@ -38,6 +38,37 @@ inventing a new status value, and treat `evidenceSignal` as an internal note who
 reaches no rendered surface, so editing it does not change the site. And a product with no
 screenshot should omit `image` and `visualAssets` rather than carry a placeholder path.
 
+## Case studies, and the diagram pages hung off them
+
+`src/content/caseStudies.js` is rendered by `CaseStudyPage.jsx` and listed by
+`CaseStudyIndexPage.jsx`, and the index numbers entries by array position, so order is
+content. Five fields the existing entries carry reach no rendered surface:
+`sections.usersStakeholders`, `sections.constraints`, `sections.ownership`,
+`sections.metrics`, and `sections.confidentialityNote`. Writing them changes nothing, so a
+new entry should carry only what renders. `sections.context`, `.problem`, and `.goal` are the
+opposite case: `CaseSection` declares `body` required, so omitting one warns and renders an
+empty section. The optional `diagrams` field (`{ path, label, blurb }`) is what draws the
+`System design` block on the detail page; entries without it render exactly as before.
+
+Three pages now render hand-drawn wireframes from raw HTML strings:
+`RideSenseWireframesPage`, which draws one board, plus `SessionCompareWireframesPage` and
+`OasisTenancyDiagramsPage` (`/case-studies/:slug/diagrams`, which redirects for any slug but
+`oasis-multi-tenancy`), where React owns a toggle between views. Three things to know before
+adding another. Their hand-drawn look depends on Caveat and Kalam, which are requested by
+the single Google Fonts `<link>` in `index.html` and used nowhere else on the site. The
+hand-maintained stylesheets and the RideSense page's inline style name `'Segoe Print',
+'Bradley Hand', 'Noteworthy'` before the generic `cursive` keyword, because bare `cursive`
+is Comic Sans MS on Windows; `src/content/sessionCompareWireframes.js` deliberately does
+not, because it is generated from a Claude Design export and kept byte-faithful to it.
+The paper canvas these use sits under the site TopBar, which is `position: fixed`, 80px
+tall, and draws unreadable shell-palette chrome over light backgrounds;
+`OasisTenancyDiagramsPage.css` fixes that with a `::before` strip painted `var(--void)`,
+which `main`'s stacking context puts behind the bar in both themes. And the muted tones the
+Session Compare wireframes use (`#7a766c`, `#8a8a8a`, `#b4b0a6`) fail WCAG AA against their
+own backgrounds; the tokens at the top of `OasisTenancyDiagramsPage.css` are the measured
+replacements. Verify reflow in a browser rather than by reading the CSS - fixed-width phone
+frames happen to fit at 390 and a board of columns does not.
+
 ## The resume story is spread across the site, and it drifts
 
 `src/content/resumeContent.js` renders nowhere. `ResumePage.jsx` exists but `/resume` is

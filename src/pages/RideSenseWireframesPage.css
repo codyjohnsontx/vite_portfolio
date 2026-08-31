@@ -14,7 +14,7 @@
   background:
     radial-gradient(circle at 18% -5%, #f4f1e7, transparent 60%),
     var(--wf-paper);
-  font-family: 'Kalam', cursive;
+  font-family: 'Kalam', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   color: var(--wf-ink);
   -webkit-font-smoothing: antialiased;
   padding: 48px 40px 80px;
@@ -36,7 +36,7 @@
   flex-wrap: wrap;
 }
 .wf-page .page-title {
-  font-family: 'Caveat', cursive;
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-weight: 700;
   font-size: 58px;
   line-height: 0.9;
@@ -46,7 +46,7 @@
 }
 .wf-page .page-title small {
   display: block;
-  font-family: 'Kalam';
+  font-family: 'Kalam', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-weight: 400;
   font-size: 17px;
   color: var(--wf-ink2);
@@ -54,7 +54,7 @@
   margin-top: 10px;
 }
 .wf-page .page-meta {
-  font-family: 'Kalam';
+  font-family: 'Kalam', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-size: 14px;
   color: var(--wf-ink2);
   text-align: right;
@@ -71,7 +71,7 @@
   border: 1.5px dashed var(--wf-pen);
   border-radius: 6px;
   padding: 3px 12px;
-  font-family: 'Caveat';
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-weight: 700;
   font-size: 20px;
   transform: rotate(-2deg);
@@ -100,7 +100,7 @@
   left: 24px;
   background: var(--wf-ink);
   color: var(--wf-sheet);
-  font-family: 'Caveat';
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-weight: 700;
   font-size: 22px;
   padding: 3px 34px 5px;
@@ -112,7 +112,7 @@
   position: absolute;
   right: -34px;
   top: 46%;
-  font-family: 'Caveat';
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-size: 40px;
   color: var(--wf-pen);
   z-index: 6;
@@ -147,7 +147,7 @@
   border-radius: 8px;
 }
 .wf-page .url-lbl {
-  font-family: 'Kalam';
+  font-family: 'Kalam', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-size: 11px;
   color: var(--wf-ink2);
   padding: 0 8px;
@@ -216,7 +216,7 @@
   gap: 8px;
 }
 .wf-page .lbl {
-  font-family: 'Kalam';
+  font-family: 'Kalam', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-weight: 700;
   font-size: 12px;
   color: var(--wf-ink);
@@ -228,13 +228,13 @@
   color: var(--wf-ink2);
 }
 .wf-page .mono-tag {
-  font-family: 'Caveat';
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-weight: 700;
   font-size: 15px;
   color: var(--wf-ink);
 }
 .wf-page .big-num {
-  font-family: 'Caveat';
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-weight: 700;
   font-size: 30px;
   color: var(--wf-ink);
@@ -244,7 +244,7 @@
   border: 1.6px solid var(--wf-ink);
   border-radius: 9px;
   padding: 2px 8px;
-  font-family: 'Kalam';
+  font-family: 'Kalam', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-size: 10.5px;
   font-weight: 700;
   background: var(--wf-card);
@@ -259,7 +259,7 @@
   border: 1.8px solid var(--wf-ink);
   border-radius: 7px;
   padding: 3px 10px;
-  font-family: 'Kalam';
+  font-family: 'Kalam', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-weight: 700;
   font-size: 11px;
   background: var(--wf-card);
@@ -430,7 +430,7 @@
   border-radius: 50%;
   background: var(--wf-pen);
   color: #fff;
-  font-family: 'Caveat';
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-weight: 700;
   font-size: 17px;
   display: flex;
@@ -460,7 +460,7 @@
   border-radius: 50%;
   background: var(--wf-pen);
   color: #fff;
-  font-family: 'Caveat';
+  font-family: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-weight: 700;
   font-size: 16px;
   display: flex;
@@ -470,7 +470,7 @@
 }
 .wf-page .note p {
   margin: 0;
-  font-family: 'Kalam';
+  font-family: 'Kalam', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-size: 13.5px;
   line-height: 1.4;
   color: var(--wf-ink);
@@ -489,7 +489,7 @@
   gap: 26px;
   flex-wrap: wrap;
   align-items: center;
-  font-family: 'Kalam';
+  font-family: 'Kalam', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-size: 13.5px;
   color: var(--wf-ink2);
   border-top: 1.5px dashed var(--wf-pencil);
@@ -529,7 +529,7 @@
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  font-family: 'Kalam';
+  font-family: 'Kalam', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
   font-size: 14px;
 }
 .wf-page .wf-backbar a {
