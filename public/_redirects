@@ -1,3 +1,6 @@
-/case-studies /notes 301!
-/blog /notes 301!
+# Netlify mirror, inert on this deploy: Vercel ignores this file and reads
+# vercel.json, which is the authoritative redirect config. Keep the two in
+# sync - 308! matches Vercel's `permanent: true`, which emits 308.
+/case-studies /notes 308!
+/blog /notes 308!
 /* /index.html 200
