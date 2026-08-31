@@ -3,6 +3,8 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowGlyph, Eyebrow } from '../components/Editorial';
 import { Reveal } from '../components/ScrollReveal';
 import { getCaseStudyBySlug } from '../content/caseStudies';
+import { getRelatedForWriting } from '../content/writing';
+import RelatedLinks from '../components/RelatedLinks';
 
 function CaseSection({ num, title, body }) {
   return (
@@ -94,6 +96,8 @@ export default function CaseStudyPage() {
   if (!study) return <Navigate to="/not-found" replace />;
   const c = study;
   const s = c.sections;
+  const href = `/case-studies/${c.slug}`;
+  const { items: related, heading: relatedHeading } = getRelatedForWriting(href);
 
   return (
     <div className="fade-in">
@@ -102,7 +106,7 @@ export default function CaseStudyPage() {
           <div className="crumbs">
             <Link to="/">Index</Link>
             <span>/</span>
-            <Link to="/case-studies">Case Studies</Link>
+            <Link to="/notes">Notes</Link>
             <span>/</span>
             <span>{c.company}</span>
           </div>
@@ -210,6 +214,18 @@ export default function CaseStudyPage() {
       <CaseListSection num="07" title="Outcomes" items={s.outcomes} />
       <CaseListSection num="08" title="Lessons" items={s.lessons} />
 
+      {related.length ? (
+        <Reveal as="section" className="section section--tight">
+          <div className="container">
+            <Eyebrow>Related</Eyebrow>
+            <h2 className="h2" style={{ margin: '12px 0 32px' }}>
+              {relatedHeading}
+            </h2>
+            <RelatedLinks items={related} />
+          </div>
+        </Reveal>
+      ) : null}
+
       <Reveal as="section" className="section section--tight">
         <Reveal
           className="container"
@@ -223,8 +239,8 @@ export default function CaseStudyPage() {
             gap: 16,
           }}
         >
-          <Link className="link-arrow" to="/case-studies">
-            ← All case studies
+          <Link className="link-arrow" to="/notes">
+            ← All notes
           </Link>
           <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
             Discuss this work <ArrowGlyph />

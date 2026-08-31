@@ -6,6 +6,8 @@ import { Reveal } from '../components/ScrollReveal';
 import { getProductAnalysisBySlug } from '../content/productAnalyses';
 import { getProductBySlug } from '../content/projects';
 import { getProductResearchBySlug } from '../content/productResearch';
+import { KIND_LABEL, getWritingForSubject } from '../content/writing';
+import RelatedLinks from '../components/RelatedLinks';
 import Shot from '../components/Shot';
 
 const SECTIONS = [
@@ -14,6 +16,9 @@ const SECTIONS = [
   { id: 'scope', label: '03 MVP scope' },
   { id: 'updates', label: '04 Updates' },
   { id: 'whats-next', label: "05 What's next" },
+  /* Only rendered when this product has writing behind it; the scroll spy
+     already skips a section whose element is not on the page. */
+  { id: 'writing', label: '06 Decisions & writing' },
 ];
 
 const HERO_IMAGE_STYLE = {
@@ -117,6 +122,10 @@ export default function ProductDetailPage() {
   const analysis = getProductAnalysisBySlug(slug);
   const research = getProductResearchBySlug(slug);
   const nextSummary = p.nextStep.split('.')[0] + '.';
+  const relatedWriting = getWritingForSubject(p.slug);
+  const sections = relatedWriting.length
+    ? SECTIONS
+    : SECTIONS.filter((section) => section.id !== 'writing');
 
   return (
     <div className="fade-in">
@@ -125,7 +134,7 @@ export default function ProductDetailPage() {
           <div className="crumbs">
             <Link to="/">Index</Link>
             <span>/</span>
-            <Link to="/products">Products</Link>
+            <Link to="/products">Work</Link>
             <span>/</span>
             <span>{p.name}</span>
           </div>
@@ -155,6 +164,16 @@ export default function ProductDetailPage() {
               </Link>
             </div>
           ) : null}
+          {/* A build can have more than one piece written about it, so the
+              label names the piece: "Read the note" twice over would give two
+              hero links one accessible name and two destinations. */}
+          {relatedWriting.map((piece) => (
+            <div key={piece.href} style={{ marginTop: 12 }}>
+              <Link to={piece.href} className="link-arrow">
+                Read the {KIND_LABEL[piece.kind].toLowerCase()}: {piece.title} <ArrowGlyph />
+              </Link>
+            </div>
+          ))}
           {p.slug === 'ridesense' ? (
             <div style={{ marginTop: 12 }}>
               <Link to={`/products/${p.slug}/wireframes`} className="link-arrow">
@@ -369,7 +388,7 @@ export default function ProductDetailPage() {
       <section className="bay--tight">
         <div className="shell pd-layout">
           <aside className="sidenav">
-            {SECTIONS.map((it) => (
+            {sections.map((it) => (
               <a
                 key={it.id}
                 href={`#${it.id}`}
@@ -551,6 +570,29 @@ export default function ProductDetailPage() {
               ) : null}
             </Reveal>
 
+            {relatedWriting.length ? (
+              <Reveal id="writing" style={{ marginTop: 80 }}>
+                <Eyebrow>06 · Decisions &amp; writing</Eyebrow>
+                <h2 className="h2" style={{ margin: '12px 0 16px' }}>
+                  What has been written about this build.
+                </h2>
+                <p
+                  className="body"
+                  style={{ color: 'var(--ink-2)', maxWidth: '60ch', marginBottom: 32 }}
+                >
+                  The decisions behind it, written up with the argument attached.
+                </p>
+                <RelatedLinks
+                  items={relatedWriting.map((piece) => ({
+                    href: piece.href,
+                    label: KIND_LABEL[piece.kind],
+                    title: piece.title,
+                    note: piece.deck,
+                  }))}
+                />
+              </Reveal>
+            ) : null}
+
             <Reveal
               style={{
                 marginTop: 80,
@@ -563,7 +605,7 @@ export default function ProductDetailPage() {
               }}
             >
               <Link className="link-arrow" to="/products">
-                ← All products
+                ← All work
               </Link>
               <a className="link-arrow" href="mailto:codyjohnsontx@gmail.com">
                 Talk about this build <ArrowGlyph />

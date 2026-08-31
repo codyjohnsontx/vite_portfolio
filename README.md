@@ -48,8 +48,8 @@ The workflow reports status, it does not block merges. Making it enforcing takes
 
 This app uses `BrowserRouter`, so deep links like `/products/track-tuner` and `/case-studies/:slug` require SPA rewrites in production.
 
-- `vercel.json` provides a catch-all rewrite for Vercel-style hosting.
-- `public/_redirects` provides the Netlify-style fallback route when the site is built.
+- `vercel.json` provides a catch-all rewrite for Vercel-style hosting, plus the permanent redirects that send the retired `/case-studies` and `/blog` indexes to `/notes`. Item URLs under those prefixes are unchanged.
+- `public/_redirects` mirrors both for Netlify-style hosting and is inert on this deploy; the comment at the top of that file owns the rule for keeping the two in sync.
 
 ## Content updates
 

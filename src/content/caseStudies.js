@@ -1,8 +1,13 @@
+/* `subjects` is what this study is about: a product slug from projects.js or an
+   engagement slug from engagements.js. It is the only link between a piece of
+   writing and the work it came out of, and it is read in both directions - the
+   subject's page lists its writing, and the writing lists its subject. */
 export const caseStudies = [
   // Newest first. Add a new case study at the top of this array; both the
-  // /case-studies index and the home page render it in plain array order.
+  // /notes index and the home page render it in plain array order.
   {
     slug: 'oasis-multi-tenancy',
+    subjects: ['oasis-race-control'],
     company: 'Oasis Race Control',
     timeframe: 'Architecture decision',
     role: 'Full-stack product builder',
@@ -65,6 +70,7 @@ export const caseStudies = [
   },
   {
     slug: 'hsnba-automation-and-gis',
+    subjects: ['hsnba'],
     company: 'Humane Society (HSNBA)',
     timeframe: 'Apr 2024 - May 2025',
     role: 'Software Engineer',
@@ -134,6 +140,7 @@ export const caseStudies = [
   },
   {
     slug: 'lambda-curry-scope-monitoring',
+    subjects: ['lambda-curry'],
     company: 'Lambda Curry',
     timeframe: 'Contract product work',
     role: 'Product Owner',
