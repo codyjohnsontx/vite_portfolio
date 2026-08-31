@@ -38,6 +38,31 @@ inventing a new status value, and treat `evidenceSignal` as an internal note who
 reaches no rendered surface, so editing it does not change the site. And a product with no
 screenshot should omit `image` and `visualAssets` rather than carry a placeholder path.
 
+## Case studies, and the diagram pages hung off them
+
+`src/content/caseStudies.js` is rendered by `CaseStudyPage.jsx` and listed by
+`CaseStudyIndexPage.jsx`, and the index numbers entries by array position, so order is
+content. Five fields the existing entries carry reach no rendered surface:
+`sections.usersStakeholders`, `sections.constraints`, `sections.ownership`,
+`sections.metrics`, and `sections.confidentialityNote`. Writing them changes nothing, so a
+new entry should carry only what renders. `sections.context`, `.problem`, and `.goal` are the
+opposite case: `CaseSection` declares `body` required, so omitting one warns and renders an
+empty section. The optional `diagrams` field (`{ path, label, blurb }`) is what draws the
+`System design` block on the detail page; entries without it render exactly as before.
+
+Three pages now render hand-drawn wireframes from raw HTML strings with React owning the
+toggle: `RideSenseWireframesPage`, `SessionCompareWireframesPage`, and
+`OasisTenancyDiagramsPage` (`/case-studies/:slug/diagrams`, which redirects for any slug but
+`oasis-multi-tenancy`). Two things to know before adding another. The paper canvas these use
+sits under the site TopBar, which is `position: fixed`, 80px tall, and draws unreadable
+shell-palette chrome over light backgrounds; `OasisTenancyDiagramsPage.css` fixes that with a
+`::before` strip painted `var(--void)`, which `main`'s stacking context puts behind the bar in
+both themes. And the muted tones the two older pages use (`#7a766c`, `#8a8a8a`, `#b4b0a6`)
+fail WCAG AA against their own backgrounds; the tokens at the top of
+`OasisTenancyDiagramsPage.css` are the measured replacements. Verify reflow in a browser
+rather than by reading the CSS - fixed-width phone frames happen to fit at 390 and a board of
+columns does not.
+
 ## The resume story is spread across the site, and it drifts
 
 `src/content/resumeContent.js` renders nowhere. `ResumePage.jsx` exists but `/resume` is

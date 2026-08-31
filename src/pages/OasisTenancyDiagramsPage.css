@@ -312,7 +312,9 @@
 
 .otd-arrow__glyph {
   font: 700 22px/1 Arial, Helvetica, sans-serif;
-  color: var(--otd-rule-2);
+  /* A connector carries meaning here, so it takes the body ink rather than a
+     rule tint: --otd-rule-2 measured 1.44:1 against the paper. */
+  color: var(--otd-ink-2);
 }
 
 .otd-arrow__label {
