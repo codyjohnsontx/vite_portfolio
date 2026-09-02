@@ -82,24 +82,84 @@ opposite case: `CaseSection` declares `body` required, so omitting one warns and
 empty section. The optional `diagrams` field (`{ path, label, blurb }`) is what draws the
 `System design` block on the detail page; entries without it render exactly as before.
 
-Three pages now render hand-drawn wireframes from raw HTML strings:
-`RideSenseWireframesPage`, which draws one board, plus `SessionCompareWireframesPage` and
-`OasisTenancyDiagramsPage` (`/case-studies/:slug/diagrams`, which redirects for any slug but
-`oasis-multi-tenancy`), where React owns a toggle between views. Three things to know before
-adding another. Their hand-drawn look depends on Caveat and Kalam, which are requested by
+Several pages render wireframes from raw HTML strings in a content module, with React owning
+the chrome around them: `RideSenseWireframesPage`, which draws one board;
+`SessionCompareWireframesPage` and `OasisTenancyDiagramsPage`
+(`/case-studies/:slug/diagrams`, which redirects for any slug but `oasis-multi-tenancy`),
+where React owns a toggle between views; and `DiazVideoFirstWireframesPage`, which the next
+section covers. Three things to know before adding another. The
+hand-drawn ones' look depends on Caveat and Kalam, which are requested by
 the single Google Fonts `<link>` in `index.html` and used nowhere else on the site. The
 hand-maintained stylesheets and the RideSense page's inline style name `'Segoe Print',
 'Bradley Hand', 'Noteworthy'` before the generic `cursive` keyword, because bare `cursive`
 is Comic Sans MS on Windows; `src/content/sessionCompareWireframes.js` deliberately does
 not, because it is generated from a Claude Design export and kept byte-faithful to it.
-The paper canvas these use sits under the site TopBar, which is `position: fixed`, 80px
-tall, and draws unreadable shell-palette chrome over light backgrounds;
-`OasisTenancyDiagramsPage.css` fixes that with a `::before` strip painted `var(--void)`,
-which `main`'s stacking context puts behind the bar in both themes. And the muted tones the
-Session Compare wireframes use (`#7a766c`, `#8a8a8a`, `#b4b0a6`) fail WCAG AA against their
-own backgrounds; the tokens at the top of `OasisTenancyDiagramsPage.css` are the measured
-replacements. Verify reflow in a browser rather than by reading the CSS - fixed-width phone
-frames happen to fit at 390 and a board of columns does not.
+The site TopBar is `position: fixed`, 80px tall, and draws shell-palette chrome with no
+background of its own, so it is unreadable over any page that brings its own ground - a
+light paper canvas in dark theme, a dark canvas in light theme. The fix used by the pages
+that carry it is a `::before` strip, `inset: 0 0 auto`, 80px, painted `var(--void)`, which
+`main`'s stacking context puts behind the bar, plus 96px of top padding so the page's own
+backbar clears it. A breakpoint that rewrites that page-root padding has to keep clearing
+the 80px bar; `RideSenseWireframesPage.css` and `OasisTenancyDiagramsPage.css` are the only
+two that override it at 720px, and both use 88px there. All six standalone pages carry the
+strip: `OasisTenancyDiagramsPage.css`, `SessionComparePage.css`, `DiazVideoFirstPage.css`,
+`DiazVideoFirstWireframesPage.css`, `SessionCompareWireframesPage.css`, and
+`RideSenseWireframesPage.css`. Copy the pattern into any new standalone page rather than
+inventing something, but read the page before copying the number: the strip has to outrank
+the page's own highest `z-index`, which is why it is 1 on most of them, 4 on the Session
+Compare wireframes (whose injected HTML carries inline `z-index:2` and `z-index:3`) and 9
+on the RideSense wireframes (whose callout pins are 8). Nothing inside `main` can cover the
+bar, so raising it is safe; copying `1` without checking is how the strip silently paints
+under the page. And the muted tones the Session Compare wireframes use (`#7a766c`,
+`#8a8a8a`, `#b4b0a6`) fail WCAG AA against their own backgrounds; the tokens at the top of
+`OasisTenancyDiagramsPage.css` are the measured replacements. Verify reflow in a browser
+rather than by reading the CSS - fixed-width phone frames happen to fit at 390 and a board
+of columns does not.
+
+## Feature presentations, and the Diaz wireframes lifted from their artifact
+
+`featurePresentations` on a product in `src/content/projects.js` draws the
+`Working briefs and wireframes` block on `ProductDetailPage`. Two products carry one: Trackday
+Tuner's Session Compare (`/products/:slug/session-compare` and `.../wireframes`) and Diaz on
+Demand's video-first browse and watch (`/products/:slug/video-first` and `.../wireframes`). All
+four routes take `:slug` but each page redirects to `/not-found` for any product but its own, so a
+new pair means a new literal path segment plus that guard, not a shared generic route.
+
+The Diaz wireframes are the reviewed standalone artifact, not a redraw.
+`src/content/diazVideoFirstWireframes.js` holds its `.app` markup and the second half of
+`DiazVideoFirstWireframesPage.css` - everything under the `PRODUCT SURFACE` rule - is its own
+stylesheet with every selector prefixed `.dvf-canvas` and its one `@keyframes` renamed. Treat both
+halves as mechanical: hand-tuning them means the page stops matching the drawing that was signed
+off.
+
+That fidelity is to the drawing as reviewed, flaws included, so it is not the same as the drawing
+being internally consistent. One known example, verified as present in the source artifact rather
+than introduced by the lift: the "Guard Retention - Defense" course reads `2 lessons / 19m` in the
+library frames and `4 lessons / 38m` in the watch and locked frames. Each frame agrees with its own
+visible rows, so there is no one-line correction, and it is deliberately preserved because changing
+it would mean authoring drawing content the owner never reviewed. It is filed as issue #61
+rather than fixed; do not "repair" it as a lift error. Four more things that had to be true
+for the lift to work, and stay true:
+
+- The artifact's `<script>` is gone, so the frames are static. Its `<button>`s and heading tags
+  became `<div>`s, its JS-only data attributes were dropped, and `data-open` survived because
+  `.dvf-canvas .expand[data-open='1'] { height: auto }` is now what holds the one open course row
+  open.
+- `.dvf-canvas` goes on the frame wrappers, never on the page root. The artifact's token block
+  redefines `--bg` and `--text`, which the portfolio also owns, so the shadowing has to stay inside
+  artifact-only subtrees. `.body`, `.mono` and `.shell` are class names both sides use; the resets
+  under the `PRODUCT SURFACE` rule are why the drawing survives the site's globals.
+- Each frame is drawn at the width it was reviewed at, 1280px or 390px, and scaled to fit by
+  `ScaledFrame` rather than reflowed. Its `ResizeObserver` watches the fixed-width inner element
+  only, never the holder whose height it writes, because observing what you resize is how a
+  ResizeObserver loop starts; a window `resize` listener covers the holder.
+- The typeface is Decision 4, so Barlow and Barlow Condensed are requested from the single Google
+  Fonts `<link>` in `index.html` and used on these two pages and nowhere else. Oswald 600 comes
+  from that same link and is not a leftover from before the decision that replaced it:
+  `.dvf-canvas .gradpost .mono` draws the monogram of the `poster-surface.tsx` design the new
+  direction supersedes, and that "being replaced" exhibit has to depict the current product
+  accurately, because a case study whose "before" is subtly degraded is arguing with a rigged
+  comparison. Oswald stays as long as that exhibit does.
 
 ## The resume story is spread across the site, and it drifts
 

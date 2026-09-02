@@ -362,6 +362,92 @@ describe('portfolio routes and metadata', () => {
     }
   });
 
+  /* The Diaz on Demand video-first pair follows the Trackday Tuner
+     featurePresentations shape, and the two routes are guarded to that one
+     product the same way Session Compare is guarded to Trackday Tuner. */
+  it('offers the video-first brief and wireframes from Diaz on Demand only', () => {
+    const withFeature = renderApp('/products/diaz-on-demand');
+
+    expect(screen.getByRole('heading', { name: 'Working briefs and wireframes' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Video-first browse and watch' })).toBeTruthy();
+    expect(
+      screen.getByRole('link', { name: /Read the brief/i }).getAttribute('href'),
+    ).toBe('/products/diaz-on-demand/video-first');
+    expect(
+      screen.getByRole('link', { name: /View wireframes/i }).getAttribute('href'),
+    ).toBe('/products/diaz-on-demand/video-first/wireframes');
+
+    withFeature.unmount();
+    renderApp('/products/oncopath');
+    expect(screen.queryByRole('heading', { name: 'Video-first browse and watch' })).toBeNull();
+  });
+
+  it('leads the video-first brief with the sparse catalogue and keeps the thumbnail question open', async () => {
+    renderApp('/products/diaz-on-demand/video-first');
+
+    await waitFor(() =>
+      expect(
+        screen.getByRole('heading', { name: 'A video product with almost no video in it' }),
+      ).toBeTruthy(),
+    );
+
+    const main = within(document.querySelector('main'));
+    // The sparse-versus-populated framing is the lead, not a footnote.
+    expect(main.getByText(/every screen was drawn twice/i)).toBeTruthy();
+    expect(main.getByText(/have no video source at all/i)).toBeTruthy();
+    expect(main.getByText(/point at video assets that do not exist/i)).toBeTruthy();
+
+    // All four decisions, and the thread that connects them.
+    expect(main.getByText(/Where does a paid lesson’s thumbnail come from\?/)).toBeTruthy();
+    expect(main.getByText(/What picture does a course row use\?/)).toBeTruthy();
+    expect(main.getByText(/Do unfilmed lessons appear in the library\?/)).toBeTruthy();
+    expect(main.getByText(/Which typeface\?/)).toBeTruthy();
+    expect(main.getByText(/All four landed with no database change/i)).toBeTruthy();
+
+    /* One call is still the owner's and is not answered here. Pinned so a later
+       copy pass cannot quietly resolve it. */
+    expect(main.getByText('Still open')).toBeTruthy();
+    expect(
+      main.getByText(/Does that address return the real frame to a signed-out visitor/i),
+    ).toBeTruthy();
+  });
+
+  it('renders both versions of every wireframe screen', async () => {
+    renderApp('/products/diaz-on-demand/video-first/wireframes');
+
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'Every screen, drawn twice' })).toBeTruthy(),
+    );
+
+    expect(screen.getByRole('heading', { name: 'Four states, and only four' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Library — rows expand in place/ })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Watch — the rail carries the course/ })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Both screens at 390px' })).toBeTruthy();
+
+    // Four desktop pairs plus the locked view plus four phones.
+    expect(document.querySelectorAll('.dvf-frame').length).toBe(9);
+    expect(screen.getAllByText(/Populated — the target/).length).toBe(3);
+    expect(screen.getAllByText(/Sparse — what ships first/).length).toBe(3);
+
+    // The wireframes carry no headings and no controls of their own: they are
+    // drawings, so nothing in them joins the page outline or the focus order.
+    const canvases = document.querySelectorAll('.dvf-frame__inner');
+    canvases.forEach((canvas) => {
+      expect(canvas.querySelector('h1, h2, h3, button, a')).toBeNull();
+    });
+  });
+
+  it('redirects the video-first routes for any other product', async () => {
+    const brief = renderApp('/products/track-tuner/video-first');
+    await waitFor(() => expect(screen.getByText('404')).toBeTruthy());
+    expect(screen.queryByRole('heading', { name: /almost no video in it/i })).toBeNull();
+
+    brief.unmount();
+    renderApp('/products/track-tuner/video-first/wireframes');
+    await waitFor(() => expect(screen.getByText('404')).toBeTruthy());
+    expect(screen.queryByRole('heading', { name: 'Every screen, drawn twice' })).toBeNull();
+  });
+
   it('renders the refreshed RideSense product proof and screenshot section', () => {
     renderApp('/products/ridesense');
 

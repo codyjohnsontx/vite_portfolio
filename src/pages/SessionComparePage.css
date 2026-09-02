@@ -5,7 +5,22 @@
   color: #eef1f3;
   min-height: 100vh;
   font-family: 'Space Grotesk', system-ui, sans-serif;
-  padding: 56px clamp(20px, 5vw, 80px) 120px;
+  /* The site TopBar is fixed and 80px tall, so the backbar starts below it. */
+  padding: 96px clamp(20px, 5vw, 80px) 120px;
+}
+
+/* The site TopBar draws in the shell palette with no background of its own,
+   which is unreadable over this page's dark ground in light theme. `main` sits
+   below the bar's stacking context, so a fixed strip declared here lands behind
+   the bar rather than over it, and --void is the ground the bar was drawn for.
+   In dark theme it matches this page's background, so nothing shows. */
+.sc-page::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto;
+  height: 80px;
+  background: var(--void);
+  z-index: 1;
 }
 
 .sc-page * {

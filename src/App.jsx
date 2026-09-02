@@ -18,6 +18,10 @@ const SessionCompareWireframesPage = lazy(
   () => import('./pages/SessionCompareWireframesPage'),
 );
 const OasisTenancyDiagramsPage = lazy(() => import('./pages/OasisTenancyDiagramsPage'));
+const DiazVideoFirstPage = lazy(() => import('./pages/DiazVideoFirstPage'));
+const DiazVideoFirstWireframesPage = lazy(
+  () => import('./pages/DiazVideoFirstWireframesPage'),
+);
 
 function App() {
   return (
@@ -50,6 +54,22 @@ function App() {
             element={
               <Suspense fallback={null}>
                 <SessionCompareWireframesPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/products/:slug/video-first"
+            element={
+              <Suspense fallback={null}>
+                <DiazVideoFirstPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/products/:slug/video-first/wireframes"
+            element={
+              <Suspense fallback={null}>
+                <DiazVideoFirstWireframesPage />
               </Suspense>
             }
           />

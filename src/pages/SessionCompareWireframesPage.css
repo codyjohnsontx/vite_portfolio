@@ -7,7 +7,25 @@
   background-size: 24px 24px;
   font-family: Arial, Helvetica, sans-serif;
   color: #2b2b2b;
-  padding: 0 0 90px;
+  /* The site TopBar is fixed and 80px tall, so the backbar starts below it. */
+  padding: 96px 0 90px;
+}
+
+/* The site TopBar is fixed and draws in the shell palette with no background of
+   its own, which is unreadable over this page's paper ground in dark theme.
+   `main` sits below the bar's stacking context, so a fixed strip declared here
+   lands behind the bar rather than over it, and --void is the ground the bar
+   was drawn for. The z-index is 4 rather than the 1 the sibling pages use: the
+   raw wireframe HTML in src/content/sessionCompareWireframes.js carries inline
+   z-index 2 and 3 and is injected with no transform wrapper, so it shares this
+   strip's stacking context and would show straight through a strip at 1. */
+.scw-page::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto;
+  height: 80px;
+  background: var(--void);
+  z-index: 4;
 }
 
 .scw-page * {
