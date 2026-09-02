@@ -570,7 +570,10 @@
 
 @media (max-width: 720px) {
   .wf-page {
-    padding: 32px 18px 64px;
+    /* Top padding still has to clear the fixed 80px TopBar here, so this
+       breakpoint narrows the gutters but not the headroom. 88px is what the
+       same breakpoint uses in OasisTenancyDiagramsPage.css. */
+    padding: 88px 18px 64px;
   }
   .wf-page .page-title {
     font-size: 44px;
