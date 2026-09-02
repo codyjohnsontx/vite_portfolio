@@ -214,7 +214,7 @@ export default function DiazVideoFirstPage() {
             <p className="dvb-body">
               Library, watch, the paywalled view, and both screens at phone width &mdash; each one
               populated and sparse, side by side, plus the four lesson states everything else is
-              built from.
+              built from, and the poster surface they replace.
             </p>
             <Link className="dvb-cta" to={`/products/${product.slug}/video-first/wireframes`}>
               View the wireframes &rarr;

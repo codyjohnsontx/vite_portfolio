@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { getProductBySlug } from '../content/projects';
 import {
@@ -21,7 +21,12 @@ function ScaledFrame({ html, width }) {
   const [scale, setScale] = useState(1);
   const [height, setHeight] = useState(0);
 
-  useEffect(() => {
+  // Layout, not passive: measuring in useEffect paints every frame once at
+  // scale(1), a 1280px drawing clipped inside its column. The .fade-in hides
+  // that from most visitors, but the global prefers-reduced-motion rule in
+  // signal.css collapses the fade, so the people who asked for less motion are
+  // exactly the ones who would see it. Do not move this back to useEffect.
+  useLayoutEffect(() => {
     const holder = holderRef.current;
     const inner = innerRef.current;
     if (!holder || !inner) return undefined;

@@ -229,6 +229,11 @@
   width: 100%;
 }
 
+.dvf-panes--phones .dvf-pane {
+  max-width: 390px;
+  margin: 0 auto;
+}
+
 .dvf-panes--phones {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
