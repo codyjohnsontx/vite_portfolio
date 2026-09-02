@@ -83,10 +83,11 @@ empty section. The optional `diagrams` field (`{ path, label, blurb }`) is what 
 `System design` block on the detail page; entries without it render exactly as before.
 
 Several pages render wireframes from raw HTML strings in a content module, with React owning
-the chrome around them: `RideSenseWireframesPage`, which draws one board, plus
+the chrome around them: `RideSenseWireframesPage`, which draws one board;
 `SessionCompareWireframesPage` and `OasisTenancyDiagramsPage`
 (`/case-studies/:slug/diagrams`, which redirects for any slug but `oasis-multi-tenancy`),
-where React owns a toggle between views. Three things to know before adding another. The
+where React owns a toggle between views; and `DiazVideoFirstWireframesPage`, which the next
+section covers. Three things to know before adding another. The
 hand-drawn ones' look depends on Caveat and Kalam, which are requested by
 the single Google Fonts `<link>` in `index.html` and used nowhere else on the site. The
 hand-maintained stylesheets and the RideSense page's inline style name `'Segoe Print',
@@ -103,10 +104,11 @@ backbar clears it. `OasisTenancyDiagramsPage.css`, `SessionComparePage.css`,
 `SessionCompareWireframesPage.css` and `RideSenseWireframesPage.css` also bring their own
 ground under the same fixed bar and do not carry it yet, so the bar is still unreadable
 over those two. Copy the pattern into any new standalone page rather than inventing
-something. And the muted tones the Session Compare wireframes use (`#7a766c`, `#8a8a8a`, `#b4b0a6`) fail WCAG AA against their
-own backgrounds; the tokens at the top of `OasisTenancyDiagramsPage.css` are the measured
-replacements. Verify reflow in a browser rather than by reading the CSS - fixed-width phone
-frames happen to fit at 390 and a board of columns does not.
+something. And the muted tones the Session Compare wireframes use (`#7a766c`, `#8a8a8a`,
+`#b4b0a6`) fail WCAG AA against their own backgrounds; the tokens at the top of
+`OasisTenancyDiagramsPage.css` are the measured replacements. Verify reflow in a browser
+rather than by reading the CSS - fixed-width phone frames happen to fit at 390 and a board
+of columns does not.
 
 ## Feature presentations, and the Diaz wireframes lifted from their artifact
 
