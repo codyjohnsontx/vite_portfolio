@@ -1247,6 +1247,22 @@ const allProducts = [
     nextStep:
       'Get it to launch: fill the catalogue, then run real payments through the fixed billing paths. Onboarding and retention patterns across affiliate school cohorts, and the broader multi-academy LMS controls, can only be validated once members are actually paying.',
     standaloneMockStatus: 'in-progress',
+    featurePresentations: [
+      {
+        slug: 'video-first',
+        eyebrow: 'Design brief · Browse & watch',
+        title: 'Video-first browse and watch',
+        summary:
+          'A subscription video product where three of sixty-seven lessons have a video that plays, so every screen was drawn twice: the populated target and the sparse version that ships first. Four decisions came out of the review, and all four landed with no database change.',
+        links: [
+          { label: 'Read the brief', href: '/products/diaz-on-demand/video-first' },
+          {
+            label: 'View wireframes',
+            href: '/products/diaz-on-demand/video-first/wireframes',
+          },
+        ],
+      },
+    ],
     updates: [
       {
         date: 'Aug 14, 2026',

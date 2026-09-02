@@ -1,0 +1,539 @@
+/* Diaz on Demand video-first wireframes.
+
+   Two stylesheets in one file. The first half is portfolio-authored page
+   chrome. The second half, under the rule, is the product-surface CSS lifted
+   verbatim from the reviewed standalone artifact, with every selector prefixed
+   `.dvf-canvas` and the one @keyframes renamed. Keep that half mechanical: it
+   is the drawing's own stylesheet, and hand-tuning it here means the page stops
+   matching the artifact it was signed off from.
+
+   `.dvf-canvas` is on the frame wrappers only, never on the page root, because
+   the artifact's token block redefines --bg and --text, which the portfolio
+   also owns. Confining the class to artifact-only subtrees keeps that
+   shadowing where it belongs. */
+
+.dvf-page {
+  min-height: 100vh;
+  background: #08090b;
+  color: #f3f0e8;
+  font-family: 'Barlow', system-ui, -apple-system, sans-serif;
+  /* The site TopBar is fixed and 80px tall, so the backbar starts below it. */
+  padding: 96px clamp(18px, 4vw, 56px) 120px;
+}
+
+.dvf-page *,
+.dvf-page *::before,
+.dvf-page *::after {
+  box-sizing: border-box;
+}
+/* The site TopBar is fixed and draws in the shell palette with no background of
+   its own, which is unreadable over this page's own dark ground in light theme.
+   `main` sits below the bar's stacking context, so a fixed strip declared here
+   lands behind the bar rather than over it, and painting it with --void keeps
+   the pairing the shell already ships in both themes. In dark theme --void and
+   this page's background are the same colour, so nothing shows. */
+.dvf-page::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto;
+  height: 80px;
+  background: var(--void);
+  z-index: 1;
+}
+
+
+.dvf-inner {
+  max-width: 1560px;
+  margin: 0 auto;
+}
+
+.dvf-backbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9aa3af;
+  margin-bottom: 30px;
+}
+
+.dvf-backbar a {
+  color: #e0643f;
+  text-decoration: none;
+}
+
+.dvf-backbar a:hover {
+  text-decoration: underline;
+}
+
+.dvf-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #e0643f;
+  margin: 0;
+}
+
+.dvf-title {
+  font-family: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 0.96;
+  letter-spacing: 0.01em;
+  margin: 14px 0 18px;
+}
+
+.dvf-intro {
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.65;
+  color: #9aa3af;
+  max-width: 74ch;
+  margin: 0;
+}
+
+.dvf-intro strong {
+  color: #f3f0e8;
+  font-weight: 600;
+}
+
+.dvf-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.dvf-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-size: 12px;
+  color: #9aa3af;
+}
+
+.dvf-legend i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.dvf-legend .is-target {
+  background: #35e0a1;
+}
+
+.dvf-legend .is-ship {
+  background: #e0643f;
+}
+
+.dvf-section {
+  padding-top: 64px;
+}
+
+.dvf-section + .dvf-section {
+  margin-top: 56px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dvf-section-title {
+  font-family: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  margin: 8px 0 0;
+}
+
+.dvf-note {
+  font-size: 15px;
+  line-height: 1.66;
+  color: #9aa3af;
+  max-width: 80ch;
+  margin: 14px 0 0;
+}
+
+.dvf-note code,
+.dvf-tile__note code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.86em;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 5px;
+  padding: 1px 5px;
+  color: #e6ded0;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- the four tile states ---------- */
+
+.dvf-tiles {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 28px;
+}
+
+@media (max-width: 1100px) {
+  .dvf-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .dvf-tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.dvf-tile__name {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #9aa3af;
+  margin: 0 0 12px;
+}
+
+.dvf-tile__note {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #9aa3af;
+  margin: 10px 0 0;
+}
+
+/* ---------- populated / sparse pairs ---------- */
+
+.dvf-panes {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 28px;
+}
+
+.dvf-panes--one {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.dvf-panes--one .dvf-pane {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dvf-panes--phones {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 1100px) {
+  .dvf-panes,
+  .dvf-panes--phones {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.dvf-pane {
+  min-width: 0;
+}
+
+.dvf-pane__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.dvf-pane__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+  background: #5a6270;
+}
+
+.dvf-pane__label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #9aa3af;
+}
+
+.dvf-pane--target .dvf-pane__dot {
+  background: #35e0a1;
+}
+
+.dvf-pane--target .dvf-pane__label {
+  color: #35e0a1;
+}
+
+.dvf-pane--ship .dvf-pane__dot {
+  background: #e0643f;
+}
+
+.dvf-pane--ship .dvf-pane__label {
+  color: #e0643f;
+}
+
+.dvf-pane__sub {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #9aa3af;
+  margin: 0 0 12px;
+}
+
+/* The clip box. The wireframe inside is drawn at its true width - 1280px, or
+   390px for a phone - and scaled down by the page, so a frame never reflows
+   into a layout the review never saw. */
+.dvf-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: #08090b;
+}
+
+.dvf-frame__inner {
+  transform-origin: top left;
+}
+
+.dvf-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 72px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.dvf-footer a {
+  color: #e0643f;
+  text-decoration: none;
+}
+
+.dvf-footer a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================================
+   PRODUCT SURFACE - the artifact's own stylesheet, scoped.
+   ========================================================================= */
+
+.dvf-canvas {
+  --bg: #08090b;
+  --surface: #12151a;
+  --surface-2: #1b1f26;
+  --surface-3: #232934;
+  --text: #f3f0e8;
+  --text-muted: #9aa3af;
+  --line: rgba(255, 255, 255, 0.08);
+  --accent: #c44a2d;
+  --accent-strong: #e0643f;
+  --progress: #35e0a1;
+  --premium: #f2c14e;
+  --danger: #e36d6d;
+
+  /* Decision 4: Barlow Condensed + Barlow, replacing Oswald + Manrope. Both
+     faces come from the single Google Fonts link in index.html. */
+  --ui-display: 'Barlow Condensed', sans-serif;
+  --ui-display-weight: 600;
+  --ui-display-track: 0.01em;
+  --ui-body: 'Barlow', -apple-system, 'Helvetica Neue', sans-serif;
+
+  color: var(--text);
+}
+
+/* The frames are static, so the row the artifact's script would have opened is
+   held open here instead, and every other row stays shut. */
+.dvf-canvas .expand {
+  height: 0;
+}
+
+.dvf-canvas .expand[data-open='1'] {
+  height: auto;
+}
+
+/* Site-wide rules that would otherwise reach into the drawing: .body and .mono
+   are portfolio classes too, and the artifact uses both names. */
+.dvf-canvas .body {
+  margin: 0;
+  text-wrap: wrap;
+}
+
+.dvf-canvas .gradpost .mono {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.dvf-canvas p {
+  margin: 0;
+}
+
+.dvf-canvas .app{width:1280px;background:var(--bg);padding-bottom:40px;font-family:var(--ui-body)}
+.dvf-canvas .app.phone{width:390px}
+.dvf-canvas .shell{max-width:1200px;margin:0 auto;padding:0 30px}
+.dvf-canvas .app.phone .shell{padding:0 16px}
+
+/* nav */
+.dvf-canvas .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 30px;border-bottom:1px solid var(--line);background:rgba(10,11,14,.72)}
+.dvf-canvas .app.phone .nav{padding:12px 16px}
+.dvf-canvas .brand .b1{font-family:var(--ui-display);font-size:20px;font-weight:var(--ui-display-weight);letter-spacing:var(--ui-display-track);line-height:1}
+.dvf-canvas .brand .b2{font-size:9px;letter-spacing:.24em;color:var(--text-muted);margin-top:3px}
+.dvf-canvas .navlinks{display:flex;gap:2px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:8px;padding:4px}
+.dvf-canvas .navlink{padding:7px 15px;border-radius:5px;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--text-muted)}
+.dvf-canvas .navlink.on{background:rgba(255,255,255,.06);color:var(--text)}
+.dvf-canvas .navright{display:flex;gap:8px;align-items:center}
+.dvf-canvas .chipbtn{border:1px solid var(--line);border-radius:6px;padding:8px 14px;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--text-muted)}
+.dvf-canvas .chipbtn.solid{border-color:rgba(255,255,255,.28);color:var(--text)}
+
+/* type */
+.dvf-canvas .kick{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:var(--text-muted)}
+.dvf-canvas .kick.acc{color:var(--accent-strong)}
+.dvf-canvas .h-xl{font-family:var(--ui-display);font-weight:var(--ui-display-weight);letter-spacing:var(--ui-display-track);font-size:52px;line-height:.94;margin:10px 0 0}
+.dvf-canvas .h-lg{font-family:var(--ui-display);font-weight:var(--ui-display-weight);letter-spacing:var(--ui-display-track);font-size:31px;line-height:1;margin:4px 0 0}
+.dvf-canvas .h-md{font-family:var(--ui-display);font-weight:var(--ui-display-weight);letter-spacing:var(--ui-display-track);font-size:23px;line-height:1.05;margin:0}
+.dvf-canvas .muted{color:var(--text-muted)}
+.dvf-canvas .body{font-size:14.5px;line-height:1.62;color:var(--text-muted)}
+
+/* badges */
+.dvf-canvas .badge{display:inline-flex;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:4px;padding:4px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--text-muted);white-space:nowrap}
+.dvf-canvas .badge.prem{border-color:rgba(242,193,78,.3);background:rgba(242,193,78,.1);color:var(--premium)}
+.dvf-canvas .badge.go{border-color:rgba(53,224,161,.3);background:rgba(53,224,161,.1);color:var(--progress)}
+.dvf-canvas .badge.acc{border-color:rgba(224,100,63,.32);background:rgba(224,100,63,.12);color:var(--accent-strong)}
+
+/* progress */
+.dvf-canvas .bar{height:5px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden}
+.dvf-canvas .bar>i{display:block;height:100%;border-radius:2px;background:var(--progress)}
+
+/* ---------- THUMBNAILS: the whole point ---------- */
+.dvf-canvas .thumb{position:relative;border-radius:5px;overflow:hidden;background:#0d0f13;flex:none;border:1px solid rgba(255,255,255,.07)}
+.dvf-canvas .thumb>svg,
+.dvf-canvas .thumb>.gradpost{position:absolute;inset:0;width:100%;height:100%;display:block}
+.dvf-canvas .thumb .dur{position:absolute;right:5px;bottom:5px;background:rgba(4,5,7,.82);border-radius:3px;padding:2px 5px;font-size:9.5px;font-weight:600;letter-spacing:.03em;color:#f3f0e8;font-variant-numeric:tabular-nums}
+.dvf-canvas .thumb .tprog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(0,0,0,.55)}
+.dvf-canvas .thumb .tprog>i{display:block;height:100%;background:var(--progress)}
+.dvf-canvas .thumb .play{position:absolute;inset:0;display:grid;place-items:center}
+.dvf-canvas .thumb .play>span{width:26px;height:26px;border-radius:6px;background:rgba(8,9,11,.66);border:1px solid rgba(255,255,255,.5);display:grid;place-items:center;font-size:8px;padding-left:2px}
+.dvf-canvas .thumb.lg .play>span{width:36px;height:36px;font-size:11px}
+.dvf-canvas .thumb .lockwrap{position:absolute;inset:0;display:grid;place-items:center;background:rgba(8,9,11,.4)}
+.dvf-canvas .thumb.blurred>svg{filter:blur(7px) saturate(.5) brightness(.6);transform:scale(1.14)}
+
+/* empty / awaiting thumbnail tiles - the designed no-artwork states */
+.dvf-canvas .thumb.empty{background:
+   repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 6px,rgba(255,255,255,0) 6px 12px),
+   #101318;
+   border-style:dashed;border-color:rgba(255,255,255,.13)}
+.dvf-canvas .thumb .tmark{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;padding:6px}
+.dvf-canvas .thumb .tmark .g{font-size:14px;line-height:1;opacity:.5}
+.dvf-canvas .thumb .tmark .t{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:rgba(243,240,232,.42)}
+.dvf-canvas .thumb.wait{background:#171b21;border-color:rgba(242,193,78,.28)}
+.dvf-canvas .thumb.wait .tmark .t{color:rgba(242,193,78,.72)}
+.dvf-canvas .thumb.wait::before{content:'';position:absolute;inset:0;background:rgba(242,193,78,.07);animation:dvf-pulse 2.2s ease-in-out infinite}
+@keyframes dvf-pulse{0%,100%{opacity:.25}50%{opacity:1}}
+
+/* the thing being replaced */
+.dvf-canvas .gradpost{background:linear-gradient(135deg,#5d2b1e,#281f25 46%,#0d1017);position:relative}
+.dvf-canvas .gradpost .mono{position:absolute;right:-6px;top:-10px;font-family:'Oswald',sans-serif;font-size:78px;font-weight:600;color:rgba(255,255,255,.1);line-height:1}
+.dvf-canvas .gradpost .gridlines{position:absolute;inset:0;opacity:.2;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:22px 22px}
+
+/* panels */
+.dvf-canvas .panel{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:color-mix(in srgb,var(--surface) 90%,transparent);box-shadow:0 20px 80px rgba(0,0,0,.35)}
+.dvf-canvas .panel.mut{border-radius:10px;background:color-mix(in srgb,var(--surface-2) 75%,transparent);box-shadow:none}
+
+/* library rows */
+.dvf-canvas .secthead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.dvf-canvas .courserow{display:flex;align-items:center;gap:16px;padding:12px 14px;border-radius:8px;border:1px solid transparent;transition:background .2s,border-color .2s;cursor:pointer;text-align:left;width:100%}
+.dvf-canvas .courserow:hover{border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
+.dvf-canvas .courserow.open{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.05)}
+.dvf-canvas .courserow .meta{min-width:0;flex:1}
+.dvf-canvas .courserow .t{font-size:16.5px;font-weight:500;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dvf-canvas .courserow .s{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;color:var(--text-muted);margin-top:4px}
+.dvf-canvas .courserow .s .sep{color:rgba(255,255,255,.22)}
+.dvf-canvas .courserow .right{display:flex;align-items:center;gap:12px;flex:none}
+.dvf-canvas .chev{font-size:13px;color:rgba(255,255,255,.45);transition:transform .28s ease;display:inline-block}
+.dvf-canvas .courserow.open .chev{transform:rotate(90deg);color:var(--progress)}
+.dvf-canvas .expand{overflow:hidden;transition:height .34s cubic-bezier(.4,0,.2,1)}
+.dvf-canvas .expandbody{padding:4px 14px 18px 14px}
+.dvf-canvas .expandinner{border-radius:10px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.025);padding:18px}
+
+.dvf-canvas .lessonrow{display:flex;align-items:center;gap:13px;padding:8px 10px;border-radius:7px;border:1px solid transparent}
+.dvf-canvas .lessonrow:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.dvf-canvas .lessonrow.now{background:rgba(53,224,161,.07);border-color:rgba(53,224,161,.22)}
+.dvf-canvas .lessonrow.off{opacity:.52}
+.dvf-canvas .lessonrow .n{width:24px;flex:none;font-family:var(--ui-display);font-size:12px;color:rgba(255,255,255,.42);letter-spacing:.1em;text-align:center}
+.dvf-canvas .lessonrow.now .n{color:var(--progress)}
+.dvf-canvas .lessonrow .lm{min-width:0;flex:1}
+.dvf-canvas .lessonrow .lt{font-size:14px;font-weight:500;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dvf-canvas .lessonrow .ls{font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--text-muted);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.dvf-canvas .lessonrow .lr{flex:none;display:flex;align-items:center;gap:10px;font-size:12px;color:rgba(255,255,255,.55)}
+
+/* continue-watching cards */
+.dvf-canvas .cwrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.dvf-canvas .ccard{min-width:0}
+.dvf-canvas .ccard .thumb{width:100%;aspect-ratio:16/9;border-radius:5px}
+.dvf-canvas .ccard .ct{font-size:14.5px;font-weight:500;margin-top:9px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dvf-canvas .ccard .cs{font-size:11.5px;color:var(--text-muted);margin-top:4px}
+
+/* buttons */
+.dvf-canvas .btn{display:inline-flex;align-items:center;gap:8px;border-radius:7px;padding:11px 20px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text)}
+.dvf-canvas .btn.white{background:#fff;color:#000;border-color:#fff}
+.dvf-canvas .btn.sm{padding:8px 15px;font-size:10.5px}
+
+/* ---------- watch page ---------- */
+.dvf-canvas .watch{display:grid;grid-template-columns:minmax(0,1fr) 372px;gap:26px;align-items:start}
+.dvf-canvas .player{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.1)}
+.dvf-canvas .player>svg{position:absolute;inset:0;width:100%;height:100%}
+.dvf-canvas .player .vig{display:none}
+.dvf-canvas .pctl{position:absolute;left:0;right:0;bottom:0;padding:12px 16px 13px;background:rgba(6,7,9,.78)}
+.dvf-canvas .pscrub{height:3px;border-radius:2px;background:rgba(255,255,255,.26);position:relative}
+.dvf-canvas .pscrub>i{position:absolute;left:0;top:0;bottom:0;background:var(--accent-strong);border-radius:2px}
+.dvf-canvas .pscrub>b{position:absolute;top:50%;width:11px;height:11px;border-radius:2px;background:#fff;transform:translate(-50%,-50%)}
+.dvf-canvas .pctlrow{display:flex;align-items:center;gap:14px;margin-top:11px;font-size:11.5px;color:rgba(255,255,255,.9)}
+.dvf-canvas .pctlrow .sp{flex:1}
+.dvf-canvas .pctlrow .g{opacity:.85;font-size:13px}
+.dvf-canvas .player .bigplay{position:absolute;inset:0;display:grid;place-items:center}
+.dvf-canvas .player .bigplay>span{width:64px;height:64px;border-radius:10px;background:rgba(8,9,11,.55);border:1.5px solid rgba(255,255,255,.62);display:grid;place-items:center;font-size:19px;padding-left:4px;backdrop-filter:blur(3px)}
+
+/* honest empty player */
+.dvf-canvas .player.blank{background:
+  repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 8px,rgba(255,255,255,0) 8px 16px),
+  #101318;
+  border-style:dashed;border-color:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;padding:30px}
+.dvf-canvas .blankmsg{text-align:center;max-width:440px}
+.dvf-canvas .blankmsg .g{font-size:30px;opacity:.4}
+.dvf-canvas .player.locked .lockover{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(8,9,11,.74)}
+
+/* rail */
+.dvf-canvas .rail{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:color-mix(in srgb,var(--surface) 92%,transparent);overflow:hidden}
+.dvf-canvas .railhead{padding:16px 16px 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.022)}
+.dvf-canvas .raillist{padding:8px;display:flex;flex-direction:column;gap:2px}
+.dvf-canvas .railrow{display:flex;gap:11px;padding:8px;border-radius:7px;border:1px solid transparent;position:relative;align-items:flex-start;cursor:pointer;text-align:left;width:100%}
+.dvf-canvas .railrow:hover{background:rgba(255,255,255,.045)}
+.dvf-canvas .railrow.now{background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.12)}
+.dvf-canvas .railrow.now::before{content:'';position:absolute;left:0;top:12px;bottom:12px;width:2.5px;border-radius:2px;background:var(--progress)}
+.dvf-canvas .railrow.off{opacity:.46}
+.dvf-canvas .railrow .thumb{width:112px;aspect-ratio:16/9}
+.dvf-canvas .railrow .rm{min-width:0;flex:1;padding-top:1px}
+.dvf-canvas .railrow .rt{font-size:13.5px;font-weight:500;line-height:1.32;color:rgba(243,240,232,.66);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dvf-canvas .railrow.now .rt,
+.dvf-canvas .railrow:hover .rt{color:var(--text)}
+.dvf-canvas .railrow .rs{font-size:9.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--text-muted);margin-top:5px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.dvf-canvas .railrow .rs .dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.3);flex:none}
+
+/* annotation callouts on wireframes */
+.dvf-canvas .note{position:relative;border-left:2px solid var(--accent-strong);padding:2px 0 2px 12px;font-size:12px;line-height:1.55;color:var(--text-muted);margin:14px 0 0}
+.dvf-canvas .note b{color:var(--accent-strong);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:10px;display:block;margin-bottom:3px}

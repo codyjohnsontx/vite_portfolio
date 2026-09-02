@@ -1,0 +1,320 @@
+/* Diaz on Demand video-first brief. Dark like the product it describes, and
+   like the wireframes page it links to, so the two read as one pair. */
+
+.dvb-page {
+  min-height: 100vh;
+  background: #08090b;
+  color: #f3f0e8;
+  font-family: 'Barlow', system-ui, -apple-system, sans-serif;
+  /* The site TopBar is fixed and 80px tall, so the backbar starts below it. */
+  padding: 96px clamp(18px, 5vw, 72px) 120px;
+}
+
+.dvb-page *,
+.dvb-page *::before,
+.dvb-page *::after {
+  box-sizing: border-box;
+}
+/* The site TopBar is fixed and draws in the shell palette with no background of
+   its own, which is unreadable over this page's own dark ground in light theme.
+   `main` sits below the bar's stacking context, so a fixed strip declared here
+   lands behind the bar rather than over it, and painting it with --void keeps
+   the pairing the shell already ships in both themes. In dark theme --void and
+   this page's background are the same colour, so nothing shows. */
+.dvb-page::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto;
+  height: 80px;
+  background: var(--void);
+  z-index: 1;
+}
+
+
+.dvb-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.dvb-backbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9aa3af;
+  margin-bottom: 34px;
+}
+
+.dvb-backbar a,
+.dvb-footer a,
+.dvb-cta {
+  color: #e0643f;
+  text-decoration: none;
+}
+
+.dvb-backbar a:hover,
+.dvb-footer a:hover,
+.dvb-cta:hover {
+  text-decoration: underline;
+}
+
+.dvb-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #e0643f;
+  margin: 0;
+}
+
+.dvb-title {
+  font-family: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(40px, 5.6vw, 70px);
+  line-height: 0.94;
+  letter-spacing: 0.01em;
+  margin: 14px 0 20px;
+}
+
+.dvb-lead {
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.55;
+  color: #c8cdd4;
+  max-width: 62ch;
+  margin: 0;
+}
+
+.dvb-lead strong {
+  color: #f3f0e8;
+  font-weight: 600;
+}
+
+.dvb-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 26px;
+  border: 1px solid rgba(224, 100, 63, 0.4);
+  background: rgba(224, 100, 63, 0.1);
+  border-radius: 7px;
+  padding: 12px 20px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.dvb-cta:hover {
+  background: rgba(224, 100, 63, 0.18);
+  text-decoration: none;
+}
+
+/* ---------- the count the whole design starts from ---------- */
+
+.dvb-counts {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 44px;
+}
+
+@media (max-width: 720px) {
+  .dvb-counts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.dvb-count {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #12151a;
+  border-radius: 9px;
+  padding: 20px;
+}
+
+.dvb-count--live {
+  border-color: rgba(53, 224, 161, 0.32);
+  background: rgba(53, 224, 161, 0.06);
+}
+
+.dvb-count__n {
+  font-family: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 46px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.dvb-count--live .dvb-count__n {
+  color: #35e0a1;
+}
+
+.dvb-count__t {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #9aa3af;
+  margin: 10px 0 0;
+}
+
+/* ---------- sections ---------- */
+
+.dvb-section {
+  margin-top: 64px;
+  padding-top: 56px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dvb-h2 {
+  font-family: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 42px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  margin: 8px 0 0;
+}
+
+.dvb-body {
+  font-size: 16px;
+  line-height: 1.72;
+  color: #9aa3af;
+  max-width: 68ch;
+  margin: 18px 0 0;
+}
+
+.dvb-body strong {
+  color: #f3f0e8;
+  font-weight: 600;
+}
+
+.dvb-body code,
+.dvb-cell code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 5px;
+  padding: 1px 5px;
+  color: #e6ded0;
+  overflow-wrap: anywhere;
+}
+
+.dvb-list {
+  margin: 18px 0 0;
+  padding-left: 20px;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: #9aa3af;
+  max-width: 68ch;
+}
+
+.dvb-list li {
+  margin-bottom: 10px;
+}
+
+.dvb-list strong {
+  color: #f3f0e8;
+  font-weight: 600;
+}
+
+/* ---------- the four decisions ---------- */
+
+.dvb-tablewrap {
+  overflow-x: auto;
+  margin-top: 26px;
+}
+
+.dvb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  min-width: 560px;
+}
+
+.dvb-table th {
+  text-align: left;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9aa3af;
+  font-weight: 600;
+  padding: 0 14px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dvb-table td {
+  padding: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: top;
+  line-height: 1.6;
+  color: #9aa3af;
+}
+
+.dvb-table td:first-child {
+  color: #f3f0e8;
+  font-weight: 600;
+  width: 38%;
+}
+
+.dvb-thread {
+  border-left: 2px solid #35e0a1;
+  background: rgba(53, 224, 161, 0.06);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin-top: 24px;
+  font-size: 15.5px;
+  line-height: 1.66;
+  color: #c8cdd4;
+  max-width: 72ch;
+}
+
+.dvb-thread b {
+  display: block;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #35e0a1;
+  margin-bottom: 7px;
+}
+
+.dvb-open {
+  border-left: 2px solid #f2c14e;
+  background: rgba(242, 193, 78, 0.05);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin-top: 24px;
+  font-size: 15.5px;
+  line-height: 1.66;
+  color: #c8cdd4;
+  max-width: 72ch;
+}
+
+.dvb-open b {
+  display: block;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f2c14e;
+  margin-bottom: 7px;
+}
+
+.dvb-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 72px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
