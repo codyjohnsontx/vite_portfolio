@@ -130,7 +130,16 @@ The Diaz wireframes are the reviewed standalone artifact, not a redraw.
 `DiazVideoFirstWireframesPage.css` - everything under the `PRODUCT SURFACE` rule - is its own
 stylesheet with every selector prefixed `.dvf-canvas` and its one `@keyframes` renamed. Treat both
 halves as mechanical: hand-tuning them means the page stops matching the drawing that was signed
-off. Four things that had to be true for the lift to work, and stay true:
+off.
+
+That fidelity is to the drawing as reviewed, flaws included, so it is not the same as the drawing
+being internally consistent. One known example, verified as present in the source artifact rather
+than introduced by the lift: the "Guard Retention - Defense" course reads `2 lessons / 19m` in the
+library frames and `4 lessons / 38m` in the watch and locked frames. Each frame agrees with its own
+visible rows, so there is no one-line correction, and it is deliberately preserved because changing
+it would mean authoring drawing content the owner never reviewed. It is filed as issue #61
+rather than fixed; do not "repair" it as a lift error. Four more things that had to be true
+for the lift to work, and stay true:
 
 - The artifact's `<script>` is gone, so the frames are static. Its `<button>`s and heading tags
   became `<div>`s, its JS-only data attributes were dropped, and `data-open` survived because

@@ -133,13 +133,18 @@ export default function DiazVideoFirstPage() {
 
           <section className="dvb-section">
             <p className="dvb-eyebrow">The decisions</p>
-            <h2 className="dvb-h2">Four calls, and the thread between them</h2>
+            {/* The table below is named by this heading rather than by an
+                aria-label of its own, so the accessible name is the visible
+                text and cannot drift away from it. */}
+            <h2 className="dvb-h2" id="dvb-decisions-heading">
+              Four calls, and the thread between them
+            </h2>
             <p className="dvb-body">
               Four questions were open going into the review and were settled in it. What connects
               them is not a visual theme.
             </p>
             <div className="dvb-tablewrap">
-              <table className="dvb-table">
+              <table className="dvb-table" aria-labelledby="dvb-decisions-heading">
                 <thead>
                   <tr>
                     <th>Question</th>
