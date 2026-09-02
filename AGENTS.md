@@ -99,17 +99,19 @@ background of its own, so it is unreadable over any page that brings its own gro
 light paper canvas in dark theme, a dark canvas in light theme. The fix used by the pages
 that carry it is a `::before` strip, `inset: 0 0 auto`, 80px, painted `var(--void)`, which
 `main`'s stacking context puts behind the bar, plus 96px of top padding so the page's own
-backbar clears it. All six standalone pages carry it: `OasisTenancyDiagramsPage.css`,
-`SessionComparePage.css`, `DiazVideoFirstPage.css`, `DiazVideoFirstWireframesPage.css`,
-`SessionCompareWireframesPage.css`, and `RideSenseWireframesPage.css`. Copy the pattern
-into any new standalone page rather than inventing something, but read the page before
-copying the number: the strip has to outrank the page's own highest `z-index`, which is why
-it is 1 on most of them, 4 on the Session Compare wireframes (whose injected HTML carries
-inline `z-index:2` and `z-index:3`) and 9 on the RideSense wireframes (whose callout pins
-are 8). Nothing inside `main` can cover the bar, so raising it is safe; copying `1` without
-checking is how the strip silently paints under the page. And the muted tones the Session
-Compare wireframes use (`#7a766c`, `#8a8a8a`, `#b4b0a6`) fail WCAG AA against their own
-backgrounds; the tokens at the top of
+backbar clears it. A breakpoint that rewrites that page-root padding has to keep clearing
+the 80px bar; `RideSenseWireframesPage.css` and `OasisTenancyDiagramsPage.css` are the only
+two that override it at 720px, and both use 88px there. All six standalone pages carry the
+strip: `OasisTenancyDiagramsPage.css`, `SessionComparePage.css`, `DiazVideoFirstPage.css`,
+`DiazVideoFirstWireframesPage.css`, `SessionCompareWireframesPage.css`, and
+`RideSenseWireframesPage.css`. Copy the pattern into any new standalone page rather than
+inventing something, but read the page before copying the number: the strip has to outrank
+the page's own highest `z-index`, which is why it is 1 on most of them, 4 on the Session
+Compare wireframes (whose injected HTML carries inline `z-index:2` and `z-index:3`) and 9
+on the RideSense wireframes (whose callout pins are 8). Nothing inside `main` can cover the
+bar, so raising it is safe; copying `1` without checking is how the strip silently paints
+under the page. And the muted tones the Session Compare wireframes use (`#7a766c`,
+`#8a8a8a`, `#b4b0a6`) fail WCAG AA against their own backgrounds; the tokens at the top of
 `OasisTenancyDiagramsPage.css` are the measured replacements. Verify reflow in a browser
 rather than by reading the CSS - fixed-width phone frames happen to fit at 390 and a board
 of columns does not.
