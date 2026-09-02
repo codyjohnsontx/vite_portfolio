@@ -383,6 +383,7 @@
   margin: 0;
 }
 
+.dvf-canvas .dsp{font-family:var(--ui-display);font-weight:var(--ui-display-weight);letter-spacing:var(--ui-display-track)}
 .dvf-canvas .app{width:1280px;background:var(--bg);padding-bottom:40px;font-family:var(--ui-body)}
 .dvf-canvas .app.phone{width:390px}
 .dvf-canvas .shell{max-width:1200px;margin:0 auto;padding:0 30px}

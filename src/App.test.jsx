@@ -437,12 +437,14 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
-  it('redirects the video-first routes for any other product', () => {
+  it('redirects the video-first routes for any other product', async () => {
     const brief = renderApp('/products/track-tuner/video-first');
+    await waitFor(() => expect(screen.getByText('404')).toBeTruthy());
     expect(screen.queryByRole('heading', { name: /almost no video in it/i })).toBeNull();
 
     brief.unmount();
     renderApp('/products/track-tuner/video-first/wireframes');
+    await waitFor(() => expect(screen.getByText('404')).toBeTruthy());
     expect(screen.queryByRole('heading', { name: 'Every screen, drawn twice' })).toBeNull();
   });
 

@@ -467,19 +467,19 @@ export const WIREFRAME_GROUPS = [
 <div class="bar" style="margin-top:11px"><i style="width:22%"></i></div>
 </div>
 <div class="raillist">
-<div class="railrow" data-pick>
+<div class="railrow">
 <div class="thumb"><svg><use href="#st1" /></svg><span class="dur">9:12</span><span class="tprog"><i style="width:100%"></i></span></div>
 <div class="rm"><div class="rt">1. Frame Fundamentals</div><div class="rs"><span style="color:var(--progress)">&#10003; Watched</span><span class="dot"></span><span>Free</span></div></div>
 </div>
-<div class="railrow now" data-pick>
+<div class="railrow now">
 <div class="thumb"><svg><use href="#st2" /></svg><span class="dur">10:04</span><span class="tprog"><i style="width:44%"></i></span><span class="play"><span>&#9654;</span></span></div>
 <div class="rm"><div class="rt">2. Hip Escape Recovery Chain</div><div class="rs"><span style="color:var(--progress)">Now playing</span><span class="dot"></span><span>Premium</span></div></div>
 </div>
-<div class="railrow" data-pick>
+<div class="railrow">
 <div class="thumb"><svg><use href="#st3" /></svg><span class="dur">7:44</span></div>
 <div class="rm"><div class="rt">3. Re-guard Timing</div><div class="rs"><span>Premium</span><span class="dot"></span><span>Guard retention</span></div></div>
 </div>
-<div class="railrow" data-pick>
+<div class="railrow">
 <div class="thumb"><svg><use href="#st5" /></svg><span class="dur">11:18</span></div>
 <div class="rm"><div class="rt">4. Inversion and Granby Basics, and When Not To Use Them</div><div class="rs"><span>Premium</span><span class="dot"></span><span>Guard retention</span></div></div>
 </div>
@@ -552,19 +552,19 @@ export const WIREFRAME_GROUPS = [
 <div class="bar" style="margin-top:11px"><i style="width:25%;background:rgba(53,224,161,.5)"></i></div>
 </div>
 <div class="raillist">
-<div class="railrow" data-pick>
+<div class="railrow">
 <div class="thumb"><svg><use href="#st3" /></svg><span class="dur">7:44</span></div>
 <div class="rm"><div class="rt">1. Re-guard Timing</div><div class="rs"><span style="color:var(--progress)">Plays now</span><span class="dot"></span><span>Premium</span></div></div>
 </div>
-<div class="railrow" data-pick>
+<div class="railrow">
 <div class="thumb wait"><span class="tmark"><span class="t" style="font-size:7.5px">Processing</span></span></div>
 <div class="rm"><div class="rt">2. Hip Switch Under Pressure</div><div class="rs"><span style="color:var(--premium)">Uploaded</span><span class="dot"></span><span>Ready shortly</span></div></div>
 </div>
-<div class="railrow now off" data-pick>
+<div class="railrow now off">
 <div class="thumb empty"><span class="tmark"><span class="g">&#9633;</span></span></div>
 <div class="rm"><div class="rt">3. Inversion and Granby Basics</div><div class="rs"><span>Not filmed</span><span class="dot"></span><span>Premium</span></div></div>
 </div>
-<div class="railrow off" data-pick>
+<div class="railrow off">
 <div class="thumb empty"><span class="tmark"><span class="g">&#9633;</span></span></div>
 <div class="rm"><div class="rt">4. Leg Entanglement Escapes</div><div class="rs"><span>Not filmed</span><span class="dot"></span><span>Premium</span></div></div>
 </div>

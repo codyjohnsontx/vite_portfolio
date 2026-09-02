@@ -95,13 +95,15 @@ is Comic Sans MS on Windows; `src/content/sessionCompareWireframes.js` deliberat
 not, because it is generated from a Claude Design export and kept byte-faithful to it.
 The site TopBar is `position: fixed`, 80px tall, and draws shell-palette chrome with no
 background of its own, so it is unreadable over any page that brings its own ground - a
-light paper canvas in dark theme, a dark canvas in light theme. Every such page fixes it
-the same way: a `::before` strip, `inset: 0 0 auto`, 80px, painted `var(--void)`, which
+light paper canvas in dark theme, a dark canvas in light theme. The fix used by the pages
+that carry it is a `::before` strip, `inset: 0 0 auto`, 80px, painted `var(--void)`, which
 `main`'s stacking context puts behind the bar, plus 96px of top padding so the page's own
 backbar clears it. `OasisTenancyDiagramsPage.css`, `SessionComparePage.css`,
-`DiazVideoFirstPage.css`, and `DiazVideoFirstWireframesPage.css` all carry it; copy it into
-any new standalone page rather than inventing something. And the muted tones the
-Session Compare wireframes use (`#7a766c`, `#8a8a8a`, `#b4b0a6`) fail WCAG AA against their
+`DiazVideoFirstPage.css`, and `DiazVideoFirstWireframesPage.css` carry it.
+`SessionCompareWireframesPage.css` and `RideSenseWireframesPage.css` also bring their own
+ground under the same fixed bar and do not carry it yet, so the bar is still unreadable
+over those two. Copy the pattern into any new standalone page rather than inventing
+something. And the muted tones the Session Compare wireframes use (`#7a766c`, `#8a8a8a`, `#b4b0a6`) fail WCAG AA against their
 own backgrounds; the tokens at the top of `OasisTenancyDiagramsPage.css` are the measured
 replacements. Verify reflow in a browser rather than by reading the CSS - fixed-width phone
 frames happen to fit at 390 and a board of columns does not.
