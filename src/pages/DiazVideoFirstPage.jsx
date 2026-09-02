@@ -143,7 +143,12 @@ export default function DiazVideoFirstPage() {
               Four questions were open going into the review and were settled in it. What connects
               them is not a visual theme.
             </p>
-            <div className="dvb-tablewrap">
+            <div
+              className="dvb-tablewrap"
+              role="region"
+              aria-labelledby="dvb-decisions-heading"
+              tabIndex={0}
+            >
               <table className="dvb-table" aria-labelledby="dvb-decisions-heading">
                 <thead>
                   <tr>

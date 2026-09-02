@@ -315,6 +315,20 @@
   transform-origin: top left;
 }
 
+/* The lift turned every interactive row in the drawing into an inert div, so
+   nothing inside a frame responds to a click. The artifact's own rules below
+   still say cursor:pointer on .courserow and .railrow, because in the reviewed
+   drawing those really were buttons. The site hides the native cursor
+   everywhere - Cursor.jsx puts has-custom-cursor on <html> and shell.css sets
+   cursor:none - so without this the only hand pointer anywhere on the site
+   appears over drawings that do nothing. Overridden here rather than in the
+   lifted half, which stays mechanical. Three classes deep on purpose: the rule
+   it beats is (0,2,0) and comes later in the file. */
+.dvf-page .dvf-canvas .dvf-frame__inner,
+.dvf-page .dvf-canvas .dvf-frame__inner * {
+  cursor: inherit;
+}
+
 .dvf-footer {
   display: flex;
   flex-wrap: wrap;
