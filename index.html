@@ -85,11 +85,24 @@
          Barlow and Barlow Condensed are the typeface the Diaz on Demand
          video-first review chose over Oswald and Manrope, and they carry the
          two pages under /products/diaz-on-demand/video-first and nowhere else.
-         Barlow is requested at 400, 500 and 600, Barlow Condensed at 500 and
-         600. A handful of labels and bolded runs on those pages set 700, which
-         matches to the 600 face rather than pulling a fourth weight down. -->
+         Both are requested at 400, 500, 600 and 700, matching the source
+         artifact, because the lifted stylesheet uses the whole span: 400 is
+         inherited by `.dvf-canvas .lessonrow .n`, which sets a family and no
+         weight, and 700 is set by six rules plus the bolded runs in the page's
+         own notes. Both faces are static, not variable like Caveat above, so
+         each listed weight is its own file; they are only fetched by a browser
+         that renders one of those two pages, and dropping a weight does not
+         save a request there, it just clamps the drawing to a weight nobody
+         reviewed.
+
+         Oswald at 600 is requested for one element: `.dvf-canvas .gradpost
+         .mono`, the oversized numeral on the poster tile. `.gradpost` is the
+         "being replaced" exhibit, so it depicts the poster surface the product
+         renders today, and it has to render the way the real product does. A
+         case study whose "before" is subtly degraded by a missing font is
+         arguing against a rigged comparison. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400..700&family=Kalam:wght@400;700&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400..700&family=Kalam:wght@400;700&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&family=Oswald:wght@600&display=swap"
       rel="stylesheet"
     />
   </head>
