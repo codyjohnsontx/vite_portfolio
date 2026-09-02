@@ -145,7 +145,12 @@ off. Four things that had to be true for the lift to work, and stay true:
   only, never the holder whose height it writes, because observing what you resize is how a
   ResizeObserver loop starts; a window `resize` listener covers the holder.
 - The typeface is Decision 4, so Barlow and Barlow Condensed are requested from the single Google
-  Fonts `<link>` in `index.html` and used on these two pages and nowhere else.
+  Fonts `<link>` in `index.html` and used on these two pages and nowhere else. Oswald 600 comes
+  from that same link and is not a leftover from before the decision that replaced it:
+  `.dvf-canvas .gradpost .mono` draws the monogram of the `poster-surface.tsx` design the new
+  direction supersedes, and that "being replaced" exhibit has to depict the current product
+  accurately, because a case study whose "before" is subtly degraded is arguing with a rigged
+  comparison. Oswald stays as long as that exhibit does.
 
 ## The resume story is spread across the site, and it drifts
 
