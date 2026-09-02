@@ -229,9 +229,13 @@
   width: 100%;
 }
 
+/* width: 100% is required, not redundant: the auto margins opt the pane out of
+   grid stretch, and its fit-content width is then the frame's fixed 390px,
+   which is wider than any of the four desktop tracks. */
 .dvf-panes--phones .dvf-pane {
   max-width: 390px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .dvf-panes--phones {
