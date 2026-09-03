@@ -95,6 +95,23 @@
          save a request there, it just clamps the drawing to a weight nobody
          reviewed.
 
+         Space Grotesk carries the Session Compare deck and appears nowhere
+         else. The page names it in 11 rules: ten inline font-family
+         declarations in src/content/sessionCompareSlides.js plus the .sc-page
+         rule in SessionComparePage.css, which sets the family page-wide, so
+         unweighted text lands on 400 and every rule beyond that uses only 500
+         or 600. It is a variable face, but the request is the static list
+         those rules ask for rather than a 400..600 range, because a range
+         ships weight axes the deck never uses. That same deck also sets 600 on
+         19 of its JetBrains Mono runs, which is why that face is requested at
+         600 as well: with only 400 and 500 served the browser synthesizes bold
+         off the 500 face and the stat numerals render a weight nobody drew.
+         The deck is not that weight's only caller, so it outlives the deck:
+         `.dvb-eyebrow`, `.dvb-cta` and `.dvb-table th` in
+         DiazVideoFirstPage.css and `.dvf-eyebrow` in
+         DiazVideoFirstWireframesPage.css set JetBrains Mono at 600 too, and
+         were synthesizing it the same way before this request existed.
+
          Oswald at 600 is requested for one element: `.dvf-canvas .gradpost
          .mono`, the oversized numeral on the poster tile. `.gradpost` is the
          "being replaced" exhibit, so it depicts the poster surface the product
@@ -102,7 +119,7 @@
          case study whose "before" is subtly degraded by a missing font is
          arguing against a rigged comparison. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400..700&family=Kalam:wght@400;700&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&family=Oswald:wght@600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Instrument+Sans:ital,wght@0,400..600;1,400..500&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@400..700&family=Kalam:wght@400;700&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Oswald:wght@600&display=swap"
       rel="stylesheet"
     />
   </head>
