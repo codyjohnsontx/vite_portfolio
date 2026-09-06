@@ -6,6 +6,53 @@ export const caseStudies = [
   // Newest first. Add a new case study at the top of this array; both the
   // /notes index and the home page render it in plain array order.
   {
+    slug: 'diaz-deploy-gate',
+    subjects: ['diaz-on-demand'],
+    company: 'Diaz on Demand',
+    timeframe: 'Incident and fix, September 2026',
+    role: 'Full-stack product builder',
+    team: 'Solo; I build and operate the product',
+    title: 'A build that refuses to ship',
+    tagline:
+      "Diaz on Demand's API was deployed early, while the product was still being built and tested. For a month, health checks passed, the catalogue loaded, webhooks arrived, and everything that ran was a read.",
+    challenge:
+      "Diaz on Demand's API was deployed early, while the product was still being built and tested. For a month, health checks passed, the catalogue loaded, webhooks arrived, and everything that ran was a read. Then the first real sign-in attempt returned 500, and it took a while to find out why, because the first two explanations were wrong. It wasn't the auth keys and it wasn't the connection pooler. It was the database: five migrations had never reached it, the oldest from 1 August. Reads had worked that whole month because reads only touch old, stable schema. Sign-in was the first write anything had attempted, and it hit the gap immediately.",
+    impactHighlights: [
+      "Code that needs a schema the database doesn't have never gets published against it.",
+      'It only looks. It never applies anything.',
+      'The gate is 261 lines, most of them the error message.',
+    ],
+    featuredOutcome:
+      'The gate is 261 lines, most of them the error message. What it prevents is a deployment that reads fine for a month and breaks on its first write - which is a much easier thing to ship than it sounds.',
+    sections: {
+      context:
+        "Diaz on Demand's API was deployed early, while the product was still being built and tested. For a month, health checks passed, the catalogue loaded, webhooks arrived, and everything that ran was a read. Then the first real sign-in attempt returned 500, and it took a while to find out why, because the first two explanations were wrong. It wasn't the auth keys and it wasn't the connection pooler. It was the database: five migrations had never reached it, the oldest from 1 August. Reads had worked that whole month because reads only touch old, stable schema. Sign-in was the first write anything had attempted, and it hit the gap immediately.",
+      problem:
+        "Applying them failed on the last one. It tried to drop a constraint that wasn't there, from a migration the database said it had already applied. It hadn't. The schema had been pushed straight from the Prisma file rather than migrated, and Prisma doesn't model check constraints, so that one statement got skipped while the migration was marked complete. I fixed it by hand: added the constraint, marked the failed migration rolled back, re-ran the deploy so it genuinely executed.",
+      goal:
+        'Then I had a gate built, because nothing in the setup would have stopped this from happening again - and next time it might not be a test sign-in.',
+      decisions: [
+        "It sits in front of the API build on Vercel. Before the build starts, it asks Prisma to compare the migration files in the repo against the ones the database has actually applied. If anything is pending, it exits with an error, the build fails, and the previous deployment keeps serving. Code that needs a schema the database doesn't have never gets published against it.",
+        'It only looks. It never applies anything.',
+        'Where it runs changes what it does. On Vercel production it refuses. On a preview it warns and carries on. On a laptop pointed at a real database it refuses, same as production.',
+        "There's an off switch for a real emergency, and it only accepts 1 or true - a typo doesn't disarm it.",
+      ],
+      tradeoffs: [
+        "That's the design decision I'd defend hardest: a gate that fixes the problem is a gate that migrates production as a side effect of pressing deploy, and that's worse than the outage.",
+        'On a laptop with no database configured it skips, so nobody is blocked from building locally.',
+      ],
+      execution: [
+        'When it refuses, the message names the pending migrations and the exact command to run, including the detail that cost me time: Neon migrations need the direct connection string, not the pooled one.',
+        "The part I didn't expect came from testing it. I'd assumed Prisma's own deploy command would refuse a database whose migration history had diverged - the state mine was in. It doesn't.",
+        "Measured on 6.19.2 against Postgres 17, it applied the migration and reported success, leaving the same migration recorded twice under different names. So for that particular failure, the gate isn't belt-and-braces over something Prisma already catches. It's the only check there is.",
+      ],
+      outcomes: [
+        'The gate is 261 lines, most of them the error message.',
+        'What it prevents is a deployment that reads fine for a month and breaks on its first write - which is a much easier thing to ship than it sounds.',
+      ],
+    },
+  },
+  {
     slug: 'oasis-multi-tenancy',
     subjects: ['oasis-race-control'],
     company: 'Oasis Race Control',
