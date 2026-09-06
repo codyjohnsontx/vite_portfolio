@@ -79,9 +79,9 @@ carry reach no rendered surface:
 `sections.metrics`, and `sections.confidentialityNote`. Writing them changes nothing, so a
 new entry should carry only what renders. `sections.context`, `.problem`, and `.goal` are the
 opposite case: `CaseSection` declares `body` required, so omitting one warns and renders an
-empty section. The list sections, `sections.decisions` through `sections.lessons`, render
-nothing when omitted, but `CaseListSection` also declares `items` required, so an entry that
-skips one (`diaz-deploy-gate` has no `lessons`) still logs a propTypes warning in development.
+empty section. The list sections, `sections.decisions` through `sections.lessons`, are the
+other way round: `CaseListSection` declares `items` optional, so an entry that skips one
+(`diaz-deploy-gate` has no `lessons`) renders nothing for it and logs nothing.
 The optional `diagrams` field (`{ path, label, blurb }`) is what draws the
 `System design` block on the detail page; entries without it render exactly as before.
 
