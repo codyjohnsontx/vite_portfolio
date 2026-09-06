@@ -86,7 +86,7 @@ CaseSection.propTypes = {
 CaseListSection.propTypes = {
   num: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  items: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default function CaseStudyPage() {

@@ -73,13 +73,16 @@ override the default product link.
 
 ## Case study fields, and the diagram pages hung off them
 
-`src/content/caseStudies.js` is rendered by `CaseStudyPage.jsx`. Five fields the existing entries
+`src/content/caseStudies.js` is rendered by `CaseStudyPage.jsx`. Five fields the older entries
 carry reach no rendered surface:
 `sections.usersStakeholders`, `sections.constraints`, `sections.ownership`,
 `sections.metrics`, and `sections.confidentialityNote`. Writing them changes nothing, so a
 new entry should carry only what renders. `sections.context`, `.problem`, and `.goal` are the
 opposite case: `CaseSection` declares `body` required, so omitting one warns and renders an
-empty section. The optional `diagrams` field (`{ path, label, blurb }`) is what draws the
+empty section. The list sections, `sections.decisions` through `sections.lessons`, are the
+other way round: `CaseListSection` declares `items` optional, so an entry that skips one
+(`diaz-deploy-gate` has no `lessons`) renders nothing for it and logs nothing.
+The optional `diagrams` field (`{ path, label, blurb }`) is what draws the
 `System design` block on the detail page; entries without it render exactly as before.
 
 Several pages render wireframes from raw HTML strings in a content module, with React owning
