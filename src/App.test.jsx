@@ -188,6 +188,7 @@ describe('portfolio routes and metadata', () => {
     // The order is authored, not derived, so it is pinned here: both surfaces
     // render src/content/caseStudies.js in plain array order.
     const newestFirst = [
+      '/case-studies/diaz-deploy-gate',
       '/case-studies/oasis-multi-tenancy',
       '/case-studies/hsnba-automation-and-gis',
       '/case-studies/lambda-curry-scope-monitoring',
