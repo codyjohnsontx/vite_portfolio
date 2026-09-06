@@ -52,8 +52,17 @@
   padding-bottom: clamp(6px, 2vh, 26px);
 }
 
+/* Leading is overridden here rather than on the shared .display rule. Both hero
+   lines render italic, and italic Source Serif 4 drops the "g" of "Ambiguous"
+   0.26em below the baseline - at .display's 0.87 that leaves only 0.05em between
+   it and the tittle of the "i" in "shipped" sitting directly beneath, which reads
+   as one smudged mark at display size. 0.92 doubles the clearance to 0.10em and
+   is still tighter than every other heading on the site. The .display headings
+   elsewhere are upright and mostly single-line, so they never collide - leave
+   that rule alone. */
 .hero__title {
   font-size: clamp(3rem, 9.4vw, 10rem);
+  line-height: 0.92;
 }
 
 .hero__eyebrow { color: var(--ink-3); }

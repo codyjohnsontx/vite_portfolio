@@ -250,6 +250,33 @@ Any pull request that gained commits after it was opened must be re-reviewed by
 commenting `@coderabbitai review` before it is merged. Skipping that merges those
 commits unreviewed.
 
+## The hero headline sets its own leading, and both its lines are italic
+
+`.hero__title` in `src/styles/pages.css` overrides the leading it would otherwise inherit
+from the shared `.display` rule in `src/styles/signal.css`. That override is deliberate and
+load-bearing - read the comment on the rule before touching either number, and do not
+"unify" it back onto `.display`, which is worn by 10+ headings that are upright and mostly
+single-line and so never collide.
+
+Three things the markup does not say out loud:
+
+- `.hero__line:last-child { font-style: italic }` reads as though it italicises only
+  "to shipped", but each `.hero__line` is the only child of its own `.hero__line-mask`, so
+  it matches both lines and the whole headline is italic. Italic Source Serif 4 drops "g"
+  0.26em below the baseline, which is why the hero is the one place on the site where a
+  descender can reach the line beneath it.
+- Descenders are clipped in two places, not one: `.hero__line-mask` (0.09em of room) and
+  `.kt-word` in `signal.css` (0.1em), each with a `padding-bottom` / negative
+  `margin-bottom` pair that buys the room at no net layout cost. They land 0.2026em and
+  0.2126em below the baseline, so releasing either one alone moves the cut by ~1.6px and
+  looks like "clipping is not happening" - a false negative. The italic "g" needs 0.259em,
+  so it renders with a flat bottom; that is issue #64, filed rather than fixed because
+  `.kt-word` is shared by every split-text animation on the site.
+- `splitChars` only runs when motion is allowed. Under `prefers-reduced-motion` the per-char
+  inline-blocks are absent, so the browser shapes the line normally and the glyphs sit
+  slightly tighter than in the animated state. Measure hero type in both states; reduced
+  motion is the worst case.
+
 ## Maintaining this file
 
 Keep this file for knowledge useful to almost every future agent session in this project.
