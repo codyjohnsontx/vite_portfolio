@@ -45,12 +45,17 @@ describe('portfolio routes and metadata', () => {
     ).toBeTruthy();
     expect(screen.getAllByText(/briefs every open conversation on its own/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/how much of the queue is briefed/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/is still a person/i).length).toBeGreaterThan(0);
-    /* "No dealership is using it yet and there is no measured result." was
-       deleted from the Latest block on owner instruction: it is volunteered
-       deflation nobody asked for, closing the freshest item on the home page
-       on a shrug. Pinned out so a content pass cannot restore it. */
+    /* The Latest block closes on the human-in-the-loop guarantee stated as a
+       strength. It replaced "Sending the suggested reply is still a person's
+       decision.", and "No dealership is using it yet and there is no measured
+       result." was deleted outright - both on owner instruction, as volunteered
+       deflation closing the freshest item on the home page. Pinned both ways so
+       a content pass cannot soften the new line or restore the old ones. */
+    expect(
+      screen.getAllByText(/The AI drafts; a person decides what sends/i).length,
+    ).toBeGreaterThan(0);
     expect(screen.queryByText(/No dealership is using it yet/i)).toBeNull();
+    expect(screen.queryByText(/is still a person/i)).toBeNull();
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
@@ -565,7 +570,13 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
     expect(screen.getAllByText(/Session Comparison v1/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/No measured result yet/i).length).toBeGreaterThan(0);
+    /* "No measured result yet." was deleted from the first successMetrics
+       entry on owner instruction, the same removal of volunteered deflation
+       made on the home page Latest block. What remains is the plan itself. */
+    expect(
+      screen.getAllByText(/Impact to validate through compare starts/i).length,
+    ).toBeGreaterThan(0);
+    expect(screen.queryByText(/No measured result yet/i)).toBeNull();
     expect(screen.getByText(/PR #16/i)).toBeTruthy();
     expect(screen.getAllByText(/context warnings/i).length).toBeGreaterThan(0);
     expect(
@@ -716,7 +727,10 @@ describe('portfolio routes and metadata', () => {
           'Product bet',
           'If session logging is fast enough to repeat and comparison is careful enough not to overclaim, riders will build structured history they can actually use.',
         ],
-        ['Measurement', 'No measured result yet.'],
+        [
+          'Measurement',
+          'Impact to validate through compare starts, repeat comparison use, Pro gate hits, and follow-up track-day retention.',
+        ],
         [
           'Buyer',
           'The same person as the user: a self-serve B2C subscription with no separate economic buyer.',
@@ -743,14 +757,8 @@ describe('portfolio routes and metadata', () => {
     {
       slug: 'wattsmith',
       rows: [
-        [
-          'Product bet',
-          'Before adding AI/RAG, Wattsmith needs a manual workflow riders can trust and reuse.',
-        ],
-        [
-          'Measurement',
-          'Track whether users can build and export .mrc or .erg workouts without validation-blocking errors.',
-        ],
+        ['Product bet', 'Manual builder first before AI'],
+        ['Measurement', 'Measure whether the builder is useful'],
         [
           'Buyer',
           'Early product validation is self-serve and utility-led; no paid conversion or production usage metric has been claimed yet.',
@@ -760,11 +768,8 @@ describe('portfolio routes and metadata', () => {
     {
       slug: 'oncopath',
       rows: [
-        ['Product bet', 'For most apps, "it produced an answer" is good enough.'],
-        [
-          'Measurement',
-          'First harness run: 0 percent usable, because the app’s own safety validator silently rejected every valid explanation over an undocumented phrasing rule.',
-        ],
+        ['Product bet', 'Built to be checked, not trusted blindly'],
+        ['Measurement', 'Measured on the eval bench, not in production'],
         [
           'Mission',
           'OncoPath is not built to make money and never will be. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live and free at onco-path.vercel.app, with no adoption or accuracy claims, and a faithfulness number that is reported but not yet validated.',

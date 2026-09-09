@@ -25,18 +25,19 @@ that are easy to get wrong:
   sentence has to stand alone as a headline, and `nextStep` cannot open with a decimal.
 - `src/App.test.jsx` also asserts the retired CTX Chat name never renders on the Attend
   page, so copy about the rename has to describe it without quoting the old name.
-- The `Why this matters` box on `ProductAnalysisPage.jsx` is derived from
-  `src/content/productAnalyses.js`, not authored: the first sentence of `productBet`, the
-  first sentence of `successMetrics[0].detail` (that field is an array of
-  `{ label, detail }`, hand-ordered, so entry zero is the headline metric), and
-  `users.buyer` under `users.buyerLabel ?? 'Buyer'`. `src/App.test.jsx` pins all three
-  rows on all four analysis pages, so editing any of those fields means updating that test
-  in the same commit. Never give a row a fallback whose value is the row's own label:
-  `betHeading ?? 'Product bet'` is how the box shipped a stuttering `Product bet Product
-  bet` to visitors on the two products that define no optional heading. `betHeading` and
-  `metricsHeading` are still the `03` and `05` section headings and belong there only.
-  The page's `firstSentence` helper ends a sentence on a terminator followed by whitespace,
-  so unlike the `nextStep` split above it survives decimals and `.mrc` / `.erg`.
+- The `Why this matters` box on `ProductAnalysisPage.jsx` reads from
+  `src/content/productAnalyses.js` on a heading-first, substance-fallback rule:
+  `betHeading` else the first sentence of `productBet`; `metricsHeading` else the first
+  sentence of `successMetrics[0].detail` (that field is an array of `{ label, detail }`,
+  hand-ordered, so entry zero is the headline metric); and `users.buyer` under
+  `users.buyerLabel ?? 'Buyer'`, which reads `Mission` on OncoPath. Only wattsmith and
+  oncopath write the two optional headings. `src/App.test.jsx` pins all three rows on all
+  four analysis pages, so editing any of those fields means updating that test in the same
+  commit. Never give a row a fallback whose value is the row's own label: `betHeading ??
+  'Product bet'` is how the box shipped a stuttering `Product bet Product bet` to visitors
+  on the two products that write no heading, and the products that write one hid it. The
+  page's `firstSentence` helper ends a sentence on a terminator followed by whitespace, so
+  unlike the `nextStep` split above it survives decimals and `.mrc` / `.erg`.
 
 For the per-product record shape, which fields exist and which are optional, read
 `src/content/projects.js` alongside the `ProductList` propTypes in

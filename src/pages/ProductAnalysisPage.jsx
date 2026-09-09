@@ -27,9 +27,9 @@ function getSections(hasRoadmap) {
   ];
 }
 
-/* The "Why this matters" box summarises the analysis, so every row has to carry
-   real content. Sentence end is a terminator followed by whitespace or the end
-   of the string, which leaves decimals and file extensions such as `.mrc` or
+/* Substance fallback for the "Why this matters" box on a product that writes no
+   optional heading. Sentence end is a terminator followed by whitespace or the
+   end of the string, which leaves decimals and file extensions such as `.mrc` or
    `.erg` intact - the same sharp edge the `nextStep` split on ProductDetailPage
    has. Returns the whole trimmed string when it holds no terminator. */
 function firstSentence(text) {
@@ -126,20 +126,24 @@ export default function ProductAnalysisPage() {
             <Reveal className="analysis-hero__meta" delay={180}>
               <div>
                 <Eyebrow>Why this matters</Eyebrow>
-                {/* Every row shows substance, never a section heading. The old
-                    shape was `analysis.betHeading ?? 'Product bet'`, a fallback
-                    whose value equalled its own label, so the two products that
-                    define no headings printed the label back at the reader. Row
-                    values come from fields every analysis carries, so a product
-                    that omits an optional heading cannot regress this box. */}
+                {/* The optional headings are hand-written for this job, so they
+                    win when they exist; the fallback is substance drawn from
+                    fields every analysis carries. The old shape fell back to a
+                    string equal to the row's own label
+                    (`analysis.betHeading ?? 'Product bet'`), so the products
+                    defining no heading printed the label back at the reader.
+                    Never give a row a fallback that can equal its label. */}
                 <div
                   className="meta-row meta-row--stacked"
                   role="list"
                   aria-label="Why this matters"
                 >
                   {[
-                    ['Product bet', firstSentence(analysis.productBet)],
-                    ['Measurement', firstSentence(analysis.successMetrics[0]?.detail)],
+                    ['Product bet', analysis.betHeading ?? firstSentence(analysis.productBet)],
+                    [
+                      'Measurement',
+                      analysis.metricsHeading ?? firstSentence(analysis.successMetrics[0]?.detail),
+                    ],
                     [analysis.users.buyerLabel ?? 'Buyer', analysis.users.buyer],
                   ].map(([label, value]) => (
                     <span key={label} className="meta-row__item" role="listitem">
