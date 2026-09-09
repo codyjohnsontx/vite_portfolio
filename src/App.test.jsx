@@ -45,7 +45,12 @@ describe('portfolio routes and metadata', () => {
     ).toBeTruthy();
     expect(screen.getAllByText(/briefs every open conversation on its own/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/how much of the queue is briefed/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/no measured result/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/is still a person/i).length).toBeGreaterThan(0);
+    /* "No dealership is using it yet and there is no measured result." was
+       deleted from the Latest block on owner instruction: it is volunteered
+       deflation nobody asked for, closing the freshest item on the home page
+       on a shrug. Pinned out so a content pass cannot restore it. */
+    expect(screen.queryByText(/No dealership is using it yet/i)).toBeNull();
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
@@ -560,7 +565,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
     expect(screen.getAllByText(/Session Comparison v1/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/No measured result yet/i)).toBeTruthy();
+    expect(screen.getAllByText(/No measured result yet/i).length).toBeGreaterThan(0);
     expect(screen.getByText(/PR #16/i)).toBeTruthy();
     expect(screen.getAllByText(/context warnings/i).length).toBeGreaterThan(0);
     expect(
@@ -600,7 +605,7 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getByRole('heading', { name: /Attend PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
-    expect(screen.getByText(/A dealership-specific communication tool/i)).toBeTruthy();
+    expect(screen.getAllByText(/A dealership-specific communication tool/i).length).toBeGreaterThan(0);
   });
 
   it('renders the Wattsmith PM analysis page', () => {
@@ -692,6 +697,108 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getAllByText(/sidesteps HIPAA by design/i).length).toBeGreaterThan(0);
     expect(screen.getByText(/no revenue, no adoption or performance numbers/i)).toBeTruthy();
   });
+
+  /* The "Why this matters" box on every analysis page. It shipped as
+     `analysis.betHeading ?? 'Product bet'` and
+     `analysis.metricsHeading ?? 'Measurement plan'` - fallbacks whose value was
+     the row's own label - so the two products that define neither heading
+     printed the label straight back at the reader, while the third row showed
+     `users.buyer` under an invented "No overclaim" label on all four. Nothing
+     asserted this box, which is why it reached visitors; assert it on every
+     page, not just one. The stutter guard below is the load-bearing part: it
+     fails on a value that equals its label AND on one that merely starts with
+     it, which is the shape "Measurement / Measurement plan" had. */
+  const ANALYSIS_META_ROWS = [
+    {
+      slug: 'track-tuner',
+      rows: [
+        [
+          'Product bet',
+          'If session logging is fast enough to repeat and comparison is careful enough not to overclaim, riders will build structured history they can actually use.',
+        ],
+        ['Measurement', 'No measured result yet.'],
+        [
+          'Buyer',
+          'The same person as the user: a self-serve B2C subscription with no separate economic buyer.',
+        ],
+      ],
+    },
+    {
+      slug: 'ctx-chat',
+      rows: [
+        [
+          'Product bet',
+          'A dealership-specific communication tool with clear ownership and next actions can outperform generic texting vendors when it matches the real workflow of the sales floor and service lane.',
+        ],
+        [
+          'Measurement',
+          'Track how quickly staff responds once a customer conversation enters the shared inbox.',
+        ],
+        [
+          'Buyer',
+          'The dealership GM or ownership team, starting with a single-store internal rollout before any broader expansion.',
+        ],
+      ],
+    },
+    {
+      slug: 'wattsmith',
+      rows: [
+        [
+          'Product bet',
+          'Before adding AI/RAG, Wattsmith needs a manual workflow riders can trust and reuse.',
+        ],
+        [
+          'Measurement',
+          'Track whether users can build and export .mrc or .erg workouts without validation-blocking errors.',
+        ],
+        [
+          'Buyer',
+          'Early product validation is self-serve and utility-led; no paid conversion or production usage metric has been claimed yet.',
+        ],
+      ],
+    },
+    {
+      slug: 'oncopath',
+      rows: [
+        ['Product bet', 'For most apps, "it produced an answer" is good enough.'],
+        [
+          'Measurement',
+          'First harness run: 0 percent usable, because the app’s own safety validator silently rejected every valid explanation over an undocumented phrasing rule.',
+        ],
+        [
+          'Mission',
+          'OncoPath is not built to make money and never will be. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live and free at onco-path.vercel.app, with no adoption or accuracy claims, and a faithfulness number that is reported but not yet validated.',
+        ],
+      ],
+    },
+  ];
+
+  it.each(ANALYSIS_META_ROWS)(
+    'renders a "Why this matters" box of real content on the $slug analysis page',
+    ({ slug, rows }) => {
+      renderApp(`/products/${slug}/analysis`);
+
+      const box = screen.getByRole('list', { name: 'Why this matters' });
+      const items = within(box).getAllByRole('listitem');
+
+      expect(items).toHaveLength(rows.length);
+
+      items.forEach((item, index) => {
+        const [expectedLabel, expectedValue] = rows[index];
+        const label = item.querySelector('strong').textContent;
+        const value = item.textContent.slice(label.length).trim();
+
+        expect(label).toBe(expectedLabel);
+        expect(value).not.toBe('');
+        // Checked before the value itself so a reintroduced stutter reports as
+        // a stutter rather than as an ordinary content diff.
+        expect(`${label} -> ${value.toLowerCase().startsWith(label.toLowerCase())}`).toBe(
+          `${label} -> false`,
+        );
+        expect(value).toBe(expectedValue);
+      });
+    },
+  );
 
   it('shows the PM analysis CTA only for products with analysis content', () => {
     const firstRender = renderApp('/products/track-tuner');

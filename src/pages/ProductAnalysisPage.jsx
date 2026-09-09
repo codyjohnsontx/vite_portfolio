@@ -27,6 +27,18 @@ function getSections(hasRoadmap) {
   ];
 }
 
+/* The "Why this matters" box summarises the analysis, so every row has to carry
+   real content. Sentence end is a terminator followed by whitespace or the end
+   of the string, which leaves decimals and file extensions such as `.mrc` or
+   `.erg` intact - the same sharp edge the `nextStep` split on ProductDetailPage
+   has. Returns the whole trimmed string when it holds no terminator. */
+function firstSentence(text) {
+  if (typeof text !== 'string') return '';
+  const trimmed = text.trim();
+  const match = trimmed.match(/^[\s\S]*?[.!?](?=\s|$)/);
+  return match ? match[0] : trimmed;
+}
+
 function AnalysisList({ items, className = '' }) {
   if (!items?.length) return null;
 
@@ -114,13 +126,23 @@ export default function ProductAnalysisPage() {
             <Reveal className="analysis-hero__meta" delay={180}>
               <div>
                 <Eyebrow>Why this matters</Eyebrow>
-                <div className="meta-row meta-row--stacked">
+                {/* Every row shows substance, never a section heading. The old
+                    shape was `analysis.betHeading ?? 'Product bet'`, a fallback
+                    whose value equalled its own label, so the two products that
+                    define no headings printed the label back at the reader. Row
+                    values come from fields every analysis carries, so a product
+                    that omits an optional heading cannot regress this box. */}
+                <div
+                  className="meta-row meta-row--stacked"
+                  role="list"
+                  aria-label="Why this matters"
+                >
                   {[
-                    ['Product bet', analysis.betHeading ?? 'Product bet'],
-                    ['Measurement', analysis.metricsHeading ?? 'Measurement plan'],
-                    ['No overclaim', analysis.users.buyer],
+                    ['Product bet', firstSentence(analysis.productBet)],
+                    ['Measurement', firstSentence(analysis.successMetrics[0]?.detail)],
+                    [analysis.users.buyerLabel ?? 'Buyer', analysis.users.buyer],
                   ].map(([label, value]) => (
-                    <span key={label} className="meta-row__item">
+                    <span key={label} className="meta-row__item" role="listitem">
                       <strong>{label}</strong>
                       {value}
                     </span>
