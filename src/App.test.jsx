@@ -835,48 +835,14 @@ describe('portfolio routes and metadata', () => {
     },
   );
 
-  const ANALYSES_WITHOUT_OPTIONAL_COPY = productAnalyses.filter(
-    (analysis) => !analysis.betHeading && !analysis.metricsHeading && !analysis.shippedIntro,
-  );
-
-  it.each(ANALYSES_WITHOUT_OPTIONAL_COPY.map((analysis) => analysis.slug))(
-    'omits the optional headings and the shipped intro on the %s analysis page',
-    (slug) => {
-      const analysis = productAnalyses.find((entry) => entry.slug === slug);
-      renderApp(`/products/${slug}/analysis`);
-
-      // The section ids are this page's own sidenav anchor targets.
-      const bet = document.getElementById('bet');
-      expect(within(bet).queryByRole('heading')).toBeNull();
-      expect(within(bet).getByText(analysis.productBet)).toBeTruthy();
-
-      const metrics = document.getElementById('metrics');
-      expect(within(metrics).queryByRole('heading')).toBeNull();
-      expect(within(metrics).getAllByRole('article').map((card) => card.textContent)).toEqual(
-        analysis.successMetrics.map((metric) => `${metric.label}${metric.detail}`),
-      );
-
-      /* No intro paragraph at all, not a neutral replacement one: the section
-         holds its eyebrow, its static headline, and this product's own shipped
-         highlights, and nothing else. */
-      const shipped = document.getElementById('shipped');
-      expect(shipped.textContent).toBe(
-        [
-          '06 · What shipped',
-          'The milestones that changed the product',
-          ...analysis.shippedHighlights.flatMap((item) => [item.label, item.detail]),
-        ].join(''),
-      );
-    },
-  );
-
-  /* The other direction of the same two conditionals: a product that writes a
-     heading must still get it. Without this, deleting the true branch of either
-     ternary silently strips wattsmith's and OncoPath's `03` and `05` headlines
-     and the whole suite stays green, because the box test above reads
-     `metricsHeading` from the meta row rather than from the section. */
+  /* Both branches of the two optional headings, on every product: the h2 says
+     exactly what the record says and is absent when the record says nothing,
+     while the content it sits above renders either way. Keyed per field rather
+     than per product, so authoring a heading for one of the two products that
+     writes none cannot quietly drop the other field's pin. The section ids are
+     this page's own sidenav anchor targets. */
   it.each(productAnalyses.map((analysis) => analysis.slug))(
-    'renders section headings only from the %s analysis record',
+    'renders the bet and metrics sections from the %s analysis record',
     (slug) => {
       const analysis = productAnalyses.find((entry) => entry.slug === slug);
       renderApp(`/products/${slug}/analysis`);
@@ -885,8 +851,15 @@ describe('portfolio routes and metadata', () => {
         within(document.getElementById(id)).queryByRole('heading', { level: 2 })?.textContent ??
         null;
 
+      const bet = document.getElementById('bet');
       expect(sectionHeading('bet')).toBe(analysis.betHeading ?? null);
+      expect(within(bet).getByText(analysis.productBet)).toBeTruthy();
+
+      const metrics = document.getElementById('metrics');
       expect(sectionHeading('metrics')).toBe(analysis.metricsHeading ?? null);
+      expect(within(metrics).getAllByRole('article').map((card) => card.textContent)).toEqual(
+        analysis.successMetrics.map((metric) => `${metric.label}${metric.detail}`),
+      );
     },
   );
 
@@ -899,6 +872,24 @@ describe('portfolio routes and metadata', () => {
     expect(
       within(document.getElementById('shipped')).getByText(analysis.shippedIntro),
     ).toBeTruthy();
+  });
+
+  /* No intro paragraph at all, not a neutral replacement one: the section holds
+     its eyebrow, its static headline, and this product's own shipped
+     highlights, and nothing else. */
+  it.each(
+    productAnalyses.filter((analysis) => !analysis.shippedIntro).map((analysis) => analysis.slug),
+  )('writes no shipped intro of its own on the %s analysis page', (slug) => {
+    const analysis = productAnalyses.find((entry) => entry.slug === slug);
+    renderApp(`/products/${slug}/analysis`);
+
+    expect(document.getElementById('shipped').textContent).toBe(
+      [
+        '06 · What shipped',
+        'The milestones that changed the product',
+        ...analysis.shippedHighlights.flatMap((item) => [item.label, item.detail]),
+      ].join(''),
+    );
   });
 
   it('shows the PM analysis CTA only for products with analysis content', () => {

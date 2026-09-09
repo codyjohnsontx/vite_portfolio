@@ -43,7 +43,8 @@ that are easy to get wrong:
   is absent, because each sits above content that renders either way and each once held a
   hardcoded default that printed Trackday Tuner's headlines and a "fourteen pull requests"
   claim onto Attend. Never reintroduce a default there, neutral or otherwise; `App.test.jsx`
-  pins the omission on every product that writes no heading.
+  pins each of those three fields on its own, present and absent, across every product, so
+  giving one product a heading cannot quietly drop another field's coverage.
 
 For the per-product record shape, which fields exist and which are optional, read
 `src/content/projects.js` alongside the `ProductList` propTypes in
