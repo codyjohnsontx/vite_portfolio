@@ -4,8 +4,8 @@ export function ArrowGlyph() {
   return <span className="arr" aria-hidden="true">→</span>;
 }
 
-export function Eyebrow({ children, style }) {
-  return <span className="eyebrow" style={style}>{children}</span>;
+export function Eyebrow({ as: Component, children, style }) {
+  return <Component className="eyebrow" style={style}>{children}</Component>;
 }
 
 export function Tag({ children, variant }) {
@@ -85,11 +85,13 @@ export function Marquee({ items }) {
 }
 
 Eyebrow.propTypes = {
+  as: PropTypes.elementType,
   children: PropTypes.node,
   style: PropTypes.object,
 };
 
 Eyebrow.defaultProps = {
+  as: 'span',
   children: null,
   style: undefined,
 };

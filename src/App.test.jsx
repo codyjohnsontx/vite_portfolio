@@ -8,6 +8,7 @@ import { caseStudies } from './content/caseStudies';
 import { engagements } from './content/engagements';
 import { KIND_LABEL, writing } from './content/writing';
 import { experience } from './content/experience';
+import { productAnalyses } from './content/productAnalyses';
 import { allProducts, flagshipProducts, products } from './content/projects';
 import { resumeContent } from './content/resumeContent';
 
@@ -45,7 +46,17 @@ describe('portfolio routes and metadata', () => {
     ).toBeTruthy();
     expect(screen.getAllByText(/briefs every open conversation on its own/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/how much of the queue is briefed/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/no measured result/i).length).toBeGreaterThan(0);
+    /* The Latest block closes on the human-in-the-loop guarantee stated as a
+       strength. It replaced "Sending the suggested reply is still a person's
+       decision.", and "No dealership is using it yet and there is no measured
+       result." was deleted outright - both on owner instruction, as volunteered
+       deflation closing the freshest item on the home page. Pinned both ways so
+       a content pass cannot soften the new line or restore the old ones. */
+    expect(
+      screen.getAllByText(/The AI drafts; a person decides what sends/i).length,
+    ).toBeGreaterThan(0);
+    expect(screen.queryByText(/No dealership is using it yet/i)).toBeNull();
+    expect(screen.queryByText(/is still a person/i)).toBeNull();
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
@@ -558,9 +569,14 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getByRole('heading', { name: /Trackday Tuner PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
-    expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
     expect(screen.getAllByText(/Session Comparison v1/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/No measured result yet/i)).toBeTruthy();
+    /* "No measured result yet." was deleted from the first successMetrics
+       entry on owner instruction, the same removal of volunteered deflation
+       made on the home page Latest block. What remains is the plan itself. */
+    expect(
+      screen.getAllByText(/Impact to validate through compare starts/i).length,
+    ).toBeGreaterThan(0);
+    expect(screen.queryByText(/No measured result yet/i)).toBeNull();
     expect(screen.getByText(/PR #16/i)).toBeTruthy();
     expect(screen.getAllByText(/context warnings/i).length).toBeGreaterThan(0);
     expect(
@@ -600,7 +616,7 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getByRole('heading', { name: /Attend PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
-    expect(screen.getByText(/A dealership-specific communication tool/i)).toBeTruthy();
+    expect(screen.getAllByText(/A dealership-specific communication tool/i).length).toBeGreaterThan(0);
   });
 
   it('renders the Wattsmith PM analysis page', () => {
@@ -691,6 +707,201 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getAllByText(/n=6/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/sidesteps HIPAA by design/i).length).toBeGreaterThan(0);
     expect(screen.getByText(/no revenue, no adoption or performance numbers/i)).toBeTruthy();
+  });
+
+  /* The "Why this matters" box on every analysis page. It shipped as
+     `analysis.betHeading ?? 'Product bet'` and
+     `analysis.metricsHeading ?? 'Measurement plan'` - fallbacks whose value was
+     the row's own label - so the two products that define neither heading
+     printed the label straight back at the reader, while the third row showed
+     `users.buyer` under an invented "No overclaim" label on all four. Nothing
+     asserted this box, which is why it reached visitors; assert it on every
+     page, not just one. The stutter guard below is the load-bearing part: it
+     fails on a value that equals its label AND on one that merely starts with
+     it, which is the shape "Measurement / Measurement plan" had. */
+  const ANALYSIS_META_ROWS = [
+    {
+      slug: 'track-tuner',
+      rows: [
+        [
+          'Product bet',
+          'If session logging is fast enough to repeat and comparison is careful enough not to overclaim, riders will build structured history they can actually use.',
+        ],
+        [
+          'Measurement',
+          'Impact to validate through compare starts, repeat comparison use, Pro gate hits, and follow-up track-day retention.',
+        ],
+        [
+          'Buyer',
+          'The same person as the user: a self-serve B2C subscription with no separate economic buyer.',
+        ],
+      ],
+    },
+    {
+      slug: 'ctx-chat',
+      rows: [
+        [
+          'Product bet',
+          'A dealership-specific communication tool with clear ownership and next actions can outperform generic texting vendors when it matches the real workflow of the sales floor and service lane.',
+        ],
+        [
+          'Measurement',
+          'Track how quickly staff responds once a customer conversation enters the shared inbox.',
+        ],
+        [
+          'Buyer',
+          'The dealership GM or ownership team, starting with a single-store internal rollout before any broader expansion.',
+        ],
+      ],
+    },
+    {
+      slug: 'wattsmith',
+      rows: [
+        ['Product bet', 'Manual builder first before AI'],
+        ['Measurement', 'Measure whether the builder is useful'],
+        [
+          'Buyer',
+          'Early product validation is self-serve and utility-led; no paid conversion or production usage metric has been claimed yet.',
+        ],
+      ],
+    },
+    {
+      slug: 'oncopath',
+      rows: [
+        ['Product bet', 'Built to be checked, not trusted blindly'],
+        ['Measurement', 'Measured on the eval bench, not in production'],
+        [
+          'Mission',
+          'OncoPath is not built to make money and never will be. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live and free at onco-path.vercel.app, with no adoption or accuracy claims, and a faithfulness number that is reported but not yet validated.',
+        ],
+      ],
+    },
+  ];
+
+  /* The expected labels and values above stay hand-written - they are what
+     catches a borrowed or wrong value - but the slug list must not be, or a
+     fifth analysis page would render its box entirely unasserted while the
+     suite stayed green. */
+  it('pins the "Why this matters" box on every analysis page that exists', () => {
+    expect(ANALYSIS_META_ROWS.map((row) => row.slug)).toEqual(
+      productAnalyses.map((analysis) => analysis.slug),
+    );
+  });
+
+  it.each(ANALYSIS_META_ROWS)(
+    'renders a "Why this matters" box of real content on the $slug analysis page',
+    ({ slug, rows }) => {
+      renderApp(`/products/${slug}/analysis`);
+
+      const box = screen.getByRole('list', { name: 'Why this matters' });
+      const items = within(box).getAllByRole('listitem');
+
+      expect(items).toHaveLength(rows.length);
+
+      items.forEach((item, index) => {
+        const [expectedLabel, expectedValue] = rows[index];
+        const label = item.querySelector('strong').textContent;
+        const value = item.textContent.slice(label.length).trim();
+
+        expect(label).toBe(expectedLabel);
+        expect(value).not.toBe('');
+        // Checked before the value itself so a reintroduced stutter reports as
+        // a stutter rather than as an ordinary content diff.
+        expect(`${label} -> ${value.toLowerCase().startsWith(label.toLowerCase())}`).toBe(
+          `${label} -> false`,
+        );
+        expect(value).toBe(expectedValue);
+      });
+    },
+  );
+
+  /* The same borrowed-default shape one component up from the box: three
+     hardcoded strings stood in whenever a product wrote no optional field, so
+     Attend's dealership page carried two of Trackday Tuner's motorsport
+     headlines and a "fourteen pull requests" intro above four entries whose
+     first is a single commit. Sections now render nothing rather than borrow. */
+  const RETIRED_ANALYSIS_DEFAULTS = [
+    'Win the trackside loop first',
+    'Measure whether the loop sticks',
+    'Fourteen pull requests landed in the first public build cycle. These are the ones that most clearly changed the product story, monetization path, and trust model.',
+  ];
+
+  it.each(productAnalyses.map((analysis) => analysis.slug))(
+    'renders no other product\'s headline on the %s analysis page',
+    (slug) => {
+      renderApp(`/products/${slug}/analysis`);
+
+      RETIRED_ANALYSIS_DEFAULTS.forEach((text) => {
+        expect(screen.queryAllByText(text)).toHaveLength(0);
+      });
+
+      productAnalyses
+        .filter((other) => other.slug !== slug)
+        .flatMap((other) => [other.betHeading, other.metricsHeading, other.shippedIntro])
+        .filter(Boolean)
+        .forEach((text) => {
+          expect(screen.queryAllByText(text)).toHaveLength(0);
+        });
+    },
+  );
+
+  /* Both branches of the two optional headings, on every product: each section
+     exposes exactly one level-2 heading, carrying the authored headline when
+     the record writes one and the eyebrow itself when it does not, so the
+     heading outline never skips 03 or 05 and never doubles up. Keyed per field
+     rather than per product, so authoring a heading for one of the two products
+     that writes none cannot quietly drop the other field's pin. The section ids
+     are this page's own sidenav anchor targets. */
+  it.each(productAnalyses.map((analysis) => analysis.slug))(
+    'renders the bet and metrics sections from the %s analysis record',
+    (slug) => {
+      const analysis = productAnalyses.find((entry) => entry.slug === slug);
+      renderApp(`/products/${slug}/analysis`);
+
+      const sectionHeadings = (id) =>
+        within(document.getElementById(id))
+          .getAllByRole('heading', { level: 2 })
+          .map((heading) => heading.textContent);
+
+      const bet = document.getElementById('bet');
+      expect(sectionHeadings('bet')).toEqual([analysis.betHeading ?? '03 · Product bet']);
+      expect(within(bet).getByText(analysis.productBet)).toBeTruthy();
+
+      const metrics = document.getElementById('metrics');
+      expect(sectionHeadings('metrics')).toEqual([analysis.metricsHeading ?? '05 · Metrics']);
+      expect(within(metrics).getAllByRole('article').map((card) => card.textContent)).toEqual(
+        analysis.successMetrics.map((metric) => `${metric.label}${metric.detail}`),
+      );
+    },
+  );
+
+  it.each(
+    productAnalyses.filter((analysis) => analysis.shippedIntro).map((analysis) => analysis.slug),
+  )('renders the %s shipped intro from its own record', (slug) => {
+    const analysis = productAnalyses.find((entry) => entry.slug === slug);
+    renderApp(`/products/${slug}/analysis`);
+
+    expect(
+      within(document.getElementById('shipped')).getByText(analysis.shippedIntro),
+    ).toBeTruthy();
+  });
+
+  /* No intro paragraph at all, not a neutral replacement one: the section holds
+     its eyebrow, its static headline, and this product's own shipped
+     highlights, and nothing else. */
+  it.each(
+    productAnalyses.filter((analysis) => !analysis.shippedIntro).map((analysis) => analysis.slug),
+  )('writes no shipped intro of its own on the %s analysis page', (slug) => {
+    const analysis = productAnalyses.find((entry) => entry.slug === slug);
+    renderApp(`/products/${slug}/analysis`);
+
+    expect(document.getElementById('shipped').textContent).toBe(
+      [
+        '06 · What shipped',
+        'The milestones that changed the product',
+        ...analysis.shippedHighlights.flatMap((item) => [item.label, item.detail]),
+      ].join(''),
+    );
   });
 
   it('shows the PM analysis CTA only for products with analysis content', () => {

@@ -27,6 +27,17 @@ function getSections(hasRoadmap) {
   ];
 }
 
+/* Substance fallback for the "Why this matters" box on a product that writes no
+   optional heading. Sentence end is a terminator followed by whitespace or the
+   end of the string, which leaves decimals and file extensions such as `.mrc` or
+   `.erg` intact - the same sharp edge the `nextStep` split on ProductDetailPage
+   has. Returns the whole trimmed string when it holds no terminator. */
+function firstSentence(text) {
+  const trimmed = text.trim();
+  const match = trimmed.match(/^[\s\S]*?[.!?](?=\s|$)/);
+  return match ? match[0] : trimmed;
+}
+
 function AnalysisList({ items, className = '' }) {
   if (!items?.length) return null;
 
@@ -114,13 +125,27 @@ export default function ProductAnalysisPage() {
             <Reveal className="analysis-hero__meta" delay={180}>
               <div>
                 <Eyebrow>Why this matters</Eyebrow>
-                <div className="meta-row meta-row--stacked">
+                {/* The optional headings are hand-written for this job, so they
+                    win when they exist; the fallback is substance drawn from
+                    fields every analysis carries. The old shape fell back to a
+                    string equal to the row's own label
+                    (`analysis.betHeading ?? 'Product bet'`), so the products
+                    defining no heading printed the label back at the reader.
+                    Never give a row a fallback that can equal its label. */}
+                <div
+                  className="meta-row meta-row--stacked"
+                  role="list"
+                  aria-label="Why this matters"
+                >
                   {[
-                    ['Product bet', analysis.betHeading ?? 'Product bet'],
-                    ['Measurement', analysis.metricsHeading ?? 'Measurement plan'],
-                    ['No overclaim', analysis.users.buyer],
+                    ['Product bet', analysis.betHeading ?? firstSentence(analysis.productBet)],
+                    [
+                      'Measurement',
+                      analysis.metricsHeading ?? firstSentence(analysis.successMetrics[0].detail),
+                    ],
+                    [analysis.users.buyerLabel ?? 'Buyer', analysis.users.buyer],
                   ].map(([label, value]) => (
-                    <span key={label} className="meta-row__item">
+                    <span key={label} className="meta-row__item" role="listitem">
                       <strong>{label}</strong>
                       {value}
                     </span>
@@ -211,11 +236,16 @@ export default function ProductAnalysisPage() {
             </Reveal>
 
             <Reveal id="bet" style={{ marginBottom: 88 }}>
-              <Eyebrow>03 · Product bet</Eyebrow>
-              <h2 className="h2" style={{ margin: '12px 0 20px' }}>
-                {analysis.betHeading ?? 'Win the trackside loop first'}
-              </h2>
-              <p className="lead" style={{ margin: 0, color: 'var(--ink)' }}>
+              <Eyebrow as={analysis.betHeading ? 'span' : 'h2'}>03 · Product bet</Eyebrow>
+              {analysis.betHeading ? (
+                <h2 className="h2" style={{ margin: '12px 0 20px' }}>
+                  {analysis.betHeading}
+                </h2>
+              ) : null}
+              <p
+                className="lead"
+                style={{ margin: analysis.betHeading ? 0 : '12px 0 0', color: 'var(--ink)' }}
+              >
                 {analysis.productBet}
               </p>
             </Reveal>
@@ -256,11 +286,16 @@ export default function ProductAnalysisPage() {
             </Reveal>
 
             <Reveal id="metrics" style={{ marginBottom: 88 }}>
-              <Eyebrow>05 · Metrics</Eyebrow>
-              <h2 className="h2" style={{ margin: '12px 0 24px' }}>
-                {analysis.metricsHeading ?? 'Measure whether the loop sticks'}
-              </h2>
-              <div className="metric-grid">
+              <Eyebrow as={analysis.metricsHeading ? 'span' : 'h2'}>05 · Metrics</Eyebrow>
+              {analysis.metricsHeading ? (
+                <h2 className="h2" style={{ margin: '12px 0 24px' }}>
+                  {analysis.metricsHeading}
+                </h2>
+              ) : null}
+              <div
+                className="metric-grid"
+                style={analysis.metricsHeading ? undefined : { marginTop: 12 }}
+              >
                 {analysis.successMetrics.map((metric, index) => (
                   <Reveal
                     as="article"
@@ -303,16 +338,20 @@ export default function ProductAnalysisPage() {
 
             <Reveal id="shipped" style={{ marginBottom: 88 }}>
               <Eyebrow>06 · What shipped</Eyebrow>
-              <h2 className="h2" style={{ margin: '12px 0 12px' }}>
+              <h2
+                className="h2"
+                style={{ margin: analysis.shippedIntro ? '12px 0 12px' : '12px 0 28px' }}
+              >
                 The milestones that changed the product
               </h2>
-              <p
-                className="body"
-                style={{ marginTop: 0, marginBottom: 28, color: 'var(--ink-2)', maxWidth: '60ch' }}
-              >
-                {analysis.shippedIntro ??
-                  'Fourteen pull requests landed in the first public build cycle. These are the ones that most clearly changed the product story, monetization path, and trust model.'}
-              </p>
+              {analysis.shippedIntro ? (
+                <p
+                  className="body"
+                  style={{ marginTop: 0, marginBottom: 28, color: 'var(--ink-2)', maxWidth: '60ch' }}
+                >
+                  {analysis.shippedIntro}
+                </p>
+              ) : null}
               {analysis.shippedHighlights.map((item, index) => (
                 <Reveal as="article" key={item.label} className="update" delay={(index % 4) * 80}>
                   <div className="update__body">

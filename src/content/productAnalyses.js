@@ -107,9 +107,9 @@ export const productAnalyses = [
     ],
     successMetrics: [
       {
-        label: 'Measurement status',
+        label: 'Measurement plan',
         detail:
-          'No measured result yet. Impact to validate through compare starts, repeat comparison use, Pro gate hits, and follow-up track-day retention.',
+          'Impact to validate through compare starts, repeat comparison use, Pro gate hits, and follow-up track-day retention.',
       },
       {
         label: 'Activation',

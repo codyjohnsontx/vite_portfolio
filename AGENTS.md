@@ -25,6 +25,21 @@ that are easy to get wrong:
   sentence has to stand alone as a headline, and `nextStep` cannot open with a decimal.
 - `src/App.test.jsx` also asserts the retired CTX Chat name never renders on the Attend
   page, so copy about the rename has to describe it without quoting the old name.
+- The `Why this matters` box on `ProductAnalysisPage.jsx` reads `src/content/productAnalyses.js`
+  heading-first with a substance fallback: `betHeading` else the first sentence of `productBet`;
+  `metricsHeading` else the first sentence of `successMetrics[0].detail` (hand-ordered
+  `{ label, detail }`, so entry zero is the headline metric); `users.buyer` under
+  `users.buyerLabel ?? 'Buyer'`, which reads `Mission` on OncoPath. `src/App.test.jsx` pins all
+  three rows on all four analysis pages, so editing any of those fields means updating that test
+  in the same commit. Never give a row a fallback equal to its own label - that is how the box
+  shipped a stuttering `Product bet Product bet`, hidden by the two products that write a heading.
+  Unlike the `nextStep` split above, `firstSentence` survives decimals and `.mrc` / `.erg`.
+  Deriving is the box's rule alone: the `03` / `05` headings and the `06` shipped intro are
+  omitted when absent, never defaulted (one once printed Trackday Tuner's headlines and a
+  "fourteen pull requests" claim onto Attend), and `App.test.jsx` pins those three present and
+  absent on every product. `Eyebrow` takes an `as` prop so those two sections render it as `h2`
+  exactly when the authored headline is absent, one level-2 heading each and never two; the
+  `.eyebrow` comment in `src/styles/legacy.css` says why the promoted tag needs its line box back.
 
 For the per-product record shape, which fields exist and which are optional, read
 `src/content/projects.js` alongside the `ProductList` propTypes in
