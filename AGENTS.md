@@ -37,7 +37,13 @@ that are easy to get wrong:
   'Product bet'` is how the box shipped a stuttering `Product bet Product bet` to visitors
   on the two products that write no heading, and the products that write one hid it. The
   page's `firstSentence` helper ends a sentence on a terminator followed by whitespace, so
-  unlike the `nextStep` split above it survives decimals and `.mrc` / `.erg`.
+  unlike the `nextStep` split above it survives decimals and `.mrc` / `.erg`. Deriving is
+  the box's rule alone. Elsewhere on that page the `03 Product bet` and `05 Metrics`
+  headings and the `06 What shipped` intro paragraph are omitted outright when the field
+  is absent, because each sits above content that renders either way and each once held a
+  hardcoded default that printed Trackday Tuner's headlines and a "fourteen pull requests"
+  claim onto Attend. Never reintroduce a default there, neutral or otherwise; `App.test.jsx`
+  pins the omission on every product that writes no heading.
 
 For the per-product record shape, which fields exist and which are optional, read
 `src/content/projects.js` alongside the `ProductList` propTypes in

@@ -8,6 +8,7 @@ import { caseStudies } from './content/caseStudies';
 import { engagements } from './content/engagements';
 import { KIND_LABEL, writing } from './content/writing';
 import { experience } from './content/experience';
+import { productAnalyses } from './content/productAnalyses';
 import { allProducts, flagshipProducts, products } from './content/projects';
 import { resumeContent } from './content/resumeContent';
 
@@ -568,7 +569,6 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getByRole('heading', { name: /Trackday Tuner PM analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
-    expect(screen.getByText(/Win the trackside loop first/i)).toBeTruthy();
     expect(screen.getAllByText(/Session Comparison v1/i).length).toBeGreaterThan(0);
     /* "No measured result yet." was deleted from the first successMetrics
        entry on owner instruction, the same removal of volunteered deflation
@@ -802,6 +802,71 @@ describe('portfolio routes and metadata', () => {
         );
         expect(value).toBe(expectedValue);
       });
+    },
+  );
+
+  /* The same borrowed-default shape one component up from the box: three
+     hardcoded strings stood in whenever a product wrote no optional field, so
+     Attend's dealership page carried two of Trackday Tuner's motorsport
+     headlines and a "fourteen pull requests" intro above four entries whose
+     first is a single commit. Sections now render nothing rather than borrow. */
+  const RETIRED_ANALYSIS_DEFAULTS = [
+    'Win the trackside loop first',
+    'Measure whether the loop sticks',
+    'Fourteen pull requests landed in the first public build cycle. These are the ones that most clearly changed the product story, monetization path, and trust model.',
+  ];
+
+  it.each(productAnalyses.map((analysis) => analysis.slug))(
+    'renders no other product\'s headline on the %s analysis page',
+    (slug) => {
+      renderApp(`/products/${slug}/analysis`);
+
+      RETIRED_ANALYSIS_DEFAULTS.forEach((text) => {
+        expect(screen.queryAllByText(text)).toHaveLength(0);
+      });
+
+      productAnalyses
+        .filter((other) => other.slug !== slug)
+        .flatMap((other) => [other.betHeading, other.metricsHeading, other.shippedIntro])
+        .filter(Boolean)
+        .forEach((text) => {
+          expect(screen.queryAllByText(text)).toHaveLength(0);
+        });
+    },
+  );
+
+  const ANALYSES_WITHOUT_OPTIONAL_COPY = productAnalyses.filter(
+    (analysis) => !analysis.betHeading && !analysis.metricsHeading && !analysis.shippedIntro,
+  );
+
+  it.each(ANALYSES_WITHOUT_OPTIONAL_COPY.map((analysis) => analysis.slug))(
+    'omits the optional headings and the shipped intro on the %s analysis page',
+    (slug) => {
+      const analysis = productAnalyses.find((entry) => entry.slug === slug);
+      renderApp(`/products/${slug}/analysis`);
+
+      // The section ids are this page's own sidenav anchor targets.
+      const bet = document.getElementById('bet');
+      expect(within(bet).queryByRole('heading')).toBeNull();
+      expect(within(bet).getByText(analysis.productBet)).toBeTruthy();
+
+      const metrics = document.getElementById('metrics');
+      expect(within(metrics).queryByRole('heading')).toBeNull();
+      expect(within(metrics).getAllByRole('article').map((card) => card.textContent)).toEqual(
+        analysis.successMetrics.map((metric) => `${metric.label}${metric.detail}`),
+      );
+
+      /* No intro paragraph at all, not a neutral replacement one: the section
+         holds its eyebrow, its static headline, and this product's own shipped
+         highlights, and nothing else. */
+      const shipped = document.getElementById('shipped');
+      expect(shipped.textContent).toBe(
+        [
+          '06 · What shipped',
+          'The milestones that changed the product',
+          ...analysis.shippedHighlights.flatMap((item) => [item.label, item.detail]),
+        ].join(''),
+      );
     },
   );
 

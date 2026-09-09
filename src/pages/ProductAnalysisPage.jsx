@@ -33,7 +33,6 @@ function getSections(hasRoadmap) {
    `.erg` intact - the same sharp edge the `nextStep` split on ProductDetailPage
    has. Returns the whole trimmed string when it holds no terminator. */
 function firstSentence(text) {
-  if (typeof text !== 'string') return '';
   const trimmed = text.trim();
   const match = trimmed.match(/^[\s\S]*?[.!?](?=\s|$)/);
   return match ? match[0] : trimmed;
@@ -142,7 +141,7 @@ export default function ProductAnalysisPage() {
                     ['Product bet', analysis.betHeading ?? firstSentence(analysis.productBet)],
                     [
                       'Measurement',
-                      analysis.metricsHeading ?? firstSentence(analysis.successMetrics[0]?.detail),
+                      analysis.metricsHeading ?? firstSentence(analysis.successMetrics[0].detail),
                     ],
                     [analysis.users.buyerLabel ?? 'Buyer', analysis.users.buyer],
                   ].map(([label, value]) => (
@@ -238,10 +237,15 @@ export default function ProductAnalysisPage() {
 
             <Reveal id="bet" style={{ marginBottom: 88 }}>
               <Eyebrow>03 · Product bet</Eyebrow>
-              <h2 className="h2" style={{ margin: '12px 0 20px' }}>
-                {analysis.betHeading ?? 'Win the trackside loop first'}
-              </h2>
-              <p className="lead" style={{ margin: 0, color: 'var(--ink)' }}>
+              {analysis.betHeading ? (
+                <h2 className="h2" style={{ margin: '12px 0 20px' }}>
+                  {analysis.betHeading}
+                </h2>
+              ) : null}
+              <p
+                className="lead"
+                style={{ margin: analysis.betHeading ? 0 : '12px 0 0', color: 'var(--ink)' }}
+              >
                 {analysis.productBet}
               </p>
             </Reveal>
@@ -283,10 +287,15 @@ export default function ProductAnalysisPage() {
 
             <Reveal id="metrics" style={{ marginBottom: 88 }}>
               <Eyebrow>05 · Metrics</Eyebrow>
-              <h2 className="h2" style={{ margin: '12px 0 24px' }}>
-                {analysis.metricsHeading ?? 'Measure whether the loop sticks'}
-              </h2>
-              <div className="metric-grid">
+              {analysis.metricsHeading ? (
+                <h2 className="h2" style={{ margin: '12px 0 24px' }}>
+                  {analysis.metricsHeading}
+                </h2>
+              ) : null}
+              <div
+                className="metric-grid"
+                style={analysis.metricsHeading ? undefined : { marginTop: 12 }}
+              >
                 {analysis.successMetrics.map((metric, index) => (
                   <Reveal
                     as="article"
@@ -329,16 +338,20 @@ export default function ProductAnalysisPage() {
 
             <Reveal id="shipped" style={{ marginBottom: 88 }}>
               <Eyebrow>06 · What shipped</Eyebrow>
-              <h2 className="h2" style={{ margin: '12px 0 12px' }}>
+              <h2
+                className="h2"
+                style={{ margin: analysis.shippedIntro ? '12px 0 12px' : '12px 0 28px' }}
+              >
                 The milestones that changed the product
               </h2>
-              <p
-                className="body"
-                style={{ marginTop: 0, marginBottom: 28, color: 'var(--ink-2)', maxWidth: '60ch' }}
-              >
-                {analysis.shippedIntro ??
-                  'Fourteen pull requests landed in the first public build cycle. These are the ones that most clearly changed the product story, monetization path, and trust model.'}
-              </p>
+              {analysis.shippedIntro ? (
+                <p
+                  className="body"
+                  style={{ marginTop: 0, marginBottom: 28, color: 'var(--ink-2)', maxWidth: '60ch' }}
+                >
+                  {analysis.shippedIntro}
+                </p>
+              ) : null}
               {analysis.shippedHighlights.map((item, index) => (
                 <Reveal as="article" key={item.label} className="update" delay={(index % 4) * 80}>
                   <div className="update__body">
