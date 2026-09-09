@@ -73,9 +73,11 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
    16px x 1.55 = 24.8px, while a promoted h2 is a block and gets its own, 11px x
    1.55 = 17.05px, which pulled the content under it 7.75px closer. The
    `h2.eyebrow` rule below hands that parent line box back, so the promotion is
-   visually neutral and the call site needs no compensation. Its value is tied to
-   the 16px font-size and 1.55 line-height in the `body` rule above: change either
-   and this has to be recomputed. */
+   visually neutral and needs no compensation at the call site - the 12px the
+   absent-headline branch in `ProductAnalysisPage.jsx` keeps above the lead and
+   the metric grid stands in for the omitted headline's own top margin, not for
+   this. Its value is tied to the 16px font-size and 1.55 line-height in the
+   `body` rule above: change either and this has to be recomputed. */
 .eyebrow {
   margin: 0;
   font-family: var(--mono);
