@@ -870,6 +870,37 @@ describe('portfolio routes and metadata', () => {
     },
   );
 
+  /* The other direction of the same two conditionals: a product that writes a
+     heading must still get it. Without this, deleting the true branch of either
+     ternary silently strips wattsmith's and OncoPath's `03` and `05` headlines
+     and the whole suite stays green, because the box test above reads
+     `metricsHeading` from the meta row rather than from the section. */
+  it.each(productAnalyses.map((analysis) => analysis.slug))(
+    'renders section headings only from the %s analysis record',
+    (slug) => {
+      const analysis = productAnalyses.find((entry) => entry.slug === slug);
+      renderApp(`/products/${slug}/analysis`);
+
+      const sectionHeading = (id) =>
+        within(document.getElementById(id)).queryByRole('heading', { level: 2 })?.textContent ??
+        null;
+
+      expect(sectionHeading('bet')).toBe(analysis.betHeading ?? null);
+      expect(sectionHeading('metrics')).toBe(analysis.metricsHeading ?? null);
+    },
+  );
+
+  it.each(
+    productAnalyses.filter((analysis) => analysis.shippedIntro).map((analysis) => analysis.slug),
+  )('renders the %s shipped intro from its own record', (slug) => {
+    const analysis = productAnalyses.find((entry) => entry.slug === slug);
+    renderApp(`/products/${slug}/analysis`);
+
+    expect(
+      within(document.getElementById('shipped')).getByText(analysis.shippedIntro),
+    ).toBeTruthy();
+  });
+
   it('shows the PM analysis CTA only for products with analysis content', () => {
     const firstRender = renderApp('/products/track-tuner');
     expect(screen.getByRole('link', { name: /Read PM analysis/i })).toBeTruthy();
