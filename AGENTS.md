@@ -25,34 +25,21 @@ that are easy to get wrong:
   sentence has to stand alone as a headline, and `nextStep` cannot open with a decimal.
 - `src/App.test.jsx` also asserts the retired CTX Chat name never renders on the Attend
   page, so copy about the rename has to describe it without quoting the old name.
-- The `Why this matters` box on `ProductAnalysisPage.jsx` reads from
-  `src/content/productAnalyses.js` on a heading-first, substance-fallback rule:
-  `betHeading` else the first sentence of `productBet`; `metricsHeading` else the first
-  sentence of `successMetrics[0].detail` (that field is an array of `{ label, detail }`,
-  hand-ordered, so entry zero is the headline metric); and `users.buyer` under
-  `users.buyerLabel ?? 'Buyer'`, which reads `Mission` on OncoPath. Only wattsmith and
-  oncopath write the two optional headings. `src/App.test.jsx` pins all three rows on all
-  four analysis pages, so editing any of those fields means updating that test in the same
-  commit. Never give a row a fallback whose value is the row's own label: `betHeading ??
-  'Product bet'` is how the box shipped a stuttering `Product bet Product bet` to visitors
-  on the two products that write no heading, and the products that write one hid it. The
-  page's `firstSentence` helper ends a sentence on a terminator followed by whitespace, so
-  unlike the `nextStep` split above it survives decimals and `.mrc` / `.erg`. Deriving is
-  the box's rule alone. Elsewhere on that page the `03 Product bet` and `05 Metrics`
-  headings and the `06 What shipped` intro paragraph are omitted outright when the field
-  is absent, because each sits above content that renders either way and each once held a
-  hardcoded default that printed Trackday Tuner's headlines and a "fourteen pull requests"
-  claim onto Attend. Never reintroduce a default there, neutral or otherwise; `App.test.jsx`
-  pins each of those three fields on its own, present and absent, across every product, so
-  giving one product a heading cannot quietly drop another field's coverage. Dropping the
-  two headings would leave those sections with no heading element at all, so the eyebrow
-  takes the job instead: `Eyebrow` accepts an `as` prop and those two render as `h2` exactly
-  when the authored headline is absent, which is why each section has one level-2 heading on
-  every product and never two. That is also why `.eyebrow` in `legacy.css` zeroes `margin`,
-  takes `font-weight: inherit`, and hands the promoted `h2.eyebrow` back the parent line box
-  a block would otherwise lose - it is worn by both tags and must look the same in each, and
-  that last value is tied to the body font-size and line-height. Read the comment on the rule
-  before changing either.
+- The `Why this matters` box on `ProductAnalysisPage.jsx` reads `src/content/productAnalyses.js`
+  heading-first with a substance fallback: `betHeading` else the first sentence of `productBet`;
+  `metricsHeading` else the first sentence of `successMetrics[0].detail` (hand-ordered
+  `{ label, detail }`, so entry zero is the headline metric); `users.buyer` under
+  `users.buyerLabel ?? 'Buyer'`, which reads `Mission` on OncoPath. `src/App.test.jsx` pins all
+  three rows on all four analysis pages, so editing any of those fields means updating that test
+  in the same commit. Never give a row a fallback equal to its own label - that is how the box
+  shipped a stuttering `Product bet Product bet`, hidden by the two products that write a heading.
+  Unlike the `nextStep` split above, `firstSentence` survives decimals and `.mrc` / `.erg`.
+  Deriving is the box's rule alone: the `03` / `05` headings and the `06` shipped intro are
+  omitted when absent, never defaulted (one once printed Trackday Tuner's headlines and a
+  "fourteen pull requests" claim onto Attend), and `App.test.jsx` pins those three present and
+  absent on every product. `Eyebrow` takes an `as` prop so those two sections render it as `h2`
+  exactly when the authored headline is absent, one level-2 heading each and never two; the
+  `.eyebrow` comment in `src/styles/legacy.css` says why the promoted tag needs its line box back.
 
 For the per-product record shape, which fields exist and which are optional, read
 `src/content/projects.js` alongside the `ProductList` propTypes in
