@@ -236,7 +236,7 @@ export default function ProductAnalysisPage() {
             </Reveal>
 
             <Reveal id="bet" style={{ marginBottom: 88 }}>
-              <Eyebrow>03 · Product bet</Eyebrow>
+              <Eyebrow as={analysis.betHeading ? 'span' : 'h2'}>03 · Product bet</Eyebrow>
               {analysis.betHeading ? (
                 <h2 className="h2" style={{ margin: '12px 0 20px' }}>
                   {analysis.betHeading}
@@ -286,7 +286,7 @@ export default function ProductAnalysisPage() {
             </Reveal>
 
             <Reveal id="metrics" style={{ marginBottom: 88 }}>
-              <Eyebrow>05 · Metrics</Eyebrow>
+              <Eyebrow as={analysis.metricsHeading ? 'span' : 'h2'}>05 · Metrics</Eyebrow>
               {analysis.metricsHeading ? (
                 <h2 className="h2" style={{ margin: '12px 0 24px' }}>
                   {analysis.metricsHeading}

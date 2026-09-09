@@ -44,7 +44,12 @@ that are easy to get wrong:
   hardcoded default that printed Trackday Tuner's headlines and a "fourteen pull requests"
   claim onto Attend. Never reintroduce a default there, neutral or otherwise; `App.test.jsx`
   pins each of those three fields on its own, present and absent, across every product, so
-  giving one product a heading cannot quietly drop another field's coverage.
+  giving one product a heading cannot quietly drop another field's coverage. Dropping the
+  two headings would leave those sections with no heading element at all, so the eyebrow
+  takes the job instead: `Eyebrow` accepts an `as` prop and those two render as `h2` exactly
+  when the authored headline is absent, which is why each section has one level-2 heading on
+  every product and never two. That is also why `.eyebrow` in `legacy.css` zeroes `margin`
+  and takes `font-weight: inherit` - it is worn by both tags and must look the same in each.
 
 For the per-product record shape, which fields exist and which are optional, read
 `src/content/projects.js` alongside the `ProductList` propTypes in

@@ -778,6 +778,16 @@ describe('portfolio routes and metadata', () => {
     },
   ];
 
+  /* The expected labels and values above stay hand-written - they are what
+     catches a borrowed or wrong value - but the slug list must not be, or a
+     fifth analysis page would render its box entirely unasserted while the
+     suite stayed green. */
+  it('pins the "Why this matters" box on every analysis page that exists', () => {
+    expect(ANALYSIS_META_ROWS.map((row) => row.slug)).toEqual(
+      productAnalyses.map((analysis) => analysis.slug),
+    );
+  });
+
   it.each(ANALYSIS_META_ROWS)(
     'renders a "Why this matters" box of real content on the $slug analysis page',
     ({ slug, rows }) => {
@@ -835,28 +845,30 @@ describe('portfolio routes and metadata', () => {
     },
   );
 
-  /* Both branches of the two optional headings, on every product: the h2 says
-     exactly what the record says and is absent when the record says nothing,
-     while the content it sits above renders either way. Keyed per field rather
-     than per product, so authoring a heading for one of the two products that
-     writes none cannot quietly drop the other field's pin. The section ids are
-     this page's own sidenav anchor targets. */
+  /* Both branches of the two optional headings, on every product: each section
+     exposes exactly one level-2 heading, carrying the authored headline when
+     the record writes one and the eyebrow itself when it does not, so the
+     heading outline never skips 03 or 05 and never doubles up. Keyed per field
+     rather than per product, so authoring a heading for one of the two products
+     that writes none cannot quietly drop the other field's pin. The section ids
+     are this page's own sidenav anchor targets. */
   it.each(productAnalyses.map((analysis) => analysis.slug))(
     'renders the bet and metrics sections from the %s analysis record',
     (slug) => {
       const analysis = productAnalyses.find((entry) => entry.slug === slug);
       renderApp(`/products/${slug}/analysis`);
 
-      const sectionHeading = (id) =>
-        within(document.getElementById(id)).queryByRole('heading', { level: 2 })?.textContent ??
-        null;
+      const sectionHeadings = (id) =>
+        within(document.getElementById(id))
+          .getAllByRole('heading', { level: 2 })
+          .map((heading) => heading.textContent);
 
       const bet = document.getElementById('bet');
-      expect(sectionHeading('bet')).toBe(analysis.betHeading ?? null);
+      expect(sectionHeadings('bet')).toEqual([analysis.betHeading ?? '03 · Product bet']);
       expect(within(bet).getByText(analysis.productBet)).toBeTruthy();
 
       const metrics = document.getElementById('metrics');
-      expect(sectionHeading('metrics')).toBe(analysis.metricsHeading ?? null);
+      expect(sectionHeadings('metrics')).toEqual([analysis.metricsHeading ?? '05 · Metrics']);
       expect(within(metrics).getAllByRole('article').map((card) => card.textContent)).toEqual(
         analysis.successMetrics.map((metric) => `${metric.label}${metric.detail}`),
       );

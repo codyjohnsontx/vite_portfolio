@@ -66,9 +66,15 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
 .serif { font-family: var(--serif); font-weight: 400; letter-spacing: -0.01em; }
 .mono { font-family: var(--mono); font-feature-settings: 'ss01'; }
 
+/* Worn by a span almost everywhere, and by an h2 where a section's only
+   heading is its eyebrow, so it has to neutralise the h2 user-agent defaults.
+   `inherit` and `0` are what a span already does, so promoting the tag changes
+   nothing visually. */
 .eyebrow {
+  margin: 0;
   font-family: var(--mono);
   font-size: 11px;
+  font-weight: inherit;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-3);
