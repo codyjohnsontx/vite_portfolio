@@ -66,10 +66,16 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
 .serif { font-family: var(--serif); font-weight: 400; letter-spacing: -0.01em; }
 .mono { font-family: var(--mono); font-feature-settings: 'ss01'; }
 
-/* Worn by a span almost everywhere, and by an h2 where a section's only
-   heading is its eyebrow, so it has to neutralise the h2 user-agent defaults.
-   `inherit` and `0` are what a span already does, so promoting the tag changes
-   nothing visually. */
+/* Worn by a span almost everywhere, and by an h2 where a section's only heading
+   is its eyebrow, so it has to neutralise the h2 user-agent defaults: `margin: 0`
+   drops the 0.83em block margins and `font-weight: inherit` the bold. Those two
+   are not the whole difference. The inline span sits in its parent's line box,
+   16px x 1.55 = 24.8px, while a promoted h2 is a block and gets its own, 11px x
+   1.55 = 17.05px, which pulled the content under it 7.75px closer. The
+   `h2.eyebrow` rule below hands that parent line box back, so the promotion is
+   visually neutral and the call site needs no compensation. Its value is tied to
+   the 16px font-size and 1.55 line-height in the `body` rule above: change either
+   and this has to be recomputed. */
 .eyebrow {
   margin: 0;
   font-family: var(--mono);
@@ -79,6 +85,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: 0; color:
   text-transform: uppercase;
   color: var(--ink-3);
 }
+h2.eyebrow { line-height: calc(16 / 11 * 1.55); }
 
 .display {
   font-family: var(--serif);

@@ -48,8 +48,11 @@ that are easy to get wrong:
   two headings would leave those sections with no heading element at all, so the eyebrow
   takes the job instead: `Eyebrow` accepts an `as` prop and those two render as `h2` exactly
   when the authored headline is absent, which is why each section has one level-2 heading on
-  every product and never two. That is also why `.eyebrow` in `legacy.css` zeroes `margin`
-  and takes `font-weight: inherit` - it is worn by both tags and must look the same in each.
+  every product and never two. That is also why `.eyebrow` in `legacy.css` zeroes `margin`,
+  takes `font-weight: inherit`, and hands the promoted `h2.eyebrow` back the parent line box
+  a block would otherwise lose - it is worn by both tags and must look the same in each, and
+  that last value is tied to the body font-size and line-height. Read the comment on the rule
+  before changing either.
 
 For the per-product record shape, which fields exist and which are optional, read
 `src/content/projects.js` alongside the `ProductList` propTypes in
