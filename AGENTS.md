@@ -79,6 +79,9 @@ product slugs from `projects.js` or engagement slugs from `engagements.js`, read
 by `getWritingForSubject` and `getSubjectsForWriting`. It is what puts the `06 Decisions & writing`
 block on a product page and the `Related` block on a case study or note. Adding a piece of writing
 without `subjects` silently orphans it from the work index.
+The one deliberate exception is `firstmate-hook-prompt`, an open-source contribution to someone
+else's project: its `subjects` is empty on the owner's decision, so its page has no `Related` block.
+Do not attach it to a product.
 
 `src/content/engagements.js` holds the two client engagements (Lambda Curry, HSNBA), which have no
 app and no repository. They are derived from their case studies rather than restating them, and

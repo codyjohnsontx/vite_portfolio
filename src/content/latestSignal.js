@@ -1,9 +1,9 @@
 /* The "Latest" block on the home page. Kept here with the rest of the
    content so the copy and its date can be updated without touching layout. */
 export const latestSignal = {
-  date: 'August 2026',
-  title: 'Attend: the inbox ranks by risk, not by what came in last',
+  date: 'September 2026',
+  title: 'A prompt nobody could answer',
   body:
-    'Attend used to write a brief only when someone asked for one, and the inbox sorted newest first. Now a background pass briefs every open conversation on its own and the list ranks by what those briefs found, so the thread most likely to cost the store sits at the top instead of wherever it happened to land. A line above the list says how much of the queue is briefed and how old the newest brief is, anyone can run a pass on demand, and a brief written before the latest messages is labelled as an earlier one rather than passed off as current. The AI drafts; a person decides what sends.',
-  links: [{ label: 'Read the build', to: '/products/ctx-chat' }],
+    "For about two weeks, half my code review wasn't happening and I didn't notice. I review everything twice. First an automated pipeline, then a second pass from a different vendor's model. The second reviewer had stopped starting. Not crashed, not erroring. Sitting there. Reviewers now launch with the hook layer off. They never meet the prompt, because there's nothing left to trust. Nothing is bypassed and nothing is pre-approved. 234 lines, merged upstream. Every second review since has started clean.",
+  links: [{ label: 'Read the case study', to: '/case-studies/firstmate-hook-prompt' }],
 };

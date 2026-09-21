@@ -6,7 +6,7 @@ import App from './App';
 import { blogPosts } from './content/blogPosts';
 import { caseStudies } from './content/caseStudies';
 import { engagements } from './content/engagements';
-import { KIND_LABEL, writing } from './content/writing';
+import { KIND_LABEL, RELATED_HEADING, getRelatedForWriting, writing } from './content/writing';
 import { experience } from './content/experience';
 import { productAnalyses } from './content/productAnalyses';
 import { allProducts, flagshipProducts, products } from './content/projects';
@@ -42,25 +42,21 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Measured outcomes')).toBeTruthy();
     expect(screen.getByText('Latest')).toBeTruthy();
     expect(
-      screen.getByRole('heading', { name: 'Attend: the inbox ranks by risk, not by what came in last' }),
+      screen.getByRole('heading', { level: 2, name: 'A prompt nobody could answer' }),
     ).toBeTruthy();
-    expect(screen.getAllByText(/briefs every open conversation on its own/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/how much of the queue is briefed/i).length).toBeGreaterThan(0);
-    /* The Latest block closes on the human-in-the-loop guarantee stated as a
-       strength. It replaced "Sending the suggested reply is still a person's
-       decision.", and "No dealership is using it yet and there is no measured
-       result." was deleted outright - both on owner instruction, as volunteered
-       deflation closing the freshest item on the home page. Pinned both ways so
-       a content pass cannot soften the new line or restore the old ones. */
     expect(
-      screen.getAllByText(/The AI drafts; a person decides what sends/i).length,
+      screen.getAllByText(/half my code review wasn't happening and I didn't notice/i).length,
     ).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Every second review since has started clean/i).length).toBeGreaterThan(0);
+    /* Both lines were deleted from an earlier Latest item on owner instruction,
+       as volunteered deflation closing the freshest item on the home page.
+       Pinned so a content pass cannot restore them. */
     expect(screen.queryByText(/No dealership is using it yet/i)).toBeNull();
     expect(screen.queryByText(/is still a person/i)).toBeNull();
     expect(
       screen
-        .getAllByRole('link', { name: /Read the build/i })
-        .some((link) => link.getAttribute('href') === '/products/ctx-chat'),
+        .getAllByRole('link', { name: /Read the case study/i })
+        .some((link) => link.getAttribute('href') === '/case-studies/firstmate-hook-prompt'),
     ).toBe(true);
   });
 
@@ -199,6 +195,7 @@ describe('portfolio routes and metadata', () => {
     // The order is authored, not derived, so it is pinned here: both surfaces
     // render src/content/caseStudies.js in plain array order.
     const newestFirst = [
+      '/case-studies/firstmate-hook-prompt',
       '/case-studies/diaz-deploy-gate',
       '/case-studies/oasis-multi-tenancy',
       '/case-studies/hsnba-automation-and-gis',
@@ -970,6 +967,32 @@ describe('portfolio routes and metadata', () => {
       expect(screen.getByRole('heading', { name: study.title })).toBeTruthy();
       expect(screen.getByText(study.tagline)).toBeTruthy();
     });
+  });
+
+  /* The firstmate contribution is the one case study that names none of the
+     products, so its subjects list is empty on purpose. It still has to render
+     everywhere a case study does, and it must not grow a Related block. */
+  it('renders a case study with no subject, without a Related block', () => {
+    const subjectless = caseStudies.filter((study) => !study.subjects?.length);
+    expect(subjectless.map((study) => study.slug)).toEqual(['firstmate-hook-prompt']);
+
+    renderApp('/case-studies/firstmate-hook-prompt');
+
+    expect(screen.getByRole('heading', { name: 'A prompt nobody could answer' })).toBeTruthy();
+    const main = within(document.querySelector('main'));
+    expect(main.queryByText('Related')).toBeNull();
+    expect(main.queryByRole('heading', { name: RELATED_HEADING.withSubject })).toBeNull();
+    expect(main.queryByRole('heading', { name: RELATED_HEADING.writingOnly })).toBeNull();
+    expect(getRelatedForWriting('/case-studies/firstmate-hook-prompt').items).toEqual([]);
+  });
+
+  it('keeps both blunt parts of the firstmate case study', () => {
+    renderApp('/case-studies/firstmate-hook-prompt');
+
+    const main = within(document.querySelector('main'));
+    expect(main.getAllByText(/half my code review wasn't happening/).length).toBeGreaterThan(0);
+    expect(main.getByText(/The line says a human trusted eleven hooks\. No human did\./)).toBeTruthy();
+    expect(main.getByText(/Consent you manufacture for yourself isn't consent/)).toBeTruthy();
   });
 
   it('renders the Oasis tenancy case study with the argument that decided it', () => {
