@@ -1,12 +1,18 @@
 import { readFileSync } from 'node:fs';
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 import { blogPosts } from './content/blogPosts';
 import { caseStudies } from './content/caseStudies';
 import { engagements } from './content/engagements';
-import { KIND_LABEL, writing } from './content/writing';
+import { KIND_LABEL, RELATED_HEADING, getRelatedForWriting, writing } from './content/writing';
 import { experience } from './content/experience';
 import { productAnalyses } from './content/productAnalyses';
 import { allProducts, flagshipProducts, products } from './content/projects';
@@ -199,6 +205,7 @@ describe('portfolio routes and metadata', () => {
     // The order is authored, not derived, so it is pinned here: both surfaces
     // render src/content/caseStudies.js in plain array order.
     const newestFirst = [
+      '/case-studies/firstmate-hook-prompt',
       '/case-studies/diaz-deploy-gate',
       '/case-studies/oasis-multi-tenancy',
       '/case-studies/hsnba-automation-and-gis',
@@ -968,8 +975,139 @@ describe('portfolio routes and metadata', () => {
       renderApp(`/case-studies/${study.slug}`);
 
       expect(screen.getByRole('heading', { name: study.title })).toBeTruthy();
-      expect(screen.getByText(study.tagline)).toBeTruthy();
     });
+  });
+
+  /* The summary between the title and `01` is drawn field by field, so the
+     firstmate study can open straight onto its numbered sections. Every other
+     study carries all of those fields and has to keep rendering all of them:
+     the tagline under the title, the Role / Team / Outcome row with its values,
+     the Challenge, and every impact highlight. */
+  const SUMMARY_LABELS = ['Role', 'Team', 'Outcome', 'Challenge', 'Impact highlights'];
+
+  caseStudies
+    .filter((study) => study.slug !== 'firstmate-hook-prompt')
+    .forEach((study) => {
+      it(`keeps the full summary block on ${study.slug}`, () => {
+        renderApp(`/case-studies/${study.slug}`);
+
+        const main = within(document.querySelector('main'));
+        const title = main.getByRole('heading', { level: 1, name: study.title });
+        expect(title.nextElementSibling.textContent).toBe(study.tagline);
+        expect(
+          [...document.querySelectorAll('main .eyebrow')]
+            .map((node) => node.textContent)
+            .filter((label) => SUMMARY_LABELS.includes(label)),
+        ).toEqual(SUMMARY_LABELS);
+        const stats = document.querySelector('main .case-stats');
+        expect([...stats.querySelectorAll('p')].map((node) => node.textContent)).toEqual([
+          study.role,
+          study.team,
+          study.featuredOutcome,
+        ]);
+        const grid = document.querySelector('main .case-grid-2');
+        expect(grid.querySelector('p.drop-cap').textContent).toBe(study.challenge);
+        expect(
+          [...grid.querySelectorAll('li')].map((node) => node.lastElementChild.textContent),
+        ).toEqual(study.impactHighlights);
+      });
+    });
+
+  it('opens the firstmate case study straight onto its numbered sections', () => {
+    renderApp('/case-studies/firstmate-hook-prompt');
+
+    const main = within(document.querySelector('main'));
+    const title = main.getByRole('heading', { level: 1, name: 'A prompt nobody could answer' });
+    // No line under the title: the Context section already opens with it.
+    expect(title.nextElementSibling).toBeNull();
+    expect(main.getAllByText(/half my code review wasn't happening/)).toHaveLength(1);
+    SUMMARY_LABELS.forEach((label) => expect(main.queryByText(label)).toBeNull());
+    expect(document.querySelector('main .case-stats')).toBeNull();
+    expect(document.querySelector('main .case-grid-2')).toBeNull();
+    expect(main.queryByText('Contributor')).toBeNull();
+    expect(main.getAllByRole('heading', { level: 2 })[0].textContent).toBe('Context');
+  });
+
+  /* Case studies lead the home page, on the owner's call, and the section heads
+     count down the page in the order the sections appear. */
+  it('puts the case studies directly under the hero and numbers the sections in order', () => {
+    renderApp('/');
+
+    const main = document.querySelector('main');
+    const heads = [...main.querySelectorAll('header.head')].map((head) => ({
+      num: head.querySelector('.head__num').textContent,
+      eyebrow: head.querySelector('.head__index .mono').textContent,
+    }));
+    expect(heads).toEqual([
+      { num: '01', eyebrow: 'Case studies' },
+      { num: '02', eyebrow: 'Active builds' },
+      { num: '03', eyebrow: 'Concepts & prototypes' },
+      { num: '04', eyebrow: 'Experience' },
+    ]);
+    const hero = main.querySelector('.hero');
+    const caseStudies = main.querySelector('.case-grid').closest('section');
+    expect(hero.nextElementSibling).toBe(caseStudies);
+    expect(caseStudies.querySelector('h2').textContent).toBe(
+      'Real problems, and the calls I made on them.',
+    );
+    expect(caseStudies.querySelector('.head__sub').textContent).toBe(
+      'Shipped products, architecture decisions, and an open-source fix: what broke or needed deciding, what I chose and why, and what happened after.',
+    );
+  });
+
+  it('keeps the deck of the firstmate case study on the notes index and the home card', () => {
+    const deck = "For about two weeks, half my code review wasn't happening and I didn't notice.";
+    const notes = renderApp('/notes');
+    expect(
+      screen.getByRole('link', { name: /A prompt nobody could answer/ }).textContent,
+    ).toContain(deck);
+
+    notes.unmount();
+    renderApp('/');
+    const card = document.querySelector('a.case-card[href="/case-studies/firstmate-hook-prompt"]');
+    expect(card.textContent).toContain(deck);
+    expect(card.textContent).toContain('Contributor');
+    expect(card.textContent).toContain('Every second review since has started clean.');
+  });
+
+  /* The firstmate contribution is the one case study that names none of the
+     products, so its subjects list is empty on purpose. It still has to render
+     everywhere a case study does, and it must not grow a Related block. */
+  it('renders a case study with no subject, without a Related block', () => {
+    const subjectless = caseStudies.filter((study) => !study.subjects?.length);
+    expect(subjectless.map((study) => study.slug)).toEqual(['firstmate-hook-prompt']);
+
+    renderApp('/case-studies/firstmate-hook-prompt');
+
+    expect(screen.getByRole('heading', { name: 'A prompt nobody could answer' })).toBeTruthy();
+    const main = within(document.querySelector('main'));
+    expect(main.queryByText('Related')).toBeNull();
+    expect(main.queryByRole('heading', { name: RELATED_HEADING.withSubject })).toBeNull();
+    expect(main.queryByRole('heading', { name: RELATED_HEADING.writingOnly })).toBeNull();
+    expect(getRelatedForWriting('/case-studies/firstmate-hook-prompt').items).toEqual([]);
+  });
+
+  it('keeps both blunt parts of the firstmate case study', () => {
+    renderApp('/case-studies/firstmate-hook-prompt');
+
+    const main = within(document.querySelector('main'));
+    expect(main.getAllByText(/half my code review wasn't happening/).length).toBeGreaterThan(0);
+    expect(main.getByText(/The line says a human trusted eleven hooks\. No human did\./)).toBeTruthy();
+    expect(main.getByText(/Consent you manufacture for yourself isn't consent/)).toBeTruthy();
+  });
+
+  it('links the firstmate case study to its source of record', () => {
+    renderApp('/case-studies/firstmate-hook-prompt');
+
+    const main = within(document.querySelector('main'));
+    const source = main.getByRole('link', {
+      name: 'https://github.com/kunchenguid/firstmate/pull/4689',
+    });
+    expect(source.getAttribute('href')).toBe('https://github.com/kunchenguid/firstmate/pull/4689');
+    expect(source.closest('li').textContent).toContain(
+      'Source of record: https://github.com/kunchenguid/firstmate/pull/4689 - merged 2026-09-17, authored by codyjohnsontx, 234 lines added.',
+    );
+    expect(main.queryByText(/Solo/)).toBeNull();
   });
 
   it('renders the Oasis tenancy case study with the argument that decided it', () => {
@@ -1037,6 +1175,64 @@ describe('portfolio routes and metadata', () => {
     // The reversibility argument stays on screen whichever state is selected.
     expect(screen.getByText(/Shared → separate, later/)).toBeTruthy();
     expect(screen.getByText(/Separate → shared, later/)).toBeTruthy();
+  });
+
+  it('links the firstmate case study to its hand-drawn diagram', async () => {
+    const page = renderApp('/case-studies/firstmate-hook-prompt');
+    expect(screen.getByText('How it broke and how we fixed it')).toBeTruthy();
+    expect(screen.queryByText('System design')).toBeNull();
+    expect(
+      screen.getByRole('link', { name: /View the drawing/i }).getAttribute('href'),
+    ).toBe('/case-studies/firstmate-hook-prompt/diagrams');
+
+    page.unmount();
+    renderApp('/case-studies/firstmate-hook-prompt/diagrams');
+    await waitFor(() =>
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'How it broke, how it was fixed' }),
+      ).toBeTruthy(),
+    );
+
+    // One drawing replaces the panels. Its title is drawn into it, so the page's
+    // only heading is a visually hidden h1 that stays in the document outline.
+    const main = within(document.querySelector('main'));
+    const headings = main.getAllByRole('heading');
+    expect(headings).toHaveLength(1);
+    expect(headings[0].className).toBe('sr-only');
+
+    // A wide drawing and a stacked one for narrow screens, chosen by the browser.
+    const drawing = main.getByRole('img');
+    expect(drawing.getAttribute('src')).toMatch(/how-it-broke[^/]*\.svg/);
+    expect(drawing.getAttribute('src')).not.toMatch(/phone/);
+    const stacked = drawing.closest('picture').querySelector('source');
+    expect(stacked.getAttribute('srcset')).toMatch(/how-it-broke-phone[^/]*\.svg/);
+    expect(stacked.getAttribute('media')).toBe('(max-width: 1099px)');
+
+    // The drawing's words reach a reader who cannot see it through the alt text.
+    const alt = drawing.getAttribute('alt');
+    [
+      'How it broke, how it was fixed',
+      'Enter, Esc and Ctrl-C',
+      'Before:',
+      'Hooks need review, 11 new or changed',
+      "can't move the cursor",
+      'Stuck, no second review',
+      'After:',
+      'hook layer off',
+      'Reads the diff',
+      'Second review runs',
+      'Not taken:',
+      'the shortcut',
+      "Write 'trusted' into the config",
+      'Says a human trusted 11 hooks, nobody did',
+    ].forEach((words) => expect(alt).toContain(words));
+
+    expect(
+      screen.getAllByRole('link', { name: /Back to the case study/ })[0].getAttribute('href'),
+    ).toBe('/case-studies/firstmate-hook-prompt');
+    expect(screen.getByRole('link', { name: /The pull request/ }).getAttribute('href')).toBe(
+      'https://github.com/kunchenguid/firstmate/pull/4689',
+    );
   });
 
   it('sends other case study slugs away from the diagrams route', async () => {

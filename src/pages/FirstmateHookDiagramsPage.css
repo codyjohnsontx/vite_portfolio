@@ -1,0 +1,39 @@
+/* The firstmate hook prompt drawing. Everything around it comes from
+   OasisTenancyDiagramsPage.css, which this page imports and whose .otd-page root
+   it wears; the --otd-* tokens below are defined there. */
+
+/* The heading is in the drawing, so the intro is the first thing in the header. */
+.fhd-intro {
+  margin-top: 0;
+}
+
+.fhd-frame {
+  display: block;
+  border: 2px solid var(--otd-ink);
+  border-radius: 14px;
+  background: var(--otd-card);
+  box-shadow: 3px 4px 0 rgba(43, 43, 43, 0.12);
+  padding: 20px;
+}
+
+.fhd-drawing {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Matches STACKED_BELOW in FirstmateHookDiagramsPage.jsx. The stacked drawing
+   is 430 units wide; held to that it keeps its 20-unit handwriting at 20px on a
+   tablet and scales down to about 16px on a 390px phone. */
+@media (max-width: 1099px) {
+  .fhd-drawing {
+    max-width: 430px;
+  }
+}
+
+@media (max-width: 720px) {
+  .fhd-frame {
+    padding: 14px 10px;
+  }
+}

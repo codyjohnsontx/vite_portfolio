@@ -4,7 +4,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 import WorkRows from '../components/WorkRows';
 import { useKineticText, useMagnetic, useReveal } from '../motion/hooks';
 import { gsap, prefersReducedMotion, splitChars } from '../motion/motion';
-import { caseStudies } from '../content/caseStudies';
+import { caseStudies, getCaseStudyDeck } from '../content/caseStudies';
 import { experience } from '../content/experience';
 import { latestSignal } from '../content/latestSignal';
 import { profile } from '../content/profile';
@@ -212,32 +212,34 @@ function CaseStudies() {
     <section className="bay" id="case-studies">
       <div className="shell">
         <SectionHead
-          num="03"
+          num="01"
           eyebrow="Case studies"
-          title="Shipped with other people, measured after launch."
-          sub="Engagements and architecture calls where the product decisions are traceable to outcomes: scope, tradeoffs, and what the numbers did afterwards."
+          title="Real problems, and the calls I made on them."
+          sub="Shipped products, architecture decisions, and an open-source fix: what broke or needed deciding, what I chose and why, and what happened after."
         />
-        <div className="case-grid" ref={ref} style={{ opacity: 0 }}>
-          {caseStudies.map((c) => (
-            <Link
-              key={c.slug}
-              to={`/case-studies/${c.slug}`}
-              className="card case-card"
-            >
-              <div className="case-card__top">
-                <span className="mono">{c.company}</span>
-                <span className="mono">{c.role}</span>
-              </div>
-              <h3 className="h3 case-card__title">{c.title}</h3>
-              <p className="body case-card__tag">{c.tagline}</p>
-              <div className="case-card__foot">
-                <span className="body case-card__outcome">{c.featuredOutcome}</span>
-                <span className="arrow-link">
-                  Read <span className="glyph" aria-hidden="true">→</span>
-                </span>
-              </div>
-            </Link>
-          ))}
+        <div className="case-grid-wrap">
+          <div className="case-grid" ref={ref} style={{ opacity: 0 }}>
+            {caseStudies.map((c) => (
+              <Link
+                key={c.slug}
+                to={`/case-studies/${c.slug}`}
+                className="card case-card"
+              >
+                <div className="case-card__top">
+                  <span className="mono">{c.company}</span>
+                  <span className="mono">{c.role}</span>
+                </div>
+                <h3 className="h3 case-card__title">{c.title}</h3>
+                <p className="body case-card__tag">{getCaseStudyDeck(c)}</p>
+                <div className="case-card__foot">
+                  <span className="body case-card__outcome">{c.featuredOutcome}</span>
+                  <span className="arrow-link">
+                    Read <span className="glyph" aria-hidden="true">→</span>
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -285,6 +287,10 @@ export default function HomePage() {
     <>
       <Hero ready={loaded} />
 
+      {/* Case studies lead, on the owner's call: the first thing under the
+          hero is the work that was accepted by other people. */}
+      <CaseStudies />
+
       <ProofStrip />
 
       <LatestSignal />
@@ -292,7 +298,7 @@ export default function HomePage() {
       <section className="bay" id="work">
         <div className="shell">
           <SectionHead
-            num="01"
+            num="02"
             eyebrow="Active builds"
             title="Products I own end to end."
             sub="Each one is live code with a real scope decision behind it. Open any row for the build log, the PM analysis, and what I would cut next."
@@ -304,7 +310,7 @@ export default function HomePage() {
       <section className="bay--tight" id="concepts">
         <div className="shell">
           <SectionHead
-            num="02"
+            num="03"
             eyebrow="Concepts & prototypes"
             title="Smaller bets, sharper questions."
             sub="Concepts prototyped to push on a single hypothesis: usability under pressure, lifecycle modeling, micro-interactions in social products."
@@ -312,8 +318,6 @@ export default function HomePage() {
         </div>
         <WorkRows products={conceptProducts} startIndex={flagshipProducts.length + 1} />
       </section>
-
-      <CaseStudies />
 
       <ExperienceList />
     </>

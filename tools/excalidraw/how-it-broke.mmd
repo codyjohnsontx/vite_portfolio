@@ -1,0 +1,22 @@
+flowchart LR
+  L["Launcher<br/>Enter · Esc · Ctrl-C"]
+
+  subgraph B["Before"]
+    direction LR
+    R1["Reviewer starts"] --> P["Hooks need review<br/>11 new or changed<br/>▸ Review hooks"]
+    P -. "can't move the cursor" .-> S(["Stuck.<br/>No second review."])
+  end
+
+  subgraph A["After"]
+    direction LR
+    R2["Reviewer starts"] --> D["Reads the diff"] --> V(["Second review runs"])
+  end
+
+  subgraph N["Not taken"]
+    direction LR
+    C["Write 'trusted'<br/>into the config"] --> G["Prompt gone"] --> X(["Says a human trusted<br/>11 hooks. Nobody did."])
+  end
+
+  L --> R1
+  L -- "hook layer off" --> R2
+  L -. "the shortcut" .-> C

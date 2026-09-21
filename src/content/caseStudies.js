@@ -6,6 +6,58 @@ export const caseStudies = [
   // Newest first. Add a new case study at the top of this array; both the
   // /notes index and the home page render it in plain array order.
   {
+    slug: 'firstmate-hook-prompt',
+    // Empty on purpose: this is a contribution to someone else's open-source
+    // project, not one of the products. With no subject the page simply has
+    // no Related block; do not attach it to an unrelated product.
+    subjects: [],
+    company: 'kunchenguid/firstmate',
+    timeframe: 'Open-source contribution, September 2026',
+    // No `team`, `challenge`, `impactHighlights` or `tagline`, on the owner's
+    // review of the rendered page: it goes straight from the title to the
+    // numbered sections. `role`, `deck` and `featuredOutcome` stay because the
+    // home page card and the /notes row read them; CaseStudyPage draws the
+    // Role / Team / Outcome row only when all three of its values exist.
+    role: 'Contributor',
+    title: 'A prompt nobody could answer',
+    deck: "For about two weeks, half my code review wasn't happening and I didn't notice.",
+    featuredOutcome: 'Every second review since has started clean.',
+    diagrams: {
+      eyebrow: 'How it broke and how we fixed it',
+      path: '/case-studies/firstmate-hook-prompt/diagrams',
+      label: 'View the drawing',
+      blurb: 'One launcher and three paths out of it, with the one-line fix marked as not taken.',
+    },
+    sections: {
+      context:
+        "For about two weeks, half my code review wasn't happening and I didn't notice. I review everything twice. First an automated pipeline, then a second pass from a different vendor's model. Not because one review isn't enough, but because the first reviewer is the same model family that wrote the code. It misses things in exactly the shape it made them. A second vendor misses different things. That's the entire argument.",
+      problem:
+        'The second reviewer had stopped starting. Not crashed, not erroring. Sitting there. A prompt: "Hooks need review. 11 hooks are new or changed. Hooks can run outside the sandbox after you trust them." Three options, cursor parked on "Review hooks." Those eleven hooks were mine. GitKraken\'s integration on my laptop, plus three of my own session-start tools. None of it belonged to the project under review, and none of it was anything the reviewer needed. It was being asked to vouch for my desk before it could read my diff. The thing that launches these reviewers can send Enter, Escape, and Ctrl-C. No arrows. So it couldn\'t move the cursor off "Review hooks" even if I\'d wanted it to. Pressing Enter would have picked the wrong option confidently.',
+      goal:
+        "Reviewers now launch with the hook layer off. They never meet the prompt, because there's nothing left to trust. Nothing is bypassed and nothing is pre-approved. The question just stops applying.",
+      decisions: [
+        'I could have written the trust decision into the config. One line. Prompt gone, reviews running inside a minute.',
+        'I keep coming back to why that bothered me. The line says a human trusted eleven hooks. No human did.',
+        "I'd have been writing myself a permission slip and signing it, and six months later I'd read that config and believe it. Consent you manufacture for yourself isn't consent, it's a note in your own handwriting.",
+      ],
+      tradeoffs: [
+        "Two things I left alone on purpose. The finished-turn signal stays, so a reviewer still reports when it's done.",
+        "And my long-running assistant keeps the old behavior, because it isn't disposable and the reasoning doesn't transfer.",
+      ],
+      execution: [
+        "Then I had it tested against the real tool: not just a check on my flags, though that's there too, but one that runs them against the installed version and fails if a future release changes what that flag means.",
+        "Silent stalling is how this started. I'd rather it break loudly.",
+        '234 lines, merged upstream. Most of it tests and the written record of why.',
+      ],
+      outcomes: [
+        'Every second review since has started clean. Last week those reviews found real bugs in three of my own pull requests, all of which the pipeline and CodeRabbit had already passed.',
+        'My favorite one: two sessions at the same circuit, on different layouts of that circuit, were being scored as the same track. Nothing about it looked wrong. It would have quietly fed the wrong laps into the setup advice, and the rider would never have known why the advice got worse.',
+        "That's the bug the second reviewer exists for. It was two weeks from finding it.",
+        'Source of record: https://github.com/kunchenguid/firstmate/pull/4689 - merged 2026-09-17, authored by codyjohnsontx, 234 lines added.',
+      ],
+    },
+  },
+  {
     slug: 'diaz-deploy-gate',
     subjects: ['diaz-on-demand'],
     company: 'Diaz on Demand',
@@ -257,6 +309,13 @@ export const caseStudies = [
     },
   },
 ];
+
+/* The one line a /notes row and a home page card print under the title. It is
+   the `tagline` for every study that has one, which also opens its page; a
+   study whose page opens without that line carries `deck` instead. */
+export function getCaseStudyDeck(study) {
+  return study.deck ?? study.tagline;
+}
 
 export function getCaseStudyBySlug(slug) {
   return caseStudies.find((study) => study.slug === slug);

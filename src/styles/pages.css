@@ -278,10 +278,20 @@
 
 /* ----------------------------- case studies ----------------------------- */
 
+/* 360px caps a full-width shell at three columns. At 300px it fit four, which
+   left the fifth case study alone on a second row with three empty slots. */
 .case-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
   gap: 14px;
+}
+/* The wrapper is a size container so the rule below can ask how wide the grid
+   is. Three 360px tracks and their gaps need 1108px, so anything narrower is
+   two columns or one. At two, an odd last card would sit alone on its row, so
+   it spans both tracks; at one, spanning the only track changes nothing. */
+.case-grid-wrap { container-type: inline-size; }
+@container (max-width: 1107.98px) {
+  .case-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 .case-card {
   display: flex;

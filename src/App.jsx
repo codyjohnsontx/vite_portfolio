@@ -18,6 +18,7 @@ const SessionCompareWireframesPage = lazy(
   () => import('./pages/SessionCompareWireframesPage'),
 );
 const OasisTenancyDiagramsPage = lazy(() => import('./pages/OasisTenancyDiagramsPage'));
+const FirstmateHookDiagramsPage = lazy(() => import('./pages/FirstmateHookDiagramsPage'));
 const DiazVideoFirstPage = lazy(() => import('./pages/DiazVideoFirstPage'));
 const DiazVideoFirstWireframesPage = lazy(
   () => import('./pages/DiazVideoFirstWireframesPage'),
@@ -80,6 +81,17 @@ function App() {
               paths redirect. */}
           <Route path="/case-studies" element={<Navigate to="/notes" replace />} />
           <Route path="/blog" element={<Navigate to="/notes" replace />} />
+          {/* A literal path outranks the :slug one below, so each case study's
+              diagrams page is its own route and the Oasis page keeps turning
+              every other slug away. */}
+          <Route
+            path="/case-studies/firstmate-hook-prompt/diagrams"
+            element={
+              <Suspense fallback={null}>
+                <FirstmateHookDiagramsPage />
+              </Suspense>
+            }
+          />
           <Route
             path="/case-studies/:slug/diagrams"
             element={

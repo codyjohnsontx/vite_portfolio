@@ -79,6 +79,9 @@ product slugs from `projects.js` or engagement slugs from `engagements.js`, read
 by `getWritingForSubject` and `getSubjectsForWriting`. It is what puts the `06 Decisions & writing`
 block on a product page and the `Related` block on a case study or note. Adding a piece of writing
 without `subjects` silently orphans it from the work index.
+The one deliberate exception is `firstmate-hook-prompt`, an open-source contribution to someone
+else's project: its `subjects` is empty on the owner's decision, so its page has no `Related` block.
+Do not attach it to a product.
 
 `src/content/engagements.js` holds the two client engagements (Lambda Curry, HSNBA), which have no
 app and no repository. They are derived from their case studies rather than restating them, and
@@ -97,16 +100,31 @@ opposite case: `CaseSection` declares `body` required, so omitting one warns and
 empty section. The list sections, `sections.decisions` through `sections.lessons`, are the
 other way round: `CaseListSection` declares `items` optional, so an entry that skips one
 (`diaz-deploy-gate` has no `lessons`) renders nothing for it and logs nothing.
-The optional `diagrams` field (`{ path, label, blurb }`) is what draws the
-`System design` block on the detail page; entries without it render exactly as before.
+The optional `diagrams` field (`{ path, label, blurb }`, plus an optional `eyebrow` that
+defaults to `System design`) is what draws the diagrams block on the detail page; entries
+without it render exactly as before.
+Everything between the title and `01` is drawn field by field: the `tagline` line, the
+Role / Team / Outcome row (only when all three values exist), `challenge`, and
+`impactHighlights`. `firstmate-hook-prompt` omits them on the owner's review of the rendered
+page and carries `deck` instead of `tagline`, which `getCaseStudyDeck` hands to the `/notes`
+row and the home card; its `role` and `featuredOutcome` stay because that card prints them.
+`src/App.test.jsx` pins the full block on every other study.
 
 Several pages render wireframes from raw HTML strings in a content module, with React owning
 the chrome around them: `RideSenseWireframesPage`, which draws one board;
 `SessionCompareWireframesPage` and `OasisTenancyDiagramsPage`
 (`/case-studies/:slug/diagrams`, which redirects for any slug but `oasis-multi-tenancy`),
-where React owns a toggle between views; and `DiazVideoFirstWireframesPage`, which the next
-section covers. Three things to know before adding another. The
-hand-drawn ones' look depends on Caveat and Kalam, which are requested by
+where React owns a toggle between views (`FirstmateHookDiagramsPage` sits on its own literal
+route, wears `.otd-page` and imports the Oasis stylesheet, so a change to an `.otd-*` rule
+lands on both; what it draws is one Excalidraw diagram as two static SVGs, a wide layout and a
+stacked one served below 1100px through `<picture>`, both generated from one Mermaid file so
+their words cannot drift, with the page title drawn in and a visually hidden `h1` kept for
+the outline; the editable `.excalidraw` scenes sit beside them in
+`src/assets/firstmate-hook-prompt/` and `tools/excalidraw/README.md` has the regenerate
+steps - Excalidraw is tooling only and must not become a runtime
+dependency); and
+`DiazVideoFirstWireframesPage`, which the next section covers. Three things to know before
+adding another. The hand-drawn ones' look depends on Caveat and Kalam, which are requested by
 the single Google Fonts `<link>` in `index.html` and used nowhere else on the site. The
 hand-maintained stylesheets and the RideSense page's inline style name `'Segoe Print',
 'Bradley Hand', 'Noteworthy'` before the generic `cursive` keyword, because bare `cursive`

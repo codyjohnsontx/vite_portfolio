@@ -1,5 +1,5 @@
 import { blogPosts } from './blogPosts';
-import { caseStudies } from './caseStudies';
+import { caseStudies, getCaseStudyDeck } from './caseStudies';
 import { getEngagementBySlug } from './engagements';
 import { getProductBySlug } from './projects';
 
@@ -32,7 +32,7 @@ export const writing = [
     slug: study.slug,
     href: `/case-studies/${study.slug}`,
     title: study.title,
-    deck: study.tagline,
+    deck: getCaseStudyDeck(study),
     meta: [study.company, study.timeframe],
     subjects: study.subjects ?? [],
   })),
