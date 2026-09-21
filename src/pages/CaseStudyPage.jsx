@@ -179,7 +179,7 @@ function CaseSummary({ study: c }) {
             }}
           >
             <div style={{ maxWidth: '60ch' }}>
-              <Eyebrow>System design</Eyebrow>
+              <Eyebrow>{c.diagrams.eyebrow ?? 'System design'}</Eyebrow>
               <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
                 {c.diagrams.blurb}
               </p>
@@ -208,6 +208,7 @@ CaseSummary.propTypes = {
     challenge: PropTypes.string,
     impactHighlights: PropTypes.arrayOf(PropTypes.string),
     diagrams: PropTypes.shape({
+      eyebrow: PropTypes.string,
       path: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       blurb: PropTypes.string.isRequired,

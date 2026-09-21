@@ -100,8 +100,8 @@ opposite case: `CaseSection` declares `body` required, so omitting one warns and
 empty section. The list sections, `sections.decisions` through `sections.lessons`, are the
 other way round: `CaseListSection` declares `items` optional, so an entry that skips one
 (`diaz-deploy-gate` has no `lessons`) renders nothing for it and logs nothing.
-The optional `diagrams` field (`{ path, label, blurb }`) is what draws the
-`System design` block on the detail page; entries without it render exactly as before.
+The optional `diagrams` field (`{ path, label, blurb }`, plus an optional `eyebrow` that
+defaults to `System design`) is what draws the diagrams block on the detail page; entries without it render exactly as before.
 Everything between the title and `01` is drawn field by field: the `tagline` line, the
 Role / Team / Outcome row (only when all three values exist), `challenge`, and
 `impactHighlights`. `firstmate-hook-prompt` omits them on the owner's review of the rendered

@@ -23,6 +23,7 @@ export const caseStudies = [
     deck: "For about two weeks, half my code review wasn't happening and I didn't notice.",
     featuredOutcome: 'Every second review since has started clean.',
     diagrams: {
+      eyebrow: 'How it broke and how we fixed it',
       path: '/case-studies/firstmate-hook-prompt/diagrams',
       label: 'View the before and after wireframe',
       blurb:

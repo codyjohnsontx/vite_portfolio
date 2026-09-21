@@ -1153,6 +1153,8 @@ describe('portfolio routes and metadata', () => {
 
   it('links the firstmate case study to its before and after wireframe', async () => {
     const page = renderApp('/case-studies/firstmate-hook-prompt');
+    expect(screen.getByText('How it broke and how we fixed it')).toBeTruthy();
+    expect(screen.queryByText('System design')).toBeNull();
     expect(
       screen
         .getByRole('link', { name: /View the before and after wireframe/i })
