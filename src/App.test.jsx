@@ -1047,6 +1047,12 @@ describe('portfolio routes and metadata', () => {
     const hero = main.querySelector('.hero');
     const caseStudies = main.querySelector('.case-grid').closest('section');
     expect(hero.nextElementSibling).toBe(caseStudies);
+    expect(caseStudies.querySelector('h2').textContent).toBe(
+      'Real problems, and the calls I made on them.',
+    );
+    expect(caseStudies.querySelector('.head__sub').textContent).toBe(
+      'Shipped products, architecture decisions, and an open-source fix: what broke or needed deciding, what I chose and why, and what happened after.',
+    );
   });
 
   it('keeps the deck of the firstmate case study on the notes index and the home card', () => {
