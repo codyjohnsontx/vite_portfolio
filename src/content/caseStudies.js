@@ -42,7 +42,7 @@ export const caseStudies = [
         "And my long-running assistant keeps the old behavior, because it isn't disposable and the reasoning doesn't transfer.",
       ],
       execution: [
-        "Then I wrote the test I actually wanted: not one that checks my flags, though that's there too, but one that runs them against the installed tool and fails if a future version changes what that flag means.",
+        "Then I had it tested against the real tool: not just a check on my flags, though that's there too, but one that runs them against the installed version and fails if a future release changes what that flag means.",
         "Silent stalling is how this started. I'd rather it break loudly.",
         '234 lines, merged upstream. Most of it tests and the written record of why.',
       ],

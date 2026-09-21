@@ -32,7 +32,7 @@ function CaseSection({ num, title, body }) {
 function withLinks(text) {
   return text.split(/(https:\/\/\S+)/).map((part, i) =>
     i % 2 ? (
-      <a key={part} href={part} target="_blank" rel="noreferrer">
+      <a key={part} className="case-link" href={part} target="_blank" rel="noreferrer">
         {part}
       </a>
     ) : (

@@ -175,6 +175,16 @@
   background-size: 100% 1px;
 }
 
+/* Inline links in case study copy stay underlined at rest: unlike the
+   update feed, nothing else marks them as links. Focus uses the global
+   :focus-visible ring. */
+.case-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 /* -------------------------- related writing --------------------------- */
 /* Used on three surfaces - product detail, case study, note - so it has to
    sit on the Signal primitives rather than on any one page's grid. */
