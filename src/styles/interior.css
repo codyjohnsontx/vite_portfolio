@@ -177,8 +177,10 @@
 
 /* Inline links in case study copy stay underlined at rest: unlike the
    update feed, nothing else marks them as links. Focus uses the global
-   :focus-visible ring. */
+   :focus-visible ring. A bare URL has no break opportunities, so without
+   overflow-wrap it widens the whole page past a phone viewport. */
 .case-link {
+  overflow-wrap: anywhere;
   color: var(--ink);
   text-decoration: underline;
   text-decoration-thickness: 1px;
