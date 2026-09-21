@@ -214,8 +214,8 @@ function CaseStudies() {
         <SectionHead
           num="01"
           eyebrow="Case studies"
-          title="Shipped with other people, measured after launch."
-          sub="Engagements and architecture calls where the product decisions are traceable to outcomes: scope, tradeoffs, and what the numbers did afterwards."
+          title="Real problems, and the calls I made on them."
+          sub="Shipped products, architecture decisions, and an open-source fix: what broke or needed deciding, what I chose and why, and what happened after."
         />
         <div className="case-grid-wrap">
           <div className="case-grid" ref={ref} style={{ opacity: 0 }}>
