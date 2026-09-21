@@ -116,9 +116,10 @@ the chrome around them: `RideSenseWireframesPage`, which draws one board;
 (`/case-studies/:slug/diagrams`, which redirects for any slug but `oasis-multi-tenancy`),
 where React owns a toggle between views (`FirstmateHookDiagramsPage` sits on its own literal
 route, wears `.otd-page` and imports the Oasis stylesheet, so a change to an `.otd-*` rule
-lands on both; what it draws is one static SVG exported from Excalidraw, with the editable `.excalidraw` scene beside it in
-`src/assets/firstmate-hook-prompt/` and the re-export steps in `tools/excalidraw/README.md` -
-Excalidraw is tooling only and must not become a runtime dependency); and
+lands on both; what it draws is one static SVG exported from Excalidraw, with the editable
+`.excalidraw` scene beside it in `src/assets/firstmate-hook-prompt/` and the re-export steps in
+`tools/excalidraw/README.md` - Excalidraw is tooling only and must not become a runtime
+dependency); and
 `DiazVideoFirstWireframesPage`, which the next section covers. Three things to know before
 adding another. The hand-drawn ones' look depends on Caveat and Kalam, which are requested by
 the single Google Fonts `<link>` in `index.html` and used nowhere else on the site. The
