@@ -29,6 +29,18 @@ function CaseSection({ num, title, body }) {
   );
 }
 
+function withLinks(text) {
+  return text.split(/(https:\/\/\S+)/).map((part, i) =>
+    i % 2 ? (
+      <a key={part} href={part} target="_blank" rel="noreferrer">
+        {part}
+      </a>
+    ) : (
+      part
+    ),
+  );
+}
+
 function CaseListSection({ num, title, items }) {
   if (!items?.length) return null;
   return (
@@ -65,7 +77,7 @@ function CaseListSection({ num, title, items }) {
                   className="body"
                   style={{ color: 'var(--ink)', fontSize: 17, lineHeight: 1.5 }}
                 >
-                  {it}
+                  {withLinks(it)}
                 </span>
               </li>
             ))}

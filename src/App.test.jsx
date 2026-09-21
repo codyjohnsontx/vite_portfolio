@@ -42,21 +42,25 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Measured outcomes')).toBeTruthy();
     expect(screen.getByText('Latest')).toBeTruthy();
     expect(
-      screen.getByRole('heading', { level: 2, name: 'A prompt nobody could answer' }),
+      screen.getByRole('heading', { name: 'Attend: the inbox ranks by risk, not by what came in last' }),
     ).toBeTruthy();
+    expect(screen.getAllByText(/briefs every open conversation on its own/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/how much of the queue is briefed/i).length).toBeGreaterThan(0);
+    /* The Latest block closes on the human-in-the-loop guarantee stated as a
+       strength. It replaced "Sending the suggested reply is still a person's
+       decision.", and "No dealership is using it yet and there is no measured
+       result." was deleted outright - both on owner instruction, as volunteered
+       deflation closing the freshest item on the home page. Pinned both ways so
+       a content pass cannot soften the new line or restore the old ones. */
     expect(
-      screen.getAllByText(/half my code review wasn't happening and I didn't notice/i).length,
+      screen.getAllByText(/The AI drafts; a person decides what sends/i).length,
     ).toBeGreaterThan(0);
-    expect(screen.getAllByText(/Every second review since has started clean/i).length).toBeGreaterThan(0);
-    /* Both lines were deleted from an earlier Latest item on owner instruction,
-       as volunteered deflation closing the freshest item on the home page.
-       Pinned so a content pass cannot restore them. */
     expect(screen.queryByText(/No dealership is using it yet/i)).toBeNull();
     expect(screen.queryByText(/is still a person/i)).toBeNull();
     expect(
       screen
-        .getAllByRole('link', { name: /Read the case study/i })
-        .some((link) => link.getAttribute('href') === '/case-studies/firstmate-hook-prompt'),
+        .getAllByRole('link', { name: /Read the build/i })
+        .some((link) => link.getAttribute('href') === '/products/ctx-chat'),
     ).toBe(true);
   });
 
@@ -993,6 +997,21 @@ describe('portfolio routes and metadata', () => {
     expect(main.getAllByText(/half my code review wasn't happening/).length).toBeGreaterThan(0);
     expect(main.getByText(/The line says a human trusted eleven hooks\. No human did\./)).toBeTruthy();
     expect(main.getByText(/Consent you manufacture for yourself isn't consent/)).toBeTruthy();
+  });
+
+  it('links the firstmate case study to its source of record', () => {
+    renderApp('/case-studies/firstmate-hook-prompt');
+
+    const main = within(document.querySelector('main'));
+    const source = main.getByRole('link', {
+      name: 'https://github.com/kunchenguid/firstmate/pull/4689',
+    });
+    expect(source.getAttribute('href')).toBe('https://github.com/kunchenguid/firstmate/pull/4689');
+    expect(source.closest('li').textContent).toContain(
+      'Source of record: https://github.com/kunchenguid/firstmate/pull/4689 - merged 2026-09-17, authored by codyjohnsontx, 234 lines added.',
+    );
+    expect(main.getByText('Open-source contribution, merged upstream')).toBeTruthy();
+    expect(main.queryByText(/Solo/)).toBeNull();
   });
 
   it('renders the Oasis tenancy case study with the argument that decided it', () => {

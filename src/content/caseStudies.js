@@ -14,19 +14,17 @@ export const caseStudies = [
     company: 'kunchenguid/firstmate',
     timeframe: 'Open-source contribution, September 2026',
     role: 'Contributor',
-    team: 'Solo; merged upstream',
+    team: 'Open-source contribution, merged upstream',
     title: 'A prompt nobody could answer',
     tagline:
       "For about two weeks, half my code review wasn't happening and I didn't notice.",
-    challenge:
-      "For about two weeks, half my code review wasn't happening and I didn't notice. I review everything twice. First an automated pipeline, then a second pass from a different vendor's model. Not because one review isn't enough, but because the first reviewer is the same model family that wrote the code. It misses things in exactly the shape it made them. A second vendor misses different things. That's the entire argument.",
+    challenge: 'The second reviewer had stopped starting. Not crashed, not erroring. Sitting there.',
     impactHighlights: [
       "Reviewers now launch with the hook layer off. They never meet the prompt, because there's nothing left to trust.",
-      'Nothing is bypassed and nothing is pre-approved.',
+      'Last week those reviews found real bugs in three of my own pull requests, all of which the pipeline and CodeRabbit had already passed.',
       '234 lines, merged upstream. Most of it tests and the written record of why.',
     ],
-    featuredOutcome:
-      'Every second review since has started clean. Last week those reviews found real bugs in three of my own pull requests, all of which the pipeline and CodeRabbit had already passed.',
+    featuredOutcome: 'Every second review since has started clean.',
     sections: {
       context:
         "For about two weeks, half my code review wasn't happening and I didn't notice. I review everything twice. First an automated pipeline, then a second pass from a different vendor's model. Not because one review isn't enough, but because the first reviewer is the same model family that wrote the code. It misses things in exactly the shape it made them. A second vendor misses different things. That's the entire argument.",
@@ -52,6 +50,7 @@ export const caseStudies = [
         'Every second review since has started clean. Last week those reviews found real bugs in three of my own pull requests, all of which the pipeline and CodeRabbit had already passed.',
         'My favorite one: two sessions at the same circuit, on different layouts of that circuit, were being scored as the same track. Nothing about it looked wrong. It would have quietly fed the wrong laps into the setup advice, and the rider would never have known why the advice got worse.',
         "That's the bug the second reviewer exists for. It was two weeks from finding it.",
+        'Source of record: https://github.com/kunchenguid/firstmate/pull/4689 - merged 2026-09-17, authored by codyjohnsontx, 234 lines added.',
       ],
     },
   },
