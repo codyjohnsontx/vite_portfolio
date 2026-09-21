@@ -1,5 +1,12 @@
 import { readFileSync } from 'node:fs';
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import {
+  fireEvent,
+  isInaccessible,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
@@ -1177,6 +1184,13 @@ describe('portfolio routes and metadata', () => {
 
     // After: the hook layer is off and the review runs.
     expect(screen.getByRole('heading', { name: /After · how it was fixed/ })).toBeTruthy();
+    expect(
+      isInaccessible(
+        within(screen.getByRole('group', { name: 'No prompt appears' })).getByText(
+          'Hooks need review.',
+        ),
+      ),
+    ).toBe(true);
     expect(screen.getByText(/They never meet the prompt/)).toBeTruthy();
     expect(screen.getByText('The second review runs')).toBeTruthy();
     expect(screen.getByText('Every second review since has started clean.')).toBeTruthy();

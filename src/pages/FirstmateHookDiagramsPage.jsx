@@ -150,7 +150,9 @@ export default function FirstmateHookDiagramsPage() {
                 <p className="otd-card__kicker">Second reviewer</p>
                 <p className="otd-card__title">No prompt to meet</p>
                 <div className="fhd-term fhd-term--clear" role="group" aria-label="No prompt appears">
-                  <p className="fhd-term__head fhd-term__head--off">Hooks need review.</p>
+                  <p className="fhd-term__head fhd-term__head--off" aria-hidden="true">
+                    Hooks need review.
+                  </p>
                   <p className="fhd-term__line">The question just stops applying.</p>
                 </div>
                 <p className="otd-card__sub">
