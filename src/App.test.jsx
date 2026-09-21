@@ -1166,14 +1166,25 @@ describe('portfolio routes and metadata', () => {
       ).toBeTruthy(),
     );
 
-    // One drawing replaces the panels: the page's only heading is its title, and
-    // the drawing's words reach a reader who cannot see it through the alt text.
+    // One drawing replaces the panels. Its title is drawn into it, so the page's
+    // only heading is a visually hidden h1 that stays in the document outline.
     const main = within(document.querySelector('main'));
-    expect(main.getAllByRole('heading')).toHaveLength(1);
+    const headings = main.getAllByRole('heading');
+    expect(headings).toHaveLength(1);
+    expect(headings[0].className).toBe('sr-only');
+
+    // A wide drawing and a stacked one for narrow screens, chosen by the browser.
     const drawing = main.getByRole('img');
-    expect(drawing.getAttribute('src')).toMatch(/how-it-broke.*\.svg/);
+    expect(drawing.getAttribute('src')).toMatch(/how-it-broke[^/]*\.svg/);
+    expect(drawing.getAttribute('src')).not.toMatch(/phone/);
+    const stacked = drawing.closest('picture').querySelector('source');
+    expect(stacked.getAttribute('srcset')).toMatch(/how-it-broke-phone[^/]*\.svg/);
+    expect(stacked.getAttribute('media')).toBe('(max-width: 1099px)');
+
+    // The drawing's words reach a reader who cannot see it through the alt text.
     const alt = drawing.getAttribute('alt');
     [
+      'How it broke, how it was fixed',
       'Enter, Esc and Ctrl-C',
       'Before:',
       'Hooks need review, 11 new or changed',
@@ -1188,12 +1199,6 @@ describe('portfolio routes and metadata', () => {
       "Write 'trusted' into the config",
       'Says a human trusted 11 hooks, nobody did',
     ].forEach((words) => expect(alt).toContain(words));
-
-    // It scrolls sideways in its own frame on a phone, so the frame has to be
-    // reachable from the keyboard.
-    const frame = screen.getByRole('region', { name: /how it broke and how it was fixed/i });
-    expect(frame.getAttribute('tabindex')).toBe('0');
-    expect(frame.contains(drawing)).toBe(true);
 
     expect(
       screen.getAllByRole('link', { name: /Back to the case study/ })[0].getAttribute('href'),

@@ -116,9 +116,12 @@ the chrome around them: `RideSenseWireframesPage`, which draws one board;
 (`/case-studies/:slug/diagrams`, which redirects for any slug but `oasis-multi-tenancy`),
 where React owns a toggle between views (`FirstmateHookDiagramsPage` sits on its own literal
 route, wears `.otd-page` and imports the Oasis stylesheet, so a change to an `.otd-*` rule
-lands on both; what it draws is one static SVG exported from Excalidraw, with the editable
-`.excalidraw` scene beside it in `src/assets/firstmate-hook-prompt/` and the re-export steps in
-`tools/excalidraw/README.md` - Excalidraw is tooling only and must not become a runtime
+lands on both; what it draws is one Excalidraw diagram as two static SVGs, a wide layout and a
+stacked one served below 1100px through `<picture>`, both generated from one Mermaid file so
+their words cannot drift, with the page title drawn in and a visually hidden `h1` kept for
+the outline; the editable `.excalidraw` scenes sit beside them in
+`src/assets/firstmate-hook-prompt/` and `tools/excalidraw/README.md` has the regenerate
+steps - Excalidraw is tooling only and must not become a runtime
 dependency); and
 `DiazVideoFirstWireframesPage`, which the next section covers. Three things to know before
 adding another. The hand-drawn ones' look depends on Caveat and Kalam, which are requested by

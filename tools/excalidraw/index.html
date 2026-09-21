@@ -7,30 +7,111 @@ try {
   const { convertToExcalidrawElements, exportToSvg, serializeAsJSON } = await import("https://esm.sh/@excalidraw/excalidraw@0.18.0");
   const mmd = await (await fetch("how-it-broke.mmd")).text();
 
-  // Excalifont sets wider than the font Mermaid measured with, so the labels on
-  // the three arrows leaving the Launcher do not fit the gap Mermaid left for
-  // them. Move the Launcher left and stretch those arrows by the same amount,
-  // keeping each label over the middle of its arrow.
-  const DX = 110;
+  const TITLE = "How it broke, how it was fixed";
+  const TITLE_SIZE = 36;
   const br = (t) => t.replace(/<br\s*\/?>/g, "\n");
+  const bounds = (els) => ({
+    left: Math.min(...els.map((el) => el.x)),
+    top: Math.min(...els.map((el) => el.y)),
+    right: Math.max(...els.map((el) => el.x + (el.width ?? 0))),
+  });
 
-  async function build() {
+  // Both drawings come from the one Mermaid file, parsed once per build, so
+  // their words cannot drift. The wide one keeps Mermaid's left-to-right layout.
+  // The phone one keeps every element and only moves it: see stackForPhone.
+  const VARIANTS = { wide: { phone: false }, phone: { phone: true } };
+
+  // Mermaid's own top-to-bottom layout staggers the groups sideways and comes
+  // out 700 units wide, which on a 390px screen halves the handwriting. This
+  // lays the same elements out in one 400-unit column instead: title, Launcher,
+  // then Before, After and Not taken under one another, each flowing downward.
+  // The two labelled arrows leave the Launcher sideways, run down a gutter, and
+  // turn in above their group, so each label sits on a level stretch of line.
+  function stackForPhone(skeleton) {
+    const W = 400, CX = W / 2, GROUP_X = 44, GROUP_W = W - 2 * GROUP_X;
+    const LEFT_GUTTER = 20, RIGHT_GUTTER = W - 20, ENTER_LEFT = 130, ENTER_RIGHT = 270;
+    const byId = Object.fromEntries(skeleton.map((el) => [el.id, el]));
+    const nodesOf = (g) => skeleton.filter((el) => el.type === "rectangle" && el.id !== g && el.groupIds?.includes(`subgraph_group_${g}`));
+    const arrows = skeleton.filter((el) => el.type === "arrow");
+
+    const launcher = byId.L;
+    launcher.x = CX - launcher.width / 2;
+    launcher.y = 0;
+    let y = launcher.height;
+    const gapY = {};
+    for (const g of ["B", "A", "N"]) {
+      gapY[g] = y + 45;
+      y += 90;
+      const group = byId[g];
+      group.x = GROUP_X; group.y = y; group.width = GROUP_W;
+      y += 44;
+      const nodes = nodesOf(g);
+      nodes.forEach((node, i) => {
+        node.x = CX - node.width / 2;
+        node.y = y;
+        y += node.height;
+        const next = nodes[i + 1];
+        if (!next) return;
+        const link = arrows.find((el) => el.start.id === node.id && el.end.id === next.id);
+        const gap = link.label ? 96 : 48;
+        link.x = CX; link.y = y;
+        link.points = [[0, 0], [0, gap]];
+        y += gap;
+      });
+      y += 28;
+      group.height = y - group.y;
+    }
+
+    const route = (arrow, pts) => {
+      arrow.x = pts[0][0]; arrow.y = pts[0][1];
+      arrow.points = pts.map(([px, py]) => [px - pts[0][0], py - pts[0][1]]);
+    };
+    const midY = launcher.y + launcher.height / 2;
+    const into = (id) => byId[id].y;
+    route(byId.L_R1, [[ENTER_LEFT, launcher.height], [ENTER_LEFT, into("R1")]]);
+    // Seven points, so the label lands on the fourth: the middle of the level run.
+    for (const [id, target, gutter, enter, side] of [
+      ["L_R2", "R2", LEFT_GUTTER, ENTER_LEFT, launcher.x],
+      ["L_C", "C", RIGHT_GUTTER, ENTER_RIGHT, launcher.x + launcher.width],
+    ]) {
+      const level = gapY[byId[target].groupIds[0].replace("subgraph_group_", "")];
+      route(byId[id], [
+        [side, midY], [gutter, midY], [gutter, level], [(gutter + enter) / 2, level],
+        [enter, level], [enter, (level + into(target)) / 2], [enter, into(target)],
+      ]);
+      byId[id].roundness = null;
+    }
+  }
+
+  async function build({ phone }) {
+    const [dx, dy] = phone ? [0, 0] : [-110, 0];
     const { elements: skeleton, files } = await parseMermaidToExcalidraw(mmd, { themeVariables: { fontSize: "20px" } });
     for (const el of skeleton) {
       // The converter leaves Mermaid's <br> in the label text; Excalidraw wants \n.
       if (el.label?.text) el.label.text = br(el.label.text);
       if (typeof el.text === "string") el.text = br(el.text);
     }
+    // Excalifont sets wider than the font Mermaid measured with, so in the wide
+    // drawing the labels on the three arrows leaving the Launcher do not fit the
+    // gap Mermaid left for them. Move the Launcher left and stretch those arrows
+    // by the same amount, keeping each label over the middle of its arrow.
     const launcher = skeleton.find((el) => el.label?.text?.startsWith("Launcher"));
-    launcher.x -= DX;
+    launcher.x += dx; launcher.y += dy;
     for (const el of skeleton) {
-      if (el.type === "arrow" && el.start?.id === launcher.id) {
+      if (el.type === "arrow" && el.start?.id === launcher.id && dx) {
         const last = el.points.length - 1;
-        el.x -= DX;
-        el.points = el.points.map(([x, y], i) => [i === 0 ? x : i === last ? x + DX : x + DX / 2, y]);
-        if (typeof el.width === "number") el.width += DX;
+        el.x += dx;
+        el.points = el.points.map(([x, y], i) => [i === 0 ? x : i === last ? x - dx : x - dx / 2, y]);
+        if (typeof el.width === "number") el.width -= dx;
       }
     }
+    if (phone) stackForPhone(skeleton);
+    // The title is part of the drawing, in the same hand as the boxes. On the
+    // phone it breaks at its comma so it fits the column.
+    const box = bounds(skeleton.filter((el) => el.type !== "arrow"));
+    const title = phone ? TITLE.replace(", ", ",\n") : TITLE;
+    const titleHeight = TITLE_SIZE * 1.25 * title.split("\n").length;
+    skeleton.push({ type: "text", text: title, fontSize: TITLE_SIZE, x: box.left, y: box.top - titleHeight - 36 });
     const elements = convertToExcalidrawElements(skeleton);
     const svg = await exportToSvg({ elements, appState: { exportBackground: false, exportEmbedScene: false }, files, exportPadding: 24 });
     return { elements, files, svg };
@@ -40,19 +121,25 @@ try {
   // measured on a canvas, so until the face is registered with the document the
   // widths - and the masks that lift each arrow off its label - come from a
   // narrower fallback font.
-  const first = await build();
+  const first = await build(VARIANTS.wide);
   const src = new XMLSerializer().serializeToString(first.svg).match(/font-family:\s*Excalifont;\s*src:\s*url\(([^)]+)\)/);
   const face = new FontFace("Excalifont", `url(${src[1]})`);
   await face.load(); document.fonts.add(face);
   await document.fonts.load("20px Excalifont");
 
-  const { elements, files, svg } = await build();
-  window.__svg = new XMLSerializer().serializeToString(svg);
-  window.__scene = serializeAsJSON(elements, { viewBackgroundColor: "#ffffff" }, files ?? {}, "local");
-  document.getElementById("out").replaceWith(svg);
   const save = (name, body) => fetch(`/save/${name}`, { method: "POST", body });
-  await save("how-it-broke.svg", window.__svg + "\n");
-  await save("how-it-broke.excalidraw", window.__scene + "\n");
+  const out = document.getElementById("out");
+  window.__boxes = {};
+  for (const [name, variant] of Object.entries(VARIANTS)) {
+    const { elements, files, svg } = await build(variant);
+    const file = name === "wide" ? "how-it-broke" : "how-it-broke-phone";
+    await save(`${file}.svg`, new XMLSerializer().serializeToString(svg) + "\n");
+    await save(`${file}.excalidraw`, serializeAsJSON(elements, { viewBackgroundColor: "#ffffff" }, files ?? {}, "local") + "\n");
+    window.__boxes[name] = svg.getAttribute("viewBox");
+    svg.style.cssText = "display:block;margin:24px;max-width:none";
+    out.after(svg);
+  }
+  out.remove();
   window.__done = "ok";
 } catch (e) { window.__done = "error: " + (e?.stack || e); document.getElementById("out").textContent = window.__done; }
 </script>
