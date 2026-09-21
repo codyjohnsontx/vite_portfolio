@@ -26,8 +26,7 @@ export const caseStudies = [
       eyebrow: 'How it broke and how we fixed it',
       path: '/case-studies/firstmate-hook-prompt/diagrams',
       label: 'View the before and after wireframe',
-      blurb:
-        'How it broke and how it was fixed, drawn side by side, with the one-line fix marked as not taken.',
+      blurb: 'Drawn side by side, with the one-line fix marked as not taken.',
     },
     sections: {
       context:
