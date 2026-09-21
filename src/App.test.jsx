@@ -1,7 +1,6 @@
 import { readFileSync } from 'node:fs';
 import {
   fireEvent,
-  isInaccessible,
   render,
   screen,
   waitFor,
@@ -1151,14 +1150,12 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText(/Separate → shared, later/)).toBeTruthy();
   });
 
-  it('links the firstmate case study to its before and after wireframe', async () => {
+  it('links the firstmate case study to its hand-drawn diagram', async () => {
     const page = renderApp('/case-studies/firstmate-hook-prompt');
     expect(screen.getByText('How it broke and how we fixed it')).toBeTruthy();
     expect(screen.queryByText('System design')).toBeNull();
     expect(
-      screen
-        .getByRole('link', { name: /View the before and after wireframe/i })
-        .getAttribute('href'),
+      screen.getByRole('link', { name: /View the drawing/i }).getAttribute('href'),
     ).toBe('/case-studies/firstmate-hook-prompt/diagrams');
 
     page.unmount();
@@ -1169,41 +1166,38 @@ describe('portfolio routes and metadata', () => {
       ).toBeTruthy(),
     );
 
-    // Before: the prompt, the keys the launcher has, and no second review.
-    expect(screen.getByRole('heading', { name: /Before · how it broke/ })).toBeTruthy();
-    expect(
-      screen.getByText('Hooks need review.', {
-        selector: '.fhd-term__head:not(.fhd-term__head--off)',
-      }),
-    ).toBeTruthy();
-    expect(screen.getByText('11 hooks are new or changed.')).toBeTruthy();
-    expect(screen.getByText(/Review hooks$/, { selector: '.fhd-term__option--on' })).toBeTruthy();
-    ['Enter', 'Escape', 'Ctrl-C', 'No arrows'].forEach((key) =>
-      expect(screen.getAllByText(key)).toHaveLength(2),
-    );
-    expect(screen.getByText('No second review')).toBeTruthy();
-    expect(screen.getByText(/half my code review wasn.t happening/)).toBeTruthy();
+    // One drawing replaces the panels: the page's only heading is its title, and
+    // the drawing's words reach a reader who cannot see it through the alt text.
+    const main = within(document.querySelector('main'));
+    expect(main.getAllByRole('heading')).toHaveLength(1);
+    const drawing = main.getByRole('img');
+    expect(drawing.getAttribute('src')).toMatch(/how-it-broke.*\.svg/);
+    const alt = drawing.getAttribute('alt');
+    [
+      'Enter, Esc and Ctrl-C',
+      'Before:',
+      'Hooks need review, 11 new or changed',
+      "can't move the cursor",
+      'Stuck, no second review',
+      'After:',
+      'hook layer off',
+      'Reads the diff',
+      'Second review runs',
+      'Not taken:',
+      'the shortcut',
+      "Write 'trusted' into the config",
+      'Says a human trusted 11 hooks, nobody did',
+    ].forEach((words) => expect(alt).toContain(words));
 
-    // After: the hook layer is off and the review runs.
-    expect(screen.getByRole('heading', { name: /After · how it was fixed/ })).toBeTruthy();
-    expect(
-      isInaccessible(
-        within(screen.getByRole('group', { name: 'No prompt appears' })).getByText(
-          'Hooks need review.',
-        ),
-      ),
-    ).toBe(true);
-    expect(screen.getByText(/They never meet the prompt/)).toBeTruthy();
-    expect(screen.getByText('The second review runs')).toBeTruthy();
-    expect(screen.getByText('Every second review since has started clean.')).toBeTruthy();
+    // It scrolls sideways in its own frame on a phone, so the frame has to be
+    // reachable from the keyboard.
+    const frame = screen.getByRole('region', { name: /how it broke and how it was fixed/i });
+    expect(frame.getAttribute('tabindex')).toBe('0');
+    expect(frame.contains(drawing)).toBe(true);
 
-    // The shortcut is drawn, and marked as not taken.
-    expect(screen.getByText('Not taken')).toBeTruthy();
-    expect(screen.getByText('Write the trust decision into the config')).toBeTruthy();
     expect(
-      screen.getByText('The line says a human trusted eleven hooks. No human did.'),
-    ).toBeTruthy();
-    expect(screen.getByText(/Consent you manufacture for yourself isn.t consent/)).toBeTruthy();
+      screen.getAllByRole('link', { name: /Back to the case study/ })[0].getAttribute('href'),
+    ).toBe('/case-studies/firstmate-hook-prompt');
     expect(screen.getByRole('link', { name: /The pull request/ }).getAttribute('href')).toBe(
       'https://github.com/kunchenguid/firstmate/pull/4689',
     );

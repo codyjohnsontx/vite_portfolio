@@ -1,0 +1,58 @@
+<!doctype html><meta charset="utf-8"><title>mermaid to excalidraw</title>
+<div id="out">working</div>
+<script type="module">
+window.EXCALIDRAW_ASSET_PATH = "https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/prod/";
+try {
+  const { parseMermaidToExcalidraw } = await import("https://esm.sh/@excalidraw/mermaid-to-excalidraw@1.1.2");
+  const { convertToExcalidrawElements, exportToSvg, serializeAsJSON } = await import("https://esm.sh/@excalidraw/excalidraw@0.18.0");
+  const mmd = await (await fetch("how-it-broke.mmd")).text();
+
+  // Excalifont sets wider than the font Mermaid measured with, so the labels on
+  // the three arrows leaving the Launcher do not fit the gap Mermaid left for
+  // them. Move the Launcher left and stretch those arrows by the same amount,
+  // keeping each label over the middle of its arrow.
+  const DX = 110;
+  const br = (t) => t.replace(/<br\s*\/?>/g, "\n");
+
+  async function build() {
+    const { elements: skeleton, files } = await parseMermaidToExcalidraw(mmd, { themeVariables: { fontSize: "20px" } });
+    for (const el of skeleton) {
+      // The converter leaves Mermaid's <br> in the label text; Excalidraw wants \n.
+      if (el.label?.text) el.label.text = br(el.label.text);
+      if (typeof el.text === "string") el.text = br(el.text);
+    }
+    const launcher = skeleton.find((el) => el.label?.text?.startsWith("Launcher"));
+    launcher.x -= DX;
+    for (const el of skeleton) {
+      if (el.type === "arrow" && el.start?.id === launcher.id) {
+        const last = el.points.length - 1;
+        el.x -= DX;
+        el.points = el.points.map(([x, y], i) => [i === 0 ? x : i === last ? x + DX : x + DX / 2, y]);
+        if (typeof el.width === "number") el.width += DX;
+      }
+    }
+    const elements = convertToExcalidrawElements(skeleton);
+    const svg = await exportToSvg({ elements, appState: { exportBackground: false, exportEmbedScene: false }, files, exportPadding: 24 });
+    return { elements, files, svg };
+  }
+
+  // Pass one only exists to make Excalidraw fetch and embed Excalifont. Text is
+  // measured on a canvas, so until the face is registered with the document the
+  // widths - and the masks that lift each arrow off its label - come from a
+  // narrower fallback font.
+  const first = await build();
+  const src = new XMLSerializer().serializeToString(first.svg).match(/font-family:\s*Excalifont;\s*src:\s*url\(([^)]+)\)/);
+  const face = new FontFace("Excalifont", `url(${src[1]})`);
+  await face.load(); document.fonts.add(face);
+  await document.fonts.load("20px Excalifont");
+
+  const { elements, files, svg } = await build();
+  window.__svg = new XMLSerializer().serializeToString(svg);
+  window.__scene = serializeAsJSON(elements, { viewBackgroundColor: "#ffffff" }, files ?? {}, "local");
+  document.getElementById("out").replaceWith(svg);
+  const save = (name, body) => fetch(`/save/${name}`, { method: "POST", body });
+  await save("how-it-broke.svg", window.__svg + "\n");
+  await save("how-it-broke.excalidraw", window.__scene + "\n");
+  window.__done = "ok";
+} catch (e) { window.__done = "error: " + (e?.stack || e); document.getElementById("out").textContent = window.__done; }
+</script>

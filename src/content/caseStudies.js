@@ -25,8 +25,8 @@ export const caseStudies = [
     diagrams: {
       eyebrow: 'How it broke and how we fixed it',
       path: '/case-studies/firstmate-hook-prompt/diagrams',
-      label: 'View the before and after wireframe',
-      blurb: 'Drawn side by side, with the one-line fix marked as not taken.',
+      label: 'View the drawing',
+      blurb: 'One launcher and three paths out of it, with the one-line fix marked as not taken.',
     },
     sections: {
       context:
