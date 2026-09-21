@@ -13,18 +13,21 @@ export const caseStudies = [
     subjects: [],
     company: 'kunchenguid/firstmate',
     timeframe: 'Open-source contribution, September 2026',
+    // No `team`, `challenge`, `impactHighlights` or `tagline`, on the owner's
+    // review of the rendered page: it goes straight from the title to the
+    // numbered sections. `role`, `deck` and `featuredOutcome` stay because the
+    // home page card and the /notes row read them; CaseStudyPage draws the
+    // Role / Team / Outcome row only when all three of its values exist.
     role: 'Contributor',
-    team: 'Open-source contribution, merged upstream',
     title: 'A prompt nobody could answer',
-    tagline:
-      "For about two weeks, half my code review wasn't happening and I didn't notice.",
-    challenge: 'The second reviewer had stopped starting. Not crashed, not erroring. Sitting there.',
-    impactHighlights: [
-      "Reviewers now launch with the hook layer off. They never meet the prompt, because there's nothing left to trust.",
-      'Last week those reviews found real bugs in three of my own pull requests, all of which the pipeline and CodeRabbit had already passed.',
-      '234 lines, merged upstream. Most of it tests and the written record of why.',
-    ],
+    deck: "For about two weeks, half my code review wasn't happening and I didn't notice.",
     featuredOutcome: 'Every second review since has started clean.',
+    diagrams: {
+      path: '/case-studies/firstmate-hook-prompt/diagrams',
+      label: 'View the before and after wireframe',
+      blurb:
+        'How it broke and how it was fixed, drawn side by side, with the one-line fix marked as not taken.',
+    },
     sections: {
       context:
         "For about two weeks, half my code review wasn't happening and I didn't notice. I review everything twice. First an automated pipeline, then a second pass from a different vendor's model. Not because one review isn't enough, but because the first reviewer is the same model family that wrote the code. It misses things in exactly the shape it made them. A second vendor misses different things. That's the entire argument.",
@@ -306,6 +309,13 @@ export const caseStudies = [
     },
   },
 ];
+
+/* The one line a /notes row and a home page card print under the title. It is
+   the `tagline` for every study that has one, which also opens its page; a
+   study whose page opens without that line carries `deck` instead. */
+export function getCaseStudyDeck(study) {
+  return study.deck ?? study.tagline;
+}
 
 export function getCaseStudyBySlug(slug) {
   return caseStudies.find((study) => study.slug === slug);

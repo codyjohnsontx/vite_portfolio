@@ -89,6 +89,132 @@ function CaseListSection({ num, title, items }) {
   );
 }
 
+const statStyle = { borderTop: '1px solid var(--rule)', paddingTop: 20 };
+
+function CaseStat({ label, value, delay }) {
+  return (
+    <Reveal delay={delay} style={statStyle}>
+      <Eyebrow>{label}</Eyebrow>
+      <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
+        {value}
+      </p>
+    </Reveal>
+  );
+}
+
+/* Everything between the title and the numbered sections. Each block is drawn
+   only from fields the entry carries, so a study can open straight onto `01`.
+   The stats row is a three-up and needs all three values: an entry can keep
+   `role` and `featuredOutcome` for its home page card and still skip the row by
+   leaving `team` out. */
+function CaseSummary({ study: c }) {
+  const hasStats = Boolean(c.role && c.team && c.featuredOutcome);
+  const hasHighlights = Boolean(c.impactHighlights?.length);
+  const hasSummary = hasStats || Boolean(c.challenge) || hasHighlights;
+
+  if (!hasSummary && !c.diagrams) return null;
+
+  return (
+    <Reveal as="section" className={hasSummary ? 'section' : 'section section--tight'}>
+      <div className="container">
+        {hasStats ? (
+          <div className="case-stats">
+            <CaseStat label="Role" value={c.role} delay={0} />
+            <CaseStat label="Team" value={c.team} delay={90} />
+            <CaseStat label="Outcome" value={c.featuredOutcome} delay={180} />
+          </div>
+        ) : null}
+
+        {c.challenge || hasHighlights ? (
+          <div className="case-grid-2">
+            {c.challenge ? (
+              <Reveal delay={80}>
+                <Eyebrow>Challenge</Eyebrow>
+                <p className="lead drop-cap" style={{ marginTop: 16, color: 'var(--ink)' }}>
+                  {c.challenge}
+                </p>
+              </Reveal>
+            ) : null}
+            {hasHighlights ? (
+              <Reveal delay={180}>
+                <Eyebrow>Impact highlights</Eyebrow>
+                <ul style={{ marginTop: 16, padding: 0, listStyle: 'none' }}>
+                  {c.impactHighlights.map((h, i) => (
+                    <li
+                      key={h}
+                      style={{
+                        padding: '14px 0',
+                        borderTop: '1px solid var(--rule-2)',
+                        display: 'flex',
+                        gap: 16,
+                        alignItems: 'baseline',
+                      }}
+                    >
+                      <span className="mono small" style={{ color: 'var(--ink-3)' }}>
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="body" style={{ color: 'var(--ink)' }}>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            ) : null}
+          </div>
+        ) : null}
+
+        {c.diagrams ? (
+          <Reveal
+            delay={hasSummary ? 260 : 0}
+            style={{
+              // Under a summary the block is ruled off from it. On its own it
+              // sits directly beneath the hero, which already draws that rule.
+              ...(hasSummary
+                ? { marginTop: 56, paddingTop: 32, borderTop: '1px solid var(--rule)' }
+                : null),
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              gap: 24,
+              flexWrap: 'wrap',
+            }}
+          >
+            <div style={{ maxWidth: '60ch' }}>
+              <Eyebrow>System design</Eyebrow>
+              <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
+                {c.diagrams.blurb}
+              </p>
+            </div>
+            <Link className="link-arrow" to={c.diagrams.path}>
+              {c.diagrams.label} <ArrowGlyph />
+            </Link>
+          </Reveal>
+        ) : null}
+      </div>
+    </Reveal>
+  );
+}
+
+CaseStat.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  delay: PropTypes.number.isRequired,
+};
+
+CaseSummary.propTypes = {
+  study: PropTypes.shape({
+    role: PropTypes.string,
+    team: PropTypes.string,
+    featuredOutcome: PropTypes.string,
+    challenge: PropTypes.string,
+    impactHighlights: PropTypes.arrayOf(PropTypes.string),
+    diagrams: PropTypes.shape({
+      path: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      blurb: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+};
+
 CaseSection.propTypes = {
   num: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -128,93 +254,15 @@ export default function CaseStudyPage() {
           >
             {c.title}
           </h1>
-          <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
-            {c.tagline}
-          </p>
-        </div>
-      </Reveal>
-
-      <Reveal as="section" className="section">
-        <div className="container">
-          <div className="case-stats">
-            <Reveal delay={0} style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
-              <Eyebrow>Role</Eyebrow>
-              <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
-                {c.role}
-              </p>
-            </Reveal>
-            <Reveal delay={90} style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
-              <Eyebrow>Team</Eyebrow>
-              <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
-                {c.team}
-              </p>
-            </Reveal>
-            <Reveal delay={180} style={{ borderTop: '1px solid var(--rule)', paddingTop: 20 }}>
-              <Eyebrow>Outcome</Eyebrow>
-              <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
-                {c.featuredOutcome}
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="case-grid-2">
-            <Reveal delay={80}>
-              <Eyebrow>Challenge</Eyebrow>
-              <p className="lead drop-cap" style={{ marginTop: 16, color: 'var(--ink)' }}>
-                {c.challenge}
-              </p>
-            </Reveal>
-            <Reveal delay={180}>
-              <Eyebrow>Impact highlights</Eyebrow>
-              <ul style={{ marginTop: 16, padding: 0, listStyle: 'none' }}>
-                {c.impactHighlights.map((h, i) => (
-                  <li
-                    key={h}
-                    style={{
-                      padding: '14px 0',
-                      borderTop: '1px solid var(--rule-2)',
-                      display: 'flex',
-                      gap: 16,
-                      alignItems: 'baseline',
-                    }}
-                  >
-                    <span className="mono small" style={{ color: 'var(--ink-3)' }}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span className="body" style={{ color: 'var(--ink)' }}>{h}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
-
-          {c.diagrams ? (
-            <Reveal
-              delay={260}
-              style={{
-                marginTop: 56,
-                paddingTop: 32,
-                borderTop: '1px solid var(--rule)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'baseline',
-                gap: 24,
-                flexWrap: 'wrap',
-              }}
-            >
-              <div style={{ maxWidth: '60ch' }}>
-                <Eyebrow>System design</Eyebrow>
-                <p className="body" style={{ margin: '8px 0 0', color: 'var(--ink)' }}>
-                  {c.diagrams.blurb}
-                </p>
-              </div>
-              <Link className="link-arrow" to={c.diagrams.path}>
-                {c.diagrams.label} <ArrowGlyph />
-              </Link>
-            </Reveal>
+          {c.tagline ? (
+            <p className="lead" style={{ marginTop: 24, maxWidth: '60ch' }}>
+              {c.tagline}
+            </p>
           ) : null}
         </div>
       </Reveal>
+
+      <CaseSummary study={c} />
 
       <CaseSection num="01" title="Context" body={s.context} />
       <CaseSection num="02" title="The problem" body={s.problem} />

@@ -4,7 +4,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 import WorkRows from '../components/WorkRows';
 import { useKineticText, useMagnetic, useReveal } from '../motion/hooks';
 import { gsap, prefersReducedMotion, splitChars } from '../motion/motion';
-import { caseStudies } from '../content/caseStudies';
+import { caseStudies, getCaseStudyDeck } from '../content/caseStudies';
 import { experience } from '../content/experience';
 import { latestSignal } from '../content/latestSignal';
 import { profile } from '../content/profile';
@@ -230,7 +230,7 @@ function CaseStudies() {
                   <span className="mono">{c.role}</span>
                 </div>
                 <h3 className="h3 case-card__title">{c.title}</h3>
-                <p className="body case-card__tag">{c.tagline}</p>
+                <p className="body case-card__tag">{getCaseStudyDeck(c)}</p>
                 <div className="case-card__foot">
                   <span className="body case-card__outcome">{c.featuredOutcome}</span>
                   <span className="arrow-link">

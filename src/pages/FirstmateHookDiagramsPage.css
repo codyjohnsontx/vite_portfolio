@@ -1,0 +1,215 @@
+/* The firstmate hook prompt wireframe. Paper, cards, notes, type and the TopBar
+   strip all come from OasisTenancyDiagramsPage.css, which this page imports and
+   whose .otd-page root it wears; the --otd-* tokens below are defined there.
+   This file only adds what that board never had to draw. Every text colour was
+   measured against the ground it sits on and clears WCAG AA. */
+
+/* ---------- two panels, side by side until there is no room ---------- */
+
+.fhd-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Two rows, thesis then flow, shared by both panels through subgrid, so the
+     two Launcher cards start level however either thesis wraps. */
+  grid-template-rows: auto auto;
+  gap: 18px 28px;
+  align-items: start;
+}
+
+.fhd-panel {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  align-self: stretch;
+  align-content: start;
+  min-width: 0;
+  padding: 18px;
+  border-radius: 16px;
+  border: 2px dashed var(--otd-rule-2);
+}
+
+.fhd-panel--amber {
+  border-color: var(--otd-amber-line);
+}
+
+.fhd-panel--teal {
+  border-color: var(--otd-teal-line);
+}
+
+.fhd-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fhd-arrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 18px;
+}
+
+/* Larger than the Oasis board's connector labels: here the label is the step. */
+.fhd-arrow .otd-arrow__label {
+  font-size: 18px;
+}
+
+.fhd-arrow__glyph {
+  font: 700 22px/1 Arial, Helvetica, sans-serif;
+  color: var(--otd-ink-2);
+}
+
+/* ---------- keys ---------- */
+
+.otd-chip.fhd-key {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  border-radius: 6px;
+  border-color: var(--otd-ink);
+  background: var(--otd-card);
+  box-shadow: 0 2px 0 var(--otd-ink);
+}
+
+/* ---------- the terminal the reviewer is sitting at ---------- */
+
+.fhd-term {
+  margin: 10px 0 8px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  background: #23262b;
+  color: #e8e6e1; /* 12.2:1 on #23262b */
+  font: 400 12.5px/1.5 'JetBrains Mono', ui-monospace, monospace;
+  overflow-wrap: anywhere;
+}
+
+.fhd-term__head {
+  font-weight: 700;
+  color: #f0c274; /* 9.2:1 on #23262b */
+}
+
+.fhd-term__head--off {
+  color: #b9b5ac; /* 7.4:1 on #23262b */
+  font-weight: 400;
+  text-decoration: line-through;
+}
+
+.fhd-term__options {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.fhd-term__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+
+.fhd-term__option--on {
+  background: #e8e6e1;
+  color: #23262b;
+  font-weight: 700;
+}
+
+/* The copy names one option of the three. The other two are drawn as the blank
+   bars a wireframe uses for text it does not know. */
+.fhd-term__bar {
+  display: block;
+  width: 46%;
+  height: 8px;
+  margin-left: 16px;
+  border-radius: 4px;
+  background: #5a5e66;
+}
+
+.fhd-term__bar--short {
+  width: 30%;
+}
+
+/* ---------- where each flow ends ---------- */
+
+.otd-card.fhd-end--amber {
+  border: 2.5px dashed var(--otd-amber-line);
+  background: var(--otd-amber-tint);
+  box-shadow: none;
+}
+
+.otd-card.fhd-end--amber .otd-card__title,
+.otd-card.fhd-end--amber .otd-card__kicker {
+  color: var(--otd-amber);
+}
+
+.otd-card.fhd-end--teal {
+  border-color: var(--otd-teal-line);
+  background: var(--otd-teal-tint);
+}
+
+.otd-card.fhd-end--teal .otd-card__title,
+.otd-card.fhd-end--teal .otd-card__kicker {
+  color: var(--otd-teal);
+}
+
+/* ---------- the shortcut, marked not taken ---------- */
+
+.fhd-shortcut {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 2px dashed var(--otd-rule-2);
+}
+
+.fhd-shortcut__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 28px;
+  align-items: center;
+}
+
+.fhd-shortcut__why {
+  font: 700 clamp(22px, 2.4vw, 28px) / 1.25 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
+  color: var(--otd-ink);
+  max-width: 34ch;
+}
+
+.fhd-shortcut__top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.fhd-stamp {
+  font: 700 18px/1 'Caveat', 'Segoe Print', 'Bradley Hand', 'Noteworthy', cursive;
+  color: var(--otd-amber);
+  border: 2px solid var(--otd-amber);
+  border-radius: 6px;
+  padding: 4px 10px;
+  transform: rotate(-3deg);
+  background: var(--otd-note);
+}
+
+.fhd-struck {
+  text-decoration: line-through;
+  text-decoration-color: var(--otd-amber-line);
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- reflow ---------- */
+
+@media (max-width: 900px) {
+  .fhd-panels,
+  .fhd-shortcut__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .fhd-panel {
+    padding: 14px 12px;
+  }
+}

@@ -102,14 +102,22 @@ other way round: `CaseListSection` declares `items` optional, so an entry that s
 (`diaz-deploy-gate` has no `lessons`) renders nothing for it and logs nothing.
 The optional `diagrams` field (`{ path, label, blurb }`) is what draws the
 `System design` block on the detail page; entries without it render exactly as before.
+Everything between the title and `01` is drawn field by field: the `tagline` line, the
+Role / Team / Outcome row (only when all three values exist), `challenge`, and
+`impactHighlights`. `firstmate-hook-prompt` omits them on the owner's review of the rendered
+page and carries `deck` instead of `tagline`, which `getCaseStudyDeck` hands to the `/notes`
+row and the home card; its `role` and `featuredOutcome` stay because that card prints them.
+`src/App.test.jsx` pins the full block on every other study.
 
 Several pages render wireframes from raw HTML strings in a content module, with React owning
 the chrome around them: `RideSenseWireframesPage`, which draws one board;
 `SessionCompareWireframesPage` and `OasisTenancyDiagramsPage`
 (`/case-studies/:slug/diagrams`, which redirects for any slug but `oasis-multi-tenancy`),
-where React owns a toggle between views; and `DiazVideoFirstWireframesPage`, which the next
-section covers. Three things to know before adding another. The
-hand-drawn ones' look depends on Caveat and Kalam, which are requested by
+where React owns a toggle between views (`FirstmateHookDiagramsPage` is plain JSX on its own
+literal route, wears `.otd-page` and imports the Oasis stylesheet, so it inherits that page's
+tokens and TopBar strip and a change to an `.otd-*` rule lands on both); and
+`DiazVideoFirstWireframesPage`, which the next section covers. Three things to know before
+adding another. The hand-drawn ones' look depends on Caveat and Kalam, which are requested by
 the single Google Fonts `<link>` in `index.html` and used nowhere else on the site. The
 hand-maintained stylesheets and the RideSense page's inline style name `'Segoe Print',
 'Bradley Hand', 'Noteworthy'` before the generic `cursive` keyword, because bare `cursive`
