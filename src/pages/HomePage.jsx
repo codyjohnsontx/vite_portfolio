@@ -212,7 +212,7 @@ function CaseStudies() {
     <section className="bay" id="case-studies">
       <div className="shell">
         <SectionHead
-          num="03"
+          num="01"
           eyebrow="Case studies"
           title="Shipped with other people, measured after launch."
           sub="Engagements and architecture calls where the product decisions are traceable to outcomes: scope, tradeoffs, and what the numbers did afterwards."
@@ -287,6 +287,10 @@ export default function HomePage() {
     <>
       <Hero ready={loaded} />
 
+      {/* Case studies lead, on the owner's call: the first thing under the
+          hero is the work that was accepted by other people. */}
+      <CaseStudies />
+
       <ProofStrip />
 
       <LatestSignal />
@@ -294,7 +298,7 @@ export default function HomePage() {
       <section className="bay" id="work">
         <div className="shell">
           <SectionHead
-            num="01"
+            num="02"
             eyebrow="Active builds"
             title="Products I own end to end."
             sub="Each one is live code with a real scope decision behind it. Open any row for the build log, the PM analysis, and what I would cut next."
@@ -306,7 +310,7 @@ export default function HomePage() {
       <section className="bay--tight" id="concepts">
         <div className="shell">
           <SectionHead
-            num="02"
+            num="03"
             eyebrow="Concepts & prototypes"
             title="Smaller bets, sharper questions."
             sub="Concepts prototyped to push on a single hypothesis: usability under pressure, lifecycle modeling, micro-interactions in social products."
@@ -314,8 +318,6 @@ export default function HomePage() {
         </div>
         <WorkRows products={conceptProducts} startIndex={flagshipProducts.length + 1} />
       </section>
-
-      <CaseStudies />
 
       <ExperienceList />
     </>

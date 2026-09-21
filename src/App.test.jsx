@@ -1028,6 +1028,27 @@ describe('portfolio routes and metadata', () => {
     expect(main.getAllByRole('heading', { level: 2 })[0].textContent).toBe('Context');
   });
 
+  /* Case studies lead the home page, on the owner's call, and the section heads
+     count down the page in the order the sections appear. */
+  it('puts the case studies directly under the hero and numbers the sections in order', () => {
+    renderApp('/');
+
+    const main = document.querySelector('main');
+    const heads = [...main.querySelectorAll('header.head')].map((head) => ({
+      num: head.querySelector('.head__num').textContent,
+      eyebrow: head.querySelector('.head__index .mono').textContent,
+    }));
+    expect(heads).toEqual([
+      { num: '01', eyebrow: 'Case studies' },
+      { num: '02', eyebrow: 'Active builds' },
+      { num: '03', eyebrow: 'Concepts & prototypes' },
+      { num: '04', eyebrow: 'Experience' },
+    ]);
+    const hero = main.querySelector('.hero');
+    const caseStudies = main.querySelector('.case-grid').closest('section');
+    expect(hero.nextElementSibling).toBe(caseStudies);
+  });
+
   it('keeps the deck of the firstmate case study on the notes index and the home card', () => {
     const deck = "For about two weeks, half my code review wasn't happening and I didn't notice.";
     const notes = renderApp('/notes');
