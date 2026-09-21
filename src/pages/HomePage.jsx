@@ -217,27 +217,29 @@ function CaseStudies() {
           title="Shipped with other people, measured after launch."
           sub="Engagements and architecture calls where the product decisions are traceable to outcomes: scope, tradeoffs, and what the numbers did afterwards."
         />
-        <div className="case-grid" ref={ref} style={{ opacity: 0 }}>
-          {caseStudies.map((c) => (
-            <Link
-              key={c.slug}
-              to={`/case-studies/${c.slug}`}
-              className="card case-card"
-            >
-              <div className="case-card__top">
-                <span className="mono">{c.company}</span>
-                <span className="mono">{c.role}</span>
-              </div>
-              <h3 className="h3 case-card__title">{c.title}</h3>
-              <p className="body case-card__tag">{c.tagline}</p>
-              <div className="case-card__foot">
-                <span className="body case-card__outcome">{c.featuredOutcome}</span>
-                <span className="arrow-link">
-                  Read <span className="glyph" aria-hidden="true">→</span>
-                </span>
-              </div>
-            </Link>
-          ))}
+        <div className="case-grid-wrap">
+          <div className="case-grid" ref={ref} style={{ opacity: 0 }}>
+            {caseStudies.map((c) => (
+              <Link
+                key={c.slug}
+                to={`/case-studies/${c.slug}`}
+                className="card case-card"
+              >
+                <div className="case-card__top">
+                  <span className="mono">{c.company}</span>
+                  <span className="mono">{c.role}</span>
+                </div>
+                <h3 className="h3 case-card__title">{c.title}</h3>
+                <p className="body case-card__tag">{c.tagline}</p>
+                <div className="case-card__foot">
+                  <span className="body case-card__outcome">{c.featuredOutcome}</span>
+                  <span className="arrow-link">
+                    Read <span className="glyph" aria-hidden="true">→</span>
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>
