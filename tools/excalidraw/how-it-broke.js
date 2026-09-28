@@ -1,5 +1,5 @@
 // The firstmate hook prompt drawing: a Launcher and three paths out of it.
-import { route } from './lib.js';
+import { route, gutterPath } from './lib.js';
 
 const TITLE = 'How it broke, how it was fixed';
 
@@ -73,16 +73,12 @@ export default {
     const midY = launcher.y + launcher.height / 2;
     const into = (id) => byId[id].y;
     route(byId.L_R1, [[ENTER_LEFT, launcher.height], [ENTER_LEFT, into('R1')]]);
-    // Seven points, so the label lands on the fourth: the middle of the level run.
     for (const [id, target, gutter, enter, side] of [
       ['L_R2', 'R2', LEFT_GUTTER, ENTER_LEFT, launcher.x],
       ['L_C', 'C', RIGHT_GUTTER, ENTER_RIGHT, launcher.x + launcher.width],
     ]) {
       const level = gapY[byId[target].groupIds[0].replace('subgraph_group_', '')];
-      route(byId[id], [
-        [side, midY], [gutter, midY], [gutter, level], [(gutter + enter) / 2, level],
-        [enter, level], [enter, (level + into(target)) / 2], [enter, into(target)],
-      ]);
+      route(byId[id], gutterPath({ fromX: side, fromY: midY, gutter, level, enter, toY: into(target) }));
       byId[id].roundness = null;
     }
   },
