@@ -6,6 +6,57 @@ export const caseStudies = [
   // Newest first. Add a new case study at the top of this array; both the
   // /notes index and the home page render it in plain array order.
   {
+    slug: 'track-tuner-atomic-save',
+    subjects: ['track-tuner'],
+    // The product renders as Trackday Tuner; the essay calls it Track Tuner,
+    // in the owner's own words, and the text is kept as he wrote it.
+    company: 'Trackday Tuner',
+    timeframe: 'Product decision, September 2026',
+    // Same shape as the firstmate study below: no `tagline`, `team`,
+    // `challenge` or `impactHighlights`, so the page goes from the title and
+    // the drawing straight to the numbered sections. `role`, `deck` and
+    // `featuredOutcome` feed the home page card and the /notes row.
+    role: 'Product manager and developer',
+    title: 'The save that could half-happen',
+    deck: 'My app promised it would never lose a session without telling you. Four review rounds in, I realized I was patching that promise instead of keeping it.',
+    featuredOutcome: 'A whole class of bug gone at once, and a retry that is safe by construction.',
+    diagrams: {
+      eyebrow: 'The save, before and after',
+      path: '/case-studies/track-tuner-atomic-save/diagrams',
+      label: 'View the drawing',
+      blurb:
+        "The phone's save followed through the server twice: three separate writes with a cleanup delete, then one all-or-nothing transaction.",
+    },
+    sections: {
+      context:
+        "Track Tuner is a setup logbook for track days. Riders and drivers log tire pressures, suspension clicks and lap times after every session, then compare sessions to figure out which change actually helped. The website is in a founding-rider beta. The phone app is what I'm building now, because the paddock has a problem the website can't fix: most tracks barely have signal. So the app is local-first. Every screen reads a database that lives on the phone. When you save a session, the app writes it locally and drops it in an outbox, which is just a queue of changes waiting to go up. Whenever the phone finds signal, it drains the queue. I wrote one promise into the plan for all of this, and it's the one I care about most. Nothing is lost silently. If something still only exists on your phone, you can see it.",
+      problem:
+        'The server saved a session in three separate writes. First the session, then its lap times, then the weather and track conditions. If the lap write failed, the server tried to delete the session to clean up after itself. On a website that\'s fine. On a phone at a racetrack it\'s a trap, because whatever kills the lap write usually kills the cleanup too. Now the server has a session with no laps. The phone does exactly what I built it to do and retries. The server sees the session is already there, answers "already saved," and the phone clears it from the outbox. The laps are gone and nothing on screen says so. The one promise I wrote down, broken by the code that was supposed to keep it. No rider ever hit this. The automated reviewer on my pull request found it before the app shipped to anyone.',
+      goal:
+        'Keep the promise instead of patching it. The fix I wanted would take a whole class of bug off the table at once, not one case per review round, and leave the retry safe no matter when it landed.',
+      decisions: [
+        "This is the part worth writing about, because I handled it wrong for a while. The plan for that pull request said no new database functions. I'd signed off on that to keep the change small. So every fix went into the retry: on a repeat save, check what actually got stored and fill in whatever's missing.",
+        "Round three's fix did exactly that. Round four found the hole it opened. If a rider edited their laps on the website in the meantime, a late retry from the phone would quietly overwrite them with the old copy.",
+        "Every one of those fixes was reasonable on its own, and every one of them opened a new edge case. When the patches keep producing bugs in the same shape, you've stopped fixing bugs. You're defending a design.",
+        'I try to stay attached to the problem, not to whatever solution I sketched first. Here I\'d done a quieter version of the opposite: I got attached to a constraint. "No new database functions" was a scoping choice. It kept the pull request small, and a small pull request is output. The outcome I actually cared about was the promise.',
+        'It also helps me to ask which kind of risk I\'m really looking at. Will riders want it, can they use it, can we build it, does it work for the business. This looked like a can-we-build-it problem, an engineering detail about what order the writes happen in. It was a do-they-want-it problem. A logbook that sometimes forgets your laps without telling you is a logbook you stop trusting, and then you stop logging.',
+        "So I dropped the constraint. The server now saves a session in a single transaction, one all-or-nothing database step where the session, its laps and its conditions either all land or none of them do. A half-saved session can't exist anymore, which makes the retry safe by construction. If the session is on the server, it's complete.",
+      ],
+      tradeoffs: [
+        "One new database function, which I apply by hand because the hosted database has no migration history. One more review round. And a line in a plan I'd approved, which I had to be fine with walking back.",
+        'I also had a third option: accept the rare loss and document it. It would have shipped that afternoon. I passed, because this failure needs the connection to drop in the middle of a save, and on one bar of signal in a paddock that\'s a lot closer to normal than "rare" makes it sound.',
+      ],
+      execution: [
+        'I made this call on September 27, 2026, in between keeping a live leaderboard running at an off-site sim racing event. The atomic save is in review now.',
+        "The retry code gets shorter instead of longer, since the cleanup delete and the repair path both disappear. And the website's own new-session form can move onto the same function later.",
+      ],
+      outcomes: [
+        'What the change bought is a whole class of bug gone at once instead of one case per review round.',
+        "The test I actually care about comes after it merges: pull the phone's signal in the middle of a save, at a real track, and watch the session come back whole.",
+      ],
+    },
+  },
+  {
     slug: 'firstmate-hook-prompt',
     // Empty on purpose: this is a contribution to someone else's open-source
     // project, not one of the products. With no subject the page simply has
