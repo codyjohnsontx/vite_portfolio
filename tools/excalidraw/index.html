@@ -17,10 +17,10 @@ try {
   const TITLE_SIZE = 36;
   const br = (t) => t.replace(/<br\s*\/?>/g, "\n");
 
-  // Both drawings come from the one Mermaid file, parsed once per build, so
-  // their words cannot drift. The wide one keeps Mermaid's left-to-right layout,
-  // adjusted by drawing.adjustWide. The phone one keeps every element and only
-  // moves it: drawing.stackForPhone.
+  // Both layouts come from the one Mermaid file, parsed once per build, so
+  // their words cannot drift. Each keeps every element and only places it: the
+  // wide one by drawing.adjustWide, starting from Mermaid's left-to-right
+  // layout, and the phone one by drawing.stackForPhone.
   const VARIANTS = { wide: { phone: false }, phone: { phone: true } };
 
   // Converts a copy of the skeleton and reads back each container's height, so
