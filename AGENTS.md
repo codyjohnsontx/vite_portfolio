@@ -105,24 +105,27 @@ defaults to `System design`) is what draws the diagrams block on the detail page
 without it render exactly as before.
 Everything between the title and `01` is drawn field by field: the `tagline` line, the
 Role / Team / Outcome row (only when all three values exist), `challenge`, and
-`impactHighlights`. `firstmate-hook-prompt` omits them on the owner's review of the rendered
-page and carries `deck` instead of `tagline`, which `getCaseStudyDeck` hands to the `/notes`
-row and the home card; its `role` and `featuredOutcome` stay because that card prints them.
+`impactHighlights`. `firstmate-hook-prompt` and `track-tuner-atomic-save` omit them, the
+first on the owner's review of the rendered page and the second by following it, and carry
+`deck` instead of `tagline`, which `getCaseStudyDeck` hands to the `/notes` row and the home
+card; their `role` and `featuredOutcome` stay because that card prints them.
 `src/App.test.jsx` pins the full block on every other study.
 
 Several pages render wireframes from raw HTML strings in a content module, with React owning
 the chrome around them: `RideSenseWireframesPage`, which draws one board;
 `SessionCompareWireframesPage` and `OasisTenancyDiagramsPage`
 (`/case-studies/:slug/diagrams`, which redirects for any slug but `oasis-multi-tenancy`),
-where React owns a toggle between views (`FirstmateHookDiagramsPage` sits on its own literal
-route, wears `.otd-page` and imports the Oasis stylesheet, so a change to an `.otd-*` rule
-lands on both; what it draws is one Excalidraw diagram as two static SVGs, a wide layout and a
-stacked one served below 1100px through `<picture>`, both generated from one Mermaid file so
-their words cannot drift, with the page title drawn in and a visually hidden `h1` kept for
-the outline; the editable `.excalidraw` scenes sit beside them in
-`src/assets/firstmate-hook-prompt/` and `tools/excalidraw/README.md` has the regenerate
-steps - Excalidraw is tooling only and must not become a runtime
-dependency); and
+where React owns a toggle between views (`FirstmateHookDiagramsPage` and
+`TrackTunerAtomicSaveDiagramsPage` each sit on their own literal route, wear `.otd-page` and
+import the Oasis stylesheet, so a change to an `.otd-*` rule lands on all three, and share
+the `.fhd-*` frame rules in `FirstmateHookDiagramsPage.css`; what each draws is one
+Excalidraw diagram as two static SVGs, a wide layout and a stacked one served below 1100px
+through `<picture>`, both generated from one Mermaid file so their words cannot drift, with
+the page title drawn in and a visually hidden `h1` kept for the outline; the editable
+`.excalidraw` scenes sit beside them in `src/assets/firstmate-hook-prompt/` and
+`src/assets/track-tuner-atomic-save/`, and `tools/excalidraw/README.md` has the regenerate
+steps and the per-drawing layout modules - Excalidraw is tooling only and must not become a
+runtime dependency); and
 `DiazVideoFirstWireframesPage`, which the next section covers. Three things to know before
 adding another. The hand-drawn ones' look depends on Caveat and Kalam, which are requested by
 the single Google Fonts `<link>` in `index.html` and used nowhere else on the site. The

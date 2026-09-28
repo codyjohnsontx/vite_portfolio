@@ -1,6 +1,7 @@
-/* The firstmate hook prompt drawing. Everything around it comes from
-   OasisTenancyDiagramsPage.css, which this page imports and whose .otd-page root
-   it wears; the --otd-* tokens below are defined there. */
+/* The frame around a hand-drawn diagram, worn by the firstmate hook prompt
+   drawing and the Track Tuner atomic save drawing. Everything around it comes
+   from OasisTenancyDiagramsPage.css, which both pages import and whose
+   .otd-page root they wear; the --otd-* tokens below are defined there. */
 
 /* The heading is in the drawing, so the intro is the first thing in the header. */
 .fhd-intro {
@@ -23,9 +24,10 @@
   margin: 0 auto;
 }
 
-/* Matches STACKED_BELOW in FirstmateHookDiagramsPage.jsx. The stacked drawing
-   is 430 units wide; held to that it keeps its 20-unit handwriting at 20px on a
-   tablet and scales down to about 16px on a 390px phone. */
+/* Matches STACKED_BELOW in both pages. The stacked hook drawing is 430 units
+   wide and the atomic save one 434; held to 430 they keep their 20-unit
+   handwriting at about 20px on a tablet and 16px on a 390px phone, and
+   neither is scaled up past its natural size. */
 @media (max-width: 1099px) {
   .fhd-drawing {
     max-width: 430px;

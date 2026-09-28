@@ -205,6 +205,7 @@ describe('portfolio routes and metadata', () => {
     // The order is authored, not derived, so it is pinned here: both surfaces
     // render src/content/caseStudies.js in plain array order.
     const newestFirst = [
+      '/case-studies/track-tuner-atomic-save',
       '/case-studies/firstmate-hook-prompt',
       '/case-studies/diaz-deploy-gate',
       '/case-studies/oasis-multi-tenancy',
@@ -979,14 +980,15 @@ describe('portfolio routes and metadata', () => {
   });
 
   /* The summary between the title and `01` is drawn field by field, so the
-     firstmate study can open straight onto its numbered sections. Every other
-     study carries all of those fields and has to keep rendering all of them:
-     the tagline under the title, the Role / Team / Outcome row with its values,
-     the Challenge, and every impact highlight. */
+     firstmate and Track Tuner studies can open straight onto their numbered
+     sections. Every other study carries all of those fields and has to keep
+     rendering all of them: the tagline under the title, the Role / Team /
+     Outcome row with its values, the Challenge, and every impact highlight. */
   const SUMMARY_LABELS = ['Role', 'Team', 'Outcome', 'Challenge', 'Impact highlights'];
+  const OPENS_ON_SECTIONS = ['track-tuner-atomic-save', 'firstmate-hook-prompt'];
 
   caseStudies
-    .filter((study) => study.slug !== 'firstmate-hook-prompt')
+    .filter((study) => !OPENS_ON_SECTIONS.includes(study.slug))
     .forEach((study) => {
       it(`keeps the full summary block on ${study.slug}`, () => {
         renderApp(`/case-studies/${study.slug}`);
@@ -1108,6 +1110,117 @@ describe('portfolio routes and metadata', () => {
       'Source of record: https://github.com/kunchenguid/firstmate/pull/4689 - merged 2026-09-17, authored by codyjohnsontx, 234 lines added.',
     );
     expect(main.queryByText(/Solo/)).toBeNull();
+  });
+
+  it('opens the Track Tuner case study onto its drawing and then its numbered sections', () => {
+    renderApp('/case-studies/track-tuner-atomic-save');
+
+    const main = within(document.querySelector('main'));
+    const title = main.getByRole('heading', { level: 1, name: 'The save that could half-happen' });
+    // No line under the title: the drawing link is the first thing beneath it.
+    expect(title.nextElementSibling).toBeNull();
+    SUMMARY_LABELS.forEach((label) => expect(main.queryByText(label)).toBeNull());
+    expect(document.querySelector('main .case-stats')).toBeNull();
+    expect(document.querySelector('main .case-grid-2')).toBeNull();
+    expect(main.getAllByRole('heading', { level: 2 })[0].textContent).toBe('Context');
+    // The essay's own words, in the owner's voice, with no em dashes anywhere.
+    expect(main.getByText(/Nothing is lost silently/)).toBeTruthy();
+    expect(main.getByText(/you've stopped fixing bugs\. You're defending a design\./)).toBeTruthy();
+    expect(main.getByText(/It was a do-they-want-it problem/)).toBeTruthy();
+    expect(main.getByText(/safe by construction/)).toBeTruthy();
+    expect(document.querySelector('main').textContent).not.toContain('\u2014');
+    // The build it came out of, one click away.
+    expect(
+      main
+        .getAllByRole('link', { name: /Trackday Tuner/i })
+        .map((link) => link.getAttribute('href')),
+    ).toContain('/products/track-tuner');
+  });
+
+  it('keeps the deck of the Track Tuner case study on the notes index and the home card', () => {
+    const deck =
+      'My app promised it would never lose a session without telling you. Four review rounds in, I realized I was patching that promise instead of keeping it.';
+    const notes = renderApp('/notes');
+    expect(
+      screen.getByRole('link', { name: /The save that could half-happen/ }).textContent,
+    ).toContain(deck);
+
+    notes.unmount();
+    renderApp('/');
+    const card = document.querySelector('a.case-card[href="/case-studies/track-tuner-atomic-save"]');
+    expect(card.textContent).toContain(deck);
+    expect(card.textContent).toContain('Product manager and developer');
+    expect(card.textContent).toContain(
+      'A whole class of bug gone at once, and a retry that is safe by construction.',
+    );
+  });
+
+  it('lists the Track Tuner case study on the build it came out of', () => {
+    renderApp('/products/track-tuner');
+
+    const toStudy = within(document.querySelector('main')).getAllByRole('link', {
+      name: /The save that could half-happen/i,
+    });
+    expect(toStudy.length).toBeGreaterThan(0);
+    toStudy.forEach((link) => {
+      expect(link.getAttribute('href')).toBe('/case-studies/track-tuner-atomic-save');
+    });
+  });
+
+  it('links the Track Tuner case study to its hand-drawn diagram', async () => {
+    const page = renderApp('/case-studies/track-tuner-atomic-save');
+    expect(screen.getByText('The save, before and after')).toBeTruthy();
+    expect(screen.queryByText('System design')).toBeNull();
+    expect(
+      screen.getByRole('link', { name: /View the drawing/i }).getAttribute('href'),
+    ).toBe('/case-studies/track-tuner-atomic-save/diagrams');
+
+    page.unmount();
+    renderApp('/case-studies/track-tuner-atomic-save/diagrams');
+    await waitFor(() =>
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'The save that could half-happen' }),
+      ).toBeTruthy(),
+    );
+
+    // The title is drawn into the picture, so the page's only heading is a
+    // visually hidden h1 that stays in the document outline.
+    const main = within(document.querySelector('main'));
+    const headings = main.getAllByRole('heading');
+    expect(headings).toHaveLength(1);
+    expect(headings[0].className).toBe('sr-only');
+
+    // A wide drawing and a stacked one for narrow screens, chosen by the browser.
+    const drawing = main.getByRole('img');
+    expect(drawing.getAttribute('src')).toMatch(/atomic-save[^/]*\.svg/);
+    expect(drawing.getAttribute('src')).not.toMatch(/phone/);
+    const stacked = drawing.closest('picture').querySelector('source');
+    expect(stacked.getAttribute('srcset')).toMatch(/atomic-save-phone[^/]*\.svg/);
+    expect(stacked.getAttribute('media')).toBe('(max-width: 1099px)');
+
+    // The drawing's words reach a reader who cannot see it through the alt text.
+    const alt = drawing.getAttribute('alt');
+    [
+      'The save that could half-happen',
+      'a queue of changes waiting for signal',
+      'signal found, the outbox sends it',
+      'Before: three separate writes, plus a cleanup delete',
+      'a database write fails partway, and so does the cleanup delete',
+      'Half-saved, a session with no laps',
+      'already saved',
+      'The laps are gone, and nothing on screen says so',
+      'After: one transaction, all or nothing',
+      'a database transaction',
+      'No reply reached the phone. The server stored everything or nothing',
+      'finds the complete session or writes it safely',
+      'Any session a retry meets is whole',
+    ].forEach((words) => expect(alt).toContain(words));
+
+    expect(
+      screen.getAllByRole('link', { name: /Back to the case study/ })[0].getAttribute('href'),
+    ).toBe('/case-studies/track-tuner-atomic-save');
+    // No pull request link: the atomic save is in a private repository.
+    expect(screen.queryByRole('link', { name: /The pull request/ })).toBeNull();
   });
 
   it('renders the Oasis tenancy case study with the argument that decided it', () => {

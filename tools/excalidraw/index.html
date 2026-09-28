@@ -5,111 +5,46 @@ window.EXCALIDRAW_ASSET_PATH = "https://esm.sh/@excalidraw/excalidraw@0.18.0/dis
 try {
   const { parseMermaidToExcalidraw } = await import("https://esm.sh/@excalidraw/mermaid-to-excalidraw@1.1.2");
   const { convertToExcalidrawElements, exportToSvg, serializeAsJSON } = await import("https://esm.sh/@excalidraw/excalidraw@0.18.0");
-  const mmd = await (await fetch("how-it-broke.mmd")).text();
+  const { bounds } = await import("./lib.js");
 
-  const TITLE = "How it broke, how it was fixed";
+  // One page, several drawings: ?drawing=<name> loads ./<name>.js, which names
+  // the Mermaid source and the title and owns the two layout hooks below.
+  const drawingName = new URLSearchParams(location.search).get("drawing");
+  if (!drawingName) throw new Error("Name the drawing to build: ?drawing=how-it-broke or ?drawing=atomic-save");
+  const drawing = (await import(`./${drawingName}.js`)).default;
+  const mmd = await (await fetch(drawing.mmd)).text();
+
   const TITLE_SIZE = 36;
   const br = (t) => t.replace(/<br\s*\/?>/g, "\n");
-  const bounds = (els) => ({
-    left: Math.min(...els.map((el) => el.x)),
-    top: Math.min(...els.map((el) => el.y)),
-    right: Math.max(...els.map((el) => el.x + (el.width ?? 0))),
-  });
 
-  // Both drawings come from the one Mermaid file, parsed once per build, so
-  // their words cannot drift. The wide one keeps Mermaid's left-to-right layout.
-  // The phone one keeps every element and only moves it: see stackForPhone.
+  // Both layouts come from the one Mermaid file, parsed once per build, so
+  // their words cannot drift. Each keeps every element and only places it: the
+  // wide one by drawing.adjustWide, starting from Mermaid's left-to-right
+  // layout, and the phone one by drawing.stackForPhone.
   const VARIANTS = { wide: { phone: false }, phone: { phone: true } };
 
-  // Mermaid's own top-to-bottom layout staggers the groups sideways and comes
-  // out 700 units wide, which on a 390px screen halves the handwriting. This
-  // lays the same elements out in one 400-unit column instead: title, Launcher,
-  // then Before, After and Not taken under one another, each flowing downward.
-  // The two labelled arrows leave the Launcher sideways, run down a gutter, and
-  // turn in above their group, so each label sits on a level stretch of line.
-  function stackForPhone(skeleton) {
-    const W = 400, CX = W / 2, GROUP_X = 44, GROUP_W = W - 2 * GROUP_X;
-    const LEFT_GUTTER = 20, RIGHT_GUTTER = W - 20, ENTER_LEFT = 130, ENTER_RIGHT = 270;
-    const byId = Object.fromEntries(skeleton.map((el) => [el.id, el]));
-    const nodesOf = (g) => skeleton.filter((el) => el.type === "rectangle" && el.id !== g && el.groupIds?.includes(`subgraph_group_${g}`));
-    const arrows = skeleton.filter((el) => el.type === "arrow");
-
-    const launcher = byId.L;
-    launcher.x = CX - launcher.width / 2;
-    launcher.y = 0;
-    let y = launcher.height;
-    const gapY = {};
-    for (const g of ["B", "A", "N"]) {
-      gapY[g] = y + 45;
-      y += 90;
-      const group = byId[g];
-      group.x = GROUP_X; group.y = y; group.width = GROUP_W;
-      y += 44;
-      const nodes = nodesOf(g);
-      nodes.forEach((node, i) => {
-        node.x = CX - node.width / 2;
-        node.y = y;
-        y += node.height;
-        const next = nodes[i + 1];
-        if (!next) return;
-        const link = arrows.find((el) => el.start.id === node.id && el.end.id === next.id);
-        const gap = link.label ? 96 : 48;
-        link.x = CX; link.y = y;
-        link.points = [[0, 0], [0, gap]];
-        y += gap;
-      });
-      y += 28;
-      group.height = y - group.y;
-    }
-
-    const route = (arrow, pts) => {
-      arrow.x = pts[0][0]; arrow.y = pts[0][1];
-      arrow.points = pts.map(([px, py]) => [px - pts[0][0], py - pts[0][1]]);
-    };
-    const midY = launcher.y + launcher.height / 2;
-    const into = (id) => byId[id].y;
-    route(byId.L_R1, [[ENTER_LEFT, launcher.height], [ENTER_LEFT, into("R1")]]);
-    // Seven points, so the label lands on the fourth: the middle of the level run.
-    for (const [id, target, gutter, enter, side] of [
-      ["L_R2", "R2", LEFT_GUTTER, ENTER_LEFT, launcher.x],
-      ["L_C", "C", RIGHT_GUTTER, ENTER_RIGHT, launcher.x + launcher.width],
-    ]) {
-      const level = gapY[byId[target].groupIds[0].replace("subgraph_group_", "")];
-      route(byId[id], [
-        [side, midY], [gutter, midY], [gutter, level], [(gutter + enter) / 2, level],
-        [enter, level], [enter, (level + into(target)) / 2], [enter, into(target)],
-      ]);
-      byId[id].roundness = null;
-    }
-  }
+  // Converts a copy of the skeleton and reads back each container's height, so
+  // a layout that narrows a box can know how tall its rewrapped text made it
+  // before placing the box beneath it. Conversion gives every element a new
+  // id, but it keeps skeleton order and appends each label's text element
+  // after its container, so dropping the text elements restores the pairing.
+  const measure = (skeleton) => {
+    const sized = convertToExcalidrawElements(structuredClone(skeleton)).filter((el) => el.type !== "text");
+    return Object.fromEntries(sized.map((el, i) => [skeleton[i].id, { width: el.width, height: el.height }]));
+  };
 
   async function build({ phone }) {
-    const [dx, dy] = phone ? [0, 0] : [-110, 0];
     const { elements: skeleton, files } = await parseMermaidToExcalidraw(mmd, { themeVariables: { fontSize: "20px" } });
     for (const el of skeleton) {
       // The converter leaves Mermaid's <br> in the label text; Excalidraw wants \n.
       if (el.label?.text) el.label.text = br(el.label.text);
       if (typeof el.text === "string") el.text = br(el.text);
     }
-    // Excalifont sets wider than the font Mermaid measured with, so in the wide
-    // drawing the labels on the three arrows leaving the Launcher do not fit the
-    // gap Mermaid left for them. Move the Launcher left and stretch those arrows
-    // by the same amount, keeping each label over the middle of its arrow.
-    const launcher = skeleton.find((el) => el.label?.text?.startsWith("Launcher"));
-    launcher.x += dx; launcher.y += dy;
-    for (const el of skeleton) {
-      if (el.type === "arrow" && el.start?.id === launcher.id && dx) {
-        const last = el.points.length - 1;
-        el.x += dx;
-        el.points = el.points.map(([x, y], i) => [i === 0 ? x : i === last ? x - dx : x - dx / 2, y]);
-        if (typeof el.width === "number") el.width -= dx;
-      }
-    }
-    if (phone) stackForPhone(skeleton);
-    // The title is part of the drawing, in the same hand as the boxes. On the
-    // phone it breaks at its comma so it fits the column.
+    if (phone) drawing.stackForPhone(skeleton, { measure });
+    else drawing.adjustWide(skeleton, { measure });
+    // The title is part of the drawing, in the same hand as the boxes.
     const box = bounds(skeleton.filter((el) => el.type !== "arrow"));
-    const title = phone ? TITLE.replace(", ", ",\n") : TITLE;
+    const title = phone ? drawing.phoneTitle : drawing.title;
     const titleHeight = TITLE_SIZE * 1.25 * title.split("\n").length;
     skeleton.push({ type: "text", text: title, fontSize: TITLE_SIZE, x: box.left, y: box.top - titleHeight - 36 });
     const elements = convertToExcalidrawElements(skeleton);
@@ -132,7 +67,7 @@ try {
   window.__boxes = {};
   for (const [name, variant] of Object.entries(VARIANTS)) {
     const { elements, files, svg } = await build(variant);
-    const file = name === "wide" ? "how-it-broke" : "how-it-broke-phone";
+    const file = name === "wide" ? drawing.file : `${drawing.file}-phone`;
     await save(`${file}.svg`, new XMLSerializer().serializeToString(svg) + "\n");
     await save(`${file}.excalidraw`, serializeAsJSON(elements, { viewBackgroundColor: "#ffffff" }, files ?? {}, "local") + "\n");
     window.__boxes[name] = svg.getAttribute("viewBox");
