@@ -1205,14 +1205,14 @@ describe('portfolio routes and metadata', () => {
       'a queue of changes waiting for signal',
       'signal found, the outbox sends it',
       'Before: three separate writes, plus a cleanup delete',
-      'signal drops mid-write, and so does the cleanup delete',
+      'a database write fails partway, and so does the cleanup delete',
       'Half-saved, a session with no laps',
       'already saved',
       'The laps are gone, and nothing on screen says so',
       'After: one transaction, all or nothing',
       'a database transaction',
-      'Nothing saved, the save stays in the outbox',
-      'the same single step saves everything',
+      'No reply reached the phone. The server stored everything or nothing',
+      'finds the complete session or writes it safely',
       'Any session a retry meets is whole',
     ].forEach((words) => expect(alt).toContain(words));
 

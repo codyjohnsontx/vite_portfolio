@@ -4,15 +4,15 @@ flowchart LR
   subgraph B["Before: three separate writes,<br/>plus a cleanup delete"]
     direction LR
     W1["1. Server writes the session"] --> W2["2. Server writes the laps"] --> W3["3. Server writes the conditions"]
-    W2 -. "signal drops mid-write,<br/>and so does the<br/>cleanup delete" .-> H["Half-saved:<br/>a session with no laps"]
-    H --> R1["Phone finds signal,<br/>sends the save again"] --> A1["Server sees the session:<br/>'already saved'"] --> X(["Phone clears the outbox.<br/>The laps are gone, and<br/>nothing on screen says so."])
+    W2 -. "a database write fails<br/>partway, and so does<br/>the cleanup delete" .-> H["Half-saved:<br/>a session with no laps"]
+    H --> R1["Phone got no answer,<br/>sends the save again"] --> A1["Server sees the session:<br/>'already saved'"] --> X(["Phone clears the outbox.<br/>The laps are gone, and<br/>nothing on screen says so."])
   end
 
   subgraph A["After: one transaction,<br/>all or nothing"]
     direction LR
     T["Server saves session, laps<br/>and conditions in one step<br/>(a database transaction)"]
-    T -. "signal drops mid-write" .-> N["Nothing saved.<br/>The save stays in the outbox."]
-    N --> R2["Phone finds signal,<br/>sends the save again"] --> T2["The same single step<br/>saves everything"] --> OK(["Complete session on the server.<br/>Phone clears the outbox.<br/>Any session a retry<br/>meets is whole."])
+    T -. "a write fails, or<br/>the reply is lost" .-> N["No reply reached the phone.<br/>The server stored everything<br/>or nothing. The save stays<br/>in the outbox."]
+    N --> R2["Phone got no answer,<br/>sends the save again"] --> T2["Finds the complete session,<br/>or writes it safely"] --> OK(["Complete session on the server.<br/>Phone clears the outbox.<br/>Any session a retry<br/>meets is whole."])
   end
 
   P -- "signal found,<br/>the outbox sends it" --> W1

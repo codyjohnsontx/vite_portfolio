@@ -27,7 +27,7 @@ const STACKED_BELOW = '(max-width: 1099px)';
 /* The drawing's own words, in reading order, and no others. It describes the
    paths rather than where they sit, so it is true of both layouts. */
 const DRAWING_ALT =
-  'Hand-drawn diagram titled The save that could half-happen. A box for the phone: every screen reads a database on the phone, and a save also joins the outbox, a queue of changes waiting for signal. Two arrows labelled signal found, the outbox sends it lead into two panels. Before: three separate writes, plus a cleanup delete. The server writes the session, then the laps, then the conditions. A dashed arrow labelled signal drops mid-write, and so does the cleanup delete, leads from the laps write to Half-saved, a session with no laps. The phone finds signal and sends the save again, the server sees the session and answers already saved, and the phone clears the outbox. The laps are gone, and nothing on screen says so. After: one transaction, all or nothing. The server saves session, laps and conditions in one step, a database transaction. A dashed arrow labelled signal drops mid-write leads to Nothing saved, the save stays in the outbox. The phone finds signal and sends the save again, the same single step saves everything, and there is a complete session on the server. The phone clears the outbox. Any session a retry meets is whole.';
+  'Hand-drawn diagram titled The save that could half-happen. A box for the phone: every screen reads a database on the phone, and a save also joins the outbox, a queue of changes waiting for signal. Two arrows labelled signal found, the outbox sends it lead into two panels. Before: three separate writes, plus a cleanup delete. The server writes the session, then the laps, then the conditions. A dashed arrow labelled a database write fails partway, and so does the cleanup delete, leads from the laps write to Half-saved, a session with no laps. The phone got no answer and sends the save again, the server sees the session and answers already saved, and the phone clears the outbox. The laps are gone, and nothing on screen says so. After: one transaction, all or nothing. The server saves session, laps and conditions in one step, a database transaction. A dashed arrow labelled a write fails, or the reply is lost, leads to No reply reached the phone. The server stored everything or nothing. The save stays in the outbox. The phone got no answer and sends the save again, finds the complete session or writes it safely, and there is a complete session on the server. The phone clears the outbox. Any session a retry meets is whole.';
 
 export default function TrackTunerAtomicSaveDiagramsPage() {
   const study = getCaseStudyBySlug(STUDY_SLUG);
@@ -53,7 +53,7 @@ export default function TrackTunerAtomicSaveDiagramsPage() {
 
         <div className="otd-canvas">
           <picture className="fhd-frame">
-            <source media={STACKED_BELOW} srcSet={drawingPhone} width="434" height="2309" />
+            <source media={STACKED_BELOW} srcSet={drawingPhone} width="434" height="2392" />
             <img className="fhd-drawing" src={drawingWide} alt={DRAWING_ALT} width="1088" height="1330" />
           </picture>
         </div>
