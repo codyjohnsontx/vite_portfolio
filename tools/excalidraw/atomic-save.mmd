@@ -12,7 +12,7 @@ flowchart LR
     direction LR
     T["Server saves session, laps<br/>and conditions in one step<br/>(a database transaction)"]
     T -. "signal drops mid-write" .-> N["Nothing saved.<br/>The save stays in the outbox."]
-    N --> R2["Phone finds signal,<br/>sends the save again"] --> T2["Same one step,<br/>lands whole"] --> OK(["Complete session on the server.<br/>Phone clears the outbox.<br/>Any session a retry<br/>meets is whole."])
+    N --> R2["Phone finds signal,<br/>sends the save again"] --> T2["The same single step<br/>saves everything"] --> OK(["Complete session on the server.<br/>Phone clears the outbox.<br/>Any session a retry<br/>meets is whole."])
   end
 
   P -- "signal found,<br/>the outbox sends it" --> W1
