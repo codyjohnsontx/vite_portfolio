@@ -2,13 +2,13 @@
 
 ## Core positioning
 
-Cody Johnson is a technical product owner and software engineer working on digital and operational systems. The portfolio should show that he can turn ambiguous asks into scoped, shippable work and then show the result holding up: reproduction conditions, expected against actual behavior, requirements and acceptance criteria, validation paths, and the disconnect, restart, and duplicate-event handling underneath real-time and operational systems. Hands-on motorsports experience is stated plainly rather than left implied by the projects.
+Cody Johnson is a full stack software engineer working in C#/.NET, TypeScript, React, and SQL, with product ownership and business operations experience behind the engineering. That is the resume's positioning, chosen by the owner in October 2026 over the earlier technical product owner framing; AGENTS.md records the decision and the files that carry it. The portfolio should show that he can turn ambiguous asks into scoped, shippable work and then show the result holding up: requirements and acceptance criteria, the APIs and integrations behind them, validation paths, and the disconnect, restart, and duplicate-event handling underneath real-time and operational systems.
 
 Where the same work can be framed as a business outcome or as investigation, validation, and system behavior, the second framing wins.
 
 ## Audience
 
-- Recruiters screening for associate PM, product owner, technical PM, and digital platform roles.
+- Recruiters screening for full stack, C#/.NET, and other software engineering roles.
 - Hiring managers looking for cross-functional execution, backlog discipline, and stakeholder communication.
 - Interviewers testing whether Cody can translate messy needs into deliverable work with engineering teams.
 
@@ -32,7 +32,7 @@ Where the same work can be framed as a business outcome or as investigation, val
 ## Messaging rules
 
 - Lead with products in active build and the operator mindset behind them.
-- State technical product ownership and engineering together; the hero and the preloader both open with the pair.
+- Lead with engineering: the hero eyebrow and the preloader open with the full stack software engineer and C#/.NET positioning, and product ownership appears as the experience behind it rather than as the title.
 - Prefer "reproduced the failure," "defined what happens when it breaks," and "validated it against real data" over tool-by-tool descriptions.
 - Use metrics where available, but do not manufacture them.
 - Keep the site selective and product-first.
