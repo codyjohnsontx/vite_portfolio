@@ -237,10 +237,9 @@ fails the suite. The
 HSNBA case study keeps its `hsnba-automation-and-gis` slug because the URL is public.
 
 The site publishes no resume. That is an owner decision from 2026-10-30 ("I don't need a
-resume PDF on the portfolio website"): the served `public/resume/` files, the
-`resumeMeta.js` module that pointed at them, and the redirect from the old PDF path were all
-removed, and `src/App.test.jsx` pins that `public/resume/` stays absent and that no redirect
-in `vercel.json` targets `/resume/`. Everything under `public/` ships as a static asset
+resume PDF on the portfolio website"): the served `public/resume/` files and the
+`resumeMeta.js` module that pointed at them were both removed, and `src/App.test.jsx` pins
+that `public/resume/` stays absent and that no redirect in `vercel.json` targets `/resume/`. Everything under `public/` ships as a static asset
 whether or not a page links to it, so a resume file placed there is public the moment it is
 pushed. The master resume lives outside this repository; `src/content/resumeContent.js` is
 the only copy of it here, it renders nowhere, and it is kept in step with the master by

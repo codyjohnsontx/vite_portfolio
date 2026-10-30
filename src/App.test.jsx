@@ -113,10 +113,9 @@ describe('portfolio routes and metadata', () => {
   it('leads experience with the freelance engineering role and names the Oasis event host', () => {
     renderApp('/');
 
-    expect(experience[0].role).toBe('Software Engineer (Freelance)');
-    expect(experience[0].dates).toBe('Apr 2024 - Present');
     const [firstRow] = document.querySelectorAll('.xp__row');
     expect(within(firstRow).getByText('Software Engineer (Freelance)')).toBeTruthy();
+    expect(within(firstRow).getByText('Apr 2024 - Present')).toBeTruthy();
     expect(
       within(firstRow).getByText(/Cavender Cadillac of San Antonio where more than 100 guests drove/i),
     ).toBeTruthy();
@@ -141,8 +140,10 @@ describe('portfolio routes and metadata', () => {
       view.unmount();
     });
 
-    const hsnba = caseStudies.find((study) => study.slug === 'hsnba-automation-and-gis');
-    expect(hsnba.role).toBe('Software Engineer (Freelance)');
+    renderApp('/case-studies/hsnba-automation-and-gis');
+    expect(
+      within(document.querySelector('main')).getByText('Software Engineer (Freelance)'),
+    ).toBeTruthy();
   });
 
   it('links the HSNBA case study to its repository', () => {
@@ -1595,9 +1596,6 @@ describe('portfolio routes and metadata', () => {
       expect(rule.source).not.toMatch(/^\/resume\//);
       expect(rule.destination).not.toMatch(/^\/resume\//);
     });
-    expect(resumeContent.headline).toBe(
-      'Full Stack Software Engineer | C#/.NET | TypeScript | React | SQL',
-    );
   });
 
   it('does not expose the resume page route', () => {

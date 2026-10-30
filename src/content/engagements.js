@@ -1,7 +1,7 @@
 import { getCaseStudyBySlug } from './caseStudies';
 import { products } from './projects';
 
-/* Client engagements: work with no live app, no repository and no update feed,
+/* Client engagements: work with no live app, no update feed and no product page,
    so they are not products and never had a row in the work index. The only door
    to them used to be a nav word that did not say "work".
 

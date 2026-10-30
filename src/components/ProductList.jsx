@@ -135,8 +135,8 @@ ProductList.propTypes = {
       oneLiner: PropTypes.string.isRequired,
       problem: PropTypes.string.isRequired,
       audience: PropTypes.string.isRequired,
-      /* Optional so an engagement, which has no repository, no live app and
-         no update feed, can share this row. */
+      /* Optional so an engagement, which has no live app, no update feed and
+         no product page, can share this row. */
       stack: PropTypes.arrayOf(PropTypes.string),
       liveUrl: PropTypes.string,
       repoUrl: PropTypes.string,
