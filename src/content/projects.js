@@ -1342,18 +1342,6 @@ const allProducts = [
         url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/7',
         body: 'Four ways a member could end up on the wrong side of the paywall, all closed. A customer who cancelled and came back paid and received nothing. Refunds and chargebacks left access switched on. A member who won a chargeback dispute stayed locked out permanently. Two checkouts started at once could double-charge, so checkout now takes a durable reservation. Access granted by hand is protected from being overwritten by Stripe. Nobody has paid yet, so this is correctness work before launch rather than a fix to a live incident.',
       },
-      {
-        date: 'Apr 19, 2026',
-        tag: 'PR #87',
-        title: 'Scoped admin permissions by affiliate school',
-        body: 'Admin access now defaults to a single academy while owner access keeps cross-school publishing control. This moves the product closer to a multi-academy LMS instead of a single-site content portal.',
-      },
-      {
-        date: 'Apr 06, 2026',
-        tag: 'PR #82',
-        title: 'Synced course progress across devices',
-        body: 'Resume-where-you-left-off state now persists through the API instead of localStorage, so a member can start on one device and continue on another without losing place.',
-      },
     ],
   },
   /* The school's public website is its own repository and its own deploy, separate
