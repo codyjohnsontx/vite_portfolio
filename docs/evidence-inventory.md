@@ -43,7 +43,7 @@ The Texas Malibu role, the CTX Motoworks eBay liquidation work, and the HSNBA GI
 
 - Lambda Curry: owned ceremonies, blocker removal, dependency coordination, and delivery visibility.
 - CTX Motoworks: redesigned service and inventory workflow using operating data and queue management.
-- HSNBA: Python and Selenium automation that logs sign-in, navigation, and every movement change, skips a record when a write inside it fails, and reruns without touching already-correct records.
+- HSNBA: Python and Selenium automation that logs sign-in, navigation, and every movement change, skips a record when its movement type change or save fails (a flag that cannot be selected is printed and the record is still saved), and reruns without re-clicking a checkbox or re-adding a flag that is already set.
 
 ### Measurement and outcomes
 

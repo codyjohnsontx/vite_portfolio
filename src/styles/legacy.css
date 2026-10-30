@@ -720,6 +720,8 @@ h2.eyebrow { line-height: calc(16 / 11 * 1.55); }
 /* A real <button>, so the browser's button chrome is reset here; the glyph
    inside rotates, the button itself keeps a 44px hit target. */
 .prod-card__caret {
+  /* Last visually, second in the DOM: see the comment in ProductList.jsx. */
+  order: 1;
   align-self: start;
   margin-top: 2px;
   min-width: 44px;

@@ -40,6 +40,22 @@ export default function ProductList({ products, startIndex = 1 }) {
             <span className="num">
               {String(startIndex + i).padStart(2, '0')}
             </span>
+            {/* The button comes before the detail in DOM order so that a
+                forward Tab from it lands on the links it just revealed; the
+                grid's `order` keeps it drawn in the row's last column. */}
+            <button
+              type="button"
+              className="prod-card__caret"
+              aria-expanded={isOpen}
+              aria-controls={`prod-card-detail-${p.slug}`}
+              aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${p.name}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggle();
+              }}
+            >
+              <span aria-hidden="true">+</span>
+            </button>
             <div className="prod-card__main">
               <h3 className="prod-card__title">{p.name}</h3>
               <p className="prod-card__one">{p.oneLiner}</p>
@@ -115,19 +131,6 @@ export default function ProductList({ products, startIndex = 1 }) {
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              className="prod-card__caret"
-              aria-expanded={isOpen}
-              aria-controls={`prod-card-detail-${p.slug}`}
-              aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${p.name}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                toggle();
-              }}
-            >
-              <span aria-hidden="true">+</span>
-            </button>
           </Reveal>
         );
       })}

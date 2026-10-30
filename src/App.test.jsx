@@ -229,6 +229,9 @@ describe('portfolio routes and metadata', () => {
        router away from /products, which would unmount the card. */
     const projectLink = within(card).getByRole('link', { name: /Open project/i });
     expect(within(toggle).queryByRole('link')).toBeNull();
+    /* The button precedes the links it reveals, so a forward Tab from it
+       reaches them instead of leaving the row. */
+    expect(toggle.compareDocumentPosition(projectLink) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     fireEvent.keyDown(projectLink, { key: 'Enter' });
     expect(toggle.getAttribute('aria-expanded')).toBe('true');
   });

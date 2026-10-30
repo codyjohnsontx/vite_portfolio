@@ -230,7 +230,7 @@ export const caseStudies = [
     team: 'Shelter staff who run ShelterManager day to day',
     title: 'Correcting a shelter’s records inside the system it already had',
     tagline:
-      'Selenium automation that signs into the shelter’s ShelterManager back office, works through its own maintenance reports, and corrects records with logging and idempotent checks, so a rerun never double-applies a change.',
+      'Selenium automation that signs into the shelter’s ShelterManager back office, works through its own maintenance reports, and corrects records with logging and state checks on the checkbox and flags it sets, so a rerun does not stack a change already made.',
     challenge:
       'HSNBA keeps its animal records in ShelterManager, a browser-based cloud application with no API available to the shelter. Movement records filed as Offsite Adoption or Working Cat needed correcting, and uploaded images sat unnamed, so staff cleaned both up by hand, one record and one page load at a time, in the gaps between the work the shelter actually exists to do.',
     featuredOutcome:
@@ -238,7 +238,7 @@ export const caseStudies = [
     impactHighlights: [
       'Automated two administrative workflows that staff had been working through by hand in the shelter’s existing management platform.',
       'Corrected historical movement records in place, with the animal flags they implied, instead of exporting and re-importing data.',
-      'Made each run safe to repeat: every change checks the record’s current state first, and a write that fails inside a record is logged and that record is skipped.',
+      'Made each run safe to repeat: the Offsite Adoption checkbox is only clicked if it is not already checked and the Feral and Working Cat flags are only added if missing, a corrected movement drops out of the report, and a failed type change or save is logged and skips that record.',
     ],
     sections: {
       context:
@@ -250,7 +250,7 @@ export const caseStudies = [
       decisions: [
         'Selenium against the real browser session, because the shelter had no API and needed something that could run on the existing setup immediately. The README says plainly that an API-based approach would be more robust in the long run; this project addressed the current need with the tools available.',
         'Each script drives one of ShelterManager’s own maintenance reports rather than its own query, so the list of records to fix is always the application’s list, not a snapshot that could drift.',
-        'Idempotent state checks before every write: the Offsite Adoption checkbox is only clicked if it is not already checked, the flags are only added if missing, and a corrected movement no longer appears in the report, so rerunning after a crash or a network drop cannot double-apply a change.',
+        'State checks on the writes that would otherwise stack: the Offsite Adoption checkbox is only clicked if it is not already checked, the Feral and Working Cat flags are only added if missing, and a corrected movement no longer appears in the report. The movement type change and the image rename set their value outright, which is harmless to repeat because both set the same value every time.',
         'The image job stays interactive, prompting per image to rename, skip, or move on, because deciding whether a photo is an ID or an animal is a judgment call the script should not make alone.',
       ],
       tradeoffs: [
@@ -260,11 +260,11 @@ export const caseStudies = [
       execution: [
         'Built the two jobs in Python with Selenium and python-dotenv, each signing in, navigating the menus to its report, and working through the entries it lists.',
         'Logged sign-in, navigation, and every movement change with timestamps through Python’s logging module, so a run can be audited afterwards and a failure located.',
-        'Wrapped each write inside a record, the movement type change, the save, and the flag update, in error handling that logs the failure and moves on to the next record. A failure opening a record itself is logged and ends the run; the next run starts from the report again.',
+        'Error handling is uneven by design, and the write-up says so: a failed movement type change or save is logged and the record is skipped; inside the flag step, a flag that cannot be selected is printed and the record is still saved, so it leaves the report with that flag missing; and a failure opening a record itself is logged and ends the run, so the next run starts from the report again.',
       ],
       outcomes: [
         'Both cleanup jobs run end to end against the live ShelterManager system, and the movement correction handles both record types including the follow-on animal flags.',
-        'A rerun is safe: records already corrected are skipped by the state checks, and the report shrinks as the backlog clears.',
+        'A rerun is safe: records already corrected have left the report, and the checkbox and flag writes check the current value before changing it, so the report shrinks as the backlog clears.',
         'Source: https://github.com/codyjohnsontx/HSNBA',
       ],
       lessons: [
