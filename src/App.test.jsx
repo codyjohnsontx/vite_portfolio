@@ -1527,9 +1527,9 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
-  /* Client engagements have no live app and no repository, so they were never
-     products; the only door to them used to be a nav word that no longer
-     exists. Their row opens the case study. */
+  /* Client engagements have no live app, no update feed and no product page,
+     so they were never products; the only door to them used to be a nav word
+     that no longer exists. Their row opens the case study. */
   it('lists the client engagements in the work index', () => {
     renderApp('/products');
 

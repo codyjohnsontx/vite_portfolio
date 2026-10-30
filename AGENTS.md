@@ -90,9 +90,9 @@ else's project: its `subjects` is empty on the owner's decision, so its page has
 Do not attach it to a product.
 
 `src/content/engagements.js` holds the two client engagements (Lambda Curry, HSNBA), which have no
-app and no repository. They are derived from their case studies rather than restating them, and
-they appear as rows in `/products` behind the `Engagements` filter, opening the case study instead
-of a product page. `ProductList` renders them because `stack` is optional and `href` / `ctaLabel`
+live app, no update feed and no product page. They are derived from their case studies rather than
+restating them, and they appear as rows in `/products` behind the `Engagements` filter, opening the
+case study instead. `ProductList` renders them because `stack` is optional and `href` / `ctaLabel`
 override the default product link.
 
 ## Case study fields, and the diagram pages hung off them
