@@ -9,6 +9,11 @@
       "source": "/blog",
       "destination": "/notes",
       "permanent": true
+    },
+    {
+      "source": "/resume/Cody-Johnson-Product-Manager-Resume.pdf",
+      "destination": "/resume/Cody-Johnson-Software-Engineer-Resume.pdf",
+      "permanent": true
     }
   ],
   "rewrites": [

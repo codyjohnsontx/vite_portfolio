@@ -150,6 +150,26 @@ export default function ProductDetailPage() {
           <div style={{ marginTop: 24, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             <StackRow items={p.stack} />
           </div>
+          {/* Where the build actually lives. A product with no screenshot has no
+              other place to carry these, so they sit in the hero for every
+              product rather than only under the image. */}
+          {p.liveUrl || p.repoUrl ? (
+            <div
+              className="pd-links"
+              style={{ marginTop: 24, display: 'flex', flexWrap: 'wrap', gap: '12px 32px' }}
+            >
+              {p.liveUrl ? (
+                <a href={p.liveUrl} target="_blank" rel="noreferrer" className="link-arrow">
+                  Live at {p.liveUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')} ↗
+                </a>
+              ) : null}
+              {p.repoUrl ? (
+                <a href={p.repoUrl} target="_blank" rel="noreferrer" className="link-arrow">
+                  Source on GitHub ↗
+                </a>
+              ) : null}
+            </div>
+          ) : null}
           {analysis ? (
             <div style={{ marginTop: 24 }}>
               <Link to={`/products/${p.slug}/analysis`} className="link-arrow">
@@ -231,16 +251,6 @@ export default function ProductDetailPage() {
                 <Shot source={p.image} alt={p.name} sizes={HERO_SIZES} style={HERO_IMAGE_STYLE} eager />
               )}
             </div>
-            {p.liveUrl ? (
-              <p
-                className="mono small uppercase"
-                style={{ marginTop: 12, textAlign: 'center' }}
-              >
-                <a href={p.liveUrl} target="_blank" rel="noreferrer">
-                  Live at {p.liveUrl.replace(/^https?:\/\//, '')} ↗
-                </a>
-              </p>
-            ) : null}
           </div>
         </Reveal>
       ) : null}

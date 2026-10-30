@@ -76,7 +76,14 @@ export default function ProductList({ products, startIndex = 1 }) {
                           </div>
                         </>
                       ) : null}
-                      <div style={{ marginTop: p.stack?.length ? 16 : 0 }}>
+                      <div
+                        style={{
+                          marginTop: p.stack?.length ? 16 : 0,
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '8px 24px',
+                        }}
+                      >
                         <Link
                           to={p.href || `/products/${p.slug}`}
                           className="link-arrow"
@@ -84,6 +91,17 @@ export default function ProductList({ products, startIndex = 1 }) {
                         >
                           {p.ctaLabel || 'Open project'} <ArrowGlyph />
                         </Link>
+                        {p.repoUrl ? (
+                          <a
+                            href={p.repoUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="link-arrow"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            Source ↗
+                          </a>
+                        ) : null}
                       </div>
                     </div>
                   </div>
@@ -120,6 +138,8 @@ ProductList.propTypes = {
       /* Optional so an engagement, which has no repository, no live app and
          no update feed, can share this row. */
       stack: PropTypes.arrayOf(PropTypes.string),
+      liveUrl: PropTypes.string,
+      repoUrl: PropTypes.string,
       href: PropTypes.string,
       ctaLabel: PropTypes.string,
       brandDisclaimer: PropTypes.string,

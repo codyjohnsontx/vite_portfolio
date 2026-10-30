@@ -1,13 +1,12 @@
 export const profile = {
   name: 'Cody Johnson',
-  targetRole: 'Technical Product Owner',
+  targetRole: 'Full Stack Software Engineer',
   location: 'Austin, Texas',
-  headline:
-    'Technical Product Owner | Software Engineer | Digital & Operational Systems',
+  headline: 'Full Stack Software Engineer | C#/.NET | TypeScript | React | SQL',
   heroSupport:
-    'I work across technical operations, real-time systems, and data workflows: reproducing issues, comparing expected against actual behavior, defining validation criteria, and improving reliability from what a system actually does under failure. Extensive hands-on motorsports experience sits behind that, so vehicle setup, telemetry, and simulator systems are familiar ground rather than a domain I read up on.',
+    'I build business applications, third-party integrations, and operational systems that hold up under failure, in C#/.NET, TypeScript, React, and SQL: gathering the requirements, designing the solution, implementing the APIs, and supporting the application through testing and deployment. Product ownership and business operations experience sits behind the engineering, including practical AI integration and workflow automation.',
   summary:
-    'I do my best work when the request is messy at first: define the real need, break it into deliverable pieces, clarify acceptance criteria and failure conditions, coordinate tradeoffs, and keep the work moving until the result holds up in practice against real data and real failure.',
+    'Full-stack software engineer with experience developing business applications, integrating third-party services, and building reliable operational systems using C#/.NET, TypeScript, React, and SQL. Experienced in gathering requirements, designing solutions, implementing APIs, and supporting applications through testing and deployment, with product ownership and business operations experience behind it, including practical AI integration and workflow automation.',
   footerNote:
     'Built as a focused portfolio for active products, selected case studies, and supporting execution proof.',
   contactLinks: [

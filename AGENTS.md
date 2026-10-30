@@ -48,10 +48,16 @@ For the per-product record shape, which fields exist and which are optional, rea
 
 Two things those files will not tell you. Nothing currently renders `status` or
 `evidenceSignal`; both are defined in `src/content/projects.js` and consumed by no
-component. So express lifecycle nuance ("pre-launch", "prototype") in the copy rather than
-inventing a new status value, and treat `evidenceSignal` as an internal note whose text
-reaches no rendered surface, so editing it does not change the site. And a product with no
-screenshot should omit `image` and `visualAssets` rather than carry a placeholder path.
+component. So express lifecycle nuance ("prototype") in the copy rather than inventing a
+new status value, and treat `evidenceSignal` as an internal note whose text reaches no
+rendered surface, so editing it does not change the site. And a product with no screenshot
+should omit `image` and `visualAssets` rather than carry a placeholder path (Dragonglass AI
+is the current example).
+
+`liveUrl` and `repoUrl` are both optional and both render in the product hero as
+`Live at <host> ↗` and `Source on GitHub ↗`; `repoUrl` also adds a `Source ↗` link to the
+expanded row on `/products`. `src/App.test.jsx` pins the exact values for the resume's
+projects, so a changed deployment or a renamed repository means updating that test.
 
 ## Notes: one index, two kinds
 
@@ -202,6 +208,11 @@ for the lift to work, and stay true:
 
 ## The resume story is spread across the site, and it drifts
 
+The site's positioning is the resume's: "Full Stack Software Engineer | C#/.NET |
+TypeScript | React | SQL", decided by the owner in October 2026 over the earlier Technical
+Product Owner framing. `src/App.test.jsx` pins the new eyebrow and pins the old phrase out
+of the home page and `index.html`, so a content pass cannot drift it back.
+
 `src/content/resumeContent.js` renders nowhere. `ResumePage.jsx` exists but `/resume` is
 not routed in `src/App.jsx`, and a test in `src/App.test.jsx` pins that it stays
 unexposed; it was unrouted deliberately in ff0ac60 and kept "for later". So editing
@@ -209,17 +220,20 @@ unexposed; it was unrouted deliberately in ff0ac60 and kept "for later". So edit
 product decision, not a content fix.
 
 What actually renders the resume story is the home page: `src/content/experience.js`
-(company, role, dates, `summary`, `tags` only, never `evidence`) plus the hardcoded hero
-eyebrow, `HERO_LINES`, and `PROOF` array in `src/pages/HomePage.jsx`, the positioning line
-in `src/components/Preloader.jsx`, `profile.heroSupport`, and the titles and descriptions
-in `index.html`. Everything else in `src/content/profile.js` is dead: only `heroSupport`
-and `contactLinks` have a consumer, and `toolkit` lost its last one when Dev Mode was
-deleted. Nothing on the site renders a skills or strengths list at all.
+(company, role, dates, `summary`, `tags` only, never `evidence`; the freelance engineering
+role leads, covering Oasis, Diaz Martial Arts and HSNBA under one row) plus the hardcoded
+hero eyebrow, `HERO_LINES`, and `PROOF` array in `src/pages/HomePage.jsx`, the positioning
+line in `src/components/Preloader.jsx`, `profile.heroSupport`, and the titles and
+descriptions in `index.html`. Everything else in `src/content/profile.js` is dead: only
+`heroSupport` and `contactLinks` have a consumer, and `toolkit` lost its last one when Dev
+Mode was deleted. Nothing on the site renders a skills or strengths list at all.
 
-Two pieces of that story are deliberately absent rather than missing: the Texas Malibu role
-and the CTX Motoworks eBay liquidation bullet. `src/App.test.jsx` pins both out of the
-rendered output and out of both `experience.js` and `resumeContent.js`, so a content pass
-that "restores" them from an older source fails the suite.
+Three pieces of that story are deliberately absent rather than missing: the Texas Malibu
+role, the CTX Motoworks eBay liquidation bullet, and the HSNBA GIS, 19,000-record and
+65 / 95 percent claims, which the HSNBA repository cannot back and the resume dropped.
+`src/App.test.jsx` pins all of them out of the rendered output and out of the content
+modules, so a content pass that "restores" them from an older source fails the suite. The
+HSNBA case study keeps its `hsnba-automation-and-gis` slug because the URL is public.
 
 Of the three files in `public/resume/`, the HTML and the TXT are separate hand-maintained
 artifacts, not generated from `resumeContent.js`, so a content change has to be applied to
@@ -228,17 +242,19 @@ the HTML, so a resume change means updating `resumeContent.js` and those two fil
 regenerating the PDF.
 
 The PDF is the exception worth knowing: it is not hand-written, it is Chrome's
-print-to-PDF of `cody-johnson-product-manager-resume.html` (its metadata still reads
+print-to-PDF of `cody-johnson-software-engineer-resume.html` (its metadata reads
 `Skia/PDF`). No component links to it, but it ships from `public/`, so it is served as a
-static asset at `/resume/Cody-Johnson-Product-Manager-Resume.pdf` and stays reachable and
-shareable. `src/content/resumeMeta.js` records that path in `downloadPath` and is
-currently imported by nothing. So editing the HTML alone silently leaves a live public
-artifact stale. Regenerate with:
+static asset at `/resume/Cody-Johnson-Software-Engineer-Resume.pdf` and stays reachable and
+shareable; the previous `/resume/Cody-Johnson-Product-Manager-Resume.pdf` path redirects to
+it in `vercel.json` (mirrored in `public/_redirects`) because that URL had been shared.
+`src/content/resumeMeta.js` records the path in `downloadPath` and is currently imported
+by nothing. So editing the HTML alone silently leaves a live public artifact stale.
+Regenerate with:
 
 ```shell
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
-  --no-pdf-header-footer --print-to-pdf=public/resume/Cody-Johnson-Product-Manager-Resume.pdf \
-  "file://$PWD/public/resume/cody-johnson-product-manager-resume.html"
+  --no-pdf-header-footer --print-to-pdf=public/resume/Cody-Johnson-Software-Engineer-Resume.pdf \
+  "file://$PWD/public/resume/cody-johnson-software-engineer-resume.html"
 ```
 
 The HTML's `@media print` block already strips the card chrome. The current resume prints

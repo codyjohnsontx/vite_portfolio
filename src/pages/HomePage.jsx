@@ -86,7 +86,7 @@ function Hero({ ready }) {
 
       <div className="hero__title-block">
         <span className="mono hero__eyebrow" data-hero style={{ opacity: 0 }}>
-          Technical product owner · Software engineer · Austin, TX
+          Full stack software engineer · C#/.NET · TypeScript · React · SQL · Austin, TX
         </span>
         <h1 className="display hero__title" id="hero-title">
           <span className="sr-only">Ambiguous to shipped</span>
@@ -106,22 +106,24 @@ function Hero({ ready }) {
 
 /* ------------------------------- proof ------------------------------- */
 
+/* Four claims, each one backed by something on the resume or in a repository
+   on this site: the numbers are the resume's own. */
 const PROOF = [
   {
-    label: 'Issue reproduction',
-    body: 'Working with engineering and QA, a vague report becomes reproduction conditions, expected against actual behavior, and a severity call somebody can act on.',
+    label: 'Requirements to API',
+    body: 'A vague ask becomes requirements, a data model, and the endpoints behind it, with acceptance criteria written before the code and the build supported through testing and deployment.',
   },
   {
-    label: 'Requirements clarity',
-    body: 'Vague asks become user stories, acceptance criteria, validation rules, and delivery-ready scope.',
+    label: 'Integrations that hold',
+    body: 'Stripe, Twilio, Mux, Clerk, and LLM APIs land behind webhook signature verification and duplicate-event prevention, so a replayed event cannot double-charge or double-send.',
   },
   {
     label: 'Reliability under failure',
     body: 'Active builds define what happens on disconnects, restarts, interrupted delivery, and duplicate events, instead of assuming the happy path.',
   },
   {
-    label: 'Measured outcomes',
-    body: 'Case studies tie decisions to launch metrics, retention, revenue, and data quality.',
+    label: 'Tested in CI',
+    body: 'Suites that run on every pull request: 373 xUnit and 1,082 TypeScript tests on Oasis Race Control, a 33-case RAG evaluation on Trackday Tuner, and real-database billing tests on Diaz on Demand.',
   },
 ];
 
