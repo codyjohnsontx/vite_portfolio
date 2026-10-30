@@ -250,12 +250,12 @@ function CaseStudies() {
 
 /* ----------------------------- experience ----------------------------- */
 
-function ExperienceList() {
+function ExperienceList({ num }) {
   const ref = useReveal();
   return (
     <section className="bay" id="experience">
       <div className="shell">
-        <SectionHead num="04" eyebrow="Experience" title="Where the reps came from." />
+        <SectionHead num={num} eyebrow="Experience" title="Where the reps came from." />
         <ol className="xp" ref={ref} style={{ opacity: 0 }}>
           {experience.map((job) => (
             <li className="xp__row" key={`${job.company}-${job.dates}`}>
@@ -284,6 +284,7 @@ function ExperienceList() {
 
 export default function HomePage() {
   const { loaded } = useOutletContext() ?? { loaded: true };
+  const hasConcepts = conceptProducts.length > 0;
 
   return (
     <>
@@ -309,25 +310,33 @@ export default function HomePage() {
         <WorkRows products={flagshipProducts} startIndex={1} />
       </section>
 
-      <section className="bay--tight" id="concepts">
-        <div className="shell">
-          <SectionHead
-            num="03"
-            eyebrow="Concepts & prototypes"
-            title="Smaller bets, sharper questions."
-            sub="Concepts prototyped to push on a single hypothesis: usability under pressure, lifecycle modeling, micro-interactions in social products."
-          />
-        </div>
-        <WorkRows products={conceptProducts} startIndex={flagshipProducts.length + 1} />
-      </section>
+      {/* Every concept is archived today, and an empty section reads as a
+          broken page, so it is drawn only when it has rows. */}
+      {hasConcepts ? (
+        <section className="bay--tight" id="concepts">
+          <div className="shell">
+            <SectionHead
+              num="03"
+              eyebrow="Concepts & prototypes"
+              title="Smaller bets, sharper questions."
+              sub="Concepts prototyped to push on a single hypothesis: usability under pressure, lifecycle modeling, micro-interactions in social products."
+            />
+          </div>
+          <WorkRows products={conceptProducts} startIndex={flagshipProducts.length + 1} />
+        </section>
+      ) : null}
 
-      <ExperienceList />
+      <ExperienceList num={hasConcepts ? '04' : '03'} />
     </>
   );
 }
 
 Hero.propTypes = {
   ready: PropTypes.bool,
+};
+
+ExperienceList.propTypes = {
+  num: PropTypes.string.isRequired,
 };
 
 SectionHead.propTypes = {

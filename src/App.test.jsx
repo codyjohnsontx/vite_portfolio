@@ -15,7 +15,7 @@ import { engagements } from './content/engagements';
 import { KIND_LABEL, RELATED_HEADING, getRelatedForWriting, writing } from './content/writing';
 import { experience } from './content/experience';
 import { productAnalyses } from './content/productAnalyses';
-import { allProducts, flagshipProducts, products } from './content/projects';
+import { allProducts, conceptProducts, flagshipProducts, products } from './content/projects';
 import { resumeContent } from './content/resumeContent';
 
 function renderApp(initialEntry = '/') {
@@ -1160,8 +1160,7 @@ describe('portfolio routes and metadata', () => {
     expect(heads).toEqual([
       { num: '01', eyebrow: 'Case studies' },
       { num: '02', eyebrow: 'Active builds' },
-      { num: '03', eyebrow: 'Concepts & prototypes' },
-      { num: '04', eyebrow: 'Experience' },
+      { num: '03', eyebrow: 'Experience' },
     ]);
     const hero = main.querySelector('.hero');
     const caseStudies = main.querySelector('.case-grid').closest('section');
@@ -1172,6 +1171,20 @@ describe('portfolio routes and metadata', () => {
     expect(caseStudies.querySelector('.head__sub').textContent).toBe(
       'Shipped products, architecture decisions, and an open-source fix: what broke or needed deciding, what I chose and why, and what happened after.',
     );
+  });
+
+  /* Every concept product is archived, so the concepts section would be a
+     heading over no rows. It is hidden instead, and Experience takes its number. */
+  it('hides the concepts section on the home page when there are no concept products', () => {
+    expect(conceptProducts).toEqual([]);
+    renderApp('/');
+
+    const main = document.querySelector('main');
+    expect(within(main).queryByText('Smaller bets, sharper questions.')).toBeNull();
+    expect(within(main).queryByText('Concepts & prototypes')).toBeNull();
+    expect(main.querySelector('#concepts')).toBeNull();
+    const experienceHead = main.querySelector('#experience header.head');
+    expect(experienceHead.querySelector('.head__num').textContent).toBe('03');
   });
 
   it('keeps the deck of the firstmate case study on the notes index and the home card', () => {
