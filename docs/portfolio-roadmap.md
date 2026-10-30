@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Keep the portfolio roadmap focused on recruiter scan quality, PM positioning, active-build proof, and reviewable implementation slices.
+Keep the portfolio roadmap focused on recruiter scan quality, the engineering positioning in `docs/positioning-brief.md`, active-build proof, and reviewable implementation slices.
 
 ## Roadmap Items
 

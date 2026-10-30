@@ -1678,14 +1678,15 @@ describe('portfolio routes and metadata', () => {
 
   it('saves the portfolio roadmap document', () => {
     const roadmap = readFileSync('docs/portfolio-roadmap.md', 'utf8');
-    const pmBrief = readFileSync('docs/pm-positioning-brief.md', 'utf8');
+    const positioningBrief = readFileSync('docs/positioning-brief.md', 'utf8');
     const evidenceInventory = readFileSync('docs/evidence-inventory.md', 'utf8');
     const resumeTailoring = readFileSync('docs/resume-tailoring-guide.md', 'utf8');
 
     expect(roadmap).toContain('Portfolio polish pass');
     expect(roadmap).toContain('Status: complete');
     expect(roadmap).toContain('Wattsmith roadmap UI polish');
-    expect(pmBrief).toContain('Schwab-aligned product-owner signals');
+    expect(positioningBrief).toContain('Full Stack Software Engineer | C#/.NET | TypeScript | React | SQL');
+    expect(positioningBrief).not.toContain('PM Positioning Brief');
     expect(evidenceInventory).toContain('Digital Product Owner Fit');
     expect(evidenceInventory).toContain('Wattsmith automated export verification');
     expect(evidenceInventory).toContain('file-format verification');
