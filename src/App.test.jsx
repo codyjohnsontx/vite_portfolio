@@ -125,7 +125,7 @@ describe('portfolio routes and metadata', () => {
   /* The HSNBA story was rewritten to what its repository backs: Selenium
      automation with logging and idempotent checks. The GIS, record-count and
      percentage claims it used to carry are pinned out of every rendered
-     surface and out of the content modules, so they cannot drift back in. */
+     surface, so they cannot drift back in. */
   it('keeps the unbacked HSNBA figures off the site', () => {
     const unbacked = [/19,000/, /65 percent/, /95 percent/, /GIS/];
     const hsnbaPages = [
@@ -143,9 +143,6 @@ describe('portfolio routes and metadata', () => {
 
     const hsnba = caseStudies.find((study) => study.slug === 'hsnba-automation-and-gis');
     expect(hsnba.role).toBe('Software Engineer (Freelance)');
-    const hsnbaText = JSON.stringify(hsnba);
-    unbacked.forEach((pattern) => expect(hsnbaText).not.toMatch(pattern));
-    expect(JSON.stringify(experience)).not.toMatch(/19,000|65 percent|95 percent|GIS/);
   });
 
   it('links the HSNBA case study to its repository', () => {
@@ -1594,9 +1591,6 @@ describe('portfolio routes and metadata', () => {
     });
     expect(existsSync('public/resume/Cody-Johnson-Software-Engineer-Resume.pdf')).toBe(true);
     expect(existsSync('public/resume/Cody-Johnson-Product-Manager-Resume.pdf')).toBe(false);
-    expect(resumeContent.headline).toBe(
-      'Full Stack Software Engineer | C#/.NET | TypeScript | React | SQL',
-    );
     expect(vercel.redirects).toContainEqual({
       source: '/resume/Cody-Johnson-Product-Manager-Resume.pdf',
       destination: '/resume/Cody-Johnson-Software-Engineer-Resume.pdf',

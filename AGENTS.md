@@ -231,8 +231,9 @@ Mode was deleted. Nothing on the site renders a skills or strengths list at all.
 Three pieces of that story are deliberately absent rather than missing: the Texas Malibu
 role, the CTX Motoworks eBay liquidation bullet, and the HSNBA GIS, 19,000-record and
 65 / 95 percent claims, which the HSNBA repository cannot back and the resume dropped.
-`src/App.test.jsx` pins all of them out of the rendered output and out of the content
-modules, so a content pass that "restores" them from an older source fails the suite. The
+`src/App.test.jsx` pins all of them out of the rendered output, and the first two out of
+the content modules as well, so a content pass that "restores" them from an older source
+fails the suite. The
 HSNBA case study keeps its `hsnba-automation-and-gis` slug because the URL is public.
 
 Of the three files in `public/resume/`, the HTML and the TXT are separate hand-maintained
