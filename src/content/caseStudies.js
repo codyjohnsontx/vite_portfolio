@@ -232,7 +232,7 @@ export const caseStudies = [
     tagline:
       'Selenium automation that signs into the shelter’s ShelterManager back office, works through its own maintenance reports, and corrects records with logging and idempotent checks, so a rerun never double-applies a change.',
     challenge:
-      'HSNBA keeps its animal records in ShelterManager, a browser-based cloud application with no API available to the shelter. Years of movement records sat under types the shelter no longer used, and uploaded images sat unnamed, so staff cleaned both up by hand, one record and one page load at a time, in the gaps between the work the shelter actually exists to do.',
+      'HSNBA keeps its animal records in ShelterManager, a browser-based cloud application with no API available to the shelter. Movement records filed as Offsite Adoption or Working Cat needed correcting, and uploaded images sat unnamed, so staff cleaned both up by hand, one record and one page load at a time, in the gaps between the work the shelter actually exists to do.',
     featuredOutcome:
       'Two report-driven cleanup jobs run end to end against the live system, every step logged, with a rerun that leaves an already-correct record alone.',
     impactHighlights: [
