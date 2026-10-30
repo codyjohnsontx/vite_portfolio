@@ -697,9 +697,14 @@ h2.eyebrow { line-height: calc(16 / 11 * 1.55); }
   overflow: hidden;
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  visibility: hidden;
+  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0.45s;
 }
-.prod-card.is-open .prod-card__expand { grid-template-rows: 1fr; }
+.prod-card.is-open .prod-card__expand {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
 .prod-card__expand-inner { min-height: 0; padding-top: 0; }
 .prod-card.is-open .prod-card__expand-inner { padding-top: 24px; }
 .prod-card__detail-grid {
