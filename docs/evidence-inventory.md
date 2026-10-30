@@ -18,7 +18,7 @@ The Texas Malibu role, the CTX Motoworks eBay liquidation work, and the HSNBA GI
    - Quantitative signals are strong: $90K monthly service revenue improvement and satisfaction gains.
 
 3. HSNBA
-   - Repository-backed story: two Selenium jobs that correct records inside the shelter's existing ShelterManager platform, with logging, per-record error handling, and idempotent state checks. No volume or percentage outcome is claimed.
+   - Repository-backed story: two Selenium jobs that correct records inside the shelter's existing ShelterManager platform, with logging, a skip on a failed movement type change or save, and state checks on the checkbox and flags it sets. No volume or percentage outcome is claimed.
    - Strong proof of shipping inside a system the organization already had, with no API and no budget for a new one.
 
 ## Experience evidence by PM signal
