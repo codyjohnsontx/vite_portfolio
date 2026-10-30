@@ -203,17 +203,34 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /Trackday Tuner/ })).toBeTruthy();
   });
 
-  it('does not collapse product cards when keyboard users press Enter on the nested project link', () => {
+  /* The expand control is its own <button>, so the project link and the
+     Source link are never nested inside a role=button element. Clicking the
+     row still toggles it for mouse users, and following a link inside the open
+     row leaves it open. */
+  it('expands a product card from its own button and keeps links out of it', () => {
     renderApp('/products');
-    const trackTunerCard = screen.getByRole('button', { name: /Trackday Tuner/i });
+    const toggle = screen.getByRole('button', { name: 'Expand Trackday Tuner' });
+    const card = toggle.closest('.prod-card');
+    expect(card.getAttribute('role')).toBeNull();
+    expect(within(card).queryByRole('link', { name: /Open project/i })).toBeTruthy();
 
-    fireEvent.keyDown(trackTunerCard, { key: 'Enter' });
-    expect(trackTunerCard.getAttribute('aria-expanded')).toBe('true');
+    fireEvent.click(toggle);
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    expect(toggle.getAttribute('aria-label')).toBe('Collapse Trackday Tuner');
+    expect(card.className).toContain('is-open');
+    expect(document.getElementById(toggle.getAttribute('aria-controls'))).toBeTruthy();
 
-    const projectLink = within(trackTunerCard).getByRole('link', { name: /Open project/i });
+    fireEvent.click(card);
+    expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    fireEvent.click(toggle);
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+
+    /* keyDown rather than click: a click on the Link navigates the memory
+       router away from /products, which would unmount the card. */
+    const projectLink = within(card).getByRole('link', { name: /Open project/i });
+    expect(within(toggle).queryByRole('link')).toBeNull();
     fireEvent.keyDown(projectLink, { key: 'Enter' });
-
-    expect(trackTunerCard.getAttribute('aria-expanded')).toBe('true');
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
   });
 
   it('keeps archived concepts outside the visible product exports', () => {

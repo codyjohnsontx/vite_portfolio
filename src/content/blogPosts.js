@@ -243,7 +243,7 @@ export const blogPosts = [
       {
         heading: 'Measurement keeps the work honest',
         body: [
-          'Operational improvements need measurement because they can disappear into the background once they start working. If the team saves time, reduces errors, or makes reporting easier, the outcome should be stated plainly. At HSNBA, the evidence is the kind a small nonprofit can actually check: two report-driven cleanup jobs that staff used to work through by hand now run end to end against the shelter’s management platform, every step is logged, and a rerun leaves an already-correct record alone.',
+          'Operational improvements need measurement because they can disappear into the background once they start working. If the team saves time, reduces errors, or makes reporting easier, the outcome should be stated plainly. At HSNBA, the evidence is the kind a small nonprofit can actually check: two report-driven cleanup jobs that staff used to work through by hand now run end to end against the shelter’s management platform, sign-in, navigation, and every movement change are logged, and a rerun leaves an already-correct record alone.',
           'Metrics also keep the work from becoming output theater. Shipping a workflow change is not the same as improving the workflow. The question is whether the repeated pain decreased, whether the data became more trustworthy, or whether stakeholders had a clearer basis for action.',
           'In Lambda Curry-style delivery work, that means defining success criteria before release and using behavior, conversion, retention, or stakeholder feedback to guide iteration after launch. Measurement is not a reporting chore at the end. It is part of scoping the work responsibly.',
         ],

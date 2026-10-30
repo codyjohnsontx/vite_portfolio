@@ -26,17 +26,16 @@ export default function ProductList({ products, startIndex = 1 }) {
             delay={(i % 4) * 80}
             distance={22}
             style={{ '--card-accent': p.accent }}
-            onClick={toggle}
-            onKeyDown={(e) => {
+            /* The whole row still toggles on a mouse click, but the row is not
+               the control: a row that announced itself as a button would make
+               the project link and the Source link nested interactive content,
+               which assistive tech cannot reach. The caret below is the real
+               button, so keyboard and screen reader users get one focusable
+               toggle per row, and links stay links. */
+            onClick={(e) => {
               if (isInteractiveChild(e.target, e.currentTarget)) return;
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggle();
-              }
+              toggle();
             }}
-            role="button"
-            tabIndex={0}
-            aria-expanded={isOpen}
           >
             <span className="num">
               {String(startIndex + i).padStart(2, '0')}
@@ -44,7 +43,7 @@ export default function ProductList({ products, startIndex = 1 }) {
             <div className="prod-card__main">
               <h3 className="prod-card__title">{p.name}</h3>
               <p className="prod-card__one">{p.oneLiner}</p>
-              <div className="prod-card__expand">
+              <div className="prod-card__expand" id={`prod-card-detail-${p.slug}`}>
                 <div className="prod-card__expand-inner">
                   <div className="prod-card__detail-grid">
                     <div>
@@ -116,9 +115,19 @@ export default function ProductList({ products, startIndex = 1 }) {
                 </div>
               </div>
             </div>
-            <span className="prod-card__caret" aria-hidden="true">
-              +
-            </span>
+            <button
+              type="button"
+              className="prod-card__caret"
+              aria-expanded={isOpen}
+              aria-controls={`prod-card-detail-${p.slug}`}
+              aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${p.name}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggle();
+              }}
+            >
+              <span aria-hidden="true">+</span>
+            </button>
           </Reveal>
         );
       })}

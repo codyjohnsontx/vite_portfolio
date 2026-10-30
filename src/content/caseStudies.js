@@ -234,11 +234,11 @@ export const caseStudies = [
     challenge:
       'HSNBA keeps its animal records in ShelterManager, a browser-based cloud application with no API available to the shelter. Movement records filed as Offsite Adoption or Working Cat needed correcting, and uploaded images sat unnamed, so staff cleaned both up by hand, one record and one page load at a time, in the gaps between the work the shelter actually exists to do.',
     featuredOutcome:
-      'Two report-driven cleanup jobs run end to end against the live system, every step logged, with a rerun that leaves an already-correct record alone.',
+      'Two report-driven cleanup jobs run end to end against the live system, with sign-in, navigation, and every movement change logged, and a rerun that leaves an already-correct record alone.',
     impactHighlights: [
       'Automated two administrative workflows that staff had been working through by hand in the shelter’s existing management platform.',
       'Corrected historical movement records in place, with the animal flags they implied, instead of exporting and re-importing data.',
-      'Made each run safe to repeat: every change checks the record’s current state first, and a failure on one record is logged and skipped rather than stopping the run.',
+      'Made each run safe to repeat: every change checks the record’s current state first, and a write that fails inside a record is logged and that record is skipped.',
     ],
     sections: {
       context:
@@ -260,7 +260,7 @@ export const caseStudies = [
       execution: [
         'Built the two jobs in Python with Selenium and python-dotenv, each signing in, navigating the menus to its report, and working through the entries it lists.',
         'Logged sign-in, navigation, and every movement change with timestamps through Python’s logging module, so a run can be audited afterwards and a failure located.',
-        'Wrapped each record’s steps in error handling that logs the failure and moves to the next entry instead of stopping the run.',
+        'Wrapped each write inside a record, the movement type change, the save, and the flag update, in error handling that logs the failure and moves on to the next record. A failure opening a record itself is logged and ends the run; the next run starts from the report again.',
       ],
       outcomes: [
         'Both cleanup jobs run end to end against the live ShelterManager system, and the movement correction handles both record types including the follow-on animal flags.',
