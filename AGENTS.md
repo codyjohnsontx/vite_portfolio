@@ -236,31 +236,15 @@ the content modules as well, so a content pass that "restores" them from an olde
 fails the suite. The
 HSNBA case study keeps its `hsnba-automation-and-gis` slug because the URL is public.
 
-Of the three files in `public/resume/`, the HTML and the TXT are separate hand-maintained
-artifacts, not generated from `resumeContent.js`, so a content change has to be applied to
-both. They are unlinked but served, so they go stale silently. The PDF is generated from
-the HTML, so a resume change means updating `resumeContent.js` and those two files, then
-regenerating the PDF.
-
-The PDF is the exception worth knowing: it is not hand-written, it is Chrome's
-print-to-PDF of `cody-johnson-software-engineer-resume.html` (its metadata reads
-`Skia/PDF`). No component links to it, but it ships from `public/`, so it is served as a
-static asset at `/resume/Cody-Johnson-Software-Engineer-Resume.pdf` and stays reachable and
-shareable; the previous `/resume/Cody-Johnson-Product-Manager-Resume.pdf` path redirects to
-it in `vercel.json` (mirrored in `public/_redirects`) because that URL had been shared.
-`src/content/resumeMeta.js` records the path in `downloadPath` and is currently imported
-by nothing. So editing the HTML alone silently leaves a live public artifact stale.
-Regenerate with:
-
-```shell
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
-  --no-pdf-header-footer --print-to-pdf=public/resume/Cody-Johnson-Software-Engineer-Resume.pdf \
-  "file://$PWD/public/resume/cody-johnson-software-engineer-resume.html"
-```
-
-The HTML's `@media print` block already strips the card chrome. The current resume prints
-to 4 US Letter pages. Check the count before committing: it should only move when the
-content did, so an unexplained change means the print CSS moved.
+The site publishes no resume. That is an owner decision from 2026-10-30 ("I don't need a
+resume PDF on the portfolio website"): the served `public/resume/` files, the
+`resumeMeta.js` module that pointed at them, and the redirect from the old PDF path were all
+removed, and `src/App.test.jsx` pins that `public/resume/` stays absent and that no redirect
+in `vercel.json` targets `/resume/`. Everything under `public/` ships as a static asset
+whether or not a page links to it, so a resume file placed there is public the moment it is
+pushed. The master resume lives outside this repository; `src/content/resumeContent.js` is
+the only copy of it here, it renders nowhere, and it is kept in step with the master by
+hand.
 
 ## Attend screenshots
 

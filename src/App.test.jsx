@@ -1584,26 +1584,20 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
   });
 
-  /* The served resume is the engineering one. The old Product Manager files
-     are gone and the old PDF path redirects, in vercel.json, to the new one. */
-  it('serves the software engineer resume and redirects the old PDF path', () => {
-    const html = readFileSync('public/resume/cody-johnson-software-engineer-resume.html', 'utf8');
-    const txt = readFileSync('public/resume/cody-johnson-software-engineer-resume.txt', 'utf8');
+  /* The owner decided on 2026-10-30 that the site publishes no resume. Nothing
+     under public/ may serve one, and no redirect may point at one, because
+     everything in public/ ships as a static asset whether or not a page links
+     to it. The /resume page route stays unexposed below for the same reason. */
+  it('publishes no resume from the site', () => {
+    expect(existsSync('public/resume')).toBe(false);
     const vercel = JSON.parse(readFileSync('vercel.json', 'utf8'));
-
-    [html, txt].forEach((doc) => {
-      expect(doc).toContain('Full Stack Software Engineer');
-      expect(doc).toContain('Cavender Cadillac of San Antonio');
-      expect(doc).not.toContain('Technical Product Owner');
-      expect(doc).not.toContain('19,000');
+    vercel.redirects.forEach((rule) => {
+      expect(rule.source).not.toMatch(/^\/resume\//);
+      expect(rule.destination).not.toMatch(/^\/resume\//);
     });
-    expect(existsSync('public/resume/Cody-Johnson-Software-Engineer-Resume.pdf')).toBe(true);
-    expect(existsSync('public/resume/Cody-Johnson-Product-Manager-Resume.pdf')).toBe(false);
-    expect(vercel.redirects).toContainEqual({
-      source: '/resume/Cody-Johnson-Product-Manager-Resume.pdf',
-      destination: '/resume/Cody-Johnson-Software-Engineer-Resume.pdf',
-      permanent: true,
-    });
+    expect(resumeContent.headline).toBe(
+      'Full Stack Software Engineer | C#/.NET | TypeScript | React | SQL',
+    );
   });
 
   it('does not expose the resume page route', () => {

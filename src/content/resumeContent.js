@@ -1,6 +1,6 @@
 /* The resume as a data module. Nothing routes ResumePage, so this renders
-   nowhere; it is kept in step with the served files under public/resume so
-   the three never disagree. Education follows the resume exactly. */
+   nowhere, and the site publishes no resume file; this is kept in step with
+   the master resume by hand. Education follows the resume exactly. */
 export const resumeContent = {
   headline: 'Full Stack Software Engineer | C#/.NET | TypeScript | React | SQL',
   summary: [

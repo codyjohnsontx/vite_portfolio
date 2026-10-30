@@ -80,8 +80,8 @@ reviews:
     - "!**/*.jpg"
     - "!**/*.jpeg"
     - "!**/*.webp"
-    # Binary resume in public/resume. The plain-text resume beside it stays
-    # reviewable - it is copy, and copy gets reviewed.
+    # Any PDF. The site publishes no resume, so none is expected; the rule
+    # stays as a guard against a stray binary commit.
     - "!**/*.pdf"
 
   # Keep. This is the summary Cody actually reads.

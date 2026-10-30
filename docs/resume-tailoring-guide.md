@@ -2,7 +2,7 @@
 
 ## Goal
 
-Tailor the master resume in 15 to 20 minutes without rewriting it from scratch. The master copy is the full stack software engineer resume in `public/resume/`; see AGENTS.md for which files are hand-maintained and which is generated.
+Tailor the master resume in 15 to 20 minutes without rewriting it from scratch. The master copy is the full stack software engineer resume, kept outside this repository; the site publishes no resume, and `src/content/resumeContent.js` is the only copy of it here, kept in step by hand and rendered nowhere.
 
 ## Default process
 
