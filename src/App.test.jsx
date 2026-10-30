@@ -308,6 +308,14 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /^Notes\.$/ })).toBeTruthy();
   });
 
+  it('pitches software engineering roles in the footer on every page', () => {
+    renderApp('/products');
+
+    const footer = within(screen.getByRole('contentinfo'));
+    expect(footer.getByText('Open to software engineering roles')).toBeTruthy();
+    expect(footer.queryByText(/product roles/i)).toBeNull();
+  });
+
   it('exposes Notes in the site navigation', () => {
     renderApp('/notes');
 
