@@ -212,6 +212,8 @@ The site's positioning is the resume's: "Full Stack Software Engineer | C#/.NET 
 TypeScript | React | SQL", decided by the owner in October 2026 over the earlier Technical
 Product Owner framing. `src/App.test.jsx` pins the new eyebrow and pins the old phrase out
 of the home page and `index.html`, so a content pass cannot drift it back.
+`docs/positioning-brief.md` is the messaging guide that goes with it; the other `docs/`
+files predate the switch and still carry product-manager framing.
 
 `src/content/resumeContent.js` renders nowhere. `ResumePage.jsx` exists but `/resume` is
 not routed in `src/App.jsx`, and a test in `src/App.test.jsx` pins that it stays
