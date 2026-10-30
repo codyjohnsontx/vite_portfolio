@@ -1,5 +1,7 @@
 # PM Positioning Brief
 
+> As of 2026-10-30 the site is positioned for software engineering roles. The product-manager framing below is historical and is not current guidance; AGENTS.md records the current positioning.
+
 ## Core positioning
 
 Cody Johnson is a full stack software engineer working in C#/.NET, TypeScript, React, and SQL, with product ownership and business operations experience behind the engineering. That is the resume's positioning, chosen by the owner in October 2026 over the earlier technical product owner framing; AGENTS.md records the decision and the files that carry it. The portfolio should show that he can turn ambiguous asks into scoped, shippable work and then show the result holding up: requirements and acceptance criteria, the APIs and integrations behind them, validation paths, and the disconnect, restart, and duplicate-event handling underneath real-time and operational systems.
