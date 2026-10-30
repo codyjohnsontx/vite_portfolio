@@ -697,9 +697,14 @@ h2.eyebrow { line-height: calc(16 / 11 * 1.55); }
   overflow: hidden;
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  visibility: hidden;
+  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0.45s;
 }
-.prod-card.is-open .prod-card__expand { grid-template-rows: 1fr; }
+.prod-card.is-open .prod-card__expand {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
 .prod-card__expand-inner { min-height: 0; padding-top: 0; }
 .prod-card.is-open .prod-card__expand-inner { padding-top: 24px; }
 .prod-card__detail-grid {
@@ -712,15 +717,36 @@ h2.eyebrow { line-height: calc(16 / 11 * 1.55); }
   .prod-card { grid-template-columns: 32px 1fr auto; }
   .prod-card__detail-grid { grid-template-columns: 1fr; gap: 16px; }
 }
+/* A real <button>, so the browser's button chrome is reset here; the glyph
+   inside rotates, the button itself keeps a 44px hit target. */
 .prod-card__caret {
+  /* Last visually, second in the DOM: see the comment in ProductList.jsx. */
+  order: 1;
   align-self: start;
-  padding-top: 12px;
+  margin-top: 2px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
   font-family: var(--mono);
   font-size: 14px;
+  line-height: 1;
   color: var(--ink-3);
-  transition: transform 0.35s ease, color 0.2s ease;
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
-.prod-card.is-open .prod-card__caret { transform: rotate(45deg); color: var(--ink); }
+.prod-card__caret > span {
+  display: inline-block;
+  transition: transform 0.35s ease;
+}
+.prod-card__caret:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 2px;
+}
+.prod-card.is-open .prod-card__caret { color: var(--ink); }
+.prod-card.is-open .prod-card__caret > span { transform: rotate(45deg); }
 
 /* ---------------- Feature product ---------------- */
 .prod-feature {

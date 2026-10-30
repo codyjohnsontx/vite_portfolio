@@ -218,74 +218,59 @@ export const caseStudies = [
       ],
     },
   },
+  /* The slug predates this rewrite and keeps its public URL; the study no longer
+     claims GIS work, record counts, or percentage reductions, because the HSNBA
+     repository backs none of them. What it does back is below. */
   {
     slug: 'hsnba-automation-and-gis',
     subjects: ['hsnba'],
-    company: 'Humane Society (HSNBA)',
-    timeframe: 'Apr 2024 - May 2025',
-    role: 'Software Engineer',
-    team: 'Operations leaders, municipal GIS partners, and shelter staff',
-    title: 'Reducing manual work and data risk in a mission-driven operations environment',
+    company: 'Humane Society of New Braunfels Area (HSNBA)',
+    timeframe: 'Freelance automation work, 2024 - 2025',
+    role: 'Software Engineer (Freelance)',
+    team: 'Shelter staff who run ShelterManager day to day',
+    title: 'Correcting a shelter’s records inside the system it already had',
     tagline:
-      'Improved operational reliability and data quality with automation, validation, and partner-facing analysis that made daily work and reporting easier to trust.',
+      'Selenium automation that signs into the shelter’s ShelterManager back office, works through its own maintenance reports, and corrects records with logging and state checks on the checkbox and flags it sets, so a rerun does not stack a change already made.',
     challenge:
-      'The organization needed more reliable operational data and clearer partner communication, but manual entry and fragmented processes created drag, introduced errors, and limited the usefulness of reporting for both daily work and funding efforts.',
+      'HSNBA keeps its animal records in ShelterManager, a browser-based cloud application with no API available to the shelter. Movement records filed as Offsite Adoption or Working Cat needed correcting, and uploaded images sat unnamed, so staff cleaned both up by hand, one record and one page load at a time, in the gaps between the work the shelter actually exists to do.',
     featuredOutcome:
-      'Reduced manual data entry by 65 percent, decreased data errors by 95 percent, and helped analyze more than 19,000 records for grant-supporting GIS work.',
+      'Two report-driven cleanup jobs run end to end against the live system, with sign-in, navigation, and every movement change logged, and a rerun that leaves an already-correct record alone.',
     impactHighlights: [
-      'Architected a Python automation suite integrated with SQL databases.',
-      'Reduced manual entry by 65 percent and data errors by 95 percent.',
-      'Led a GIS partnership that analyzed and classified 19,000 plus records to strengthen grant acquisition work.',
+      'Automated two administrative workflows that staff had been working through by hand in the shelter’s existing management platform.',
+      'Corrected historical movement records in place, with the animal flags they implied, instead of exporting and re-importing data.',
+      'Made each run safe to repeat: the Offsite Adoption checkbox is only clicked if it is not already checked and the Feral and Working Cat flags are only added if missing, a corrected movement drops out of the report, and a failed type change or save is logged and skips that record.',
     ],
     sections: {
       context:
-        'HSNBA operated in a setting where operational data quality, daily reliability, and partner-ready reporting all mattered to the organization’s ability to execute.',
+        'The shelter had no engineering staff and no budget for a new system. Its records lived in ShelterManager, which exposes maintenance reports in the browser but, for this shelter, no API. The work had to run against the application staff already used, with their credentials, and leave the system in a state they would recognise.',
       problem:
-        'Manual data workflows consumed time, introduced avoidable errors, made reporting less reliable than the organization needed, and made partner analysis harder to communicate cleanly.',
-      usersStakeholders:
-        'Stakeholders included shelter operations staff, leadership, municipal GIS collaborators, and grant-related decision-makers relying on clean analysis.',
+        'Two backlogs had built up. Movement records filed as “Offsite Adoption” or “Working Cat” needed to become plain adoptions, with the right checkbox set and, for working cats, the Feral and Working Cat flags added to the animal’s record. And a report of unnamed JPEGs, such as driver’s license photos, needed each image labelled or skipped. Both were repetitive clicks through the same screens, which is where mistakes come from.',
       goal:
-        'Reduce manual operational overhead, improve data trust, and generate stronger analysis to support both internal execution and external funding opportunities.',
-      constraints: [
-        'Mission-driven environment with limited excess capacity',
-        'Existing operational processes already in use by staff',
-        'Need for reliable analysis without creating more manual work',
-      ],
-      ownership: [
-        'Architected the automation suite and SQL integration approach',
-        'Led the GIS partnership and technical design for record analysis',
-        'Connected operational pain points to practical automation choices and clearer reporting handoffs',
-      ],
+        'Take the repetition off staff without taking the judgment away from them: automate the navigation and the writes, keep a person in the loop where a decision is needed, and make the scripts safe to run again after an interruption.',
       decisions: [
-        'Focused first on eliminating repetitive manual work because that unlocked both accuracy and reporting quality.',
-        'Used Python and SQL as the backbone so the system could be practical, maintainable, and usable by the organization.',
-        'Pursued the GIS partnership because richer analysis could support a broader strategic outcome than operations alone.',
+        'Selenium against the real browser session, because the shelter had no API and needed something that could run on the existing setup immediately. The README says plainly that an API-based approach would be more robust in the long run; this project addressed the current need with the tools available.',
+        'Each script drives one of ShelterManager’s own maintenance reports rather than its own query, so the list of records to fix is always the application’s list, not a snapshot that could drift.',
+        'State checks on the writes that would otherwise stack: the Offsite Adoption checkbox is only clicked if it is not already checked, the Feral and Working Cat flags are only added if missing, and a corrected movement no longer appears in the report. The movement type change and the image rename set their value outright, which is harmless to repeat because both set the same value every time.',
+        'The image job stays interactive, prompting per image to rename, skip, or move on, because deciding whether a photo is an ID or an animal is a judgment call the script should not make alone.',
       ],
       tradeoffs: [
-        'Chose targeted automation over a broader systems overhaul to keep adoption realistic.',
-        'Balanced analytical ambition with the organization’s need for dependable day-to-day workflows.',
+        'Browser automation is slower and more brittle than an API, and it breaks when the vendor changes a page. That was accepted in exchange for shipping on the system the shelter already had.',
+        'Credentials come from a local .env file rather than a secrets manager, which is appropriate for a script a staff member runs on their own machine and would not be for anything shared.',
       ],
       execution: [
-        'Built Python-based automation integrated with SQL databases.',
-        'Refined validation and classification workflows to improve trust in the underlying data.',
-        'Designed geospatial automation systems that supported analysis across 19,000 plus records.',
+        'Built the two jobs in Python with Selenium and python-dotenv, each signing in, navigating the menus to its report, and working through the entries it lists.',
+        'Logged sign-in, navigation, and every movement change with timestamps through Python’s logging module, so a run can be audited afterwards and a failure located.',
+        'Error handling is uneven by design, and the write-up says so: a failed movement type change or save is logged and the record is skipped; inside the flag step, a flag that cannot be selected is printed and the record is still saved, so it leaves the report with that flag missing; and a failure opening a record itself is logged and ends the run, so the next run starts from the report again.',
       ],
       outcomes: [
-        'Reduced manual data entry by 65 percent.',
-        'Decreased data errors by 95 percent.',
-        'Delivered analysis that strengthened grant-acquisition efforts through better record classification and reporting.',
-      ],
-      metrics: [
-        '65 percent reduction in manual data entry',
-        '95 percent reduction in data errors',
-        '19,000 plus records analyzed and classified through GIS-enabled workflows',
+        'Both cleanup jobs run end to end against the live ShelterManager system, and the movement correction handles both record types including the follow-on animal flags.',
+        'A rerun is safe: records already corrected have left the report, and the checkbox and flag writes check the current value before changing it, so the report shrinks as the backlog clears.',
+        'Source: https://github.com/codyjohnsontx/HSNBA',
       ],
       lessons: [
-        'Operational pain is often the clearest path to product value because the ROI is immediate and visible.',
-        'Good systems work can create strategic leverage when it improves both execution and the story an organization can tell externally.',
+        'The useful question was not “what system should the shelter have?” but “what can be fixed inside the one it has?”. Shipping against the existing platform was the whole value.',
+        'Idempotency is what makes automation trustworthy to non-engineers.',
       ],
-      confidentialityNote:
-        'Detailed internal datasets and grant documentation are intentionally summarized.',
     },
   },
   {

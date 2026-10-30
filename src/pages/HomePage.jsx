@@ -86,7 +86,7 @@ function Hero({ ready }) {
 
       <div className="hero__title-block">
         <span className="mono hero__eyebrow" data-hero style={{ opacity: 0 }}>
-          Technical product owner · Software engineer · Austin, TX
+          Full stack software engineer · C#/.NET · TypeScript · React · SQL · Austin, TX
         </span>
         <h1 className="display hero__title" id="hero-title">
           <span className="sr-only">Ambiguous to shipped</span>
@@ -106,22 +106,24 @@ function Hero({ ready }) {
 
 /* ------------------------------- proof ------------------------------- */
 
+/* Four claims, each one backed by something on the resume or in a repository
+   on this site: the numbers are the resume's own. */
 const PROOF = [
   {
-    label: 'Issue reproduction',
-    body: 'Working with engineering and QA, a vague report becomes reproduction conditions, expected against actual behavior, and a severity call somebody can act on.',
+    label: 'Requirements to API',
+    body: 'A vague ask becomes requirements, a data model, and the endpoints behind it, with acceptance criteria written before the code and the build supported through testing and deployment.',
   },
   {
-    label: 'Requirements clarity',
-    body: 'Vague asks become user stories, acceptance criteria, validation rules, and delivery-ready scope.',
+    label: 'Integrations that hold',
+    body: 'Stripe and Twilio webhooks land behind signature verification and duplicate-event prevention, so a replayed event cannot double-charge or double-send.',
   },
   {
     label: 'Reliability under failure',
     body: 'Active builds define what happens on disconnects, restarts, interrupted delivery, and duplicate events, instead of assuming the happy path.',
   },
   {
-    label: 'Measured outcomes',
-    body: 'Case studies tie decisions to launch metrics, retention, revenue, and data quality.',
+    label: 'Verified by tests',
+    body: 'Oasis Race Control is verified with 373 xUnit and 1,082 TypeScript tests. In CI, every pull request runs a 33-case RAG evaluation on Trackday Tuner and real-database billing tests on Diaz on Demand.',
   },
 ];
 
@@ -248,12 +250,12 @@ function CaseStudies() {
 
 /* ----------------------------- experience ----------------------------- */
 
-function ExperienceList() {
+function ExperienceList({ num }) {
   const ref = useReveal();
   return (
     <section className="bay" id="experience">
       <div className="shell">
-        <SectionHead num="04" eyebrow="Experience" title="Where the reps came from." />
+        <SectionHead num={num} eyebrow="Experience" title="Where the reps came from." />
         <ol className="xp" ref={ref} style={{ opacity: 0 }}>
           {experience.map((job) => (
             <li className="xp__row" key={`${job.company}-${job.dates}`}>
@@ -282,6 +284,7 @@ function ExperienceList() {
 
 export default function HomePage() {
   const { loaded } = useOutletContext() ?? { loaded: true };
+  const hasConcepts = conceptProducts.length > 0;
 
   return (
     <>
@@ -307,25 +310,33 @@ export default function HomePage() {
         <WorkRows products={flagshipProducts} startIndex={1} />
       </section>
 
-      <section className="bay--tight" id="concepts">
-        <div className="shell">
-          <SectionHead
-            num="03"
-            eyebrow="Concepts & prototypes"
-            title="Smaller bets, sharper questions."
-            sub="Concepts prototyped to push on a single hypothesis: usability under pressure, lifecycle modeling, micro-interactions in social products."
-          />
-        </div>
-        <WorkRows products={conceptProducts} startIndex={flagshipProducts.length + 1} />
-      </section>
+      {/* Every concept is archived today, and an empty section reads as a
+          broken page, so it is drawn only when it has rows. */}
+      {hasConcepts ? (
+        <section className="bay--tight" id="concepts">
+          <div className="shell">
+            <SectionHead
+              num="03"
+              eyebrow="Concepts & prototypes"
+              title="Smaller bets, sharper questions."
+              sub="Concepts prototyped to push on a single hypothesis: usability under pressure, lifecycle modeling, micro-interactions in social products."
+            />
+          </div>
+          <WorkRows products={conceptProducts} startIndex={flagshipProducts.length + 1} />
+        </section>
+      ) : null}
 
-      <ExperienceList />
+      <ExperienceList num={hasConcepts ? '04' : '03'} />
     </>
   );
 }
 
 Hero.propTypes = {
   ready: PropTypes.bool,
+};
+
+ExperienceList.propTypes = {
+  num: PropTypes.string.isRequired,
 };
 
 SectionHead.propTypes = {

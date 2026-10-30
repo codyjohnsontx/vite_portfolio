@@ -4,7 +4,7 @@
 
 This file consolidates the strongest product-relevant evidence currently reflected in the portfolio. It is meant to serve as a working source of truth when updating the public site, adjusting the resume, or preparing for interviews.
 
-The Texas Malibu role and the CTX Motoworks eBay liquidation work were cut from the site and the resume on the owner's instruction, so they are deliberately absent below. `src/App.test.jsx` pins both out; do not restore them here as evidence to draw on.
+The Texas Malibu role, the CTX Motoworks eBay liquidation work, and the HSNBA GIS, 19,000-record and 65 / 95 percent claims were cut from the site and the resume, so they are deliberately absent below. AGENTS.md ("The resume story is spread across the site") records why and what pins them out; do not restore them here as evidence to draw on.
 
 ## Ranked case study shortlist
 
@@ -18,8 +18,8 @@ The Texas Malibu role and the CTX Motoworks eBay liquidation work were cut from 
    - Quantitative signals are strong: $90K monthly service revenue improvement and satisfaction gains.
 
 3. HSNBA
-   - Strong quantitative outcome set: 65 percent less manual entry, 95 percent fewer data errors, and 19,000 plus records analyzed.
-   - Strong proof of systems thinking, operational leverage, and partnership-driven delivery.
+   - Repository-backed story: two Selenium jobs that correct records inside the shelter's existing ShelterManager platform, with logging, a skip on a failed movement type change or save, and state checks on the checkbox and flags it sets. No volume or percentage outcome is claimed.
+   - Strong proof of shipping inside a system the organization already had, with no API and no budget for a new one.
 
 ## Experience evidence by PM signal
 
@@ -38,19 +38,17 @@ The Texas Malibu role and the CTX Motoworks eBay liquidation work were cut from 
 
 - Lambda Curry: translated requests into requirements, user stories, and acceptance criteria across clients and internal teams.
 - CTX Motoworks: aligned service, inventory, and e-commerce decisions around shared revenue and customer outcomes.
-- HSNBA: led a GIS partnership that connected operational data work to external grant-supporting needs.
 
 ### Execution
 
 - Lambda Curry: owned ceremonies, blocker removal, dependency coordination, and delivery visibility.
 - CTX Motoworks: redesigned service and inventory workflow using operating data and queue management.
-- HSNBA: Python and SQL automation plus validation and GIS workflows.
+- HSNBA: Python and Selenium automation that logs sign-in, navigation, and every movement change, skips a record when its movement type change or save fails (a flag that cannot be selected is printed and the record is still saved), and reruns without re-clicking a checkbox or re-adding a flag that is already set.
 
 ### Measurement and outcomes
 
 - Lambda Curry: 12 percent first-week sales increase tied to a client deployment.
 - CTX Motoworks: $90K service revenue increase in one month.
-- HSNBA: 65 percent reduction in manual data entry and 95 percent reduction in data errors.
 
 ### Customer empathy and business context
 
@@ -62,15 +60,15 @@ The Texas Malibu role and the CTX Motoworks eBay liquidation work were cut from 
 
 - Ambiguous asks to actionable work: Lambda Curry translated stakeholder requests into requirements, user stories, acceptance criteria, and release validation.
 - Backlog and sequencing: Lambda Curry sprint priorities; Wattsmith trust-before-AI roadmap; Trackday Tuner compare workflow sequencing.
-- Cross-functional execution: Lambda Curry with client stakeholders, engineering, QA/design; Attend across sales, service, parts, and leadership; HSNBA with operations and GIS partners.
+- Cross-functional execution: Lambda Curry with client stakeholders, engineering, QA/design; Attend across sales, service, parts, and leadership; HSNBA with shelter staff.
 - Production/platform trust: RideSense OAuth hardening and fallback behavior; Trackday Tuner privacy-safe AI observability; Wattsmith reusable palette, drag/drop composition, accessibility fixes, export readiness, and Wattsmith automated export verification; Attend failed-message visibility.
-- Metrics and monitoring: Lambda Curry conversion/retention signals; Attend unread/overdue/failed-message metrics; HSNBA data error reduction.
+- Metrics and monitoring: Lambda Curry conversion/retention signals; Attend unread/overdue/failed-message metrics.
 - Compliance-aware habits: Attend STOP/START handling; privacy-safe AI observability; explicit validation before export; file-format verification before app-acceptance claims.
 
 ## Active builds to keep product-first
 
 - Trackday Tuner: audience, problem, and feature set are now strong enough for homepage-level detail, but it is still too early for a full polished case study.
-- Diaz on Demand: working MVP slices across web, API, mobile, billing, and admin are worth showing publicly, but it is pre-launch and no customer has paid. The recent work fixed billing paths where money moved and access did not follow, so present it as correctness before launch, not as a live product, and keep other production hardening details selective.
+- Diaz on Demand: working MVP slices across web, API, mobile, billing, and admin are worth showing publicly, and the web app is live at its library landing, but no customer has paid yet. The recent work fixed billing paths where money moved and access did not follow, so present it as correctness before launch, not as a proven product, and keep other production hardening details selective.
 - draftSpace: the tilt from a flat whiteboard to separated architecture tiers is the clearest single idea to lead with, but it is a working prototype with no users, so keep it at card level rather than writing it up as a case study.
 
 ## Weak spots to handle carefully

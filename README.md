@@ -7,7 +7,6 @@ Personal portfolio site built with Vite, React, React Router, and Tailwind CSS.
 - Homepage
 - Product index and product detail pages
 - Case study pages
-- Downloadable resume assets
 - SPA rewrite support for deep links
 - Smoke tests for route and content integrity
 
@@ -16,7 +15,6 @@ Personal portfolio site built with Vite, React, React Router, and Tailwind CSS.
 - `src/content/` content used by the site pages
 - `src/pages/` route-level page components
 - `src/components/` shared layout and utility components
-- `public/resume/` printable and downloadable resume assets
 - `docs/` supporting project documentation
 
 ## Local development
@@ -49,7 +47,7 @@ The workflow reports status, it does not block merges. Making it enforcing takes
 This app uses `BrowserRouter`, so deep links like `/products/track-tuner` and `/case-studies/:slug` require SPA rewrites in production.
 
 - `vercel.json` provides a catch-all rewrite for Vercel-style hosting, plus the permanent redirects that send the retired `/case-studies` and `/blog` indexes to `/notes`. Item URLs under those prefixes are unchanged.
-- `public/_redirects` mirrors both for Netlify-style hosting and is inert on this deploy; the comment at the top of that file owns the rule for keeping the two in sync.
+- `public/_redirects` mirrors them for Netlify-style hosting and is inert on this deploy; the comment at the top of that file owns the rule for keeping the two in sync.
 
 ## Content updates
 

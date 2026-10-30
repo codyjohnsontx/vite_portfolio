@@ -1,4 +1,5 @@
 import diazMa from '../assets/diazma.png?shot';
+import diazMartialArtsHome from '../assets/diaz-martial-arts/diaz-martial-arts-01-home.jpg?shot';
 import attendCard from '../assets/attend.png?shot';
 import rideSense from '../assets/ridesense.png?shot';
 import trackTunerHomepage from '../assets/track-tuner/track-tuner-homepage.jpg?shot';
@@ -65,8 +66,20 @@ const allProducts = [
     year: '2026',
     accent: 'oklch(0.62 0.18 30)',
     image: trackTunerHomepage,
+    liveUrl: 'https://trackday-tuner.vercel.app',
+    repoUrl: 'https://github.com/codyjohnsontx/trackday_tuner',
     role: 'Product Manager / Developer',
-    stack: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS', 'OpenAI', 'Embeddings', 'RAG'],
+    stack: [
+      'Next.js',
+      'TypeScript',
+      'PostgreSQL',
+      'Supabase',
+      'Stripe',
+      'Tailwind CSS',
+      'OpenAI',
+      'Embeddings',
+      'RAG',
+    ],
     oneLiner:
       'Motorsport setup logger that helps riders and drivers compare sessions, understand setup deltas, and make better trackside decisions without overreading weak data.',
     audience:
@@ -277,16 +290,21 @@ const allProducts = [
     accent: 'oklch(0.7 0.2 340)',
     image: oasisLanding,
     liveUrl: 'https://oasis-race-control.vercel.app',
+    repoUrl: 'https://github.com/codyjohnsontx/oasisRaceControl',
     role: 'Full-stack product builder',
     stack: [
+      'C#',
+      '.NET 8',
       'Next.js',
       'TypeScript',
-      'Tailwind CSS',
       'Neon Postgres',
-      'Postgres concurrency control',
-      '.NET',
+      'SQLite',
+      'REST APIs',
+      'xUnit',
       'iRacing SDK',
       'Idempotent ingestion',
+      'Postgres concurrency control',
+      'Tailwind CSS',
     ],
     oneLiner:
       'Check-in and live-timing for a sim-racing venue: drivers scan a QR at their simulator to check in, the front-of-store screen cycles every track’s leaderboard on its own, drivers compare their laps on their phone, and staff run the floor and league night from a dashboard.',
@@ -366,6 +384,13 @@ const allProducts = [
     },
     updates: [
       {
+        date: 'Sep 29, 2026',
+        tag: 'PR #43',
+        title: 'Ran the board at a two-day event for Cavender Cadillac of San Antonio',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/43',
+        body: 'The system left the venue: two rig PCs and the projected event board ran across two days at an off-site event hosted by Cavender Cadillac of San Antonio, where more than 100 guests drove. A second review of the event view found that its feed capped the board at 200 rows with nothing on screen saying so, so a 201st driver of the day would have silently vanished while the board still claimed to show everyone. The event view now asks for every driver of the day, the numeric limits keep their old contract, and the rank column widens itself for three-digit places. An integration test seeds 250 drivers and checks that all of them come back.',
+      },
+      {
         date: 'Aug 25, 2026',
         tag: 'PR #21',
         title: 'Fitted the wall board to the venue’s real screen',
@@ -436,6 +461,7 @@ const allProducts = [
     accent: 'oklch(0.68 0.14 205)',
     image: attendCard,
     liveUrl: 'https://ctxconnect.vercel.app/inbox',
+    repoUrl: 'https://github.com/codyjohnsontx/ctxconnect',
     role: 'Full-stack product builder',
     stack: [
       'Next.js 16',
@@ -614,6 +640,7 @@ const allProducts = [
   {
     name: 'draftSpace',
     slug: 'draftspace',
+    repoUrl: 'https://github.com/codyjohnsontx/draftSpace',
     tier: 'flagship',
     status: 'active-build',
     year: '2026',
@@ -702,6 +729,7 @@ const allProducts = [
     accent: 'oklch(0.6 0.17 300)',
     image: oncopathHomeHero,
     liveUrl: 'https://onco-path.vercel.app',
+    repoUrl: 'https://github.com/codyjohnsontx/ocnoPath',
     role: 'Product Manager / Developer',
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'ClinicalTrials.gov API', 'Groq/LLM', 'zod'],
     oneLiner:
@@ -783,6 +811,7 @@ const allProducts = [
   {
     name: 'RideSense',
     slug: 'ridesense',
+    repoUrl: 'https://github.com/codyjohnsontx/ridesense',
     tier: 'flagship',
     status: 'active-build',
     year: '2026',
@@ -949,6 +978,7 @@ const allProducts = [
   {
     name: 'Wattsmith',
     slug: 'wattsmith',
+    repoUrl: 'https://github.com/codyjohnsontx/wattSmith',
     tier: 'flagship',
     status: 'active-build',
     accent: 'oklch(0.64 0.15 110)',
@@ -1109,6 +1139,7 @@ const allProducts = [
   {
     name: 'windCast',
     slug: 'windcast',
+    repoUrl: 'https://github.com/codyjohnsontx/windCast',
     tier: 'flagship',
     status: 'active-build',
     year: '2026',
@@ -1207,11 +1238,16 @@ const allProducts = [
     year: '2026',
     accent: 'oklch(0.62 0.18 240)',
     image: diazMa,
+    liveUrl: 'https://diaz-on-demand-diaz-ondemand-web.vercel.app',
+    repoUrl: 'https://github.com/codyjohnsontx/DiazOnDemand',
     role: 'Product Manager / Developer',
     stack: [
       'React',
+      'Next.js',
       'TypeScript',
-      'Node.js',
+      'NestJS',
+      'PostgreSQL',
+      'Prisma',
       'Stripe subscriptions and webhooks',
       'Entitlement model',
       'Mux signed playback',
@@ -1219,7 +1255,7 @@ const allProducts = [
       'Expo / React Native',
     ],
     oneLiner:
-      'Subscription training platform for structured martial arts courses across affiliate schools, pre-launch while the billing and access paths get proven out.',
+      'Subscription training platform for structured martial arts courses across affiliate schools, live with its library, sign-in, and premium paths, and a billing and access lifecycle proven under real-database tests.',
     audience:
       'Martial arts students, coaches, and admins who need premium training content with clear progression and access control.',
     jtbd:
@@ -1243,9 +1279,9 @@ const allProducts = [
       'Admin publishing workflow',
     ],
     evidenceSignal:
-      'Auth, entitlement, Stripe, and Mux are integrated, so this is a working subscription product rather than a static content library. The latest cycle went after the paths where money moves and access does not follow: a returning customer who cancelled and resubscribed used to pay and receive nothing, refunds and chargebacks left access switched on, a member who won a chargeback dispute stayed locked out for good, and two simultaneous checkouts could double-charge. It also closed a developer authentication bypass that depended on a single environment variable nothing in the repo set, took the paid lesson video identifiers out of the payloads served to anyone who asked, leaving a signed URL as the only handle a member gets, and replaced the hard playback error on lessons that were never filmed with a state that says so. A mobile app has started as well: an emailed sign-in code and an app shell, running on the Expo SDK that store-installed Expo Go actually accepts. The product is pre-launch: no customer has paid, so there is no measured result yet.',
+      'Auth, entitlement, Stripe, and Mux are integrated, so this is a working subscription product rather than a static content library. The latest cycle went after the paths where money moves and access does not follow: a returning customer who cancelled and resubscribed used to pay and receive nothing, refunds and chargebacks left access switched on, a member who won a chargeback dispute stayed locked out for good, and two simultaneous checkouts could double-charge. It also closed a developer authentication bypass that depended on a single environment variable nothing in the repo set, took the paid lesson video identifiers out of the payloads served to anyone who asked, leaving a signed URL as the only handle a member gets, and replaced the hard playback error on lessons that were never filmed with a state that says so. A mobile app has started as well: an emailed sign-in code and an app shell, running on the Expo SDK that store-installed Expo Go actually accepts. The web app is live at its library landing; there is no measured retention result yet.',
     nextStep:
-      'Get it to launch: fill the catalogue, then run real payments through the fixed billing paths. Onboarding and retention patterns across affiliate school cohorts, and the broader multi-academy LMS controls, can only be validated once members are actually paying.',
+      'Fill the catalogue and run real payments through the proven billing paths. Onboarding and retention patterns across affiliate school cohorts, and the broader multi-academy LMS controls, can only be validated once members are paying.',
     standaloneMockStatus: 'in-progress',
     featurePresentations: [
       {
@@ -1306,6 +1342,104 @@ const allProducts = [
         url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/7',
         body: 'Four ways a member could end up on the wrong side of the paywall, all closed. A customer who cancelled and came back paid and received nothing. Refunds and chargebacks left access switched on. A member who won a chargeback dispute stayed locked out permanently. Two checkouts started at once could double-charge, so checkout now takes a durable reservation. Access granted by hand is protected from being overwritten by Stripe. Nobody has paid yet, so this is correctness work before launch rather than a fix to a live incident.',
       },
+    ],
+  },
+  /* The school's public website is its own repository and its own deploy, separate
+     from the Diaz on Demand video product above, which is why it is a row of its own
+     rather than a second link on that page. The card image is the repository's own
+     home page capture, docs/screenshots/home.jpg in DiazMartialArts. */
+  {
+    name: 'Diaz Martial Arts website',
+    slug: 'diaz-martial-arts',
+    tier: 'flagship',
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.72 0.17 60)',
+    image: diazMartialArtsHome,
+    liveUrl: 'https://www.diazmartialarts.com',
+    repoUrl: 'https://github.com/codyjohnsontx/DiazMartialArts',
+    role: 'Full-stack product builder',
+    stack: [
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'Google Calendar ICS',
+      'Formspree',
+      'Vitest',
+      'Playwright',
+    ],
+    oneLiner:
+      'The live marketing and lead-capture site for a martial arts school: programs, coaches, a weekly schedule that reads upcoming events from the gym’s own Google Calendar, and contact and waitlist forms that land in the owner’s inbox.',
+    audience:
+      'Prospective students and parents deciding whether to visit, current members checking class times and events, and the owner, who publishes schedules, flyers, and announcements without an engineer.',
+    jtbd:
+      'When someone searches for a martial arts school nearby, they need to see the programs, the schedule, and how to get started, on a phone, without the page being out of date.',
+    problem:
+      'A small gym’s website goes stale in a specific way: the schedule drifts from the printed flyer, past events linger as “upcoming”, class times render in the visitor’s time zone instead of the gym’s, and program pages exist but nothing links to them. The site has to keep telling the truth with no one tending it between monthly flyer drops.',
+    coreWorkflow: [
+      'A visitor lands on the home page and sees the next class coming up, read from the weekly schedule on the gym’s own clock rather than the browser’s.',
+      'Programs and coaches render from content files the owner can edit, with every program page reachable from the home page and the programs index.',
+      'The schedule page combines the weekly table, the printable flyers, and an upcoming-events list that reads a public Google Calendar ICS feed when one is configured and falls back to a hand-maintained list otherwise.',
+      'An upcoming event shows its end time and price with Event structured data, and an event that has passed falls out of the list instead of lingering.',
+      'Contact and Diaz on Demand waitlist forms post to Formspree, so a lead reaches the owner without the site holding any inbox credentials.',
+      'Vitest and Playwright run on every pull request, with the end-to-end suite driving both a desktop and a 390px mobile project.',
+    ],
+    mvpScope: [
+      'Programs, coaches, FAQ, and announcements from editable content files',
+      'Weekly schedule table plus printable schedule flyers',
+      'Upcoming events from a Google Calendar ICS feed with a hand-maintained fallback',
+      'Lead capture through Formspree-backed contact and waitlist forms',
+      'SEO metadata, LocalBusiness and Event structured data, robots, and sitemap',
+      'Duplicate Vercel host redirected onto the custom domain',
+    ],
+    evidenceSignal:
+      'The site is live at www.diazmartialarts.com and the owner publishes through it. The recent fixes are the kind a live site accumulates: a schedule list that silently went empty when every entry aged out of its window, event times shifting to the visitor’s time zone, program pages prerendering as an empty shell, and a time column too narrow for its own text.',
+    nextStep:
+      'Keep the schedule and events honest with no engineer in the loop. The next question is whether the owner adopts the calendar feed for events, which would retire the hand-maintained fallback list and its expiry test, or whether the monthly flyer stays the source of truth.',
+    standaloneMockStatus: 'planned',
+    updates: [
+      {
+        date: 'Oct 30, 2026',
+        tag: 'PR #62',
+        title: 'Kept class times on one line on the home card and the schedule page',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/62',
+        body: 'The home page’s coming-up card wrapped “7:00 AM” onto two lines at every width because its time column was a fixed track narrower than the text. The track now sizes to its content and the time never wraps, so long class names wrap instead of widening the card at 320px. The schedule rows had a matching bug: the start-time pattern never matched entries like “7:00-8:00 AM”, so every row printed the whole range and wrapped. A new helper derives the start time with its own AM or PM, and a range the parser cannot read is shown as written.',
+      },
+      {
+        date: 'Oct 28, 2026',
+        tag: 'PR #59',
+        title: 'Added a jiu jitsu dice roller for randomizing open-mat drills',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/59',
+        body: 'Three editable twenty-sided dice, for position, submission, and sweep or pass, defined in a content file. One button rolls every die and tapping a single die re-rolls only that one. The result is chosen when you roll and a short tumble plays afterwards, skipped under reduced motion, so nothing random happens during render and the prerendered page matches the first client render. Controls stay focusable mid-roll and a screen-reader status region reads the whole result once the dice settle.',
+      },
+      {
+        date: 'Sep 22, 2026',
+        tag: 'PR #54',
+        title: 'Showed an event’s end time and price on the schedule, with Event markup',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/54',
+        body: 'The upcoming-events card showed only a start time and never rendered an entry’s notes, so a seminar’s price and its end time were invisible even though both were in the content file. The card now prints both, and each event carries Event structured data so search engines read the same facts the visitor does.',
+      },
+      {
+        date: 'Sep 17, 2026',
+        tag: 'PR #52',
+        title: 'Rendered schedule dates and times on the gym’s clock, not the visitor’s',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/52',
+        body: 'A 7:00 PM Central event read as a different hour, and sometimes a different day, to a visitor in another time zone. Timed events now derive their calendar day and time in the school’s zone from any visitor zone, ICS date-times resolve in the zone the feed states with a fallback to the gym’s clock rather than the server’s, and the parser stops a reminder’s summary from overwriting the event’s own fields.',
+      },
+      {
+        date: 'Sep 11, 2026',
+        tag: 'PR #50',
+        title: 'Made every program page reachable and collapsed the duplicate Vercel host',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/50',
+        body: 'Every path on the old vercel.app alias now redirects permanently to the custom domain, so search engines stop seeing two copies of the site. The programs index had been prerendering as an empty shell with no heading, because a search-params hook sat outside any Suspense boundary; it now prerenders the full grid, and the home page program cards became real links, taking all twelve program pages from zero internal inbound links to two. Opening hours moved from display prose into a parseable openingHoursSpecification without changing a visible character.',
+      },
+      {
+        date: 'Aug 18, 2026',
+        tag: 'PR #24',
+        title: 'Published a real upcoming event and stopped the list decaying silently',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/24',
+        body: 'The schedule page told visitors the school had no events while the announcements page was full of them: every hand-written entry had aged out of the 60-day forward window, so the section rendered its empty state permanently. The list now carries a real event, all-day events show a date span instead of an invented midnight, the test suite pins the gym’s time zone so a UTC runner cannot hide a date shift, and a content test fails when every shipped entry has already happened, so the trap cannot re-arm quietly.',
+      },
       {
         date: 'May 01, 2026',
         tag: 'PR #10',
@@ -1321,46 +1455,119 @@ const allProducts = [
         body: 'Updated the live class schedule, centered the homepage layout, and turned announcements into a clickable flyer gallery with modal enlargement. That gives the Diaz ecosystem a cleaner front door while on-demand access is still staged.',
       },
       {
-        date: 'Apr 19, 2026',
-        tag: 'PR #87',
-        title: 'Scoped admin permissions by affiliate school',
-        body: 'Admin access now defaults to a single academy while owner access keeps cross-school publishing control. This moves the product closer to a multi-academy LMS instead of a single-site content portal.',
-      },
-      {
-        date: 'Apr 06, 2026',
-        tag: 'PR #82',
-        title: 'Synced course progress across devices',
-        body: 'Resume-where-you-left-off state now persists through the API instead of localStorage, so a member can start on one device and continue on another without losing place.',
-      },
-      {
         date: 'Mar 31, 2026',
         tag: 'PR #8',
         title: 'Simplified the homepage UI around one stronger CTA',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/8',
         body: 'Removed card-heavy homepage framing, collapsed duplicate calls to action, and simplified the programs layout into a cleaner stacked presentation. The site now pushes visitors toward one clearer next step instead of splitting attention.',
       },
       {
         date: 'Mar 31, 2026',
         tag: 'PR #7',
         title: 'Reopened the pricing route and tightened public smoke tests',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/7',
         body: 'Removed the stale redirect that had made /pricing unreachable, added that page to smoke coverage, and updated assertions to match the actual visible content. This reduced the chance of quietly shipping broken public routes.',
       },
       {
         date: 'Mar 17, 2026',
         tag: 'PR #6',
         title: 'Split website docs and fixed Clerk auth routing',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/6',
         body: 'Documented the website as its own repo boundary, clarified where Diaz on Demand responsibility begins, and moved Clerk auth pages to App Router catch-all routes so path-based auth flows behave correctly.',
       },
       {
         date: 'Mar 14, 2026',
         tag: 'PR #5',
         title: 'Replaced pricing with announcements backed by Sanity CMS',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/5',
         body: 'Shifted the public site away from static pricing toward a Sanity-powered announcements page, updated the nav and sitemap, and added the studio configuration needed to manage fresh content without code changes.',
       },
       {
         date: 'Mar 13, 2026',
         tag: 'PR #4',
         title: 'Centralized env validation and expanded E2E coverage',
+        url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/4',
         body: 'Introduced typed environment validation, fixed the on-demand redirect URL, and added end-to-end coverage around account gating, the on-demand route, and schedule behavior. That hardened the launch path before more funnel work shipped.',
+      },
+    ],
+  },
+  /* No screenshot yet, so `image` and `visualAssets` are omitted on purpose rather
+     than carrying a placeholder. */
+  {
+    name: 'Dragonglass AI',
+    slug: 'dragonglass',
+    tier: 'flagship',
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.68 0.16 300)',
+    repoUrl: 'https://github.com/codyjohnsontx/dragonglass',
+    role: 'Full-stack product builder',
+    stack: ['TypeScript', 'Obsidian API', 'Ollama', 'OpenAI', 'Anthropic', 'Gemini', 'Vitest'],
+    oneLiner:
+      'Open-source Obsidian assistant that brings your own model, local through Ollama or cloud through your own API key, reads and searches the vault, and proposes every note edit as a diff you approve before anything is written. MIT licensed.',
+    audience:
+      'Obsidian users who want an AI assistant inside their vault without a subscription, an account, or their notes leaving the machine unless they choose a cloud provider.',
+    jtbd:
+      'When someone is working in their notes, they need to ask questions across the vault and have edits made for them, while staying certain that nothing is changed without their approval.',
+    problem:
+      'Most AI assistants for note-taking are a chatbot bolted to one hosted model: a subscription, a proxy that sees every note, and edits that land before you have read them. Obsidian is local-first and Markdown-based, and its users chose it for that reason. An assistant for it has to respect the same contract: your model, your machine unless you say otherwise, and a human approving each change.',
+    coreWorkflow: [
+      'The user picks a provider in the sidebar: local Ollama, OpenAI, Anthropic, or Gemini with their own key, or any OpenAI-compatible endpoint. Keys live in Obsidian’s keychain-backed secret storage, never in plugin files or notes.',
+      'The active note and any selected text are attached to each message, with chips showing exactly what gets sent. When a cloud provider is active the sidebar says so.',
+      'The model streams a reply and can call tools: list, search, and read notes, and inspect properties, links, and backlinks. Tool calls, results, and token usage are shown per turn.',
+      'An edit request produces a proposal card with the diff. Approve applies it through the Vault API and takes a snapshot; Reject discards it; Revert restores the snapshot, and is refused if the note changed afterwards so later edits are never overwritten.',
+      'A note edited after a proposal was made marks the card stale and blocks approval until the change is undone or the model asks again.',
+      'Switching providers keeps the conversation, including earlier tool calls, and the next message goes to the new provider with the whole history.',
+    ],
+    mvpScope: [
+      'Five streaming provider integrations: Ollama, OpenAI, Anthropic, Gemini, and a custom OpenAI-compatible endpoint',
+      'Tool calling with shared conversation history across providers',
+      'A cancellable agent loop with input validation and execution limits',
+      'Read tools: list, read, search, and metadata with links and backlinks',
+      'Approval-based editing with diff review, rejection, revert, and stale-file detection',
+      'Keychain-backed credential storage',
+      'Unit tests plus adapter tests against a fake provider server',
+    ],
+    evidenceSignal:
+      'Verified live against a local Ollama model, with every scenario in the README exercised in a real Obsidian instance on a disposable vault. The cloud wire formats are tested against shapes from the official API documentation, not live keys, and the README says so. Not yet in the community plugin directory; installed manually.',
+    nextStep:
+      'Get it into the community plugin directory. After that the roadmap is the tools the vault still lacks: Canvas and Bases, folder, move, and rename operations, frontmatter-specific editing, and semantic search instead of substring matching.',
+    standaloneMockStatus: 'planned',
+    updates: [
+      {
+        date: 'Oct 30, 2026',
+        tag: 'PR #5',
+        title: 'Added any OpenAI-compatible endpoint as a fifth provider',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/5',
+        body: 'A custom provider reuses the OpenAI adapter with its own base URL, an auth mode of bearer token, key in a named header, or none, and toggles for streaming and tool calling, which brings in Moonshot, OpenRouter, Groq, LM Studio, vLLM, and llama.cpp. An endpoint on localhost is treated as local and not described as billed. A server that refuses tools gets one retry without them, and the system prompt is now built per turn from whether tools were actually sent.',
+      },
+      {
+        date: 'Oct 29, 2026',
+        tag: 'PR #4',
+        title: 'Polished the chat sidebar, connection checks, and context budgeting',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/4',
+        body: 'Tool-only turns no longer render as empty bubbles, a running chip appears the moment a cloud provider starts a tool call, and an open proposal card flips to stale and back as its note is edited. Every attached item, selections included, now shares one token budget, and the Ollama truncation check gained a worst-case estimate so cuts to Chinese, Japanese, or Korean notes get caught too.',
+      },
+      {
+        date: 'Oct 28, 2026',
+        tag: 'PR #3',
+        title: 'Stopped Ollama silently dropping the prompt, and showed the model thinking',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/3',
+        body: 'Ollama runs at a 4,096-token context by default and, when a long note overflows it, keeps about half the prompt and drops the system prompt and the question without a word. Every request now sends an explicit context window, capped at what the model supports, and the adapter compares what it sent against what the model reports consuming and warns in the reply when the prompt was cut. Thinking models stream their reasoning into a collapsed block with elapsed time, the status light is re-checked on every send, and deleting a conversation asks first.',
+      },
+      {
+        date: 'Oct 28, 2026',
+        tag: 'PR #2',
+        title: 'Added Anthropic and Gemini providers',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/2',
+        body: 'Two more streaming adapters, both with tool calls, model listing, and usage reporting, behind the same provider abstraction. Each reads only its own keychain secret. When a request declares no tools, earlier tool calls and results are replayed as plain text, because Anthropic rejects tool blocks in that case. The fake test server speaks both new wire formats.',
+      },
+      {
+        date: 'Oct 28, 2026',
+        tag: 'PR #1',
+        title: 'Shipped the MVP: Ollama and OpenAI chat with approval-gated note edits',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/1',
+        body: 'The first vertical slice: a sidebar chat that streams from a local Ollama model or OpenAI with the user’s own key, read tools over the vault, and an edit flow in which the model proposes a find-and-replace, the diff is shown, and nothing is written until the user approves. Snapshots back every applied edit so it can be reverted.',
       },
     ],
   },

@@ -48,10 +48,16 @@ For the per-product record shape, which fields exist and which are optional, rea
 
 Two things those files will not tell you. Nothing currently renders `status` or
 `evidenceSignal`; both are defined in `src/content/projects.js` and consumed by no
-component. So express lifecycle nuance ("pre-launch", "prototype") in the copy rather than
-inventing a new status value, and treat `evidenceSignal` as an internal note whose text
-reaches no rendered surface, so editing it does not change the site. And a product with no
-screenshot should omit `image` and `visualAssets` rather than carry a placeholder path.
+component. So express lifecycle nuance ("prototype") in the copy rather than inventing a
+new status value, and treat `evidenceSignal` as an internal note whose text reaches no
+rendered surface, so editing it does not change the site. And a product with no screenshot
+should omit `image` and `visualAssets` rather than carry a placeholder path (Dragonglass AI
+is the current example).
+
+`liveUrl` and `repoUrl` are both optional and both render in the product hero as
+`Live at <host> ↗` and `Source on GitHub ↗`; `repoUrl` also adds a `Source ↗` link to the
+expanded row on `/products`. `src/App.test.jsx` pins the exact values for the resume's
+projects, so a changed deployment or a renamed repository means updating that test.
 
 ## Notes: one index, two kinds
 
@@ -84,9 +90,9 @@ else's project: its `subjects` is empty on the owner's decision, so its page has
 Do not attach it to a product.
 
 `src/content/engagements.js` holds the two client engagements (Lambda Curry, HSNBA), which have no
-app and no repository. They are derived from their case studies rather than restating them, and
-they appear as rows in `/products` behind the `Engagements` filter, opening the case study instead
-of a product page. `ProductList` renders them because `stack` is optional and `href` / `ctaLabel`
+live app, no update feed and no product page. They are derived from their case studies rather than
+restating them, and they appear as rows in `/products` behind the `Engagements` filter, opening the
+case study instead. `ProductList` renders them because `stack` is optional and `href` / `ctaLabel`
 override the default product link.
 
 ## Case study fields, and the diagram pages hung off them
@@ -202,6 +208,11 @@ for the lift to work, and stay true:
 
 ## The resume story is spread across the site, and it drifts
 
+The site's positioning is the resume's: "Full Stack Software Engineer | C#/.NET |
+TypeScript | React | SQL", decided by the owner in October 2026 over the earlier Technical
+Product Owner framing. `src/App.test.jsx` pins the new eyebrow and pins the old phrase out
+of the home page and `index.html`, so a content pass cannot drift it back.
+
 `src/content/resumeContent.js` renders nowhere. `ResumePage.jsx` exists but `/resume` is
 not routed in `src/App.jsx`, and a test in `src/App.test.jsx` pins that it stays
 unexposed; it was unrouted deliberately in ff0ac60 and kept "for later". So editing
@@ -209,41 +220,30 @@ unexposed; it was unrouted deliberately in ff0ac60 and kept "for later". So edit
 product decision, not a content fix.
 
 What actually renders the resume story is the home page: `src/content/experience.js`
-(company, role, dates, `summary`, `tags` only, never `evidence`) plus the hardcoded hero
-eyebrow, `HERO_LINES`, and `PROOF` array in `src/pages/HomePage.jsx`, the positioning line
-in `src/components/Preloader.jsx`, `profile.heroSupport`, and the titles and descriptions
-in `index.html`. Everything else in `src/content/profile.js` is dead: only `heroSupport`
-and `contactLinks` have a consumer, and `toolkit` lost its last one when Dev Mode was
-deleted. Nothing on the site renders a skills or strengths list at all.
+(company, role, dates, `summary`, `tags` only, never `evidence`; the freelance engineering
+role leads, covering Oasis, Diaz Martial Arts and HSNBA under one row) plus the hardcoded
+hero eyebrow, `HERO_LINES`, and `PROOF` array in `src/pages/HomePage.jsx`, the positioning
+line in `src/components/Preloader.jsx`, `profile.heroSupport`, and the titles and
+descriptions in `index.html`. Everything else in `src/content/profile.js` is dead: only
+`heroSupport` and `contactLinks` have a consumer, and `toolkit` lost its last one when Dev
+Mode was deleted. Nothing on the site renders a skills or strengths list at all.
 
-Two pieces of that story are deliberately absent rather than missing: the Texas Malibu role
-and the CTX Motoworks eBay liquidation bullet. `src/App.test.jsx` pins both out of the
-rendered output and out of both `experience.js` and `resumeContent.js`, so a content pass
-that "restores" them from an older source fails the suite.
+Three pieces of that story are deliberately absent rather than missing: the Texas Malibu
+role, the CTX Motoworks eBay liquidation bullet, and the HSNBA GIS, 19,000-record and
+65 / 95 percent claims, which the HSNBA repository cannot back and the resume dropped.
+`src/App.test.jsx` pins all of them out of the rendered output, and the first two out of
+the content modules as well, so a content pass that "restores" them from an older source
+fails the suite. The
+HSNBA case study keeps its `hsnba-automation-and-gis` slug because the URL is public.
 
-Of the three files in `public/resume/`, the HTML and the TXT are separate hand-maintained
-artifacts, not generated from `resumeContent.js`, so a content change has to be applied to
-both. They are unlinked but served, so they go stale silently. The PDF is generated from
-the HTML, so a resume change means updating `resumeContent.js` and those two files, then
-regenerating the PDF.
-
-The PDF is the exception worth knowing: it is not hand-written, it is Chrome's
-print-to-PDF of `cody-johnson-product-manager-resume.html` (its metadata still reads
-`Skia/PDF`). No component links to it, but it ships from `public/`, so it is served as a
-static asset at `/resume/Cody-Johnson-Product-Manager-Resume.pdf` and stays reachable and
-shareable. `src/content/resumeMeta.js` records that path in `downloadPath` and is
-currently imported by nothing. So editing the HTML alone silently leaves a live public
-artifact stale. Regenerate with:
-
-```shell
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
-  --no-pdf-header-footer --print-to-pdf=public/resume/Cody-Johnson-Product-Manager-Resume.pdf \
-  "file://$PWD/public/resume/cody-johnson-product-manager-resume.html"
-```
-
-The HTML's `@media print` block already strips the card chrome. The current resume prints
-to 4 US Letter pages. Check the count before committing: it should only move when the
-content did, so an unexplained change means the print CSS moved.
+The site publishes no resume. That is an owner decision from 2026-10-30 ("I don't need a
+resume PDF on the portfolio website"): the served `public/resume/` files and the
+`resumeMeta.js` module that pointed at them were both removed, and `src/App.test.jsx` pins
+that `public/resume/` stays absent and that no redirect in `vercel.json` targets `/resume/`.
+Everything under `public/` ships as a static asset whether or not a page links to it, so a
+resume file placed there is public the moment it is pushed. The master resume lives outside this repository; `src/content/resumeContent.js` is
+the only copy of it here, it renders nowhere, and it is kept in step with the master by
+hand.
 
 ## Attend screenshots
 

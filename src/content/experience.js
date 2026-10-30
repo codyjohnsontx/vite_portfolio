@@ -1,7 +1,32 @@
+/* Order follows the resume: the freelance engineering work first, then the two
+   roles that ran alongside it. Only company, role, dates, summary and tags
+   render (HomePage.jsx); `evidence` is kept as the resume's own bullets. */
 export const experience = [
   {
+    company: 'Oasis Sim Racing · Diaz Martial Arts · HSNBA',
+    role: 'Software Engineer (Freelance)',
+    dates: 'Apr 2024 - Present',
+    summary:
+      'Sole engineer on Oasis Race Control, a racing venue platform that joins a C#/.NET 8 Windows agent reading simulator telemetry from shared memory to a Next.js app, PostgreSQL, and live leaderboards, deployed at a two-day event for Cavender Cadillac of San Antonio where more than 100 guests drove. For Diaz Martial Arts, a subscription video platform across a React web app, a NestJS API, and a mobile app, plus the school’s live website. For HSNBA, Selenium automation that corrects records inside the shelter’s management platform.',
+    evidence: [
+      'Sole engineer responsible for developing a full-stack racing venue platform integrating C#/.NET Windows applications, backend APIs, relational databases, and live leaderboards.',
+      'Built a lightweight C# application that reads simulator telemetry directly from shared memory and transmits lap data to a Next.js application, with minimal impact on simulator performance.',
+      'Implemented local SQLite storage, automatic retries, and idempotent event processing to prevent data loss during network outages and application restarts.',
+      'Developed a monitoring system with approximately 20 alert rules, Discord notifications, AI-assisted diagnostics, and GitHub issue integration to support remote troubleshooting.',
+      'Deployed and supported the system at a two-day event for Cavender Cadillac of San Antonio, where more than 100 guests participated in the racing experience.',
+      'Verified application functionality with 373 passing C# xUnit tests and 1,082 TypeScript tests, including database integration and failure-recovery scenarios.',
+      'Worked directly with the Diaz Martial Arts owner to gather requirements, design solutions, and develop web and mobile applications supporting the school’s operations.',
+      'Developed a subscription video platform spanning a React frontend, NestJS backend, and mobile application, integrating authentication, billing, and video delivery through third-party APIs.',
+      'Implemented webhook signature verification, duplicate-event prevention, and automated tests covering subscriptions, payment events, account permissions, and video access.',
+      'Developed and maintained the school’s live website, including responsive interfaces, lead capture, and calendar integration.',
+      'Developed automation tools for the Humane Society of New Braunfels Area to streamline administrative workflows, maintain animal records, and correct historical data within the organization’s existing management platform.',
+      'Implemented data validation, application logging, and error handling to improve reliability and support troubleshooting of automated processes.',
+    ],
+    tags: ['C#/.NET 8', 'Next.js', 'PostgreSQL', 'Selenium'],
+  },
+  {
     company: 'CTX Motoworks',
-    role: 'Assistant General Manager (Part-time, Operations & E-commerce)',
+    role: 'Assistant General Manager, E-commerce & Digital (Part-time)',
     dates: 'Jul 2025 - May 2026',
     summary:
       'Owned service, inventory, customer communication, repair tracking, and billing workflows in a high-volume motorcycle dealership, watching repair status, queue age, and service capacity to find the problems worth investigating. I also defined the internal dealership platform that became Attend.',
@@ -29,19 +54,5 @@ export const experience = [
       'Used behavioral data, conversion trends, and retention patterns to prioritize fixes and product improvements, driving 10-25 percent retention improvement across a multi-product platform.',
     ],
     tags: ['Requirements', 'Defect triage', 'Release validation'],
-  },
-  {
-    company: 'Humane Society of New Braunfels (HSNBA)',
-    role: 'Software Engineer (Volunteer, Full-stack & SQL Automation)',
-    dates: 'Apr 2024 - Present',
-    summary:
-      'Built Python and SQL tools for collecting, cleaning, validating, and processing operational data, reducing manual data entry by 65 percent and data errors by 95 percent.',
-    evidence: [
-      'Built repeatable workflows to process and classify more than 19,000 animal-control records for reporting, geospatial analysis, grant planning, and operational decision-making.',
-      'Developed validation logic to identify missing, inconsistent, duplicate, and incorrectly classified records before downstream analysis.',
-      'Integrated external GIS datasets and APIs into internal systems to automate classification and reporting.',
-      'Investigated data-quality issues and documented transformation rules, validation logic, and system behavior to improve reliability, auditability, and maintainability.',
-    ],
-    tags: ['Data validation', 'SQL automation', 'GIS integration'],
   },
 ];

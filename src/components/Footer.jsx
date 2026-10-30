@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="shell">
         <div className="site-footer__cta">
-          <span className="mono">Open to product roles</span>
+          <span className="mono">Open to software engineering roles</span>
           <h2 className="display site-footer__headline" ref={ctaRef} style={{ opacity: 0 }}>
             Let&rsquo;s build
           </h2>

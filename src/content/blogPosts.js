@@ -236,14 +236,14 @@ export const blogPosts = [
         heading: 'Scope should reduce repeated decisions',
         body: [
           'Good operational product work often reduces the number of small decisions people have to remake. It clarifies what data belongs where. It defines what a complete request looks like. It turns ambiguous handoffs into a sequence people can trust.',
-          'In client product work, that can mean turning stakeholder requests into requirements, user stories, acceptance criteria, and release validation. In automation work, it can mean using Python and SQL to remove repetitive entry and improve data consistency. In service or inventory operations, it can mean making queue priority visible enough that the team stops renegotiating the same choice every day.',
+          'In client product work, that can mean turning stakeholder requests into requirements, user stories, acceptance criteria, and release validation. In automation work, it can mean using Python and Selenium to remove repetitive entry and correct records consistently. In service or inventory operations, it can mean making queue priority visible enough that the team stops renegotiating the same choice every day.',
           'The output changes by environment, but the pattern is similar: find the repeated decision, make the right next action easier, and leave enough structure for the team to keep moving without constant clarification.',
         ],
       },
       {
         heading: 'Measurement keeps the work honest',
         body: [
-          'Operational improvements need measurement because they can disappear into the background once they start working. If the team saves time, reduces errors, or makes reporting easier, the outcome should be stated plainly. At HSNBA, the public evidence is concrete: manual data entry dropped by 65 percent, data errors decreased by 95 percent, and more than 19,000 records were analyzed and classified for GIS-enabled work.',
+          'Operational improvements need measurement because they can disappear into the background once they start working. If the team saves time, reduces errors, or makes reporting easier, the outcome should be stated plainly. At HSNBA, the evidence is the kind a small nonprofit can actually check: two report-driven cleanup jobs that staff used to work through by hand now run end to end against the shelter’s management platform, sign-in, navigation, and every movement change are logged, and a rerun leaves an already-correct record alone.',
           'Metrics also keep the work from becoming output theater. Shipping a workflow change is not the same as improving the workflow. The question is whether the repeated pain decreased, whether the data became more trustworthy, or whether stakeholders had a clearer basis for action.',
           'In Lambda Curry-style delivery work, that means defining success criteria before release and using behavior, conversion, retention, or stakeholder feedback to guide iteration after launch. Measurement is not a reporting chore at the end. It is part of scoping the work responsibly.',
         ],

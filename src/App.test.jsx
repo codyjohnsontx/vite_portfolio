@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import {
   fireEvent,
   render,
@@ -15,7 +15,7 @@ import { engagements } from './content/engagements';
 import { KIND_LABEL, RELATED_HEADING, getRelatedForWriting, writing } from './content/writing';
 import { experience } from './content/experience';
 import { productAnalyses } from './content/productAnalyses';
-import { allProducts, flagshipProducts, products } from './content/projects';
+import { allProducts, conceptProducts, flagshipProducts, products } from './content/projects';
 import { resumeContent } from './content/resumeContent';
 
 function renderApp(initialEntry = '/') {
@@ -37,15 +37,24 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Attend' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Dragonglass AI' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Diaz Martial Arts website' })).toBeTruthy();
     expect(screen.getByText('Ambiguous to shipped')).toBeTruthy();
+    /* The positioning follows the resume's headline and summary, on the
+       owner's decision: an engineer first, with the product ownership behind
+       it. Pinned so a content pass cannot drift the site back to the earlier
+       product-owner framing. */
     expect(
-      screen.getByText(/Technical product owner · Software engineer · Austin, TX/i),
+      screen.getByText(/Full stack software engineer · C#\/\.NET · TypeScript · React · SQL · Austin, TX/i),
     ).toBeTruthy();
-    expect(screen.getByText(/reproducing issues, comparing expected against actual behavior/i)).toBeTruthy();
-    expect(screen.getByText('Issue reproduction')).toBeTruthy();
-    expect(screen.getByText('Requirements clarity')).toBeTruthy();
+    expect(screen.queryByText(/Technical product owner/i)).toBeNull();
+    expect(
+      screen.getByText(/I build business applications, third-party integrations, and operational systems/i),
+    ).toBeTruthy();
+    expect(screen.getByText('Requirements to API')).toBeTruthy();
+    expect(screen.getByText('Integrations that hold')).toBeTruthy();
     expect(screen.getByText('Reliability under failure')).toBeTruthy();
-    expect(screen.getByText('Measured outcomes')).toBeTruthy();
+    expect(screen.getByText('Verified by tests')).toBeTruthy();
     expect(screen.getByText('Latest')).toBeTruthy();
     expect(
       screen.getByRole('heading', { name: 'Attend: the inbox ranks by risk, not by what came in last' }),
@@ -93,9 +102,57 @@ describe('portfolio routes and metadata', () => {
   it('states the CTX Motoworks role as part-time and points its platform at Attend', () => {
     renderApp('/');
 
-    expect(screen.getByText(/Assistant General Manager \(Part-time, Operations & E-commerce\)/i))
+    expect(screen.getByText(/Assistant General Manager, E-commerce & Digital \(Part-time\)/i))
       .toBeTruthy();
     expect(screen.getByText(/the internal dealership platform that became Attend/i)).toBeTruthy();
+  });
+
+  /* The experience section follows the resume: the freelance engineering work
+     leads, covering Oasis, Diaz Martial Arts and HSNBA under one role, and the
+     Oasis event names its host now that the owner has allowed it. */
+  it('leads experience with the freelance engineering role and names the Oasis event host', () => {
+    renderApp('/');
+
+    const [firstRow] = document.querySelectorAll('.xp__row');
+    expect(within(firstRow).getByText('Software Engineer (Freelance)')).toBeTruthy();
+    expect(within(firstRow).getByText('Apr 2024 - Present')).toBeTruthy();
+    expect(
+      within(firstRow).getByText(/Cavender Cadillac of San Antonio where more than 100 guests drove/i),
+    ).toBeTruthy();
+  });
+
+  /* The HSNBA story was rewritten to what its repository backs: Selenium
+     automation with logging and idempotent checks. The GIS, record-count and
+     percentage claims it used to carry are pinned out of every rendered
+     surface, so they cannot drift back in. */
+  it('keeps the unbacked HSNBA figures off the site', () => {
+    const unbacked = [/19,000/, /65 percent/, /95 percent/, /GIS/];
+    const hsnbaPages = [
+      '/',
+      '/case-studies/hsnba-automation-and-gis',
+      '/blog/operational-friction-is-product-scope',
+    ];
+    hsnbaPages.forEach((path) => {
+      const view = renderApp(path);
+      unbacked.forEach((pattern) => {
+        expect(screen.queryByText(pattern), `${pattern} on ${path}`).toBeNull();
+      });
+      view.unmount();
+    });
+
+    renderApp('/case-studies/hsnba-automation-and-gis');
+    expect(
+      within(document.querySelector('main')).getByText('Software Engineer (Freelance)'),
+    ).toBeTruthy();
+  });
+
+  it('links the HSNBA case study to its repository', () => {
+    renderApp('/case-studies/hsnba-automation-and-gis');
+
+    const source = within(document.querySelector('main')).getByRole('link', {
+      name: 'https://github.com/codyjohnsontx/HSNBA',
+    });
+    expect(source.getAttribute('href')).toBe('https://github.com/codyjohnsontx/HSNBA');
   });
 
   it('falls back when localStorage is unavailable during initial render', () => {
@@ -146,17 +203,37 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /Trackday Tuner/ })).toBeTruthy();
   });
 
-  it('does not collapse product cards when keyboard users press Enter on the nested project link', () => {
+  /* The expand control is its own <button>, so the project link and the
+     Source link are never nested inside a role=button element. Clicking the
+     row still toggles it for mouse users, and following a link inside the open
+     row leaves it open. */
+  it('expands a product card from its own button and keeps links out of it', () => {
     renderApp('/products');
-    const trackTunerCard = screen.getByRole('button', { name: /Trackday Tuner/i });
+    const toggle = screen.getByRole('button', { name: 'Expand Trackday Tuner' });
+    const card = toggle.closest('.prod-card');
+    expect(card.getAttribute('role')).toBeNull();
+    expect(within(card).queryByRole('link', { name: /Open project/i })).toBeTruthy();
 
-    fireEvent.keyDown(trackTunerCard, { key: 'Enter' });
-    expect(trackTunerCard.getAttribute('aria-expanded')).toBe('true');
+    fireEvent.click(toggle);
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    expect(toggle.getAttribute('aria-label')).toBe('Collapse Trackday Tuner');
+    expect(card.className).toContain('is-open');
+    expect(document.getElementById(toggle.getAttribute('aria-controls'))).toBeTruthy();
 
-    const projectLink = within(trackTunerCard).getByRole('link', { name: /Open project/i });
+    fireEvent.click(card);
+    expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    fireEvent.click(toggle);
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+
+    /* keyDown rather than click: a click on the Link navigates the memory
+       router away from /products, which would unmount the card. */
+    const projectLink = within(card).getByRole('link', { name: /Open project/i });
+    expect(within(toggle).queryByRole('link')).toBeNull();
+    /* The button precedes the links it reveals, so a forward Tab from it
+       reaches them instead of leaving the row. */
+    expect(toggle.compareDocumentPosition(projectLink) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     fireEvent.keyDown(projectLink, { key: 'Enter' });
-
-    expect(trackTunerCard.getAttribute('aria-expanded')).toBe('true');
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
   });
 
   it('keeps archived concepts outside the visible product exports', () => {
@@ -252,6 +329,14 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /^Notes\.$/ })).toBeTruthy();
   });
 
+  it('pitches software engineering roles in the footer on every page', () => {
+    renderApp('/products');
+
+    const footer = within(screen.getByRole('contentinfo'));
+    expect(footer.getByText('Open to software engineering roles')).toBeTruthy();
+    expect(footer.queryByText(/product roles/i)).toBeNull();
+  });
+
   it('exposes Notes in the site navigation', () => {
     renderApp('/notes');
 
@@ -283,6 +368,58 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
+  /* Every product with a repository links it from the hero, and every live one
+     links its deployment there too, so a product with no screenshot (Dragonglass)
+     still has somewhere to send a reader. */
+  const REPO_LINKED = {
+    'track-tuner': 'https://github.com/codyjohnsontx/trackday_tuner',
+    'oasis-race-control': 'https://github.com/codyjohnsontx/oasisRaceControl',
+    'ctx-chat': 'https://github.com/codyjohnsontx/ctxconnect',
+    'diaz-on-demand': 'https://github.com/codyjohnsontx/DiazOnDemand',
+    'diaz-martial-arts': 'https://github.com/codyjohnsontx/DiazMartialArts',
+    dragonglass: 'https://github.com/codyjohnsontx/dragonglass',
+  };
+  const LIVE_LINKED = {
+    'track-tuner': 'https://trackday-tuner.vercel.app',
+    'diaz-on-demand': 'https://diaz-on-demand-diaz-ondemand-web.vercel.app',
+    'diaz-martial-arts': 'https://www.diazmartialarts.com',
+  };
+
+  products.forEach((product) => {
+    it(`links ${product.slug} to its source and its deployment where they exist`, () => {
+      renderApp(`/products/${product.slug}`);
+      const hero = within(document.querySelector('.page-hero'));
+
+      if (REPO_LINKED[product.slug]) {
+        expect(product.repoUrl).toBe(REPO_LINKED[product.slug]);
+      }
+      if (LIVE_LINKED[product.slug]) {
+        expect(product.liveUrl).toBe(LIVE_LINKED[product.slug]);
+      }
+      if (product.repoUrl) {
+        expect(
+          hero.getByRole('link', { name: /Source on GitHub/ }).getAttribute('href'),
+        ).toBe(product.repoUrl);
+      } else {
+        expect(hero.queryByRole('link', { name: /Source on GitHub/ })).toBeNull();
+      }
+      if (product.liveUrl) {
+        expect(hero.getByRole('link', { name: /^Live at / }).getAttribute('href')).toBe(
+          product.liveUrl,
+        );
+      } else {
+        expect(hero.queryByRole('link', { name: /^Live at / })).toBeNull();
+      }
+    });
+  });
+
+  it('says Diaz on Demand is live rather than pre-launch', () => {
+    renderApp('/products/diaz-on-demand');
+
+    expect(screen.queryByText(/pre-launch/i)).toBeNull();
+    expect(screen.getByText(/live with its library, sign-in, and premium paths/i)).toBeTruthy();
+  });
+
   /* Each product's `updates` array is its own feed, and the newest entry has to sit
      first: the page renders the feed in array order, and the overlay menu card for
      the first three flagships reads updates[0]. Putting an entry in the wrong
@@ -299,9 +436,9 @@ describe('portfolio routes and metadata', () => {
     },
     {
       slug: 'oasis-race-control',
-      meta: 'Aug 25, 2026 · PR #21',
-      title: 'Fitted the wall board to the venue’s real screen',
-      url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/21',
+      meta: 'Sep 29, 2026 · PR #43',
+      title: 'Ran the board at a two-day event for Cavender Cadillac of San Antonio',
+      url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/43',
     },
     {
       slug: 'ctx-chat',
@@ -1043,8 +1180,7 @@ describe('portfolio routes and metadata', () => {
     expect(heads).toEqual([
       { num: '01', eyebrow: 'Case studies' },
       { num: '02', eyebrow: 'Active builds' },
-      { num: '03', eyebrow: 'Concepts & prototypes' },
-      { num: '04', eyebrow: 'Experience' },
+      { num: '03', eyebrow: 'Experience' },
     ]);
     const hero = main.querySelector('.hero');
     const caseStudies = main.querySelector('.case-grid').closest('section');
@@ -1055,6 +1191,20 @@ describe('portfolio routes and metadata', () => {
     expect(caseStudies.querySelector('.head__sub').textContent).toBe(
       'Shipped products, architecture decisions, and an open-source fix: what broke or needed deciding, what I chose and why, and what happened after.',
     );
+  });
+
+  /* Every concept product is archived, so the concepts section would be a
+     heading over no rows. It is hidden instead, and Experience takes its number. */
+  it('hides the concepts section on the home page when there are no concept products', () => {
+    expect(conceptProducts).toEqual([]);
+    renderApp('/');
+
+    const main = document.querySelector('main');
+    expect(within(main).queryByText('Smaller bets, sharper questions.')).toBeNull();
+    expect(within(main).queryByText('Concepts & prototypes')).toBeNull();
+    expect(main.querySelector('#concepts')).toBeNull();
+    const experienceHead = main.querySelector('#experience header.head');
+    expect(experienceHead.querySelector('.head__num').textContent).toBe('03');
   });
 
   it('keeps the deck of the firstmate case study on the notes index and the home card', () => {
@@ -1410,9 +1560,9 @@ describe('portfolio routes and metadata', () => {
     });
   });
 
-  /* Client engagements have no live app and no repository, so they were never
-     products; the only door to them used to be a nav word that no longer
-     exists. Their row opens the case study. */
+  /* Client engagements have no live app, no update feed and no product page,
+     so they were never products; the only door to them used to be a nav word
+     that no longer exists. Their row opens the case study. */
   it('lists the client engagements in the work index', () => {
     renderApp('/products');
 
@@ -1468,6 +1618,19 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /this page does not exist/i })).toBeTruthy();
   });
 
+  /* The owner decided on 2026-10-30 that the site publishes no resume. Nothing
+     under public/ may serve one, and no redirect may point at one, because
+     everything in public/ ships as a static asset whether or not a page links
+     to it. The /resume page route stays unexposed below for the same reason. */
+  it('publishes no resume from the site', () => {
+    expect(existsSync('public/resume')).toBe(false);
+    const vercel = JSON.parse(readFileSync('vercel.json', 'utf8'));
+    vercel.redirects.forEach((rule) => {
+      expect(rule.source).not.toMatch(/^\/resume\//);
+      expect(rule.destination).not.toMatch(/^\/resume\//);
+    });
+  });
+
   it('does not expose the resume page route', () => {
     renderApp('/resume');
 
@@ -1477,6 +1640,8 @@ describe('portfolio routes and metadata', () => {
   it('includes the required social metadata in index.html', () => {
     const indexHtml = readFileSync('index.html', 'utf8');
 
+    expect(indexHtml).toContain('<title>Cody Johnson | Full Stack Software Engineer</title>');
+    expect(indexHtml).not.toContain('Technical Product Owner');
     expect(indexHtml).toContain('rel="canonical"');
     expect(indexHtml).toContain('property="og:title"');
     expect(indexHtml).toContain('property="og:description"');
