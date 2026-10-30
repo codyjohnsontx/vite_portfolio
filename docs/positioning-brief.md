@@ -20,7 +20,7 @@ Where the same work can be framed as a business outcome or as investigation, val
 2. Use Oasis Race Control as the strongest engineering proof: sole engineer, a C#/.NET 8 Windows agent reading simulator telemetry from shared memory, a Next.js app, PostgreSQL, and live leaderboards, deployed at a two-day event for Cavender Cadillac of San Antonio where more than 100 guests drove.
 3. Use the integration work as proof of correctness under real traffic: Stripe and Twilio webhooks behind signature verification and duplicate-event prevention on Diaz on Demand and Attend.
 4. Use Trackday Tuner and Dragonglass AI as proof of practical AI engineering with guardrails: a RAG pipeline with input validation, output guardrails, and a 33-case evaluation suite in CI; streaming provider integrations with approval-based editing.
-5. Use Lambda Curry, CTX Motoworks, and HSNBA as the experience behind the engineering: requirements, acceptance criteria, defect investigation, regression testing, and release validation done alongside developers and QA, which is why the requirements in the engineering work hold up.
+5. Use Lambda Curry and CTX Motoworks as the experience behind the engineering: at Lambda Curry, requirements, acceptance criteria, defect investigation, regression testing, and release validation done alongside developers and QA; at CTX Motoworks, gathering requirements directly with dealership staff. That is why the requirements in the engineering work hold up.
 
 ## Engineering signals and where they are proven
 
