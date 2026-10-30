@@ -115,15 +115,15 @@ const PROOF = [
   },
   {
     label: 'Integrations that hold',
-    body: 'Stripe, Twilio, Mux, Clerk, and LLM APIs land behind webhook signature verification and duplicate-event prevention, so a replayed event cannot double-charge or double-send.',
+    body: 'Stripe and Twilio webhooks land behind signature verification and duplicate-event prevention, so a replayed event cannot double-charge or double-send.',
   },
   {
     label: 'Reliability under failure',
     body: 'Active builds define what happens on disconnects, restarts, interrupted delivery, and duplicate events, instead of assuming the happy path.',
   },
   {
-    label: 'Tested in CI',
-    body: 'Suites that run on every pull request: 373 xUnit and 1,082 TypeScript tests on Oasis Race Control, a 33-case RAG evaluation on Trackday Tuner, and real-database billing tests on Diaz on Demand.',
+    label: 'Verified by tests',
+    body: 'Oasis Race Control is verified with 373 xUnit and 1,082 TypeScript tests. In CI, every pull request runs a 33-case RAG evaluation on Trackday Tuner and real-database billing tests on Diaz on Demand.',
   },
 ];
 

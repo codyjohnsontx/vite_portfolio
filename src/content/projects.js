@@ -388,7 +388,7 @@ const allProducts = [
         tag: 'PR #43',
         title: 'Ran the board at a two-day event for Cavender Cadillac of San Antonio',
         url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/43',
-        body: 'The system left the venue for the first time: two rig PCs and the projected event board ran across two days at an off-site event hosted by Cavender Cadillac of San Antonio, where more than 100 guests drove. A second review of the event view found that its feed capped the board at 200 rows with nothing on screen saying so, so a 201st driver of the day would have silently vanished while the board still claimed to show everyone. The event view now asks for every driver of the day, the numeric limits keep their old contract, and the rank column widens itself for three-digit places. An integration test seeds 250 drivers and checks that all of them come back.',
+        body: 'The system left the venue: two rig PCs and the projected event board ran across two days at an off-site event hosted by Cavender Cadillac of San Antonio, where more than 100 guests drove. A second review of the event view found that its feed capped the board at 200 rows with nothing on screen saying so, so a 201st driver of the day would have silently vanished while the board still claimed to show everyone. The event view now asks for every driver of the day, the numeric limits keep their old contract, and the rank column widens itself for three-digit places. An integration test seeds 250 drivers and checks that all of them come back.',
       },
       {
         date: 'Aug 25, 2026',

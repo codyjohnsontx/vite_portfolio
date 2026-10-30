@@ -54,7 +54,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Requirements to API')).toBeTruthy();
     expect(screen.getByText('Integrations that hold')).toBeTruthy();
     expect(screen.getByText('Reliability under failure')).toBeTruthy();
-    expect(screen.getByText('Tested in CI')).toBeTruthy();
+    expect(screen.getByText('Verified by tests')).toBeTruthy();
     expect(screen.getByText('Latest')).toBeTruthy();
     expect(
       screen.getByRole('heading', { name: 'Attend: the inbox ranks by risk, not by what came in last' }),
@@ -102,7 +102,7 @@ describe('portfolio routes and metadata', () => {
   it('states the CTX Motoworks role as part-time and points its platform at Attend', () => {
     renderApp('/');
 
-    expect(screen.getByText(/Assistant General Manager \(Part-time, Operations & E-commerce\)/i))
+    expect(screen.getByText(/Assistant General Manager, E-commerce & Digital \(Part-time\)/i))
       .toBeTruthy();
     expect(screen.getByText(/the internal dealership platform that became Attend/i)).toBeTruthy();
   });

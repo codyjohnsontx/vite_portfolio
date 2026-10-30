@@ -244,7 +244,7 @@ export const caseStudies = [
       context:
         'The shelter had no engineering staff and no budget for a new system. Its records lived in ShelterManager, which exposes maintenance reports in the browser but, for this shelter, no API. The work had to run against the application staff already used, with their credentials, and leave the system in a state they would recognise.',
       problem:
-        'Two backlogs had built up. Movement records filed as “Offsite Adoption” or “Working Cat” needed to become plain adoptions, with the right checkbox set and, for working cats, the Feral and Working Cat flags added to the animal’s record. And a report of unnamed JPEGs, many of them driver’s licence photos, needed each image labelled or skipped. Both were clicks through the same screens hundreds of times, which is where mistakes come from.',
+        'Two backlogs had built up. Movement records filed as “Offsite Adoption” or “Working Cat” needed to become plain adoptions, with the right checkbox set and, for working cats, the Feral and Working Cat flags added to the animal’s record. And a report of unnamed JPEGs, such as driver’s license photos, needed each image labelled or skipped. Both were repetitive clicks through the same screens, which is where mistakes come from.',
       goal:
         'Take the repetition off staff without taking the judgment away from them: automate the navigation and the writes, keep a person in the loop where a decision is needed, and make the scripts safe to run again after an interruption.',
       decisions: [
@@ -269,7 +269,7 @@ export const caseStudies = [
       ],
       lessons: [
         'The useful question was not “what system should the shelter have?” but “what can be fixed inside the one it has?”. Shipping against the existing platform was the whole value.',
-        'Idempotency is what makes automation trustworthy to non-engineers. Staff were comfortable rerunning a script precisely because a second run could not make things worse.',
+        'Idempotency is what makes automation trustworthy to non-engineers.',
       ],
     },
   },

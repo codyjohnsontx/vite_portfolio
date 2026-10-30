@@ -26,7 +26,7 @@ export const experience = [
   },
   {
     company: 'CTX Motoworks',
-    role: 'Assistant General Manager (Part-time, Operations & E-commerce)',
+    role: 'Assistant General Manager, E-commerce & Digital (Part-time)',
     dates: 'Jul 2025 - May 2026',
     summary:
       'Owned service, inventory, customer communication, repair tracking, and billing workflows in a high-volume motorcycle dealership, watching repair status, queue age, and service capacity to find the problems worth investigating. I also defined the internal dealership platform that became Attend.',
