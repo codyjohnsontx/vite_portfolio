@@ -110,14 +110,15 @@ The optional `diagrams` field (`{ path, label, blurb }`, plus an optional `eyebr
 defaults to `System design`) is what draws the diagrams block on the detail page; entries
 without it render exactly as before. The optional `figures` array puts screenshots in the
 page: each `{ after, caption, shots }` renders a full-width figure after the block `after`
-names (`hero` or a section key), and each shot is `{ source, alt, width, height, label? }`
+names (`hero`, `goal` or `decisions`, the only slots the page draws), and each shot is `{ source, alt, width, height, label? }`
 with `source` a `?shot` import, so a content module imports its images the way
 `projects.js` does. A pair of shots shares one row sized by aspect ratio, so a 1440 desktop
 and a 390 phone come out the same height; a `label` is for a bare value only, a width or a
 date, never a kicker. `diaz-martial-arts-design` is the one study carrying them, its two
 "before" shots were built from the parent commits named in its comment, and
-`src/App.test.jsx` pins its labels in order and pins that no `.eyebrow` renders on it. The
-case study page draws no label over its Related heading for the same reason.
+`src/App.test.jsx` pins its labels in order and pins that no `.eyebrow` renders on it. Neither
+the case study page nor the note page draws a label over its Related heading, for the
+same reason, and `src/App.test.jsx` pins that on both.
 Everything between the title and `01` is drawn field by field: the `tagline` line, the
 Role / Team / Outcome row (only when all three values exist), `challenge`, and
 `impactHighlights`. `firstmate-hook-prompt`, `track-tuner-atomic-save` and

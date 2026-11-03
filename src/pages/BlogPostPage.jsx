@@ -71,8 +71,7 @@ export default function BlogPostPage() {
       {related.length ? (
         <Reveal as="section" className="section section--tight">
           <div className="container">
-            <Eyebrow>Related</Eyebrow>
-            <h2 className="h2" style={{ margin: '12px 0 32px' }}>
+            <h2 className="h2" style={{ margin: '0 0 32px' }}>
               {relatedHeading}
             </h2>
             <RelatedLinks items={related} />

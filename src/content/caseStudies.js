@@ -99,14 +99,14 @@ export const caseStudies = [
       {
         after: 'decisions',
         caption:
-          'The reasons rows and the first program card at phone width, the day before and the day after the labels came off. The card’s age range replaced its one-word sub-line because a parent needs it and a tag reading Grappling says nothing the title does not.',
+          'The reasons rows and the first program card at phone width, just before and just after the labels came off. The card’s age range replaced its one-word sub-line because a parent needs it and a tag reading Grappling says nothing the title does not.',
         shots: [
           {
             source: dmaWhyBefore390,
             alt: 'Before: a small-caps label reading Why Diaz with a short ember dash above the headline, a Programs label above the next heading, and the first program card carrying a Grappling tag above its title and a Gi and No-Gi sub-line below it.',
             width: 390,
             height: 1440,
-            label: 'Before, 3 November 2026',
+            label: 'Before, 1 November 2026',
           },
           {
             source: dmaWhyAfter390,

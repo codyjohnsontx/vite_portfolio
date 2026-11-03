@@ -1238,10 +1238,22 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getByRole('heading', { name: 'A prompt nobody could answer' })).toBeTruthy();
     const main = within(document.querySelector('main'));
-    expect(main.queryByText('Related')).toBeNull();
     expect(main.queryByRole('heading', { name: RELATED_HEADING.withSubject })).toBeNull();
     expect(main.queryByRole('heading', { name: RELATED_HEADING.writingOnly })).toBeNull();
     expect(getRelatedForWriting('/case-studies/firstmate-hook-prompt').items).toEqual([]);
+  });
+
+  it('draws no label over the Related heading on a case study or a note', () => {
+    ['/case-studies/oasis-multi-tenancy', '/blog/mvp-sequencing-memory-before-intelligence'].forEach(
+      (path) => {
+        const view = renderApp(path);
+        const main = within(document.querySelector('main'));
+        const block = main.getByRole('heading', { name: RELATED_HEADING.withSubject }).closest('section');
+        expect(block.querySelector('.eyebrow')).toBeNull();
+        expect(within(block).queryByText('Related')).toBeNull();
+        view.unmount();
+      },
+    );
   });
 
   it('keeps both blunt parts of the firstmate case study', () => {
@@ -1338,7 +1350,7 @@ describe('portfolio routes and metadata', () => {
       '/coaches, 1440 px',
       'Before, 18 August 2026',
       'After',
-      'Before, 3 November 2026',
+      'Before, 1 November 2026',
       'After',
     ]);
     const decisions = page.getByRole('heading', { level: 2, name: 'Decisions' }).closest('section');

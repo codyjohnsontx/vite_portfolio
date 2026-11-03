@@ -306,8 +306,9 @@ export default function CaseStudyPage() {
   const s = c.sections;
   const href = `/case-studies/${c.slug}`;
   const { items: related, heading: relatedHeading } = getRelatedForWriting(href);
-  /* Each figure names the block it follows: `hero` for the page title, or a
-     section key. Figures with the same key keep their array order. */
+  /* Each figure names the block it follows: `hero` for the page title, or the
+     `goal` or `decisions` section. Figures with the same key keep their array
+     order. */
   const figuresAfter = (key) =>
     (c.figures ?? [])
       .filter((figure) => figure.after === key)
@@ -343,22 +344,16 @@ export default function CaseStudyPage() {
       <CaseSummary study={c} />
 
       <CaseSection num="01" title="Context" body={s.context} />
-      {figuresAfter('context')}
       <CaseSection num="02" title="The problem" body={s.problem} />
-      {figuresAfter('problem')}
       <CaseSection num="03" title="The goal" body={s.goal} />
       {figuresAfter('goal')}
 
       <CaseListSection num="04" title="Decisions" items={s.decisions} />
       {figuresAfter('decisions')}
       <CaseListSection num="05" title="Tradeoffs" items={s.tradeoffs} />
-      {figuresAfter('tradeoffs')}
       <CaseListSection num="06" title="Execution" items={s.execution} />
-      {figuresAfter('execution')}
       <CaseListSection num="07" title="Outcomes" items={s.outcomes} />
-      {figuresAfter('outcomes')}
       <CaseListSection num="08" title="Lessons" items={s.lessons} />
-      {figuresAfter('lessons')}
 
       {related.length ? (
         <Reveal as="section" className="section section--tight">
