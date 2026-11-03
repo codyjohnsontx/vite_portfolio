@@ -235,12 +235,12 @@ descriptions in `index.html`. Everything else in `src/content/profile.js` is dea
 `heroSupport` and `contactLinks` have a consumer, and `toolkit` lost its last one when Dev
 Mode was deleted. Nothing on the site renders a skills or strengths list at all.
 
-Three pieces of that story are deliberately absent rather than missing: the Texas Malibu
-role, the CTX Motoworks eBay liquidation bullet, and the HSNBA GIS, 19,000-record and
-65 / 95 percent claims, which the HSNBA repository cannot back and the resume dropped.
-`src/App.test.jsx` pins all of them out of the rendered output, and the first two out of
-the content modules as well, so a content pass that "restores" them from an older source
-fails the suite. The
+Five pieces of that story are deliberately absent rather than missing: the Texas Malibu
+role, the CTX Motoworks eBay liquidation bullet, the HSNBA GIS, 19,000-record and
+65 / 95 percent claims, which the HSNBA repository cannot back and the resume dropped, and
+the CTX $90,000 service revenue and Lambda Curry 10-25 percent retention figures, which the
+resume also dropped. `src/App.test.jsx` pins each of them out, so a content pass that
+"restores" one from an older source fails the suite. The
 HSNBA case study keeps its `hsnba-automation-and-gis` slug because the URL is public.
 
 The site publishes no resume. That is an owner decision from 2026-10-30 ("I don't need a
