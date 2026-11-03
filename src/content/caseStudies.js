@@ -31,7 +31,9 @@ export const caseStudies = [
        its label, captured at 2x in Chromium at the width the label gives.
        The two "before" states were built from the parent commits of the
        pull requests that changed them (c092203 for the hero, f2fd764 for the
-       labels), so each pair differs only by that one change. */
+       labels); each "after" is the live site. So the hero pair also shows
+       everything that landed since August, the Manrope switch and later nav
+       items included; its caption names the font change. */
     figures: [
       {
         after: 'hero',
