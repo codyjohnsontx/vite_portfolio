@@ -63,26 +63,38 @@
 .hero__title {
   font-size: clamp(3rem, 9.4vw, 10rem);
   line-height: 0.92;
-}
-
-.hero__eyebrow { color: var(--ink-3); }
-
-.hero__title {
   /* the headline sits on the aurora - blend keeps it feeling lit by the
      field rather than pasted on top of it */
   mix-blend-mode: plus-lighter;
   text-shadow: 0 0 70px color-mix(in srgb, var(--void) 55%, transparent);
 }
+
+.hero__eyebrow { color: var(--ink-3); }
 [data-theme='light'] .hero__title {
   mix-blend-mode: normal;
   text-shadow: none;
 }
 
+/* Two boxes clip the hero's descenders: this mask, and the .kt-word that
+   splitChars wraps around each word while motion is allowed. Each buys room
+   below the line with a padding-bottom / negative margin-bottom pair, so the
+   room costs no layout. Italic Source Serif 4 drops the "g" of "Ambiguous" and
+   the "p"s of "shipped" about 0.26em below the baseline, and a box's cut lands
+   at its room plus about 0.11em, so both need 0.18em (a cut near 0.29em) or the
+   descenders render flat. Widen one alone and the other still cuts. The shared
+   .kt-word rule keeps its 0.1em for every other split-text reveal; only the
+   hero's is widened, and the hero's rise in HomePage.jsx starts further down
+   (yPercent 128, not 118) so the taller mask still hides each character at the
+   start of the reveal. */
 .hero__line-mask {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.09em;
-  margin-bottom: -0.09em;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
+.hero__line .kt-word {
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
 }
 .hero__line {
   display: block;

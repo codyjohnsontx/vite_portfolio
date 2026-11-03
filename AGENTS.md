@@ -308,13 +308,15 @@ Three things the markup does not say out loud:
   it matches both lines and the whole headline is italic. Italic Source Serif 4 drops "g"
   0.26em below the baseline, which is why the hero is the one place on the site where a
   descender can reach the line beneath it.
-- Descenders are clipped in two places, not one: `.hero__line-mask` (0.09em of room) and
-  `.kt-word` in `signal.css` (0.1em), each with a `padding-bottom` / negative
-  `margin-bottom` pair that buys the room at no net layout cost. They land 0.2026em and
-  0.2126em below the baseline, so releasing either one alone moves the cut by ~1.6px and
-  looks like "clipping is not happening" - a false negative. The italic "g" needs 0.259em,
-  so it renders with a flat bottom; that is issue #64, filed rather than fixed because
-  `.kt-word` is shared by every split-text animation on the site.
+- Descenders are clipped in two places, not one: `.hero__line-mask` and, while motion is
+  allowed, the `.kt-word` each character sits in. Each buys room below the line with a
+  `padding-bottom` / negative `margin-bottom` pair at no net layout cost, and a box's cut
+  lands about 0.11em below the baseline plus its room. The italic "g" and "p" reach 0.259em,
+  so the hero gives both boxes 0.18em (`.hero__line .kt-word` overrides the shared 0.1em
+  only in the hero), and the hero rise starts at `yPercent: 128` so the taller mask still
+  hides each character at the first frame. Releasing either box alone hands the cut to the
+  other and looks like "clipping is not happening" - a false negative. jsdom cannot measure
+  glyphs, so check this in a browser at a desktop and a phone width, in both motion states.
 - `splitChars` only runs when motion is allowed. Under `prefers-reduced-motion` the per-char
   inline-blocks are absent, so the browser shapes the line normally and the glyphs sit
   slightly tighter than in the animated state. Measure hero type in both states; reduced

@@ -44,7 +44,7 @@ function Hero({ ready }) {
       chars.forEach((set, i) => {
         tl.from(
           set,
-          { yPercent: 118, duration: 1.35, stagger: 0.028 },
+          { yPercent: 128, duration: 1.35, stagger: 0.028 },
           i === 0 ? '-=0.75' : '-=1.18',
         );
       });
