@@ -327,7 +327,7 @@ export const caseStudies = [
         'Managed sprint execution, dependency coordination, blocker removal, and release readiness across teams.',
       ],
       outcomes: [
-        'Contributed to a 12 percent first-week sales lift at launch and measurable conversion improvement through the purchase funnel.',
+        'The checkout redesign requirements and success measures contributed to a 12 percent first-week sales increase.',
         'Created a stronger operating loop between product definition, sprint execution, release coordination, and post-launch validation.',
       ],
       metrics: [
