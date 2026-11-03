@@ -1114,6 +1114,9 @@ describe('portfolio routes and metadata', () => {
       renderApp(`/case-studies/${study.slug}`);
 
       expect(screen.getByRole('heading', { name: study.title })).toBeTruthy();
+      expect(document.querySelectorAll('main figure.case-figure')).toHaveLength(
+        study.figures?.length ?? 0,
+      );
     });
   });
 
