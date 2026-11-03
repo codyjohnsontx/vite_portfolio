@@ -48,12 +48,12 @@ import oasisPersonalBest from '../assets/oasis-race-control/oasis-race-control-0
 import oasisDriverPortal from '../assets/oasis-race-control/oasis-race-control-05-driver-portal.png?shot';
 import oasisArchitecture from '../assets/oasis-race-control/oasis-race-control-06-architecture.png?shot';
 
-/* Entry order is significant. This array flows into `flagshipProducts`, which two
-   fixed-size surfaces slice from the top: `flagshipProducts.slice(0, 3)` in
-   src/components/TopBar.jsx (the overlay menu) and `flagshipProducts.slice(0, 5)` in
-   src/pages/HomePage.jsx (the home hero rail). Inserting a flagship above an existing
-   one silently pushes the last entry off those surfaces. The first three flagship slugs
-   are pinned by a test in src/App.test.jsx.
+/* Entry order is significant. This array flows into `flagshipProducts`, and every
+   featured surface lists it in this order. The home hero rail in src/pages/HomePage.jsx
+   shows all of it, but the overlay menu in src/components/TopBar.jsx slices
+   `flagshipProducts.slice(0, 3)` from the top, so inserting a flagship above an
+   existing one silently pushes the third entry off the menu. The first three flagship
+   slugs are pinned by a test in src/App.test.jsx.
 
    The featured products follow the resume: Oasis Race Control, Attend, the two Diaz
    Martial Arts builds, Trackday Tuner, and Dragonglass AI. The rest carry
@@ -977,6 +977,34 @@ const allProducts = [
     },
     standaloneMockStatus: 'planned',
     updates: [
+      {
+        date: 'Nov 1, 2026',
+        tag: 'PR #18',
+        title: 'Made search follow the links of a note the question names',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/18',
+        body: 'Some answers sit one hop away: the question names a note, but what it asks about lives in a note that one links to. Search now returns at least 10 results, and when a result is the note the query names, it also lists the notes that note links to and reads them in full within half of the note-text budget. When a strict all-words search fills its results and finds nothing inside the chosen folder, it falls back to the whole vault.',
+      },
+      {
+        date: 'Oct 31, 2026',
+        tag: 'PR #17',
+        title: 'Stopped a guessed search folder from hiding the answer',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/17',
+        body: 'When the model narrows a search to the wrong folder, the answer used to stay hidden. A folder-restricted search with no match now returns results from the whole vault and says so, and one whose matches outside the folder rank higher names up to three of them first. The live agent runner can also record each round’s thinking, tool arguments, and result heads.',
+      },
+      {
+        date: 'Oct 31, 2026',
+        tag: 'PR #14',
+        title: 'Moved search onto an in-memory BM25 index with full note text in results',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/14',
+        body: 'Search now ranks on a BM25 index built in memory from the vault’s cached note text once Obsidian has loaded and kept current from vault events, instead of scanning every note on each call, with the matching rules carried over exactly. Results append the full text of the best matches within a token budget, a new setting beside the per-note character cap: 4,000 tokens by default and at most a quarter of the context window. Folder listings are capped at 500 entries, and a retrieval lab with a vault generator, a benchmark, and a live-run harness went in alongside.',
+      },
+      {
+        date: 'Oct 30, 2026',
+        tag: 'PR #13',
+        title: 'Made vault search match any word and rank by how many match',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/13',
+        body: 'Search required every word of the query, so the multi-word queries local models write returned one note or none. It now matches any word, dropping stopwords, and ranks by how many distinct words a note matches, then by a score for matches in its name, headings, and body. Each result shows the note name and path, the words it matched, and an excerpt around the densest match. Terms match at the start of a word, Chinese, Japanese, and Korean terms match anywhere, and asking for all words keeps the strict behavior.',
+      },
       {
         date: 'Oct 30, 2026',
         tag: 'PR #5',

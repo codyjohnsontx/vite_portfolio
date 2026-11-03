@@ -59,7 +59,7 @@ function Hero({ ready }) {
     <section className="hero" ref={rootRef} aria-labelledby="hero-title">
       {/* nav, not div: aria-label is ignored on a generic element */}
       <nav className="hero__rail" aria-label="Active builds">
-        {flagshipProducts.slice(0, 5).map((p) => (
+        {flagshipProducts.map((p) => (
           <Link
             key={p.slug}
             to={`/products/${p.slug}`}
