@@ -156,7 +156,7 @@ export const caseStudies = [
         {
           lead: 'Rows, not cards.',
           body: [
-            'Sections are rows rather than grids of cards. The reasons section is a headline column beside three numbered rows ruled with hairlines, and the programs follow as a list of program cards, each a numeral, a title, a sentence and an arrow.',
+            'On the home page, sections are rows rather than grids of cards. The reasons section is a headline column beside three numbered rows ruled with hairlines, and the programs are a two-column ruled grid, each cell a numeral, a title, a sentence and an arrow.',
             'A box stays only where the content is a unit of its own. The next class up is a pale panel in the hero that reads the schedule on the gym’s clock rather than the visitor’s, the one thing a current member comes back for. Each program card holds one program.',
           ],
         },
@@ -172,7 +172,7 @@ export const caseStudies = [
           body: [
             'The scrolling ribbon went in August; every one of its labels was already a filter button on the programs page. The hero label went the same week; the city and the founding year live in the footer and in the structured data.',
             'On 3 November the small-caps labels above headings and the decorative sub-lines went at once, the label component with them: 252 lines out and 105 in across 28 files. The rule written into the repository is short. Headings stand alone, and a line stays only if it carries a fact a visitor needs, like a price, an address or an age range.',
-            'The labels over a live value stayed: Coming up, Starts in, Tonight and Later in the next-class panel, and a discipline name on a program tile. They name data rather than decorate it, which is the same rule.',
+            'The labels over a live value stayed: Coming up, Starts in, Tonight and Later in the next-class panel. They name data rather than decorate it, which is the same rule.',
           ],
         },
       ],
