@@ -1353,7 +1353,7 @@ describe('portfolio routes and metadata', () => {
       'Before, 18 August 2026',
       'After',
       'Before, 1 November 2026',
-      'After',
+      'After, 3 November 2026',
     ]);
     const decisions = page.getByRole('heading', { level: 2, name: 'Decisions' }).closest('section');
     expect(decisions.nextElementSibling.querySelector('figure.case-figure')).toBe(figures[2]);

@@ -31,9 +31,13 @@ export const caseStudies = [
        two "before" states were built from the parent commits of the pull
        requests that changed them (c092203 for the hero, f2fd764 for the
        labels), and their labels carry that commit's date rather than its
-       hash; each "after" is the live site. So the hero pair also shows
-       everything that landed since August, the Manrope switch and later nav
-       items included; its caption names the font change. */
+       hash. The four current-site shots and the hero pair's "after" are the
+       live site on 3 November 2026 after the white background landed
+       (062ede1), so the hero pair also shows everything since August, the
+       Manrope switch and later nav items included; its caption names the
+       font change. The phone pair's "after" was captured between the labels
+       coming off and the background change the same day, and is kept as it
+       was so the pair shows one change, not two. */
     figures: [
       {
         after: 'hero',
@@ -42,7 +46,7 @@ export const caseStudies = [
         shots: [
           {
             source: dmaHome1440,
-            alt: 'Diaz Martial Arts home page at 1440 pixels wide: a dark photo of the gym behind the headline Martial arts for real progress, with the word progress in gold, two pill buttons, and a sand card listing the next class up.',
+            alt: 'Diaz Martial Arts home page at 1440 pixels wide: a dark photo of the gym behind the headline Martial arts for real progress, with the word progress in gold, two pill buttons, and a pale grey card listing the next class up.',
             width: 1440,
             height: 900,
             label: '1440 px',
@@ -101,7 +105,7 @@ export const caseStudies = [
       {
         after: 'decisions',
         caption:
-          'The reasons rows and the first program card at phone width, just before and just after the labels came off. The card’s age range replaced its one-word sub-line because a parent needs it and a tag reading Grappling says nothing the title does not.',
+          'The reasons rows and the first program card at phone width, just before and just after the labels came off. The card’s age range replaced its one-word sub-line because a parent needs it and a tag reading Grappling says nothing the title does not. Both sit on the tan page that went later the same day.',
         shots: [
           {
             source: dmaWhyBefore390,
@@ -115,7 +119,7 @@ export const caseStudies = [
             alt: 'After: the same headings with no label above them and no sub-line below, and the first program card showing its numeral, title, sentence and age range.',
             width: 390,
             height: 1360,
-            label: 'After',
+            label: 'After, 3 November 2026',
           },
         ],
       },
@@ -138,8 +142,8 @@ export const caseStudies = [
         {
           lead: 'One red, rationed.',
           body: [
-            'The palette has been the same since the first commit: ink, sand, ember, bronze and gold. Ember is the primary button, the active underline in the navigation, the numerals on the program and reasons rows, the focus ring and the text selection, and nothing else.',
-            'Everything else is ink on sand, and the sand is not flat. Two faint radial washes of ember and bronze sit in the top corners over a slow gradient, so the paper reads warm without a visible pattern.',
+            'The palette has carried the same five names since the first commit: ink, sand, ember, bronze and gold. Ember is the primary button, the active underline in the navigation, the numerals on the program and reasons rows, the focus ring and the text selection, and nothing else.',
+            'For nine months everything else was ink on a warm sand: two faint radial washes of ember and bronze in the top corners over a slow tan gradient. On 3 November I took the tan out too. It had started to read like a template, which is the thing this whole site is trying not to be. The page is flat white now, the sand and clay panels moved to neutral greys, and ink, ember and the charcoal panels stayed where they were. With less colour on the page, the one red carries more.',
           ],
         },
         {
@@ -153,7 +157,7 @@ export const caseStudies = [
           lead: 'Rows, not cards.',
           body: [
             'The reasons section is a headline column beside three numbered rows ruled with hairlines. The programs are a two-column ruled grid, each cell a numeral, a title, a sentence and an arrow.',
-            'The one card on the home page is the next class up, a sand panel in the hero that reads the schedule on the gym’s clock rather than the visitor’s. It is the only thing on the page that looks like an object, and the one thing a current member comes back for.',
+            'The one card on the home page is the next class up, a pale panel in the hero that reads the schedule on the gym’s clock rather than the visitor’s. It is the only thing on the page that looks like an object, and the one thing a current member comes back for.',
           ],
         },
         {
@@ -186,12 +190,12 @@ export const caseStudies = [
       ],
       outcomes: [
         'The site is live at https://www.diazmartialarts.com and the owner publishes through it.',
-        'What a visitor sees now: one typeface, one red, the gym’s own photo, headings with nothing stacked around them, and a free-trial button first on the screen at every width.',
+        'What a visitor sees now: one typeface, one red on a white page, the gym’s own photo, headings with nothing stacked around them, and a free-trial button first on the screen at every width.',
         'I have no conversion numbers to report and will not invent any. The only numbers in this study are the ones measured in the browser and recorded in the commits.',
         'Source: https://github.com/codyjohnsontx/DiazMartialArts',
       ],
       lessons: [
-        'Most of the design happened by removal. The commits that changed how the site looks most are the ones that deleted a ribbon, a label, a card or a second typeface.',
+        'Most of the design happened by removal. The commits that changed how the site looks most are the ones that deleted a ribbon, a label, a card, a second typeface or a tint.',
         'Treat contrast as a floor you can prove, not a sample you took once. The scrim comment in the hero owns its figures and how they were measured, so the next change to the photo has something to be checked against.',
         'A design decision that is not rendered is not a decision. The type system sat in the stylesheet for nearly three months before a browser showed it.',
       ],
