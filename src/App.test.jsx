@@ -58,25 +58,21 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Verified by tests')).toBeTruthy();
     expect(screen.getByText('Latest')).toBeTruthy();
     expect(
-      screen.getByRole('heading', { name: 'Attend: the inbox ranks by risk, not by what came in last' }),
+      screen.getByRole('heading', {
+        name: 'Dragonglass AI: vault search a small local model can answer from',
+      }),
     ).toBeTruthy();
-    expect(screen.getAllByText(/briefs every open conversation on its own/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/how much of the queue is briefed/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/runs on a BM25 index the plugin builds in memory/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/falls back to the whole vault and says so/i).length).toBeGreaterThan(0);
     /* The Latest block closes on the human-in-the-loop guarantee stated as a
-       strength. It replaced "Sending the suggested reply is still a person's
-       decision.", and "No dealership is using it yet and there is no measured
-       result." was deleted outright - both on owner instruction, as volunteered
-       deflation closing the freshest item on the home page. Pinned both ways so
-       a content pass cannot soften the new line or restore the old ones. */
+       strength, on owner instruction, rather than on volunteered deflation. */
     expect(
-      screen.getAllByText(/The AI drafts; a person decides what sends/i).length,
+      screen.getAllByText(/every edit is still a diff the user approves/i).length,
     ).toBeGreaterThan(0);
-    expect(screen.queryByText(/No dealership is using it yet/i)).toBeNull();
-    expect(screen.queryByText(/is still a person/i)).toBeNull();
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
-        .some((link) => link.getAttribute('href') === '/products/ctx-chat'),
+        .some((link) => link.getAttribute('href') === '/products/dragonglass'),
     ).toBe(true);
   });
 

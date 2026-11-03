@@ -942,7 +942,7 @@ const allProducts = [
       'Switching providers keeps the conversation, including earlier tool calls, and the next message goes to the new provider with the whole history.',
     ],
     mvpScope: [
-      'Five streaming provider integrations: Ollama, OpenAI, Anthropic, Gemini, and a custom OpenAI-compatible endpoint',
+      'Four streaming provider integrations, Ollama, OpenAI, Anthropic, and Gemini, plus support for any custom OpenAI-compatible endpoint',
       'Tool calling with shared conversation history across providers',
       'A cancellable agent loop with input validation and execution limits',
       'Read tools: list, read, search, and metadata with links and backlinks',
@@ -953,7 +953,7 @@ const allProducts = [
     evidenceSignal:
       'Verified live against a local Ollama model, with every scenario in the README exercised in a real Obsidian instance on a disposable vault. The cloud wire formats are tested against shapes from the official API documentation, not live keys, and the README says so. Not yet in the community plugin directory; installed manually.',
     nextStep:
-      'Get it into the community plugin directory. After that the roadmap is the tools the vault still lacks: Canvas and Bases, folder, move, and rename operations, frontmatter-specific editing, and semantic search instead of substring matching.',
+      'Get it into the community plugin directory. After that the roadmap is the tools the vault still lacks: Canvas and Bases, folder, move, and rename operations, frontmatter-specific editing, and semantic search instead of keyword matching.',
     visualAssets: {
       note:
         'Screenshots of the plugin built from its repository and running in Obsidian 1.14 on a demo vault of made-up notes, with a local Ollama model (qwen3:8b). The answers and the proposed edit are the model’s real output.',
