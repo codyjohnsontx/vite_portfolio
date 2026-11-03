@@ -982,7 +982,7 @@ const allProducts = [
         tag: 'PR #18',
         title: 'Made search follow the links of a note the question names',
         url: 'https://github.com/codyjohnsontx/dragonglass/pull/18',
-        body: 'Some answers sit one hop away: the question names a note, but what it asks about lives in a note that one links to. Search now returns at least 10 results, and when a result is the note the query names, it also lists the notes that note links to and reads them in full within half of the note-text budget. When a strict all-words search fills its results and finds nothing inside the chosen folder, it falls back to the whole vault.',
+        body: 'Some answers sit one hop away: the question names a note, but what it asks about lives in a note that one links to. Search now returns at least 10 results, and when a result is the note the query names, it also lists the notes that note links to and reads them in full within half of the note-text budget. An all-words search now lists notes with every word first and fills the rest with notes that have some of them, and when that finds nothing inside the chosen folder it falls back to the whole vault.',
       },
       {
         date: 'Oct 31, 2026',
