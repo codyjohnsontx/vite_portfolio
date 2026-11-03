@@ -1310,8 +1310,7 @@ describe('portfolio routes and metadata', () => {
   /* The design study is the one case study built around screenshots. It opens
      on the live home page at both widths, carries two before-and-after pairs,
      and, being about taking labels off headings, must not grow any itself:
-     no eyebrow anywhere in main, and each figure label names only a width or
-     a date. */
+     no eyebrow anywhere in main, and each figure label is a bare value. */
   it('opens the Diaz Martial Arts design study onto its screenshots, with no eyebrow on the page', () => {
     renderApp('/case-studies/diaz-martial-arts-design');
 

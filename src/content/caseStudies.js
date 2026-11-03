@@ -27,11 +27,11 @@ export const caseStudies = [
     deck: 'Diaz Martial Arts got a front door that looks like the gym. Most of the design work was deciding what not to put on it.',
     featuredOutcome:
       'One typeface, one red, the gym’s own photo, and headings with nothing stacked around them, live at diazmartialarts.com.',
-    /* Every screenshot is the live site or a build of the commit named in
-       its label, captured at 2x in Chromium at the width the label gives.
-       The two "before" states were built from the parent commits of the
-       pull requests that changed them (c092203 for the hero, f2fd764 for the
-       labels); each "after" is the live site. So the hero pair also shows
+    /* Every screenshot is captured at 2x in Chromium at its `width`. The
+       two "before" states were built from the parent commits of the pull
+       requests that changed them (c092203 for the hero, f2fd764 for the
+       labels), and their labels carry that commit's date rather than its
+       hash; each "after" is the live site. So the hero pair also shows
        everything that landed since August, the Manrope switch and later nav
        items included; its caption names the font change. */
     figures: [
