@@ -57,31 +57,49 @@ function CaseListSection({ num, title, items }) {
             {title}
           </h2>
           <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
-            {items.map((it, i) => (
-              <li
-                key={it}
-                style={{
-                  padding: '18px 0',
-                  borderTop: '1px solid var(--rule-2)',
-                  display: 'flex',
-                  gap: 20,
-                  alignItems: 'baseline',
-                }}
-              >
-                <span
-                  className="mono small"
-                  style={{ color: 'var(--ink-3)', minWidth: 32 }}
+            {items.map((it, i) => {
+              /* An item is a sentence or two as a string, or `{ lead, body }`
+                 for a decision long enough to need a line of its own to scan
+                 by: the lead is a short plain sentence, not a label, and the
+                 body is one or more short paragraphs under it. */
+              const structured = typeof it !== 'string';
+              return (
+                <li
+                  key={structured ? it.lead : it}
+                  style={{
+                    padding: structured ? '28px 0' : '18px 0',
+                    borderTop: '1px solid var(--rule-2)',
+                    display: 'flex',
+                    gap: 20,
+                    alignItems: 'baseline',
+                  }}
                 >
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span
-                  className="body"
-                  style={{ color: 'var(--ink)', fontSize: 17, lineHeight: 1.5 }}
-                >
-                  {withLinks(it)}
-                </span>
-              </li>
-            ))}
+                  <span
+                    className="mono small"
+                    style={{ color: 'var(--ink-3)', minWidth: 32 }}
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {structured ? (
+                    <div className="case-item">
+                      <h3 className="case-item__lead">{it.lead}</h3>
+                      {it.body.map((paragraph) => (
+                        <p key={paragraph} className="case-item__body body">
+                          {withLinks(paragraph)}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <span
+                      className="body"
+                      style={{ color: 'var(--ink)', fontSize: 17, lineHeight: 1.5 }}
+                    >
+                      {withLinks(it)}
+                    </span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
         <div />
@@ -108,7 +126,8 @@ function CaseFigure({ figure }) {
   const narrowest = Math.min(...ratios);
   const columns = ratios.map((r) => `${(r / narrowest).toFixed(3)}fr`).join(' ');
   // A row of portrait shots alone would stretch to the full column and run
-  // thousands of pixels tall, so it is capped near the width it was captured at.
+  // thousands of pixels tall, so it is capped near the width it was captured
+  // at and its caption moves beside it to use the rest of the column.
   const portrait = ratios.every((r) => r < 1);
 
   return (
@@ -294,7 +313,15 @@ CaseSection.propTypes = {
 CaseListSection.propTypes = {
   num: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.string),
+  items: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        lead: PropTypes.string.isRequired,
+        body: PropTypes.arrayOf(PropTypes.string).isRequired,
+      }),
+    ]),
+  ),
 };
 
 export default function CaseStudyPage() {

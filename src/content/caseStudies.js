@@ -126,12 +126,48 @@ export const caseStudies = [
       goal:
         'A site that looks like the gym and gets out of the way. One typeface, one red, the owner’s own photograph, headings that stand on their own, and a free-trial button that is the obvious next step at every width.',
       decisions: [
-        'Type. In June I dropped the condensed display face and set everything in Manrope. Headlines are the same family at its heaviest weight, uppercase, tracked in by 2.5 percent, with the leading pulled under the cap height to 0.92. That is the whole display system, six lines of CSS, and it sets the 96 pixel headline on the home page, the 88 pixel page titles, and the numbered program rows. The body is the same family at regular weight. One family means the voice comes from weight, case and tracking alone, which is how a gym talks.',
-        'Color. The palette has been the same since the first commit: ink, sand, ember, bronze and gold. Ember is rationed. It is the primary button, the active underline in the navigation, the numerals on the program and reasons rows, the focus ring and the text selection, and nothing else. Everything else is ink on sand. The sand is not flat: two faint radial washes of ember and bronze sit in the top corners over a slow gradient, so the paper reads warm without a visible pattern.',
-        'Imagery. In August the home hero went from a plain band to the gym’s own photo, inverted to light on dark. A photo with a white wall across its top third cannot carry white type on its own, so a scrim holds it at no less than 82 percent coverage anywhere in the section. That turns the contrast figures into a guarantee rather than a reading off one crop: the lightest backdrop the section can produce is rgb(69, 61, 62). The accent word moved from ember to gold, because ember on that backdrop measures 1.1 to 1 and no scrim can rescue it. The photo is framed through a box a quarter taller than the section and anchored to its top, so the crest baked into the photo’s corner never surfaces to fight the crest in the header.',
-        'Layout. Rows, not cards. The reasons section is a headline column beside three numbered rows ruled with hairlines. The programs are a two-column ruled grid, each cell a numeral, a title, a sentence and an arrow. The one card on the home page is the next class up, a sand panel in the hero that reads the schedule on the gym’s clock rather than the visitor’s. That card is the only thing on the page that looks like an object, and it is the one thing a current member comes back for.',
-        'Motion. One effect. On a desktop with a fine pointer, the hero photo drifts down a fifth of its frame over the first screen of scrolling, driven by the scroll position rather than a timer. On phones, coarse pointers, reduced-motion settings and browsers without scroll timelines there is no effect at all, and the hero is pixel-identical to the still one. The travel runs downward on purpose: it pushes the crest in the photo further out of frame instead of toward it.',
-        'Subtraction. The scrolling ribbon went in August; every one of its labels was already a filter button on the programs page. The hero label went the same week; the city and the founding year live in the footer and in the structured data. On 3 November every remaining small-caps label and sub-line on the site went at once, the label component with them, 252 lines out and 105 in across 28 files. The rule written into the repository is short: headings stand alone, and a line stays only if it carries a fact a visitor needs, like a price, an address or an age range.',
+        {
+          lead: 'One typeface, set hard.',
+          body: [
+            'In June I dropped the condensed display face and set everything in Manrope. Headlines are the same family at its heaviest weight, uppercase, tracked in by 2.5 percent, with the leading pulled under the cap height to 0.92.',
+            'That is the whole display system, six lines of CSS. It sets the 96 pixel headline on the home page, the 88 pixel page titles and the numbered program rows, and the body is the same family at regular weight. The voice comes from weight, case and tracking alone, which is how a gym talks.',
+          ],
+        },
+        {
+          lead: 'One red, rationed.',
+          body: [
+            'The palette has been the same since the first commit: ink, sand, ember, bronze and gold. Ember is the primary button, the active underline in the navigation, the numerals on the program and reasons rows, the focus ring and the text selection, and nothing else.',
+            'Everything else is ink on sand, and the sand is not flat. Two faint radial washes of ember and bronze sit in the top corners over a slow gradient, so the paper reads warm without a visible pattern.',
+          ],
+        },
+        {
+          lead: 'The gym’s own photo, with contrast as a guarantee.',
+          body: [
+            'In August the home hero went from a plain band to the gym’s photo, inverted to light on dark. The photo has a white wall across its top third, so a scrim holds it at no less than 82 percent coverage anywhere in the section. The lightest backdrop the section can produce is rgb(69, 61, 62), which makes the contrast figures a floor rather than a reading off one crop.',
+            'The accent word moved from ember to gold, because ember on that backdrop measures 1.1 to 1 and no scrim can rescue it. The photo is framed through a box a quarter taller than the section and anchored to its top, so the crest baked into the photo’s corner never surfaces to fight the crest in the header.',
+          ],
+        },
+        {
+          lead: 'Rows, not cards.',
+          body: [
+            'The reasons section is a headline column beside three numbered rows ruled with hairlines. The programs are a two-column ruled grid, each cell a numeral, a title, a sentence and an arrow.',
+            'The one card on the home page is the next class up, a sand panel in the hero that reads the schedule on the gym’s clock rather than the visitor’s. It is the only thing on the page that looks like an object, and the one thing a current member comes back for.',
+          ],
+        },
+        {
+          lead: 'One motion effect, only where it costs nothing.',
+          body: [
+            'On a desktop with a fine pointer, the hero photo drifts down a fifth of its frame over the first screen of scrolling, driven by the scroll position rather than a timer. On phones, coarse pointers, reduced-motion settings and browsers without scroll timelines there is no effect, and the hero is pixel-identical to the still one.',
+            'The travel runs downward on purpose. It pushes the crest in the photo further out of frame instead of toward it.',
+          ],
+        },
+        {
+          lead: 'Then take things away.',
+          body: [
+            'The scrolling ribbon went in August; every one of its labels was already a filter button on the programs page. The hero label went the same week; the city and the founding year live in the footer and in the structured data.',
+            'On 3 November every remaining small-caps label and sub-line on the site went at once, the label component with them: 252 lines out and 105 in across 28 files. The rule written into the repository is short. Headings stand alone, and a line stays only if it carries a fact a visitor needs, like a price, an address or an age range.',
+          ],
+        },
       ],
       tradeoffs: [
         'Inverting the hero cost the headline its ember. Gold does the job on the dark photo, and ember stays on the buttons, where white on ember holds 6.57 to 1.',

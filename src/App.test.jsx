@@ -1362,6 +1362,25 @@ describe('portfolio routes and metadata', () => {
       figures[3],
     );
     expect(page.getAllByRole('heading', { level: 2 })[0].textContent).toBe('Context');
+    // Each decision opens on a plain lead sentence (an h3, not a label) over
+    // short paragraphs, so the section scans one decision at a time.
+    const leads = [...decisions.querySelectorAll('h3.case-item__lead')].map((n) => n.textContent);
+    expect(leads).toEqual([
+      'One typeface, set hard.',
+      'One red, rationed.',
+      'The gym’s own photo, with contrast as a guarantee.',
+      'Rows, not cards.',
+      'One motion effect, only where it costs nothing.',
+      'Then take things away.',
+    ]);
+    decisions.querySelectorAll('li').forEach((item) => {
+      expect(item.querySelectorAll('p.case-item__body').length).toBeGreaterThanOrEqual(2);
+    });
+    // The phone pair is the one portrait figure, laid out with its caption
+    // beside it rather than left in half the column.
+    expect(
+      figures.map((figure) => figure.classList.contains('case-figure--portrait')),
+    ).toEqual([false, false, false, true]);
 
     // Claims that have to stay tied to the Diaz repository's own record.
     expect(page.getByText(/252 lines out and 105 in across 28 files/)).toBeTruthy();

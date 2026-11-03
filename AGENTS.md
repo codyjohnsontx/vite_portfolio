@@ -105,7 +105,10 @@ new entry should carry only what renders. `sections.context`, `.problem`, and `.
 opposite case: `CaseSection` declares `body` required, so omitting one warns and renders an
 empty section. The list sections, `sections.decisions` through `sections.lessons`, are the
 other way round: `CaseListSection` declares `items` optional, so an entry that skips one
-(`diaz-deploy-gate` has no `lessons`) renders nothing for it and logs nothing.
+(`diaz-deploy-gate` has no `lessons`) renders nothing for it and logs nothing. A list item is
+a string, or `{ lead, body: [paragraphs] }` when it is long enough to need a line to scan by:
+the lead renders as an `h3` in the text face, a plain sentence and never a label, and the
+body as short paragraphs under it (`diaz-martial-arts-design`'s decisions are the example).
 The optional `diagrams` field (`{ path, label, blurb }`, plus an optional `eyebrow` that
 defaults to `System design`) is what draws the diagrams block on the detail page; entries
 without it render exactly as before. The optional `figures` array puts screenshots in the
