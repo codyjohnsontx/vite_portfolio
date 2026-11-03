@@ -1,5 +1,8 @@
 import diazMa from '../assets/diazma.png?shot';
 import diazMartialArtsHome from '../assets/diaz-martial-arts/diaz-martial-arts-01-home.jpg?shot';
+import dragonglassVaultAnswer from '../assets/dragonglass/dragonglass-01-vault-answer.png?shot';
+import dragonglassEditReview from '../assets/dragonglass/dragonglass-02-edit-review.png?shot';
+import dragonglassSettings from '../assets/dragonglass/dragonglass-03-settings.png?shot';
 import attendCard from '../assets/attend.png?shot';
 import rideSense from '../assets/ridesense.png?shot';
 import trackTunerHomepage from '../assets/track-tuner/track-tuner-homepage.jpg?shot';
@@ -908,8 +911,9 @@ const allProducts = [
       },
     ],
   },
-  /* No screenshot yet, so `image` and `visualAssets` are omitted on purpose rather
-     than carrying a placeholder. */
+  /* The screenshots are the plugin built from its repository and run in a throwaway
+     Obsidian vault of made-up notes against a local Ollama model; every chat reply in
+     them is the model's real output. */
   {
     name: 'Dragonglass AI',
     slug: 'dragonglass',
@@ -917,6 +921,7 @@ const allProducts = [
     status: 'active-build',
     year: '2026',
     accent: 'oklch(0.68 0.16 300)',
+    image: dragonglassVaultAnswer,
     repoUrl: 'https://github.com/codyjohnsontx/dragonglass',
     role: 'Full-stack product builder',
     stack: ['TypeScript', 'Obsidian API', 'Ollama', 'OpenAI', 'Anthropic', 'Gemini', 'Vitest'],
@@ -949,6 +954,27 @@ const allProducts = [
       'Verified live against a local Ollama model, with every scenario in the README exercised in a real Obsidian instance on a disposable vault. The cloud wire formats are tested against shapes from the official API documentation, not live keys, and the README says so. Not yet in the community plugin directory; installed manually.',
     nextStep:
       'Get it into the community plugin directory. After that the roadmap is the tools the vault still lacks: Canvas and Bases, folder, move, and rename operations, frontmatter-specific editing, and semantic search instead of substring matching.',
+    visualAssets: {
+      note:
+        'Screenshots of the plugin built from its repository and running in Obsidian 1.14 on a demo vault of made-up notes, with a local Ollama model (qwen3:8b). The answers and the proposed edit are the model’s real output.',
+      items: [
+        {
+          label: 'Vault answer',
+          src: dragonglassVaultAnswer,
+          alt: 'Obsidian with the Dragonglass AI sidebar open beside a brewing log note: the user asks which V60 grind setting gave the best cup, the model calls search_notes for the brewing log, and answers that setting 20 on Oct 30 was best, with token usage under the reply.',
+        },
+        {
+          label: 'Edit review',
+          src: dragonglassEditReview,
+          alt: 'A Dragonglass AI proposal card in the Obsidian sidebar: an edit to Coffee/Pour-over recipe.md adding one line about grind setting 20, shown as a diff with one added line, marked awaiting review, with Approve and Reject buttons while the note itself is still unchanged.',
+        },
+        {
+          label: 'Settings',
+          src: dragonglassSettings,
+          alt: 'Dragonglass AI settings in Obsidian: a provider picker set to Ollama (local), the Ollama server URL, model, context window, and a let-thinking-models-think toggle, then the OpenAI section with an API key kept in Obsidian’s keychain.',
+        },
+      ],
+    },
     standaloneMockStatus: 'planned',
     updates: [
       {

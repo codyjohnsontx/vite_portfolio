@@ -407,7 +407,7 @@ describe('portfolio routes and metadata', () => {
   });
 
   /* Every product with a repository links it from the hero, and every live one
-     links its deployment there too, so a product with no screenshot (Dragonglass)
+     links its deployment there too, so a product with no live app (Dragonglass)
      still has somewhere to send a reader. */
   const REPO_LINKED = {
     'track-tuner': 'https://github.com/codyjohnsontx/trackday_tuner',

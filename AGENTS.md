@@ -51,8 +51,13 @@ Two things those files will not tell you. Nothing currently renders `status` or
 component. So express lifecycle nuance ("prototype") in the copy rather than inventing a
 new status value, and treat `evidenceSignal` as an internal note whose text reaches no
 rendered surface, so editing it does not change the site. And a product with no screenshot
-should omit `image` and `visualAssets` rather than carry a placeholder path (Dragonglass AI
-is the current example).
+should omit `image` and `visualAssets` rather than carry a placeholder path.
+
+Only six products are featured, the resume's: Oasis Race Control, Attend, Diaz on Demand,
+the Diaz Martial Arts website, Trackday Tuner, and Dragonglass AI, in that order. The older
+builds carry `featured: false`, which keeps their pages and `/products` rows but drops them
+from `flagshipProducts` and so from every featured surface; read the comment above
+`allProducts` in `src/content/projects.js` before featuring or retiring one.
 
 `liveUrl` and `repoUrl` are both optional and both render in the product hero as
 `Live at <host> ↗` and `Source on GitHub ↗`; `repoUrl` also adds a `Source ↗` link to the
