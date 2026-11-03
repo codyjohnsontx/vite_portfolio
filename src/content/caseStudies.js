@@ -16,7 +16,7 @@ export const caseStudies = [
     // `challenge` or `impactHighlights`, so the page goes from the title and
     // the drawing straight to the numbered sections. `role`, `deck` and
     // `featuredOutcome` feed the home page card and the /notes row.
-    role: 'Product manager and developer',
+    role: 'Software engineer',
     title: 'The save that could half-happen',
     deck: 'My app promised it would never lose a session without telling you. Four review rounds in, I realized I was patching that promise instead of keeping it.',
     featuredOutcome: 'A whole class of bug gone at once, and a retry that is safe by construction.',
@@ -113,7 +113,7 @@ export const caseStudies = [
     subjects: ['diaz-on-demand'],
     company: 'Diaz on Demand',
     timeframe: 'Incident and fix, September 2026',
-    role: 'Full-stack product builder',
+    role: 'Software Engineer (Freelance)',
     team: 'Solo; I build and operate the product',
     title: 'A build that refuses to ship',
     tagline:
@@ -160,7 +160,7 @@ export const caseStudies = [
     subjects: ['oasis-race-control'],
     company: 'Oasis Race Control',
     timeframe: 'Architecture decision',
-    role: 'Full-stack product builder',
+    role: 'Software Engineer (Freelance)',
     team: 'The venue owners, who want to franchise',
     title: 'One database or many: picking a tenancy model for a sim racing platform',
     tagline:
@@ -282,19 +282,19 @@ export const caseStudies = [
     team: 'Client stakeholders, engineering, design, and operations',
     title: 'Driving multi-product delivery from scope through measurable launch outcomes',
     tagline:
-      'Turned competing stakeholder asks into scoped product work across e-commerce, consumer, and B2B surfaces, using requirements, acceptance criteria, backlog priorities, and release metrics to guide delivery.',
+      'Turned competing stakeholder asks into scoped product work across healthcare, consumer, e-commerce, and B2B applications, using requirements, acceptance criteria, backlog priorities, and release metrics to guide delivery.',
     challenge:
       'Multiple product lines and stakeholder requests were competing for the same delivery capacity. The work required clarifying what was actually needed, defining ready-to-build scope, sequencing the backlog, and making sure launches were measured by business and user outcomes instead of output alone.',
     featuredOutcome:
-      'Contributed to a 12 percent first-week sales lift on a checkout redesign and friction-reduction launch, plus 10-25 percent retention improvement across a multi-product platform.',
+      'Defined the requirements and success measures for a checkout redesign that contributed to a 12 percent first-week sales increase.',
     impactHighlights: [
-      'Owned product lifecycles across e-commerce, consumer, and B2B products.',
+      'Owned requirements and delivery coordination across healthcare, consumer, e-commerce, and B2B applications.',
       'Translated stakeholder needs into requirements, user stories, acceptance criteria, and release-ready scope for engineering teams.',
-      'Drove 10-25 percent retention improvement by identifying drop-off patterns and prioritizing fixes in sprint planning.',
+      'Worked alongside developers and QA on application design, defect investigation, regression testing, and release validation.',
     ],
     sections: {
       context:
-        'Lambda Curry required balancing e-commerce, consumer, and B2B product priorities while keeping stakeholders aligned around business impact, user behavior, and delivery constraints.',
+        'Lambda Curry required balancing healthcare, consumer, e-commerce, and B2B product priorities while keeping stakeholders aligned around business impact, user behavior, and delivery constraints.',
       problem:
         'Stakeholder requests often arrived as desired outputs rather than clear product problems. Without requirements, acceptance criteria, prioritization, and success metrics, the team risked shipping work that was on time but not tied to conversion, retention, or user behavior.',
       usersStakeholders:
@@ -302,7 +302,7 @@ export const caseStudies = [
       goal:
         'Prioritize high-impact features, define release scope clearly, and use conversion, retention, and behavioral data to guide post-launch iteration.',
       constraints: [
-        'Competing priorities across e-commerce, consumer, and B2B product work',
+        'Competing priorities across healthcare, consumer, e-commerce, and B2B product work',
         'Stakeholders balancing business urgency, user feedback, and delivery realities',
         'Need to define validation criteria before each release without slowing sprint execution',
       ],
@@ -328,12 +328,10 @@ export const caseStudies = [
       ],
       outcomes: [
         'Contributed to a 12 percent first-week sales lift at launch and measurable conversion improvement through the purchase funnel.',
-        'Drove 10-25 percent retention improvement across a multi-product platform.',
         'Created a stronger operating loop between product definition, sprint execution, release coordination, and post-launch validation.',
       ],
       metrics: [
         '12 percent first-week sales lift tied to a checkout redesign and friction-reduction launch',
-        '10-25 percent retention improvement across a multi-product platform',
         'Conversion, retention, and behavioral data used to guide iteration and sprint priorities',
       ],
       lessons: [

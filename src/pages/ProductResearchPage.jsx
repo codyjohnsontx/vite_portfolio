@@ -109,7 +109,7 @@ export default function ProductResearchPage() {
               <div style={{ marginTop: 28, display: 'flex', flexWrap: 'wrap', gap: 16 }}>
                 {analysis ? (
                   <Link to={`/products/${product.slug}/analysis`} className="link-arrow">
-                    Read PM analysis <ArrowGlyph />
+                    Read product analysis <ArrowGlyph />
                   </Link>
                 ) : null}
                 <Link to={`/products/${product.slug}`} className="link-arrow">

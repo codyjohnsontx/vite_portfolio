@@ -68,7 +68,7 @@ export default function SessionComparePage() {
         </div>
 
         <header className="sc-hero">
-          <p className="sc-hero__eyebrow">Shipped feature · PM case study</p>
+          <p className="sc-hero__eyebrow">Shipped feature · product brief</p>
           <h1 className="sc-hero__title">Session Compare</h1>
           <p className="sc-hero__lead">
             Session Comparison v1 moves Trackday Tuner from setup logging toward a setup-learning

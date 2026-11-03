@@ -304,7 +304,7 @@ export default function HomePage() {
             num="02"
             eyebrow="Active builds"
             title="Products I own end to end."
-            sub="Each one is live code with a real scope decision behind it. Open any row for the build log, the PM analysis, and what I would cut next."
+            sub="Each one is live code with a real scope decision behind it. Open any row for the build log, the product analysis, and what I would cut next."
           />
         </div>
         <WorkRows products={flagshipProducts} startIndex={1} />

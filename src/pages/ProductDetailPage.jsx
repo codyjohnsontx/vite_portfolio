@@ -173,7 +173,7 @@ export default function ProductDetailPage() {
           {analysis ? (
             <div style={{ marginTop: 24 }}>
               <Link to={`/products/${p.slug}/analysis`} className="link-arrow">
-                Read PM analysis <ArrowGlyph />
+                Read product analysis <ArrowGlyph />
               </Link>
             </div>
           ) : null}
@@ -267,7 +267,7 @@ export default function ProductDetailPage() {
               Working briefs and wireframes
             </h2>
             <p className="body" style={{ margin: 0, maxWidth: '58ch', color: 'var(--ink-2)' }}>
-              PM briefs and lo-fi storyboards for features in flight. Each one starts as a small
+              Product briefs and lo-fi storyboards for features in flight. Each one starts as a small
               hypothesis and ends with a wireframe a developer could build from.
             </p>
             <div
