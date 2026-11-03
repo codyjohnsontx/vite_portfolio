@@ -291,7 +291,9 @@
    itself (`--case-figure-columns`, one `fr` per image from its aspect
    ratio) so a desktop and a phone, or a before and an after, share one
    height; below 800px they stack. The frame is a hairline and nothing else:
-   the screenshots bring their own chrome. */
+   the screenshots bring their own chrome. It is an outline, not a border,
+   because a border adds to an image's height but comes out of its width, so
+   a narrow phone column would end up taller than the desktop beside it. */
 
 .case-figure {
   margin: 0;
@@ -306,7 +308,7 @@
   width: 100%;
   height: auto;
   display: block;
-  border: 1px solid var(--rule);
+  outline: 1px solid var(--rule);
   background: var(--bg-2);
 }
 /* Portrait shots only: two 390 captures side by side, each near 1x. */
