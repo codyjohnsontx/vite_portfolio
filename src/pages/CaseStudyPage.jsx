@@ -5,6 +5,7 @@ import { Reveal } from '../components/ScrollReveal';
 import { getCaseStudyBySlug } from '../content/caseStudies';
 import { getRelatedForWriting } from '../content/writing';
 import RelatedLinks from '../components/RelatedLinks';
+import Shot from '../components/Shot';
 
 function CaseSection({ num, title, body }) {
   return (
@@ -84,6 +85,58 @@ function CaseListSection({ num, title, items }) {
           </ul>
         </div>
         <div />
+      </div>
+    </Reveal>
+  );
+}
+
+/* A screenshot figure, drawn at full container width so the images break out
+   of the measured text column. `shots` is one image or a pair; a pair shares
+   one row, and each column is sized by its image's aspect ratio so two shots
+   of different shapes, a 1440 desktop beside a 390 phone or a before beside
+   an after, come out the same height. Below 800px the stylesheet stacks them.
+   A shot's `label` names a bare value, a width or a date, and nothing else;
+   the caption is the one place for prose. */
+const FIGURE_COLUMN = 1240;
+
+function CaseFigure({ figure }) {
+  const ratios = figure.shots.map((shot) => shot.width / shot.height);
+  const total = ratios.reduce((sum, ratio) => sum + ratio, 0);
+  // Scaled so the narrowest column is exactly 1fr: fr tracks whose values sum
+  // to less than 1 take only that fraction of the row, so two phone crops at
+  // 0.23fr each would sit in half the container with the rest empty.
+  const narrowest = Math.min(...ratios);
+  const columns = ratios.map((r) => `${(r / narrowest).toFixed(3)}fr`).join(' ');
+  // A row of portrait shots alone would stretch to the full column and run
+  // thousands of pixels tall, so it is capped near the width it was captured at.
+  const portrait = ratios.every((r) => r < 1);
+
+  return (
+    <Reveal as="section" className="section--tight">
+      <div className="container">
+        <figure
+          className={portrait ? 'case-figure case-figure--portrait' : 'case-figure'}
+          style={{ '--case-figure-columns': columns }}
+        >
+          <div className="case-figure__shots">
+            {figure.shots.map((shot, i) => (
+              <div key={shot.alt} className="case-figure__shot">
+                <Shot
+                  source={shot.source}
+                  alt={shot.alt}
+                  width={shot.width}
+                  height={shot.height}
+                  sizes={`(max-width: 800px) 92vw, ${Math.round((ratios[i] / total) * FIGURE_COLUMN)}px`}
+                  eager={figure.after === 'hero'}
+                />
+                {shot.label ? (
+                  <span className="case-figure__label mono small">{shot.label}</span>
+                ) : null}
+              </div>
+            ))}
+          </div>
+          <figcaption className="case-figure__caption body">{figure.caption}</figcaption>
+        </figure>
       </div>
     </Reveal>
   );
@@ -216,6 +269,22 @@ CaseSummary.propTypes = {
   }).isRequired,
 };
 
+const shotShape = PropTypes.shape({
+  source: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  label: PropTypes.string,
+});
+
+CaseFigure.propTypes = {
+  figure: PropTypes.shape({
+    after: PropTypes.string.isRequired,
+    caption: PropTypes.string.isRequired,
+    shots: PropTypes.arrayOf(shotShape).isRequired,
+  }).isRequired,
+};
+
 CaseSection.propTypes = {
   num: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -237,6 +306,12 @@ export default function CaseStudyPage() {
   const s = c.sections;
   const href = `/case-studies/${c.slug}`;
   const { items: related, heading: relatedHeading } = getRelatedForWriting(href);
+  /* Each figure names the block it follows: `hero` for the page title, or a
+     section key. Figures with the same key keep their array order. */
+  const figuresAfter = (key) =>
+    (c.figures ?? [])
+      .filter((figure) => figure.after === key)
+      .map((figure) => <CaseFigure key={figure.caption} figure={figure} />);
 
   return (
     <div className="fade-in">
@@ -263,23 +338,32 @@ export default function CaseStudyPage() {
         </div>
       </Reveal>
 
+      {figuresAfter('hero')}
+
       <CaseSummary study={c} />
 
       <CaseSection num="01" title="Context" body={s.context} />
+      {figuresAfter('context')}
       <CaseSection num="02" title="The problem" body={s.problem} />
+      {figuresAfter('problem')}
       <CaseSection num="03" title="The goal" body={s.goal} />
+      {figuresAfter('goal')}
 
       <CaseListSection num="04" title="Decisions" items={s.decisions} />
+      {figuresAfter('decisions')}
       <CaseListSection num="05" title="Tradeoffs" items={s.tradeoffs} />
+      {figuresAfter('tradeoffs')}
       <CaseListSection num="06" title="Execution" items={s.execution} />
+      {figuresAfter('execution')}
       <CaseListSection num="07" title="Outcomes" items={s.outcomes} />
+      {figuresAfter('outcomes')}
       <CaseListSection num="08" title="Lessons" items={s.lessons} />
+      {figuresAfter('lessons')}
 
       {related.length ? (
         <Reveal as="section" className="section section--tight">
           <div className="container">
-            <Eyebrow>Related</Eyebrow>
-            <h2 className="h2" style={{ margin: '12px 0 32px' }}>
+            <h2 className="h2" style={{ margin: '0 0 32px' }}>
               {relatedHeading}
             </h2>
             <RelatedLinks items={related} />

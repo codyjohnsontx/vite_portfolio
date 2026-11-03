@@ -285,3 +285,46 @@
   padding-top: clamp(48px, 6vw, 84px);
   padding-bottom: clamp(8px, 1vw, 16px);
 }
+
+/* ---------------------------- case figures ----------------------------- */
+/* Screenshots inside a case study. The row's columns come from the figure
+   itself (`--case-figure-columns`, one `fr` per image from its aspect
+   ratio) so a desktop and a phone, or a before and an after, share one
+   height; below 800px they stack. The frame is a hairline and nothing else:
+   the screenshots bring their own chrome. */
+
+.case-figure {
+  margin: 0;
+}
+.case-figure__shots {
+  display: grid;
+  grid-template-columns: var(--case-figure-columns, 1fr);
+  gap: clamp(14px, 2vw, 28px);
+  align-items: start;
+}
+.case-figure__shot img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--rule);
+  background: var(--bg-2);
+}
+/* Portrait shots only: two 390 captures side by side, each near 1x. */
+.case-figure--portrait {
+  max-width: 820px;
+}
+.case-figure__label {
+  display: block;
+  margin-top: 10px;
+  color: var(--ink-3);
+}
+.case-figure__caption {
+  margin: clamp(18px, 2vw, 26px) 0 0;
+  max-width: 60ch;
+  color: var(--ink-2);
+}
+@media (max-width: 800px) {
+  .case-figure__shots {
+    grid-template-columns: 1fr;
+  }
+}

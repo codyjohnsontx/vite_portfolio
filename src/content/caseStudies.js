@@ -1,3 +1,11 @@
+import dmaHome1440 from '../assets/diaz-martial-arts/design-home-1440.jpg?shot';
+import dmaHome390 from '../assets/diaz-martial-arts/design-home-390.jpg?shot';
+import dmaPrograms1440 from '../assets/diaz-martial-arts/design-programs-1440.jpg?shot';
+import dmaCoaches1440 from '../assets/diaz-martial-arts/design-coaches-1440.jpg?shot';
+import dmaHeroBefore1440 from '../assets/diaz-martial-arts/design-hero-before-2026-08-1440.jpg?shot';
+import dmaWhyBefore390 from '../assets/diaz-martial-arts/design-why-before-2026-11-390.jpg?shot';
+import dmaWhyAfter390 from '../assets/diaz-martial-arts/design-why-after-390.jpg?shot';
+
 /* `subjects` is what this study is about: a product slug from projects.js or an
    engagement slug from engagements.js. It is the only link between a piece of
    writing and the work it came out of, and it is read in both directions - the
@@ -5,6 +13,152 @@
 export const caseStudies = [
   // Newest first. Add a new case study at the top of this array; both the
   // /notes index and the home page render it in plain array order.
+  {
+    slug: 'diaz-martial-arts-design',
+    subjects: ['diaz-martial-arts'],
+    company: 'Diaz Martial Arts',
+    timeframe: 'Visual identity, February to November 2026',
+    // Opens straight onto the home page figure and then the numbered
+    // sections, like the two studies below it: no `tagline`, `team`,
+    // `challenge` or `impactHighlights`. `role`, `deck` and
+    // `featuredOutcome` feed the home page card and the /notes row.
+    role: 'Designer and developer',
+    title: 'A gym site that stopped explaining itself',
+    deck: 'Diaz Martial Arts got a front door that looks like the gym. Most of the design work was deciding what not to put on it.',
+    featuredOutcome:
+      'One typeface, one red, the gym’s own photo, and headings with nothing stacked around them, live at diazmartialarts.com.',
+    /* Every screenshot is the live site or a build of the commit named in
+       its label, captured at 2x in Chromium at the width the label gives.
+       The two "before" states were built from the parent commits of the
+       pull requests that changed them (c092203 for the hero, f2fd764 for the
+       labels), so each pair differs only by that one change. */
+    figures: [
+      {
+        after: 'hero',
+        caption:
+          'The home page as it is live today. The next class up sits beside the headline on a desktop and under the buttons on a phone, read from the weekly schedule on the gym’s clock.',
+        shots: [
+          {
+            source: dmaHome1440,
+            alt: 'Diaz Martial Arts home page at 1440 pixels wide: a dark photo of the gym behind the headline Martial arts for real progress, with the word progress in gold, two pill buttons, and a sand card listing the next class up.',
+            width: 1440,
+            height: 900,
+            label: '1440 px',
+          },
+          {
+            source: dmaHome390,
+            alt: 'The same home page at 390 pixels wide: the headline, the two buttons, and the next-class card stacked in one column over the photo.',
+            width: 390,
+            height: 844,
+            label: '390 px',
+          },
+        ],
+      },
+      {
+        after: 'goal',
+        caption:
+          'The same display setting carries every page: one family at its heaviest weight, uppercase, tracked in, with the leading under the cap height. A program without a photograph gets a striped tile with its discipline on it, not a stock image.',
+        shots: [
+          {
+            source: dmaPrograms1440,
+            alt: 'The programs page at 1440 pixels: the word Programs in large uppercase type, a row of pill filters, and a two-column grid of program cards with photographs or a striped placeholder tile.',
+            width: 1440,
+            height: 900,
+            label: '/programs, 1440 px',
+          },
+          {
+            source: dmaCoaches1440,
+            alt: 'The coaches page at 1440 pixels: the word Coaches in large uppercase type above a portrait of Eddie Diaz in a blue gi and a bronze line reading 8th Degree Grandmaster, Chief Head Instructor.',
+            width: 1440,
+            height: 900,
+            label: '/coaches, 1440 px',
+          },
+        ],
+      },
+      {
+        after: 'decisions',
+        caption:
+          'The home hero the day before the photo went in and as it is now. Same words, same card. The accent word moved from ember to gold because ember on the dark photo measures 1.1 to 1. The before is also still in the system font: Manrope was in the bundle but not applied until eleven days later.',
+        shots: [
+          {
+            source: dmaHeroBefore1440,
+            alt: 'The home hero before August 2026: dark headline on a pale sand band, the word progress in ember red, and the next-class card to the right.',
+            width: 1440,
+            height: 900,
+            label: 'Before, 18 August 2026',
+          },
+          {
+            source: dmaHome1440,
+            alt: 'The home hero as it is live: the same headline in light type over a darkened photo of the gym, the word progress in gold.',
+            width: 1440,
+            height: 900,
+            label: 'After',
+          },
+        ],
+      },
+      {
+        after: 'decisions',
+        caption:
+          'The reasons rows and the first program card at phone width, the day before and the day after the labels came off. The card’s age range replaced its one-word sub-line because a parent needs it and a tag reading Grappling says nothing the title does not.',
+        shots: [
+          {
+            source: dmaWhyBefore390,
+            alt: 'Before: a small-caps label reading Why Diaz with a short ember dash above the headline, a Programs label above the next heading, and the first program card carrying a Grappling tag above its title and a Gi and No-Gi sub-line below it.',
+            width: 390,
+            height: 1440,
+            label: 'Before, 3 November 2026',
+          },
+          {
+            source: dmaWhyAfter390,
+            alt: 'After: the same headings with no label above them and no sub-line below, and the first program card showing its numeral, title, sentence and age range.',
+            width: 390,
+            height: 1360,
+            label: 'After',
+          },
+        ],
+      },
+    ],
+    sections: {
+      context:
+        "Diaz Martial Arts is a martial arts school in San Marcos, Texas, open since 1998 and run by Eddie Diaz, an eighth-degree grandmaster. Twelve programs, from Lil' Dragons at age four to adult jiu jitsu and tactical classes, six days a week. I design and build the website alone, and the owner publishes through it: the weekly schedule, the monthly flyers, the events. The site has one job. A parent or a new adult student lands on it, usually on a phone, and either books a free trial or does not. Everything on the page is there to make that step obvious, and anything that is not helping is in the way.",
+      problem:
+        'The first version shipped in February 2026 with the right ingredients and too many of them. Two typefaces, a condensed display face over a sans. A hero that was a card inside a card, with discipline pills, a second call-to-action card beside it, and three places on one screen to book a free trial. A grid of program cards. By June it had also grown a scrolling ribbon of disciplines, a small-caps label above every heading, and a sub-line under most of them. Each piece was defensible on its own. Together they read like a template, and nothing on the page looked like the gym, which is a working room with mats and heavy bags, not a boutique.',
+      goal:
+        'A site that looks like the gym and gets out of the way. One typeface, one red, the owner’s own photograph, headings that stand on their own, and a free-trial button that is the obvious next step at every width.',
+      decisions: [
+        'Type. In June I dropped the condensed display face and set everything in Manrope. Headlines are the same family at its heaviest weight, uppercase, tracked in by 2.5 percent, with the leading pulled under the cap height to 0.92. That is the whole display system, six lines of CSS, and it sets the 96 pixel headline on the home page, the 88 pixel page titles, and the numbered program rows. The body is the same family at regular weight. One family means the voice comes from weight, case and tracking alone, which is how a gym talks.',
+        'Color. The palette has been the same since the first commit: ink, sand, ember, bronze and gold. Ember is rationed. It is the primary button, the active underline in the navigation, the numerals on the program and reasons rows, the focus ring and the text selection, and nothing else. Everything else is ink on sand. The sand is not flat: two faint radial washes of ember and bronze sit in the top corners over a slow gradient, so the paper reads warm without a visible pattern.',
+        'Imagery. In August the home hero went from a plain band to the gym’s own photo, inverted to light on dark. A photo with a white wall across its top third cannot carry white type on its own, so a scrim holds it at no less than 82 percent coverage anywhere in the section. That turns the contrast figures into a guarantee rather than a reading off one crop: the lightest backdrop the section can produce is rgb(69, 61, 62). The accent word moved from ember to gold, because ember on that backdrop measures 1.1 to 1 and no scrim can rescue it. The photo is framed through a box a quarter taller than the section and anchored to its top, so the crest baked into the photo’s corner never surfaces to fight the crest in the header.',
+        'Layout. Rows, not cards. The reasons section is a headline column beside three numbered rows ruled with hairlines. The programs are a two-column ruled grid, each cell a numeral, a title, a sentence and an arrow. The one card on the home page is the next class up, a sand panel in the hero that reads the schedule on the gym’s clock rather than the visitor’s. That card is the only thing on the page that looks like an object, and it is the one thing a current member comes back for.',
+        'Motion. One effect. On a desktop with a fine pointer, the hero photo drifts down a fifth of its frame over the first screen of scrolling, driven by the scroll position rather than a timer. On phones, coarse pointers, reduced-motion settings and browsers without scroll timelines there is no effect at all, and the hero is pixel-identical to the still one. The travel runs downward on purpose: it pushes the crest in the photo further out of frame instead of toward it.',
+        'Subtraction. The scrolling ribbon went in August; every one of its labels was already a filter button on the programs page. The hero label went the same week; the city and the founding year live in the footer and in the structured data. On 3 November every remaining small-caps label and sub-line on the site went at once, the label component with them, 252 lines out and 105 in across 28 files. The rule written into the repository is short: headings stand alone, and a line stays only if it carries a fact a visitor needs, like a price, an address or an age range.',
+      ],
+      tradeoffs: [
+        'Inverting the hero cost the headline its ember. Gold does the job on the dark photo, and ember stays on the buttons, where white on ember holds 6.57 to 1.',
+        'The hero photograph is 960 pixels wide and the image optimizer does not upscale, so on a 1920 pixel screen the browser stretches it about two times. The heavy scrim is what keeps that from reading as blur. A sharper hero needs a bigger file from the gym, not a code change.',
+        'Buttons come in six variants rather than two, because a border or a focus ring that carries on sand collapses on ink. The outline on the photo is white at 50 percent because 25 percent measured 2.1 to 1 against the imagery, and the ghost border on dark panels sits at 35 percent, the smallest step that clears 3 to 1 on every panel it appears on.',
+        'Taking the labels off the program cards also took off their one-word sub-lines. The age range took their place as plain text, because a parent needs it and a tag like Striking tells them nothing they cannot see in the title.',
+      ],
+      execution: [
+        'Every contrast figure was measured from rendered pixels in Chromium at 320, 768, 1280 and 1920 pixels wide, not reasoned from the stylesheet. The scrim floor was measured by painting the photo pure white and sampling the whole section, so the figure does not depend on which crop of the photo happens to be behind the type.',
+        'Tailwind emits nothing for an opacity step off its scale. Three values in use were off it, so a muted caption at 72 percent rendered as fully opaque sand while the build stayed green. A unit test now reads the generated stylesheet and fails on the next off-scale value.',
+        'Manrope was downloaded on every page for six months and applied to none of them. The arbitrary class that set it was read as a font weight, so the whole site fell through to the system stack until 29 August. The fix is one data-type hint; the guard is a Playwright test that reads the computed font off the body in a real browser, since neither the source nor the class list could see the bug.',
+        'Focus rings are measured per surface. The ember ring that carries on the light pages reaches 1.66 to 1 against the hero photo, so every primary button on a dark panel opts into a white ring, which the end-to-end suite reads back as a computed outline colour.',
+        'Playwright runs a desktop project and a 390 pixel mobile project on every pull request, and CodeRabbit reviews each one once.',
+      ],
+      outcomes: [
+        'The site is live at https://www.diazmartialarts.com and the owner publishes through it.',
+        'What a visitor sees now: one typeface, one red, the gym’s own photo, headings with nothing stacked around them, and a free-trial button first on the screen at every width.',
+        'I have no conversion numbers to report and will not invent any. The only numbers in this study are the ones measured in the browser and recorded in the commits.',
+        'Source: https://github.com/codyjohnsontx/DiazMartialArts',
+      ],
+      lessons: [
+        'Most of the design happened by removal. The commits that changed how the site looks most are the ones that deleted a ribbon, a label, a card or a second typeface.',
+        'Treat contrast as a floor you can prove, not a sample you took once. The scrim comment in the hero owns its figures and how they were measured, so the next change to the photo has something to be checked against.',
+        'A design decision that is not rendered is not a decision. The type system sat in the stylesheet for nearly three months before a browser showed it.',
+      ],
+    },
+  },
   {
     slug: 'track-tuner-atomic-save',
     subjects: ['track-tuner'],

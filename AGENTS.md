@@ -108,13 +108,23 @@ other way round: `CaseListSection` declares `items` optional, so an entry that s
 (`diaz-deploy-gate` has no `lessons`) renders nothing for it and logs nothing.
 The optional `diagrams` field (`{ path, label, blurb }`, plus an optional `eyebrow` that
 defaults to `System design`) is what draws the diagrams block on the detail page; entries
-without it render exactly as before.
+without it render exactly as before. The optional `figures` array puts screenshots in the
+page: each `{ after, caption, shots }` renders a full-width figure after the block `after`
+names (`hero` or a section key), and each shot is `{ source, alt, width, height, label? }`
+with `source` a `?shot` import, so a content module imports its images the way
+`projects.js` does. A pair of shots shares one row sized by aspect ratio, so a 1440 desktop
+and a 390 phone come out the same height; a `label` is for a bare value only, a width or a
+date, never a kicker. `diaz-martial-arts-design` is the one study carrying them, its two
+"before" shots were built from the parent commits named in its comment, and
+`src/App.test.jsx` pins its labels in order and pins that no `.eyebrow` renders on it. The
+case study page draws no label over its Related heading for the same reason.
 Everything between the title and `01` is drawn field by field: the `tagline` line, the
 Role / Team / Outcome row (only when all three values exist), `challenge`, and
-`impactHighlights`. `firstmate-hook-prompt` and `track-tuner-atomic-save` omit them, the
-first on the owner's review of the rendered page and the second by following it, and carry
-`deck` instead of `tagline`, which `getCaseStudyDeck` hands to the `/notes` row and the home
-card; their `role` and `featuredOutcome` stay because that card prints them.
+`impactHighlights`. `firstmate-hook-prompt`, `track-tuner-atomic-save` and
+`diaz-martial-arts-design` omit them, the first on the owner's review of the rendered page
+and the others by following it, and carry `deck` instead of `tagline`, which
+`getCaseStudyDeck` hands to the `/notes` row and the home card; their `role` and
+`featuredOutcome` stay because that card prints them.
 `src/App.test.jsx` pins the full block on every other study.
 
 Several pages render wireframes from raw HTML strings in a content module, with React owning
