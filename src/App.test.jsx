@@ -282,6 +282,7 @@ describe('portfolio routes and metadata', () => {
     // The order is authored, not derived, so it is pinned here: both surfaces
     // render src/content/caseStudies.js in plain array order.
     const newestFirst = [
+      '/case-studies/diaz-martial-arts-design',
       '/case-studies/track-tuner-atomic-save',
       '/case-studies/firstmate-hook-prompt',
       '/case-studies/diaz-deploy-gate',
@@ -1113,6 +1114,9 @@ describe('portfolio routes and metadata', () => {
       renderApp(`/case-studies/${study.slug}`);
 
       expect(screen.getByRole('heading', { name: study.title })).toBeTruthy();
+      expect(document.querySelectorAll('main figure.case-figure')).toHaveLength(
+        study.figures?.length ?? 0,
+      );
     });
   });
 
@@ -1122,7 +1126,11 @@ describe('portfolio routes and metadata', () => {
      rendering all of them: the tagline under the title, the Role / Team /
      Outcome row with its values, the Challenge, and every impact highlight. */
   const SUMMARY_LABELS = ['Role', 'Team', 'Outcome', 'Challenge', 'Impact highlights'];
-  const OPENS_ON_SECTIONS = ['track-tuner-atomic-save', 'firstmate-hook-prompt'];
+  const OPENS_ON_SECTIONS = [
+    'diaz-martial-arts-design',
+    'track-tuner-atomic-save',
+    'firstmate-hook-prompt',
+  ];
 
   caseStudies
     .filter((study) => !OPENS_ON_SECTIONS.includes(study.slug))
@@ -1233,10 +1241,22 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getByRole('heading', { name: 'A prompt nobody could answer' })).toBeTruthy();
     const main = within(document.querySelector('main'));
-    expect(main.queryByText('Related')).toBeNull();
     expect(main.queryByRole('heading', { name: RELATED_HEADING.withSubject })).toBeNull();
     expect(main.queryByRole('heading', { name: RELATED_HEADING.writingOnly })).toBeNull();
     expect(getRelatedForWriting('/case-studies/firstmate-hook-prompt').items).toEqual([]);
+  });
+
+  it('draws no label over the Related heading on a case study or a note', () => {
+    ['/case-studies/oasis-multi-tenancy', '/blog/mvp-sequencing-memory-before-intelligence'].forEach(
+      (path) => {
+        const view = renderApp(path);
+        const main = within(document.querySelector('main'));
+        const block = main.getByRole('heading', { name: RELATED_HEADING.withSubject }).closest('section');
+        expect(block.querySelector('.eyebrow')).toBeNull();
+        expect(within(block).queryByText('Related')).toBeNull();
+        view.unmount();
+      },
+    );
   });
 
   it('keeps both blunt parts of the firstmate case study', () => {
@@ -1285,6 +1305,115 @@ describe('portfolio routes and metadata', () => {
         .getAllByRole('link', { name: /Trackday Tuner/i })
         .map((link) => link.getAttribute('href')),
     ).toContain('/products/track-tuner');
+  });
+
+  /* The design study is the one case study built around screenshots. It opens
+     on the live home page at both widths, carries two before-and-after pairs,
+     and, being about taking labels off headings, must not grow any itself:
+     no eyebrow anywhere in main, and each figure label is a bare value. */
+  it('opens the Diaz Martial Arts design study onto its screenshots, with no eyebrow on the page', () => {
+    renderApp('/case-studies/diaz-martial-arts-design');
+
+    const main = document.querySelector('main');
+    const page = within(main);
+    const title = page.getByRole('heading', {
+      level: 1,
+      name: 'A gym site that stopped explaining itself',
+    });
+    expect(title.nextElementSibling).toBeNull();
+    SUMMARY_LABELS.forEach((label) => expect(page.queryByText(label)).toBeNull());
+    expect(main.querySelector('.case-stats')).toBeNull();
+    expect(main.querySelector('.case-grid-2')).toBeNull();
+    expect(main.querySelectorAll('.eyebrow')).toHaveLength(0);
+
+    // The first thing under the title is the live home page at both widths.
+    const figures = [...main.querySelectorAll('figure.case-figure')];
+    expect(figures).toHaveLength(4);
+    const hero = title.closest('section').nextElementSibling;
+    expect(hero.querySelector('figure.case-figure')).toBe(figures[0]);
+    expect([...figures[0].querySelectorAll('.case-figure__label')].map((n) => n.textContent)).toEqual(
+      ['1440 px', '390 px'],
+    );
+    figures.forEach((figure) => {
+      figure.querySelectorAll('img').forEach((img) => {
+        expect(img.getAttribute('alt').length).toBeGreaterThan(20);
+        expect(img.getAttribute('srcset')).toContain('640w');
+        expect(Number(img.getAttribute('width'))).toBeGreaterThan(0);
+      });
+      expect(figure.querySelector('figcaption').textContent.length).toBeGreaterThan(40);
+    });
+    // Both before-and-after pairs sit under Decisions, in the order the
+    // changes shipped: the hero photo, then the labels coming off.
+    const labels = [...main.querySelectorAll('.case-figure__label')].map((n) => n.textContent);
+    expect(labels).toEqual([
+      '1440 px',
+      '390 px',
+      '/programs, 1440 px',
+      '/coaches, 1440 px',
+      'Before, 18 August 2026',
+      'After',
+      'Before, 1 November 2026',
+      'After, 3 November 2026',
+    ]);
+    const decisions = page.getByRole('heading', { level: 2, name: 'Decisions' }).closest('section');
+    expect(decisions.nextElementSibling.querySelector('figure.case-figure')).toBe(figures[2]);
+    expect(decisions.nextElementSibling.nextElementSibling.querySelector('figure.case-figure')).toBe(
+      figures[3],
+    );
+    expect(page.getAllByRole('heading', { level: 2 })[0].textContent).toBe('Context');
+    // Each decision opens on a plain lead sentence (an h3, not a label) over
+    // short paragraphs, so the section scans one decision at a time.
+    const leads = [...decisions.querySelectorAll('h3.case-item__lead')].map((n) => n.textContent);
+    expect(leads).toEqual([
+      'One typeface, set hard.',
+      'One red, rationed.',
+      'The gym’s own photo, with contrast as a guarantee.',
+      'Rows, not cards.',
+      'One motion effect, only where it costs nothing.',
+      'Then take things away.',
+    ]);
+    decisions.querySelectorAll('li').forEach((item) => {
+      expect(item.querySelectorAll('p.case-item__body').length).toBeGreaterThanOrEqual(2);
+    });
+    // The phone pair is the one portrait figure, laid out with its caption
+    // beside it rather than left in half the column.
+    expect(
+      figures.map((figure) => figure.classList.contains('case-figure--portrait')),
+    ).toEqual([false, false, false, true]);
+
+    // Claims that have to stay tied to the Diaz repository's own record.
+    expect(page.getByText(/252 lines out and 105 in across 28 files/)).toBeTruthy();
+    expect(page.getByText(/no less than 82 percent coverage/)).toBeTruthy();
+    expect(page.getByText(/I have no conversion numbers to report/)).toBeTruthy();
+    expect(main.textContent).not.toContain('—');
+    expect(
+      page.getAllByRole('link', { name: /Diaz Martial Arts/i }).map((link) => link.getAttribute('href')),
+    ).toContain('/products/diaz-martial-arts');
+  });
+
+  it('keeps the deck of the design study on the notes index, the home card, and its product page', () => {
+    const deck =
+      'Diaz Martial Arts got a front door that looks like the gym. Most of the design work was deciding what not to put on it.';
+    const notes = renderApp('/notes');
+    expect(
+      screen.getByRole('link', { name: /A gym site that stopped explaining itself/ }).textContent,
+    ).toContain(deck);
+
+    notes.unmount();
+    const home = renderApp('/');
+    const card = document.querySelector('a.case-card[href="/case-studies/diaz-martial-arts-design"]');
+    expect(card.textContent).toContain(deck);
+    expect(card.textContent).toContain('Designer and developer');
+
+    home.unmount();
+    renderApp('/products/diaz-martial-arts');
+    const toStudy = within(document.querySelector('main')).getAllByRole('link', {
+      name: /A gym site that stopped explaining itself/i,
+    });
+    expect(toStudy.length).toBeGreaterThan(0);
+    toStudy.forEach((link) => {
+      expect(link.getAttribute('href')).toBe('/case-studies/diaz-martial-arts-design');
+    });
   });
 
   it('keeps the deck of the Track Tuner case study on the notes index and the home card', () => {
