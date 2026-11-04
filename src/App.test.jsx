@@ -32,9 +32,10 @@ describe('portfolio routes and metadata', () => {
 
     expect(screen.getAllByRole('heading', { level: 1 }).length).toBeGreaterThan(0);
     expect(screen.getByRole('heading', { name: 'Trackday Tuner' })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'OncoPath' })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'RideSense' })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Wattsmith' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Oasis Race Control' })).toBeTruthy();
+    expect(screen.queryByRole('heading', { name: 'OncoPath' })).toBeNull();
+    expect(screen.queryByRole('heading', { name: 'RideSense' })).toBeNull();
+    expect(screen.queryByRole('heading', { name: 'Wattsmith' })).toBeNull();
     expect(screen.getByRole('heading', { name: 'Attend' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Diaz on Demand' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Dragonglass AI' })).toBeTruthy();
@@ -57,25 +58,21 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText('Verified by tests')).toBeTruthy();
     expect(screen.getByText('Latest')).toBeTruthy();
     expect(
-      screen.getByRole('heading', { name: 'Attend: the inbox ranks by risk, not by what came in last' }),
+      screen.getByRole('heading', {
+        name: 'Dragonglass AI: vault search a small local model can answer from',
+      }),
     ).toBeTruthy();
-    expect(screen.getAllByText(/briefs every open conversation on its own/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/how much of the queue is briefed/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/runs on a BM25 index the plugin builds in memory/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/falls back to the whole vault and says so/i).length).toBeGreaterThan(0);
     /* The Latest block closes on the human-in-the-loop guarantee stated as a
-       strength. It replaced "Sending the suggested reply is still a person's
-       decision.", and "No dealership is using it yet and there is no measured
-       result." was deleted outright - both on owner instruction, as volunteered
-       deflation closing the freshest item on the home page. Pinned both ways so
-       a content pass cannot soften the new line or restore the old ones. */
+       strength, on owner instruction, rather than on volunteered deflation. */
     expect(
-      screen.getAllByText(/The AI drafts; a person decides what sends/i).length,
+      screen.getAllByText(/every edit is still a diff the user approves/i).length,
     ).toBeGreaterThan(0);
-    expect(screen.queryByText(/No dealership is using it yet/i)).toBeNull();
-    expect(screen.queryByText(/is still a person/i)).toBeNull();
     expect(
       screen
         .getAllByRole('link', { name: /Read the build/i })
-        .some((link) => link.getAttribute('href') === '/products/ctx-chat'),
+        .some((link) => link.getAttribute('href') === '/products/dragonglass'),
     ).toBe(true);
   });
 
@@ -99,12 +96,25 @@ describe('portfolio routes and metadata', () => {
     ).toBe(false);
   });
 
-  it('states the CTX Motoworks role as part-time and points its platform at Attend', () => {
+  it('states the CTX Motoworks role as part-time and leads it with building Attend', () => {
     renderApp('/');
 
     expect(screen.getByText(/Assistant General Manager, E-commerce & Digital \(Part-time\)/i))
       .toBeTruthy();
-    expect(screen.getByText(/the internal dealership platform that became Attend/i)).toBeTruthy();
+    expect(screen.getByText(/^Designed and developed Attend, an internal business application/))
+      .toBeTruthy();
+  });
+
+  /* The resume dropped the CTX $90,000 service revenue and the Lambda Curry 10-25
+     percent retention figures, and a number the resume dropped stays off the site. */
+  it('keeps numbers the resume dropped off the experience rows and the Lambda Curry study', () => {
+    for (const job of experience) {
+      const lines = [job.summary, ...(job.evidence ?? [])];
+      expect(lines.some((line) => /\$90,000|10-25 percent/.test(line))).toBe(false);
+    }
+
+    renderApp('/case-studies/lambda-curry-scope-monitoring');
+    expect(screen.queryByText(/10-25 percent/)).toBeNull();
   });
 
   /* The experience section follows the resume: the freelance engineering work
@@ -249,10 +259,34 @@ describe('portfolio routes and metadata', () => {
      above Attend silently drops it out of the site owner's own menu. */
   it('keeps the overlay menu on the first three flagship products', () => {
     expect(flagshipProducts.slice(0, 3).map((p) => p.slug)).toEqual([
-      'track-tuner',
       'oasis-race-control',
       'ctx-chat',
+      'diaz-on-demand',
     ]);
+  });
+
+  /* The featured work follows the resume. The older builds keep their pages and
+     their /products rows, but nothing featured links to them. */
+  it('features the resume projects and keeps the retired builds reachable', () => {
+    expect(flagshipProducts.map((p) => p.slug)).toEqual([
+      'oasis-race-control',
+      'ctx-chat',
+      'diaz-on-demand',
+      'diaz-martial-arts',
+      'track-tuner',
+      'dragonglass',
+    ]);
+
+    const retired = ['draftspace', 'oncopath', 'ridesense', 'wattsmith', 'windcast'];
+    for (const slug of retired) {
+      expect(products.some((product) => product.slug === slug)).toBe(true);
+    }
+
+    renderApp('/');
+    const work = document.querySelector('#work');
+    for (const slug of retired) {
+      expect(work.querySelector(`a[href="/products/${slug}"]`)).toBeNull();
+    }
   });
 
   it('does not expose Overlap on primary public product surfaces', () => {
@@ -370,7 +404,7 @@ describe('portfolio routes and metadata', () => {
   });
 
   /* Every product with a repository links it from the hero, and every live one
-     links its deployment there too, so a product with no screenshot (Dragonglass)
+     links its deployment there too, so a product with no live app (Dragonglass)
      still has somewhere to send a reader. */
   const REPO_LINKED = {
     'track-tuner': 'https://github.com/codyjohnsontx/trackday_tuner',
@@ -674,7 +708,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getAllByText(/FTP, form, fatigue, TSS, and VO2 progress/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/analytics, AI-assisted insight, and workout creation/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/export correctness is now verified in the codebase/i).length).toBeGreaterThan(0);
-    expect(screen.getByRole('link', { name: /Read PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Read product analysis/i })).toBeTruthy();
   });
 
   it('opens RideSense screenshots in a zoom dialog and restores focus on close', async () => {
@@ -710,10 +744,10 @@ describe('portfolio routes and metadata', () => {
     await waitFor(() => expect(document.activeElement).toBe(zoomButton));
   });
 
-  it('renders the Trackday Tuner PM analysis page', () => {
+  it('renders the Trackday Tuner product analysis page', () => {
     renderApp('/products/track-tuner/analysis');
 
-    expect(screen.getByRole('heading', { name: /Trackday Tuner PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Trackday Tuner product analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getAllByText(/Session Comparison v1/i).length).toBeGreaterThan(0);
     /* "No measured result yet." was deleted from the first successMetrics
@@ -754,21 +788,21 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByText(/Feature prioritization matrix across Structured/i)).toBeTruthy();
     expect(screen.getByRole('columnheader', { name: 'Structured' })).toBeTruthy();
     expect(screen.getByRole('rowheader', { name: 'Deduped canonical feed' })).toBeTruthy();
-    expect(screen.queryByRole('link', { name: /Read PM analysis/i })).toBeNull();
+    expect(screen.queryByRole('link', { name: /Read product analysis/i })).toBeNull();
   });
 
-  it('renders the Attend PM analysis page', () => {
+  it('renders the Attend product analysis page', () => {
     renderApp('/products/ctx-chat/analysis');
 
-    expect(screen.getByRole('heading', { name: /Attend PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Attend product analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /The problem worth solving/i })).toBeTruthy();
     expect(screen.getAllByText(/A dealership-specific communication tool/i).length).toBeGreaterThan(0);
   });
 
-  it('renders the Wattsmith PM analysis page', () => {
+  it('renders the Wattsmith product analysis page', () => {
     renderApp('/products/wattsmith/analysis');
 
-    expect(screen.getByRole('heading', { name: /Wattsmith PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /Wattsmith product analysis/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /Manual builder first before AI/i })).toBeTruthy();
     expect(screen.getAllByText(/Reusable starter palette/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Drag\/drop composition/i).length).toBeGreaterThan(0);
@@ -838,10 +872,10 @@ describe('portfolio routes and metadata', () => {
     ).toBeTruthy();
   });
 
-  it('renders the OncoPath PM analysis page without overclaiming', () => {
+  it('renders the OncoPath product analysis page without overclaiming', () => {
     renderApp('/products/oncopath/analysis');
 
-    expect(screen.getByRole('heading', { name: /OncoPath PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: /OncoPath product analysis/i })).toBeTruthy();
     expect(
       screen.getByRole('heading', { name: /Built to be checked, not trusted blindly/i }),
     ).toBeTruthy();
@@ -1050,17 +1084,17 @@ describe('portfolio routes and metadata', () => {
     );
   });
 
-  it('shows the PM analysis CTA only for products with analysis content', () => {
+  it('shows the product analysis CTA only for products with analysis content', () => {
     const firstRender = renderApp('/products/track-tuner');
-    expect(screen.getByRole('link', { name: /Read PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Read product analysis/i })).toBeTruthy();
 
     firstRender.unmount();
     const secondRender = renderApp('/products/ctx-chat');
-    expect(screen.getByRole('link', { name: /Read PM analysis/i })).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Read product analysis/i })).toBeTruthy();
 
     secondRender.unmount();
     renderApp('/products/ridesense');
-    expect(screen.queryByRole('link', { name: /Read PM analysis/i })).toBeNull();
+    expect(screen.queryByRole('link', { name: /Read product analysis/i })).toBeNull();
   });
 
   /* The gallery images are captures of the renamed Attend app. Their pixels are not
@@ -1092,7 +1126,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('link', { name: /View persona research/i })).toBeNull();
   });
 
-  it('exposes Trackday Tuner research from the PM analysis page', () => {
+  it('exposes Trackday Tuner research from the product analysis page', () => {
     renderApp('/products/track-tuner/analysis');
     expect(screen.getAllByRole('link', { name: /View persona research/i }).length).toBeGreaterThan(0);
   });
@@ -1428,7 +1462,7 @@ describe('portfolio routes and metadata', () => {
     renderApp('/');
     const card = document.querySelector('a.case-card[href="/case-studies/track-tuner-atomic-save"]');
     expect(card.textContent).toContain(deck);
-    expect(card.textContent).toContain('Product manager and developer');
+    expect(card.textContent).toContain('Software engineer');
     expect(card.textContent).toContain(
       'A whole class of bug gone at once, and a retry that is safe by construction.',
     );

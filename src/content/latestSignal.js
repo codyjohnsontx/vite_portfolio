@@ -1,9 +1,9 @@
 /* The "Latest" block on the home page. Kept here with the rest of the
    content so the copy and its date can be updated without touching layout. */
 export const latestSignal = {
-  date: 'August 2026',
-  title: 'Attend: the inbox ranks by risk, not by what came in last',
+  date: 'November 2026',
+  title: 'Dragonglass AI: vault search a small local model can answer from',
   body:
-    'Attend used to write a brief only when someone asked for one, and the inbox sorted newest first. Now a background pass briefs every open conversation on its own and the list ranks by what those briefs found, so the thread most likely to cost the store sits at the top instead of wherever it happened to land. A line above the list says how much of the queue is briefed and how old the newest brief is, anyone can run a pass on demand, and a brief written before the latest messages is labelled as an earlier one rather than passed off as current. The AI drafts; a person decides what sends.',
-  links: [{ label: 'Read the build', to: '/products/ctx-chat' }],
+    'Vault search used to need every word of the query to match, so the multi-word questions a local model writes often came back with one note or none. It now runs on a BM25 index the plugin builds in memory when Obsidian starts and keeps current as notes change, matches any word and ranks the notes holding rarer words and more of them first, and hands the model the full text of its best matches within a token budget instead of short excerpts. A search narrowed to a folder with no match falls back to the whole vault and says so, and when a question names a note but asks about something it only links to, the search reads those linked notes too. Nothing is written to disk, and every edit is still a diff the user approves.',
+  links: [{ label: 'Read the build', to: '/products/dragonglass' }],
 };

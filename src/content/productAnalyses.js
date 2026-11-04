@@ -1,7 +1,7 @@
 export const productAnalyses = [
   {
     slug: 'track-tuner',
-    title: 'Trackday Tuner PM analysis',
+    title: 'Trackday Tuner product analysis',
     tagline:
       'A mobile-first setup logging product for riders and drivers who need faster trackside decisions than notes apps can support.',
     summary:
@@ -236,7 +236,7 @@ export const productAnalyses = [
   },
   {
     slug: 'ctx-chat',
-    title: 'Attend PM analysis',
+    title: 'Attend product analysis',
     tagline:
       'A shared dealership texting and follow-up system designed around the real operating rhythm of sales, service, and parts teams.',
     summary:
@@ -430,7 +430,7 @@ export const productAnalyses = [
   },
   {
     slug: 'wattsmith',
-    title: 'Wattsmith PM analysis',
+    title: 'Wattsmith product analysis',
     tagline:
       'A local-first cycling workout builder that prioritizes a reliable manual workflow before AI generation or platform sync.',
     summary:
@@ -914,7 +914,7 @@ export const productAnalyses = [
   },
   {
     slug: 'oncopath',
-    title: 'OncoPath PM analysis',
+    title: 'OncoPath product analysis',
     tagline:
       'An AI-assisted cancer trial explainer where the centerpiece is not the UI. It is the evaluation work that measures whether the AI explanations stay faithful to the source record.',
     summary:

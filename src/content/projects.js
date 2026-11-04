@@ -1,5 +1,8 @@
 import diazMa from '../assets/diazma.png?shot';
 import diazMartialArtsHome from '../assets/diaz-martial-arts/diaz-martial-arts-01-home.jpg?shot';
+import dragonglassVaultAnswer from '../assets/dragonglass/dragonglass-01-vault-answer.png?shot';
+import dragonglassEditReview from '../assets/dragonglass/dragonglass-02-edit-review.png?shot';
+import dragonglassSettings from '../assets/dragonglass/dragonglass-03-settings.png?shot';
 import attendCard from '../assets/attend.png?shot';
 import rideSense from '../assets/ridesense.png?shot';
 import trackTunerHomepage from '../assets/track-tuner/track-tuner-homepage.jpg?shot';
@@ -45,242 +48,20 @@ import oasisPersonalBest from '../assets/oasis-race-control/oasis-race-control-0
 import oasisDriverPortal from '../assets/oasis-race-control/oasis-race-control-05-driver-portal.png?shot';
 import oasisArchitecture from '../assets/oasis-race-control/oasis-race-control-06-architecture.png?shot';
 
-/* Entry order is significant. This array flows into `flagshipProducts`, which two
-   fixed-size surfaces slice from the top: `flagshipProducts.slice(0, 3)` in
-   src/components/TopBar.jsx (the overlay menu) and `flagshipProducts.slice(0, 5)` in
-   src/pages/HomePage.jsx (the home hero rail). Inserting a flagship above an existing
-   one silently pushes the last entry off those surfaces. The first three flagship slugs
-   are pinned by a test in src/App.test.jsx. */
+/* Entry order is significant. This array flows into `flagshipProducts`, and every
+   featured surface lists it in this order. The home hero rail in src/pages/HomePage.jsx
+   shows all of it, but the overlay menu in src/components/TopBar.jsx slices
+   `flagshipProducts.slice(0, 3)` from the top, so inserting a flagship above an
+   existing one silently pushes the third entry off the menu. The first three flagship
+   slugs are pinned by a test in src/App.test.jsx.
+
+   The featured products follow the resume: Oasis Race Control, Attend, the two Diaz
+   Martial Arts builds, Trackday Tuner, and Dragonglass AI. The rest carry
+   `featured: false`, which keeps their pages and their /products rows but takes them
+   off every featured surface (the home work list, the hero rail, the menu, and the
+   footer). That is how a product is retired without breaking its public URL;
+   `archived: true` is the stronger switch that removes the page too. */
 const allProducts = [
-  /* The product is Trackday Tuner - the name the shipped app gives itself in its own
-     metadata title, the name on the resume, and the name of the trackday_tuner repository -
-     but the `track-tuner` slug below, the routes built from it, and the src/assets/track-tuner
-     paths deliberately keep the shorter name: those routes are public and renaming them
-     breaks live inbound links. This mirrors the Attend entry further down, which is
-     displayed as Attend while living on the `ctx-chat` slug. */
-  {
-    name: 'Trackday Tuner',
-    slug: 'track-tuner',
-    tier: 'flagship',
-    status: 'active-build',
-    year: '2026',
-    accent: 'oklch(0.62 0.18 30)',
-    image: trackTunerHomepage,
-    liveUrl: 'https://trackday-tuner.vercel.app',
-    repoUrl: 'https://github.com/codyjohnsontx/trackday_tuner',
-    role: 'Product Manager / Developer',
-    stack: [
-      'Next.js',
-      'TypeScript',
-      'PostgreSQL',
-      'Supabase',
-      'Stripe',
-      'Tailwind CSS',
-      'OpenAI',
-      'Embeddings',
-      'RAG',
-    ],
-    oneLiner:
-      'Motorsport setup logger that helps riders and drivers compare sessions, understand setup deltas, and make better trackside decisions without overreading weak data.',
-    audience:
-      'Track day riders, HPDE and time-attack drivers, and club racers who need setup confidence between sessions.',
-    jtbd:
-      'When a session ends, users need to log what changed and decide what to adjust next without guessing.',
-    problem:
-      'Setup work at a track day happens between runs, in the paddock, with about ten minutes to do it. What gets recorded is scattered notes and memory, so the suspension settings, tire pressures, track and weather conditions, and what the vehicle was actually doing on corner exit never land in the same place. By the next event nobody can say which change produced which result, so the next change is a guess.',
-    coreWorkflow: [
-      'Capture suspension settings, vehicle configuration, tire pressures, track and weather conditions, and rider observations right after each run, while the run is still fresh.',
-      'Each session stores those settings against the conditions and the feedback from the same run, so a later comparison is between a setup change and what the vehicle actually did, not between two sets of loose notes.',
-      'Keep the free previous-session comparison on the session detail page for the fastest "what changed since last time?" check.',
-      'Use the Pro Session Comparison page to choose a same-vehicle baseline and compare setup deltas, conditions, context flags, and available lap-summary metrics.',
-      'Treat comparison strength labels and warnings as guardrails so users do not assume a setup caused a result.',
-      'Ask Race Engineer a setup question and it embeds the question, scores it by cosine similarity against a prebuilt setup-knowledge index, and keeps only the closest few passages, filtered to the vehicle being asked about so car material never comes back to answer a bike question.',
-      'Near-duplicate passages are dropped before the model sees them, and thin retrieved context produces a refusal instead of a confident-sounding guess.',
-    ],
-    mvpScope: [
-      'Setup logging first, telemetry workflows second',
-      'Bike and car setup capture',
-      'Condition, environment, and feedback timeline',
-      'Structured data model connecting suspension settings, vehicle configuration, environmental conditions, rider feedback, and historical outcomes',
-      'Free previous-session setup comparison',
-      'Pro same-vehicle Session Comparison v1 with baseline picker, strength labels, context flags, lap metrics, and setup deltas',
-      'Race Engineer retrieval built on OpenAI embeddings and cosine similarity over a prebuilt setup-knowledge index, filtered by vehicle type, capped at the closest four passages, with near-duplicates dropped above a similarity threshold',
-      'Refusal guardrails so thin retrieved context yields no answer rather than a plausible one, with the scoring, vehicle filtering, and dedupe covered by unit tests instead of checked by eye',
-    ],
-    evidenceSignal:
-      'The product has moved beyond basic logging into a setup-learning loop: free users can compare against the previous session, while Pro users can choose a same-vehicle baseline and review deterministic comparison signals with context warnings instead of causal claims. That loop now holds for a real track day: two sessions logged on the same day with Start Time left blank compare in the order they were run, and the database the sessions live in builds from the repository rather than from a hosting dashboard.',
-    nextStep:
-      'Validate whether Session Comparison v1 helps users return after repeat track days, then decide whether CSV import, richer telemetry summaries, saved takeaways, or coach-facing comparison workflows should come next.',
-    standaloneMockStatus: 'in-progress',
-    featurePresentations: [
-      {
-        slug: 'session-compare',
-        eyebrow: 'Shipped feature · PM brief',
-        title: 'Session Compare',
-        summary:
-          'Shipped Session Comparison v1 for Trackday Tuner: a Pro workflow where users choose a same-vehicle baseline and compare setup changes, conditions, lap-summary metrics, and context warnings without treating the result as proof of causation.',
-        links: [
-          { label: 'Read the brief', href: '/products/track-tuner/session-compare' },
-          {
-            label: 'View wireframes',
-            href: '/products/track-tuner/session-compare/wireframes',
-          },
-        ],
-      },
-    ],
-    visualAssets: {
-      note:
-        'Screenshots use Trackday Tuner demo data from the shipped Session Comparison v1 flow. No measured result is claimed.',
-      items: [
-        {
-          label: 'Compare CTA',
-          src: trackTunerSessionDetailCompareCta,
-          alt: 'Trackday Tuner session detail page showing the free previous-session comparison and Compare Sessions CTA.',
-        },
-        {
-          label: 'Baseline picker',
-          src: trackTunerBaselinePicker,
-          alt: 'Trackday Tuner Session Comparison page showing the same-vehicle baseline picker with same-track sessions prioritized.',
-        },
-        {
-          label: 'Strength and metrics',
-          src: trackTunerStrengthLapMetrics,
-          alt: 'Trackday Tuner Session Comparison page showing the comparison strength banner and lap-summary metrics.',
-        },
-        {
-          label: 'Context flags',
-          src: trackTunerContextFlags,
-          alt: 'Trackday Tuner Session Comparison page showing context flags for track, conditions, tires, lap data, and notes.',
-        },
-        {
-          label: 'Setup deltas',
-          src: trackTunerSetupDeltas,
-          alt: 'Trackday Tuner Session Comparison page showing grouped setup deltas with changed fields shown by default.',
-        },
-      ],
-    },
-    updates: [
-      {
-        date: 'Merged',
-        tag: 'Update 17',
-        title: 'Provision the photo bucket from the repository',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/50',
-        body: 'Adding a bike with a photo failed on any freshly built database with Bucket not found: the storage bucket the garage form uploads to had only ever existed in the hosting dashboard, so a database built from the repository had no working garage. The bucket is now declared in the repository config, public to read and images only, with a migration adding policies so a rider can create, replace, and delete photos only inside their own folder. An end-to-end test proves it on a from-scratch stack, failing before and passing after, including a rider being refused when writing outside their own folder, and a unit guard pins the bucket and its owner-only policies. This was one of the prerequisites for opening signup.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 16',
-        title: 'Cover database functions that never decide who can run them',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/38',
-        body: 'A database function that runs with its owner’s privileges is callable by anyone until its own migration says otherwise, and nothing checked that. A test now reads the permissions on each of those functions and fails when one has never been granted or revoked, so a new one cannot ship quietly open to anyone holding the app’s public API key.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 15',
-        title: 'Build a fresh database from the repository',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/36',
-        body: 'The core tables were created by hand in the hosting dashboard and no migration ever created them, so a clean checkout could not start a working database and a fresh project answered every request with permission denied. Migrations now create the schema and grant the roles the app actually uses, so the database comes from the repository instead of from memory.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 14',
-        title: 'Compare same-day sessions logged without a start time',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/34',
-        body: 'Two sessions logged on the same day with Start Time left blank did not order correctly, so the second one could compare against the wrong session or show no comparison at all. The lookup now sorts by the same rule the rest of the app uses instead of leaning on a start time that may not be there, and a session that saved only a baseline row still renders its diff. An end-to-end test logs two same-day sessions with the field blank and checks what was actually written.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 13',
-        title: 'Stop primary calls to action rendering invisible',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/33',
-        body: 'The main call to action was white text on a white pill: a stylesheet rule set outside the app’s cascade layers was beating the one meant to color it. Every rule now sits in a declared layer, and a test fails the build if one escapes again.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 12',
-        title: 'Ship Session Comparison v1',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/16',
-        body: 'Added Session Comparison v1 for Pro users: choose a baseline session from the same vehicle, prioritize same-track comparisons, review strength labels, context flags, available lap-summary metrics, and grouped setup deltas. The comparison is rules-based, avoids causal claims, and keeps the free previous-session comparison intact.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 11',
-        title: 'Add public read-only demo mode',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/15',
-        body: 'Adds a Try Demo path that drops visitors into the real authenticated app UI without signing in or calling Supabase. Demo mode uses local typed sample data for a Yamaha R6, Texas tracks, and sample sessions, shows Pro-preview analytics and Race Engineer surfaces, and keeps every create, edit, delete, billing, export, and live AI action read-only.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 10',
-        title: 'Deduplicate repeated Race Engineer prompts',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/13',
-        body: 'Prevents riders from accidentally sending the same AI question over and over. If the same request comes in within five minutes, the app reuses the recent result instead of spending time and money on another answer.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 09',
-        title: 'Add ai_requests inspection script',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/12',
-        body: 'Adds a local way to review recent Race Engineer activity without digging through the database manually, making it easier to spot failed requests, refusals, and usage patterns while testing.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 08',
-        title: 'Add agent doc sync guardrails',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/11',
-        body: 'Adds guardrails so contributor and AI-agent instructions stay clean and consistent. This keeps the project easier to maintain as more automation and helper workflows get added.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 07',
-        title: 'Add privacy-safe AI request observability',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/10',
-        body: 'Makes Race Engineer activity easier to understand without storing sensitive prompt text. The app can now track patterns, refusals, and safety decisions while keeping request details privacy-safe.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 06',
-        title: 'Verify personal evidence against loaded context',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/9',
-        body: 'Stops the AI from acting like it knows personal riding history unless that session data is actually loaded. If the evidence is not available, the answer stays general or refuses the request.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 05',
-        title: 'Harden Race Engineer refusal handling',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/8',
-        body: 'Tightens the boundaries around what Race Engineer will answer. Off-topic, unsafe, or manipulative prompts now get a clear refusal instead of a fake setup recommendation.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 04',
-        title: 'Load local env in Playwright config',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/7',
-        body: 'Makes the browser test setup behave more like the real local app by loading the same environment settings. This reduces false test failures and makes the test workflow easier to run.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 03',
-        title: 'Add adaptive race engineer flows and session history UX',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/6',
-        body: 'Turns Race Engineer from a single advice box into a fuller workflow: day plans, recommendation feedback, session memory, environment details, settings, and cleaner navigation around past sessions.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 02',
-        title: 'Add Race Engineer AI assistant',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/5',
-        body: 'Ships the first Race Engineer assistant for Pro users, giving setup advice from saved session context and a small knowledge base while adding citations, safety rules, rate limits, and tests.',
-      },
-      {
-        date: 'Merged',
-        tag: 'Update 01',
-        title: 'Stabilize app wiring, lint config, and contributor docs',
-        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/4',
-        body: 'Cleans up the app foundation before adding more AI work: navigation, auth, billing display, session comparison, environment helpers, contributor docs, automated checks, and test coverage.',
-      },
-    ],
-  },
   {
     name: 'Oasis Race Control',
     slug: 'oasis-race-control',
@@ -339,7 +120,9 @@ const allProducts = [
       'Unattended wall board that rotates through every track leaderboard on a timer, skips boards with no lap times instead of showing a blank screen, and recovers on its own when the timing feed comes back',
       'League night end to end: weekly rounds rolling into monthly seasons, driver participation, season standings, a league board for the wall, a staff control that closes one month and opens the next in a single transaction, and full-field expandable lap comparison sized for a phone',
       'Scoring on the venue’s real rule, 5/4/3/2/1 for the top five and one point for anyone who turns up, with a database lock on season rolling',
+      'A rig monitor that reads each simulator’s heartbeat and runs about 20 alert rules against it, with Discord notifications when a problem starts and when it clears, AI-assisted diagnostics, and GitHub issue integration, so the venue can be troubleshot without anyone on site',
       'Integration tests that run check-in and lap ingestion against a real database, so the conflict, takeover, and duplicate-event paths are exercised rather than assumed, plus a concurrency test that fails without the season-rolling lock',
+      '373 passing C# xUnit tests on the rig agent and 1,082 TypeScript tests on the web app, including database integration and failure-recovery scenarios',
     ],
     evidenceSignal:
       'These have been design, reliability, and unattended-operation cycles, not metrics cycles. The wall board runs in a shop for hours with nobody watching it, so recovering by itself is the requirement rather than a nice-to-have; it was verified against a production build in a real browser at 1920x1080, including killing the server mid-rotation to watch it come back. League night went from an idea customers kept asking about to something the venue can run on a Wednesday. The scoring scale first shipped as an invented placeholder, labelled as a guess, and was corrected only after asking the venue what they actually score. No engagement, retention, or conversion is claimed, and no measured result exists yet.',
@@ -638,599 +421,6 @@ const allProducts = [
     ],
   },
   {
-    name: 'draftSpace',
-    slug: 'draftspace',
-    repoUrl: 'https://github.com/codyjohnsontx/draftSpace',
-    tier: 'flagship',
-    status: 'active-build',
-    year: '2026',
-    accent: 'oklch(0.66 0.16 265)',
-    role: 'Product Manager / Developer',
-    stack: [
-      'Next.js',
-      'React',
-      'TypeScript',
-      'three.js',
-      'Tailwind CSS',
-      'Zustand',
-      'IndexedDB',
-      'Cloudflare Workers',
-    ],
-    oneLiner:
-      'A system-design board you can tilt: flat it edits like any whiteboard, tilted the layers separate so a service reaching past its layer becomes a visible diagonal.',
-    audience:
-      'Engineers, product managers, and technical founders who sketch a system on a whiteboard and then have to explain which part talks to which.',
-    jtbd:
-      'When someone is designing or explaining a system, they need to see which connections cross a layer boundary without tracing every arrow by hand.',
-    problem:
-      'A whiteboard treats every box as equal. Architecture does not: data sits under services, services under clients. On a flat canvas that structure lives entirely in the arrows, so the one connection that skips a layer looks exactly like all the others.',
-    coreWorkflow: [
-      'Draw on an infinite canvas the way you would on any whiteboard: rectangles, ellipses, diamonds, selection, movement, resizing, clipboard, undo and redo, saved locally in the browser.',
-      'Give an element a node kind and a layer, data, services, or clients, and it renders as a datastore, queue, service, or decision instead of a plain box.',
-      'Wire two shapes together with the connector tool on the flat canvas: hovering shows the port a press would take, the edge routes live while you drag, and once it exists you can select it, restyle it, put arrowheads on either end, and label it. Routing is computed once as a pure function and drawn by both views, so the flat board and the tilted one cannot disagree.',
-      'Duplicate, copy, and paste a group and the connectors inside it come along, rebound to the copies and undone in one step. An edge with only one end in the selection is dropped rather than left pointing at the original.',
-      'Tilt the space and the tiers physically separate, so any connector crossing a layer reads as a diagonal.',
-      'Keep editing while tilted: select, drag on the tier plane with grid snapping, create connectors, delete. Every action runs through the same command store, so undo, autosave, and the live room work there too.',
-      'Open a temporary approval-based live room for cursors and shared edits when walking someone through the board.',
-    ],
-    mvpScope: [
-      'Local-first infinite canvas with pan, pointer-centered zoom, shape tools, selection, resize, clipboard, undo/redo, and IndexedDB persistence',
-      'Board schema v3 that adds connectors alongside elements and migrates v1 and v2 boards in place',
-      'Depth as the architectural tier: data at the bottom, services above, clients on top',
-      'One toggle between the 2D canvas and the 3D space over a single board document, with shared selection and a shared style inspector',
-      'Port-based connectors with orthogonal elbow routing, computed as pure functions and consumed by both renderers',
-      'Connector tool on the flat canvas with port snapping, a live routed preview, selection on the routed line, per-edge stroke and width, arrowheads at either end, and labels placed along the route',
-      'Duplicate, copy, and paste that carry the connectors inside a selection and rebind them to the copies',
-      'Node kit rendering datastores, queues, services, and decisions from the shared shape factory, still carrying user styling',
-      'Temporary approval-based live rooms for cursors and shared edits without uploading a durable copy of the board',
-    ],
-    evidenceSignal:
-      'The 3D view is a working prototype rather than a demo reel: it shares the board document, the selection, the style inspector, and the command store with the 2D canvas, so undo, autosave, and live collaboration work in it with no new plumbing. Connectors were deliberately kept outside the existing element type so the 21 places that consume that type did not have to change; they are now first-class on the flat canvas too, drawn with their own tool, selectable on the routed line, stylable, and carried through duplicate and paste. Covered by 219 unit tests and 69 end-to-end tests, including one that seeds an architecture board, toggles to 3D, drags a node, and asserts the move landed in storage and shows up unchanged in the 2D view. No users and no measured result yet.',
-    nextStep:
-      'Put the tilted view in front of people who actually draw architecture and find out whether the diagonal reads as "this crosses a layer" without being explained. Capture the flat board beside the separated tiers, since that side-by-side is the pitch. It is a working prototype, not a demo reel, but there are no users and no measured result yet.',
-    standaloneMockStatus: 'planned',
-    updates: [
-      {
-        date: 'Aug 14, 2026',
-        tag: 'PR #16',
-        title: 'Kept the selection when a duplicate is refused',
-        url: 'https://github.com/codyjohnsontx/draftSpace/pull/16',
-        body: 'Pressing duplicate on something the board would not copy cleared the selection anyway, so the shapes you were holding dropped out from under you and there was nothing left to try again on. The selection only changes now when copies actually came back. The same pass made the connector tool cheaper to hold armed, since it had been re-measuring the ports under the pointer on every move, and put the connector label limit in one place instead of three.',
-      },
-      {
-        date: 'Aug 10, 2026',
-        tag: 'PR #14',
-        title: 'Kept connectors attached through duplicate, copy, and paste',
-        url: 'https://github.com/codyjohnsontx/draftSpace/pull/14',
-        body: 'Copying a group of shapes left their connectors behind, so the copy arrived as loose boxes with the structure stripped out. A connector with both ends inside the selection now travels with it, rebound to the new shapes and applied as a single step, so one undo takes the shapes and the edges back together. An edge with only one end copied is dropped rather than left pointing at the original, and a pasted payload is checked entry by entry so a hand-edited one cannot alias two copies to the same shape or abort the rest of the paste.',
-      },
-      {
-        date: 'Aug 06, 2026',
-        tag: 'PR #13',
-        title: 'Made connectors usable on the flat canvas',
-        url: 'https://github.com/codyjohnsontx/draftSpace/pull/13',
-        body: 'Connectors existed on the board but the only way to make one was dragging a port in the tilted view, and once it existed you could not select it, delete it, or restyle it. The flat canvas now has a connector tool: hovering shows the port a press would take, the edge routes live while you drag, and a second edge between the same pair is refused. An edge is selected by its actual routed line rather than its bounding box, deleted as one undoable step, and given a stroke color and width, arrowheads at either end or both, and a label placed halfway along the route. Edges follow their shapes during a move or resize instead of snapping into place on release.',
-      },
-      {
-        date: 'Aug 02, 2026',
-        tag: 'PR #11',
-        title: 'Shipped the 3D space view',
-        url: 'https://github.com/codyjohnsontx/draftSpace/pull/11',
-        body: 'The same board document now opens as a flat whiteboard or as a tiered architecture diagram from one toggle. Depth is the architectural tier, data at the bottom, services above, clients on top, so tilting the space separates the layers and a connector that skips one becomes a visible diagonal. Board schema v3 adds connectors alongside elements and migrates v1 and v2 boards in place. Connectors live outside the existing element type on purpose, so the 21 consumers of that type were left alone, and one routing function feeds both renderers so the two views cannot drift. Editing in 3D dispatches through the existing command store, so undo, redo, autosave, and the live room work there without new plumbing.',
-      },
-    ],
-  },
-  {
-    name: 'OncoPath',
-    slug: 'oncopath',
-    tier: 'flagship',
-    status: 'active-build',
-    year: '2026',
-    accent: 'oklch(0.6 0.17 300)',
-    image: oncopathHomeHero,
-    liveUrl: 'https://onco-path.vercel.app',
-    repoUrl: 'https://github.com/codyjohnsontx/ocnoPath',
-    role: 'Product Manager / Developer',
-    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'ClinicalTrials.gov API', 'Groq/LLM', 'zod'],
-    oneLiner:
-      'A calmer path through cancer trials: plain-English explanations of public clinical trials, built to be checked, not trusted blindly.',
-    audience:
-      'Cancer patients and caregivers who want to walk into an oncology appointment with the right questions about clinical trials.',
-    jtbd:
-      'When a patient or caregiver finds a trial that might matter, they need to understand what it is, where it may or may not fit, and what to ask their care team, without the app pretending it can decide for them.',
-    problem:
-      'ClinicalTrials.gov records are public but written for researchers. Eligibility criteria, phases, and endpoints are hard for patients to parse, so relevant trials never make it into the appointment conversation.',
-    coreWorkflow: [
-      'Enter basic context only: cancer type, age group, and location. Never records or identifiers.',
-      'Search public ClinicalTrials.gov records and open a trial to read a plain-English explanation: why it may be relevant, possible eligibility concerns, what information is missing, and questions to ask the oncology team.',
-      'Explanations run behind a safety validator with a deterministic source-grounded fallback when the model is unavailable or its output fails checks.',
-      'Save trials to a printable doctor discussion sheet, stored in the browser only.',
-    ],
-    mvpScope: [
-      'ClinicalTrials.gov v2 API search with plain-English trial explanations',
-      'Safety validator with a deterministic source-grounded fallback',
-      'Printable doctor discussion sheet and saved searches in localStorage, so no PHI is collected',
-      'Deliberate non-goals: no diagnosis, no treatment advice, no eligibility confirmation, no enrollment recommendations',
-      'Faithfulness evaluation harness with a second-model judge and human calibration',
-    ],
-    evidenceSignal:
-      'An evaluation harness measures whether the AI explanations stay faithful to the source record. It surfaced a validator bug that rejected 100 percent of valid output, a warnings field the model used for unsourced clinical claims, and a self-grading bug in the judge. Human calibration then showed the judge is too lenient, so its 81 percent faithfulness score is reported but not trusted.',
-    nextStep:
-      'Tighten the judge and the generator so the model stops addressing the reader as if it knows their diagnosis, then re-run human calibration before trusting any faithfulness number.',
-    standaloneMockStatus: 'in-progress',
-    visualAssets: {
-      note:
-        'The app uses public ClinicalTrials.gov records and only the basic context a person chooses to share. Each trial gets explanation notes tied to the official record, and saved trials become a printable sheet to bring to an appointment. The eval output is from a real harness run; the faithfulness number it reports is not yet trusted.',
-      items: [
-        {
-          label: 'Trial results',
-          src: oncopathResults,
-          alt: 'OncoPath results page listing recruiting breast cancer trials from public ClinicalTrials.gov records.',
-        },
-        {
-          label: 'Explanation notes',
-          src: oncopathTrialExplanation,
-          alt: 'OncoPath trial detail page showing plain-English explanation notes generated from the official record.',
-        },
-        {
-          label: 'Discussion sheet',
-          src: oncopathDiscussionSheet,
-          alt: 'OncoPath printable doctor discussion sheet with saved trials, discussion points, and questions for the oncology team.',
-        },
-        {
-          label: 'Eval run output',
-          src: oncopathEvalTerminal,
-          alt: 'Terminal output from a real OncoPath eval harness run showing 12 of 12 model outputs with zero fallbacks.',
-        },
-      ],
-    },
-    updates: [
-      {
-        date: 'Live',
-        tag: 'Deploy',
-        title: 'Deployed OncoPath to production',
-        url: 'https://onco-path.vercel.app',
-        body: 'OncoPath is now live and free at onco-path.vercel.app, deployed on Vercel with the repo connected for automatic deploys. Anyone can search public ClinicalTrials.gov records, read plain-English explanation notes, and print a discussion sheet. No accounts, no PHI collected, and the eval faithfulness number is still reported but not trusted.',
-      },
-      {
-        date: 'Current',
-        tag: 'Eval',
-        title: 'Built an accuracy-evaluation harness and a faithfulness judge',
-        url: 'https://github.com/codyjohnsontx/ocnoPath',
-        body: 'Snapshotted about a dozen real trials as a reproducible test set, then measured the generator against it. Fixed a validator bug that silently rejected 100 percent of valid output (0 to 100 percent usable), removed a warnings field the model used for unsourced clinical claims, and fixed a self-grading bug in the judge (67 to 81 percent). Human calibration then revealed the judge is too lenient, so the faithfulness number is not trusted yet.',
-      },
-      {
-        date: 'Build',
-        tag: 'Prototype',
-        title: 'Working prototype of the trial explainer and discussion sheet',
-        url: 'https://github.com/codyjohnsontx/ocnoPath',
-        body: 'Runs locally, not yet deployed. Searches public ClinicalTrials.gov records, explains each trial in plain English behind a safety validator with a deterministic fallback, and saves trials to a printable doctor discussion sheet. Context stays in the browser, so the app collects no protected health information by design.',
-      },
-    ],
-  },
-  {
-    name: 'RideSense',
-    slug: 'ridesense',
-    repoUrl: 'https://github.com/codyjohnsontx/ridesense',
-    tier: 'flagship',
-    status: 'active-build',
-    year: '2026',
-    accent: 'oklch(0.66 0.16 170)',
-    image: rideSense,
-    role: 'Product Manager / Developer',
-    stack: [
-      'Next.js',
-      'TypeScript',
-      'FastAPI',
-      'Supabase Postgres',
-      'Strava OAuth',
-      'TrainerRoad ingest',
-      'Grounded AI',
-    ],
-    oneLiner:
-      'Full-stack training analytics MVP that unifies TrainerRoad, Strava, and uploaded ride files into one canonical activity timeline with workload trends and grounded AI Q&A.',
-    audience:
-      'Enthusiast and competitive cyclists who use multiple platforms, log structured intervals, and want decision-support for the next training block.',
-    jtbd:
-      'After workouts accumulate across multiple tools, riders need one canonical view of their training history and evidence-bound answers that explain workload, consistency, fatigue, freshness, and trend changes from their own data.',
-    problem:
-      'Cyclists often split training history across TrainerRoad, Strava, head-unit exports, and manual files, making it hard to trust load trends, avoid duplicate activities, and understand what their recent work actually signals.',
-    coreWorkflow: [
-      'Connect Strava through OAuth, bring in TrainerRoad activity context, or upload GPX, TCX, and FIT ride files.',
-      'Normalize provider data into one activity pipeline, then merge overlapping efforts into a canonical timeline.',
-      'Apply deterministic analytics for weekly load, form, fatigue, freshness, category breakdowns, and trend detection.',
-      'Explore the dashboard through accessible charts with hover readouts, keyboard support, mobile interactions, and screen reader copy.',
-      'Ask grounded training questions over computed metrics, with fallback handling when AI parsing fails instead of breaking the experience.',
-    ],
-    mvpScope: [
-      'Next.js dashboard UI with FastAPI backend',
-      'Strava OAuth, sync hardening, and UTC-safe date range filtering',
-      'TrainerRoad, Strava, and uploaded file activity ingestion into a canonical timeline',
-      'Deterministic training analytics for workload trends, readiness signals, category breakdowns, and rolling date windows',
-      'Accessible dashboard visualizations with hover readouts, live metric explanations, keyboard support, and mobile behavior',
-      'Grounded AI Q&A with safer fallback behavior when model responses are malformed',
-      'Seeded demo workflow, README screenshots, custom logo, app icon, guided onboarding, and same-origin local API proxy',
-    ],
-    evidenceSignal:
-      'The MVP now demonstrates production-shaped product judgment across ingestion, deduplication, deterministic analytics, accessible visualization, AI guardrails, local development ergonomics, and public demo documentation.',
-    nextStep:
-      "Validate the seeded demo flow against real rider history, tighten TrainerRoad ingestion depth, and use the dashboard's load, form, fatigue, freshness, and grounded Q&A signals to drive the next round of user interviews.",
-    visualAssets: {
-      note: 'Public screenshots use seeded demo data, not private athlete data.',
-      items: [
-        {
-          label: 'Desktop dashboard',
-          src: rideSenseOverviewDesktop,
-          alt: 'RideSense desktop dashboard showing seeded demo training analytics.',
-        },
-        {
-          label: 'Mobile dashboard',
-          src: rideSenseOverviewMobile,
-          alt: 'RideSense mobile dashboard showing seeded demo training analytics.',
-        },
-      ],
-    },
-    standaloneMockStatus: 'in-progress',
-    updates: [
-      {
-        date: 'May 31, 2026',
-        tag: 'PR #18',
-        title: 'Added README screenshots with seeded demo data',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/18',
-        body: 'Added desktop and mobile README screenshots captured from seeded demo data so GitHub visitors can immediately understand the dashboard experience without exposing private athlete data.',
-      },
-      {
-        date: 'May 31, 2026',
-        tag: 'PR #17',
-        title: 'Made analytics load trend tests deterministic',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/17',
-        body: 'Fixed flaky analytics tests by making rolling date-window behavior deterministic around UTC midnight boundaries.',
-      },
-      {
-        date: 'May 31, 2026',
-        tag: 'PR #16',
-        title: 'Added the RideSense app icon',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/16',
-        body: 'Added an app icon to give the product a more complete, installable product feel.',
-      },
-      {
-        date: 'May 31, 2026',
-        tag: 'PR #15',
-        title: 'Hardened AI fallback behavior',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/15',
-        body: 'Added safer fallback behavior when AI response parsing fails so malformed model output does not break the grounded Q&A experience.',
-      },
-      {
-        date: 'May 31, 2026',
-        tag: 'PR #14',
-        title: 'Added same-origin local API proxying',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/14',
-        body: 'Routed frontend API calls through the Next.js app to the FastAPI backend during local development, simplifying setup and avoiding client-side backend URL wiring.',
-      },
-      {
-        date: 'May 31, 2026',
-        tag: 'PR #13',
-        title: 'Added guided onboarding and clearer docs',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/13',
-        body: 'Added a guided onboarding experience and updated documentation so the product flow and local setup are easier to understand.',
-      },
-      {
-        date: 'May 09, 2026',
-        tag: 'PR #12',
-        title: 'Refactored the app shell and training analytics experience',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/12',
-        body: 'Refactored the app shell and analytics surface, polished mobile navigation accessibility, fixed active nav path matching, preserved accessible mobile dialog behavior, and hardened shell sync and resize behavior.',
-      },
-      {
-        date: 'May 02, 2026',
-        tag: 'PR #11',
-        title: 'Improved chart accessibility and metric explanations',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/11',
-        body: 'Added screen reader support for metric tooltip copy and improved chart explanations with directional context so dashboard metrics are easier to interpret.',
-      },
-      {
-        date: 'May 02, 2026',
-        tag: 'PR #10',
-        title: 'Added chart hover and live readout improvements',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/10',
-        body: 'Added chart hover readouts, improved mobile chart interactions, added live chart readouts, improved keyboard accessibility, and fixed stale heatmap hover behavior.',
-      },
-      {
-        date: 'Apr 29, 2026',
-        tag: 'PR #9',
-        title: 'Added the RideSense logo component',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/9',
-        body: 'Added a custom RideSense logo component to give the product stronger identity and polish inside the app.',
-      },
-      {
-        date: 'Apr 29, 2026',
-        tag: 'PR #8',
-        title: 'Hardened Strava OAuth sync and range filtering',
-        url: 'https://github.com/codyjohnsontx/ridesense/pull/8',
-        body: 'Hardened Strava sync behavior, improved activity analysis range filters, fixed UTC date boundary handling, and aligned range metadata with count behavior.',
-      },
-      {
-        date: 'Apr 28, 2026',
-        tag: 'PR #7',
-        title: 'Hardened Strava OAuth ahead of going live',
-        body: 'Stamped a 5-minute TTL onto the OAuth state token so a stolen redirect cannot be replayed later, taught sync_strava to mark the connection status="error" when refresh fails so the UI can prompt for a relink, and locked the behavior in with 6 new tests. Next: register the Strava app and run real activities through the canonical pipeline.',
-      },
-      {
-        date: 'Apr 28, 2026',
-        tag: 'PR #6',
-        title: 'GPX / TCX / FIT upload pipeline',
-        body: 'Built three parsers with defusedxml for XML formats and fitparse for FIT behind one EXTENSION_TO_PARSER dispatcher, using a SHA-256 content hash as the upsert identity so re-uploads are idempotent. Added a drag-and-drop card on the Connections page while TrainerRoad remains scaffolded.',
-      },
-      {
-        date: 'Apr 28, 2026',
-        tag: 'PR #5',
-        title: 'Replaced HMAC-only signing with real Fernet encryption',
-        body: 'The previous token wrapper was tamper-evident but plaintext-readable. Swapped to Fernet with the key derived from APP_SECRET_KEY, added a guard that refuses default or weak secrets outside development, and pinned the property that plaintext must not appear in ciphertext with a dedicated test.',
-      },
-      {
-        date: 'Apr 27, 2026',
-        tag: 'Note',
-        title: 'Audited the README against the implementation',
-        body: 'Three claims did not match the code: tokens were called encrypted, TrainerRoad was described as storing cookies only, and the AI was described as deterministic. Rewrote each to match what the code actually does.',
-      },
-    ],
-  },
-  {
-    name: 'Wattsmith',
-    slug: 'wattsmith',
-    repoUrl: 'https://github.com/codyjohnsontx/wattSmith',
-    tier: 'flagship',
-    status: 'active-build',
-    accent: 'oklch(0.64 0.15 110)',
-    image: wattsmithBuilderDashboard,
-    role: 'Product Manager / Developer',
-    stack: [
-      'Next.js',
-      'React',
-      'TypeScript',
-      'Tailwind CSS',
-      'Vitest',
-    ],
-    oneLiner:
-      'Wattsmith is a local-first cycling training workspace for self-coached riders and coach-led athletes. It connects performance markers like FTP, form, fatigue, TSS, and VO2 progress with analytics, AI-assisted insight, and workout creation; the current builder supports reusable FTP-based blocks, load inspection, and verified .mrc/.erg exports.',
-    audience:
-      'Cyclists who train with FTP-based structured workouts and want to build reusable sessions before riding them in external training platforms.',
-    jtbd:
-      'When planning a structured ride, cyclists need to build intervals, understand watts and zones against their FTP, save the workout, and export a file that matches what the chart shows.',
-    problem:
-      'Cyclists can sketch a workout quickly, but turning that sketch into a reliable, reusable, and rideable file is harder when common warmups, intervals, recoveries, cooldowns, target types, repeats, profile assumptions, chart inspection, and export behavior are split across separate tools or hidden in file syntax.',
-    coreWorkflow: [
-      'Browse and search a grouped 60-block starter palette across warmup, endurance, tempo, sweet spot, threshold, VO2, anaerobic, recovery, cooldown, and general categories.',
-      'Drag warmups, endurance blocks, intervals, recovery steps, and cooldowns from the palette into explicit drop joints in the root workout or repeat children.',
-      'Create, edit, duplicate, delete, and insert custom reusable blocks while protected starter blocks remain deterministic.',
-      'Reorder existing workout blocks with drag handles, magnetic insertion previews, drag overlays, undo/redo, and button fallbacks.',
-      'Inspect the interactive power chart by hover, tap, or keyboard focus to compare watts, %FTP, zones, selected blocks, the FTP line, and the 0W baseline.',
-      'Review export readiness before downloading .mrc or .erg files so validation, FTP, timeline, targets, preview, filename, and range strategy are visible.',
-      'Export .mrc or .erg files whose generated timelines are checked against the source workout for durations, power targets, ramps, repeats, and cues.',
-    ],
-    mvpScope: [
-      'Tabbed workspace for Builder, Library, Profile, and Export',
-      'Manual block builder with add, delete, duplicate, reorder, repeat blocks, target ranges, ramps, single targets, and text cues',
-      '60 protected starter reusable blocks across Warmup, Endurance, Tempo, Sweet Spot, Threshold, VO2, Anaerobic, Recovery, Cooldown, and General',
-      'Grouped searchable reusable block palette with drag/drop insertion and button fallbacks',
-      'Custom reusable block management for creating, editing, duplicating, deleting, and inserting saved workout pieces',
-      'Explicit drop joints before and after root blocks and inside repeat children, with invalid nested placements blocked',
-      'Magnetic insertion previews, drag overlays, and drag handles for reordering existing workout blocks',
-      'Local workout library with starter templates, search, category filtering, duplicate, rename, delete, and load',
-      'Starter template preview modal with chart, metrics, profile warnings, training rationale, and citation links',
-      'Accessible modal behavior with focus trap, Escape close, focus restore, search labeling, and drop joint announcements',
-      'Collapsible block editing for workout blocks and nested repeat children',
-      'Local athlete profile for FTP/default assumptions and workout warnings',
-      'Interactive SVG power chart with hover/tap inspection, keyboard-accessible intervals, selected-block highlighting, zone bands, FTP line, 0W baseline, and watts/%FTP y-axis references',
-      'Export readiness checklist covering validation, FTP, timeline, target sanity, file preview, filename, and range export strategy',
-      'Validated .mrc and .erg exports with preview, range export strategy, and shared flattened workout data',
-      'Automated export verification that parses generated .mrc and .erg files back into workout timelines and checks durations, power targets, ramps, expanded repeats, and cue timestamps',
-      'Golden-file checks that keep committed sample exports byte-for-byte aligned with current exporter output',
-      'Workout metrics for duration, zone time, IF/TSS estimates, NP-style estimate, kJ, interval counts, and work-above-threshold style metrics',
-      'Cited workout rationale structure plus Vitest coverage for starter validation, export readiness, clone/rekey behavior, nested drag/drop helpers, validation, exports, export round-trip verification, zones, and science source resolution',
-    ],
-    evidenceSignal:
-      'PR #10 closed a stalled export-confidence milestone by replacing flaky third-party-app testing with automated in-repo verification: generated .mrc/.erg files are parsed back into workout timelines, checked against the source workout, and protected by golden-file tests.',
-    nextStep:
-      'Keep strengthening the manual builder before AI/RAG: clearer training metrics, deeper rationale coverage, profile-driven warnings, duration and difficulty filters, favorites, and stronger empty states. Optional third-party app acceptance checks can still be run in any ERG/MRC-capable tool, but export correctness is now verified in the codebase.',
-    standaloneMockStatus: 'in-progress',
-    updates: [
-      {
-        date: 'Jul 4, 2026',
-        tag: 'PR #10',
-        title: 'Wattsmith automated export verification',
-        url: 'https://github.com/codyjohnsontx/wattSmith/pull/10',
-        body: 'Wattsmith exports cycling workouts as .mrc/.erg files for training apps, so those files have to be exactly right. I replaced a manual testing step that relied on a third-party desktop app with automated checks in the codebase. The tests read each exported file back into a workout timeline and confirm it matches the original: durations, power targets, ramps, repeats, and cues. Golden-file checks flag unintended export-format changes. Export correctness is now checked automatically on every change; third-party app acceptance remains a separate optional check. Test count moved from 84 to 119.',
-      },
-      {
-        date: 'Jun 29, 2026',
-        tag: 'PR #6',
-        title: 'Wattsmith reusable palette and drag/drop builder',
-        url: 'https://github.com/codyjohnsontx/wattSmith/pull/6',
-        body: 'Expanded Wattsmith with a 60-block reusable starter palette, grouped search, custom reusable blocks, drag/drop insertion, explicit drop joints, magnetic insertion previews, and drag handles for reordering workout blocks. The workflow now supports composing structured FTP workouts from reusable pieces while preserving undo/redo behavior, button fallbacks, accessibility improvements, and export-safe workout data. No adoption, speed, retention, or revenue result is claimed.',
-      },
-      {
-        date: 'Jun 25, 2026',
-        tag: 'PR #4',
-        title: 'Wattsmith trust pass: template preview, collapsible editing, and export readiness',
-        url: 'https://github.com/codyjohnsontx/wattSmith/pull/4',
-        body: 'Added a trust pass for the manual workout-building workflow: starter template previews with chart, metrics, profile warnings, rationale, and citations; collapsible editing for complex workout and repeat blocks; and an export readiness checklist for .mrc and .erg downloads. The goal was to help riders inspect structure, reduce editing noise, and catch export issues before using the file elsewhere. No AI/RAG release or measured usage result is claimed.',
-      },
-      {
-        date: 'Jun 22, 2026',
-        tag: 'PR #1',
-        title:
-          'Wattsmith v0.2: Manual workout builder, library, profile, chart inspection, and export upgrades',
-        url: 'https://github.com/codyjohnsontx/wattSmith/pull/1',
-        body: 'Expanded Wattsmith from a starter FTP-based workout MVP into a local-first manual cycling workout builder. The release adds the tabbed workspace, block editing, repeats, target ranges and ramps, a local library with templates, athlete profile assumptions, interactive chart inspection, workout metrics, cited rationale, validation, and .mrc/.erg export previews without claiming AI generation or production usage metrics.',
-      },
-    ],
-    visualAssets: {
-      note: 'Screenshots from the local demo builder. The current public images show the builder homescreen, workout library, reusable block palette, step editing, template preview, chart inspection, athlete profile, export flow, and mobile views; no measured usage result is implied.',
-      items: [
-        {
-          label: 'Template preview',
-          src: wattsmithTemplatePreview,
-          alt: 'Wattsmith starter template preview modal showing the workout chart, key metrics, profile fit note, training rationale, cautions, and citation links before loading a template.',
-        },
-        {
-          label: 'Collapsed editor',
-          src: wattsmithCollapsedEditor,
-          alt: 'Wattsmith builder with workout blocks collapsed so repeat structures show summary rows and expand controls instead of every nested interval input.',
-        },
-        {
-          label: 'Export readiness',
-          src: wattsmithExportReadiness,
-          alt: 'Wattsmith export tab showing the export readiness checklist, range export strategy, .mrc and .erg download controls, and file preview.',
-        },
-        {
-          label: 'Builder',
-          src: wattsmithBuilderDashboard,
-          alt: 'Wattsmith builder homescreen showing the workout preview chart, FTP controls, builder form, and workout summary for a structured FTP workout.',
-        },
-        {
-          label: 'Builder workspace',
-          src: wattsmithBuilderWorkspace,
-          alt: 'Wattsmith builder workspace showing workout name and description fields, reusable block search, starter block cards, and summary metrics.',
-        },
-        {
-          label: 'Reusable block palette',
-          src: wattsmithReusableBlockPalette,
-          alt: 'Wattsmith reusable block palette showing starter warmup blocks, workout metrics, time in zones, and workout rationale.',
-        },
-        {
-          label: 'Workout step editor',
-          src: wattsmithWorkoutStepEditor,
-          alt: 'Wattsmith workout step editor showing an editable warmup ramp, a nested repeat set, repeat children, and cited workout rationale.',
-        },
-        {
-          label: 'Chart inspection',
-          src: wattsmithChartTooltip,
-          alt: 'Interactive chart tooltip surfacing watts, %FTP, zone, and interval context for the hovered block.',
-        },
-        {
-          label: 'Library',
-          src: wattsmithLibrary,
-          alt: 'Local workout library with starter templates, search, category filters, and saved workouts ready to duplicate, rename, or load.',
-        },
-        {
-          label: 'Profile',
-          src: wattsmithProfile,
-          alt: 'Athlete profile tab where FTP and assumptions drive warnings, power targets, and workout metrics.',
-        },
-        {
-          label: 'Export preview',
-          src: wattsmithExport,
-          alt: 'Export preview showing a validated .mrc or .erg file that matches the visible chart and block structure.',
-        },
-        {
-          label: 'Mobile editor',
-          src: wattsmithMobileEditor,
-          alt: 'Mobile builder view of the same block editor adapted for narrow screens.',
-        },
-        {
-          label: 'Mobile chart',
-          src: wattsmithMobileChart,
-          alt: 'Mobile chart summary showing zone time, intensity, and interval structure at a glance.',
-        },
-      ],
-    },
-  },
-  {
-    name: 'windCast',
-    slug: 'windcast',
-    repoUrl: 'https://github.com/codyjohnsontx/windCast',
-    tier: 'flagship',
-    status: 'active-build',
-    year: '2026',
-    accent: 'oklch(0.7 0.15 235)',
-    image: windCastHero,
-    role: 'Product Manager / Developer',
-    stack: [
-      'React 18',
-      'TypeScript',
-      'Vite',
-      'Tailwind CSS',
-      'React Router',
-      'Leaflet + react-leaflet',
-      'leaflet-velocity',
-      'Open-Meteo API',
-      'Vitest',
-    ],
-    oneLiner:
-      'Session planner for wind sports with saved spots, scored forecast hours, and an animated wind map that answers one question: is it worth loading up gear today?',
-    audience:
-      'Recreational and intermediate kiteboarders, wing foilers, and downwind foilers who currently juggle 3+ weather sources to plan a single session.',
-    jtbd:
-      'When deciding whether to load gear and go, I want my saved spots scored against the next 48 hours of wind so I can pick a session window in seconds instead of cross-referencing forecasts.',
-    problem:
-      'Wind-sport athletes check multiple weather sources manually, then mentally map each forecast against per-spot rules (safe direction, ideal wind range, gust tolerance). The math is repetitive, error-prone, and often gets done in the parking lot. windCast encodes per-spot rules once and runs them against every forecast hour automatically.',
-    coreWorkflow: [
-      'Save your spots with per-location rules: ideal/unsafe wind directions, min/ideal/max wind speed, and sport type.',
-      'Open the dashboard. Every saved spot shows current wind, a session-score badge (fire / good / maybe / poor / sketchy), and the best upcoming window.',
-      'Tap a spot for the full 48-hour hourly forecast with per-hour scores and the reasoning behind each label.',
-      'Switch to the map for an animated wind-particle overlay, score-colored pins at each saved spot, and tap-anywhere ephemeral forecasts.',
-      'Swap forecast sources in Settings (mock for demos, Open-Meteo for real data). All providers are interface-compatible.',
-    ],
-    mvpScope: [
-      'Dashboard view sorted by current safety and confidence.',
-      'Per-spot rules engine and scoring (utils/sessionScore.ts) producing 5-label session quality with explainable reasons.',
-      'Interactive Leaflet map with animated wind-particle overlay and tap-to-forecast.',
-      'Spot CRUD with 48-hour hourly forecast detail.',
-      'Pluggable forecast-provider interface (mock + Open-Meteo) with response caching.',
-      'Unit toggles (mph / knots / m/s, F / C).',
-      'Local persistence with JSON import/export for spot backup.',
-    ],
-    evidenceSignal:
-      'Built end-to-end in roughly one day as a tightly-scoped MVP: real Open-Meteo integration, an explainable scoring engine, and an animated wind map that runs on mock data for offline demos. Codebase is test-covered (Vitest + RTL) and structured so future data sources (NOAA GFS for wind grids, NOAA CO-OPS for tides) drop in behind the existing provider interface.',
-    nextStep:
-      'Roadmap from the README: real tide data via NOAA CO-OPS, real wind grids via NOAA GFS through a serverless proxy, long-press to add spots on the map, PWA + offline cache, and push notifications for incoming "fire" windows. Explicitly out of scope: radar/satellite, accounts/auth, route planning, premium tiers.',
-    visualAssets: {
-      note: 'Screenshots use mock seed data, the same data the demo runs on offline.',
-      items: [
-        {
-          label: 'Dashboard',
-          src: windCastHero,
-          alt: 'windCast dashboard listing saved spots with session-score badges and current wind conditions.',
-        },
-        {
-          label: 'Wind map',
-          src: windCastMap,
-          alt: 'Leaflet map with animated wind-particle overlay and score-colored pins at saved spots.',
-        },
-        {
-          label: 'Spot forecast',
-          src: windCastSpotDetail,
-          alt: 'Spot detail page showing 48-hour hourly forecast with per-hour session scores and reasoning.',
-        },
-      ],
-    },
-    standaloneMockStatus: 'in-progress',
-    updates: [
-      {
-        date: 'Jun 02, 2026',
-        tag: 'PR #2',
-        title: 'Added forecast confidence by comparing model output to nearby observations',
-        url: 'https://github.com/codyjohnsontx/windCast/pull/2',
-        body: 'Each saved spot now compares its model forecast against the nearest weather station and surfaces whether the two agree. Added a layers drawer on the map, station and buoy markers from a mock observation provider, a timeline selector for the forecast hour, and decision summaries on the dashboard and spot detail.',
-      },
-      {
-        date: 'Jun 02, 2026',
-        tag: 'PR #1',
-        title: 'Swapped mock-only forecasts for the Open-Meteo provider and shipped spot CRUD',
-        url: 'https://github.com/codyjohnsontx/windCast/pull/1',
-        body: 'Replaced the mock-only forecast pipe with a real Open-Meteo provider behind the existing interface, added per-route error boundaries so a single forecast failure does not take down the dashboard, and built the spot CRUD that the scoring engine needs to do anything useful. Settings now exposes the forecast-source toggle, unit preferences (mph/knots/m/s), and JSON import/export for spot backup. Vitest suites were added for forms, hooks, and forecast utilities.',
-      },
-      {
-        date: 'Jun 01, 2026',
-        tag: 'Note',
-        title: 'Seeded the MVP in a day',
-        url: 'https://github.com/codyjohnsontx/windCast',
-        body: 'Initial commit shipped the dashboard, spot list, scoring engine (utils/sessionScore.ts), and a Leaflet map with an animated wind-particle overlay. Forecasts ran on mock data so the UX could be designed against the full data shape before any network call existed; the provider interface was in place from day one so real sources could slot in without component changes.',
-      },
-    ],
-  },
-  {
     name: 'Diaz on Demand',
     slug: 'diaz-on-demand',
     tier: 'flagship',
@@ -1491,8 +681,239 @@ const allProducts = [
       },
     ],
   },
-  /* No screenshot yet, so `image` and `visualAssets` are omitted on purpose rather
-     than carrying a placeholder. */
+  /* The product is Trackday Tuner - the name the shipped app gives itself in its own
+     metadata title, the name on the resume, and the name of the trackday_tuner repository -
+     but the `track-tuner` slug below, the routes built from it, and the src/assets/track-tuner
+     paths deliberately keep the shorter name: those routes are public and renaming them
+     breaks live inbound links. This mirrors the Attend entry above, which is
+     displayed as Attend while living on the `ctx-chat` slug. */
+  {
+    name: 'Trackday Tuner',
+    slug: 'track-tuner',
+    tier: 'flagship',
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.62 0.18 30)',
+    image: trackTunerHomepage,
+    liveUrl: 'https://trackday-tuner.vercel.app',
+    repoUrl: 'https://github.com/codyjohnsontx/trackday_tuner',
+    role: 'Product Manager / Developer',
+    stack: [
+      'Next.js',
+      'TypeScript',
+      'PostgreSQL',
+      'Supabase',
+      'Stripe',
+      'Tailwind CSS',
+      'OpenAI',
+      'Embeddings',
+      'RAG',
+    ],
+    oneLiner:
+      'Motorsport setup logger that helps riders and drivers compare sessions, understand setup deltas, and make better trackside decisions without overreading weak data.',
+    audience:
+      'Track day riders, HPDE and time-attack drivers, and club racers who need setup confidence between sessions.',
+    jtbd:
+      'When a session ends, users need to log what changed and decide what to adjust next without guessing.',
+    problem:
+      'Setup work at a track day happens between runs, in the paddock, with about ten minutes to do it. What gets recorded is scattered notes and memory, so the suspension settings, tire pressures, track and weather conditions, and what the vehicle was actually doing on corner exit never land in the same place. By the next event nobody can say which change produced which result, so the next change is a guess.',
+    coreWorkflow: [
+      'Capture suspension settings, vehicle configuration, tire pressures, track and weather conditions, and rider observations right after each run, while the run is still fresh.',
+      'Each session stores those settings against the conditions and the feedback from the same run, so a later comparison is between a setup change and what the vehicle actually did, not between two sets of loose notes.',
+      'Keep the free previous-session comparison on the session detail page for the fastest "what changed since last time?" check.',
+      'Use the Pro Session Comparison page to choose a same-vehicle baseline and compare setup deltas, conditions, context flags, and available lap-summary metrics.',
+      'Treat comparison strength labels and warnings as guardrails so users do not assume a setup caused a result.',
+      'Ask Race Engineer a setup question and it embeds the question, scores it by cosine similarity against a prebuilt setup-knowledge index, and keeps only the closest few passages, filtered to the vehicle being asked about so car material never comes back to answer a bike question.',
+      'Near-duplicate passages are dropped before the model sees them, and thin retrieved context produces a refusal instead of a confident-sounding guess.',
+    ],
+    mvpScope: [
+      'Setup logging first, telemetry workflows second',
+      'Bike and car setup capture',
+      'Condition, environment, and feedback timeline',
+      'Structured data model connecting suspension settings, vehicle configuration, environmental conditions, rider feedback, and historical outcomes',
+      'Free previous-session setup comparison',
+      'Pro same-vehicle Session Comparison v1 with baseline picker, strength labels, context flags, lap metrics, and setup deltas',
+      'Race Engineer retrieval built on OpenAI embeddings and cosine similarity over a prebuilt setup-knowledge index, filtered by vehicle type, capped at the closest four passages, with near-duplicates dropped above a similarity threshold',
+      'Refusal guardrails so thin retrieved context yields no answer rather than a plausible one, with the scoring, vehicle filtering, and dedupe covered by unit tests instead of checked by eye',
+      'A 33-case evaluation suite that runs the production prompt, retrieval, model call, and policy in CI and fails a pull request when any case regresses against the committed baseline',
+    ],
+    evidenceSignal:
+      'The product has moved beyond basic logging into a setup-learning loop: free users can compare against the previous session, while Pro users can choose a same-vehicle baseline and review deterministic comparison signals with context warnings instead of causal claims. That loop now holds for a real track day: two sessions logged on the same day with Start Time left blank compare in the order they were run, and the database the sessions live in builds from the repository rather than from a hosting dashboard.',
+    nextStep:
+      'Validate whether Session Comparison v1 helps users return after repeat track days, then decide whether CSV import, richer telemetry summaries, saved takeaways, or coach-facing comparison workflows should come next.',
+    standaloneMockStatus: 'in-progress',
+    featurePresentations: [
+      {
+        slug: 'session-compare',
+        eyebrow: 'Shipped feature · product brief',
+        title: 'Session Compare',
+        summary:
+          'Shipped Session Comparison v1 for Trackday Tuner: a Pro workflow where users choose a same-vehicle baseline and compare setup changes, conditions, lap-summary metrics, and context warnings without treating the result as proof of causation.',
+        links: [
+          { label: 'Read the brief', href: '/products/track-tuner/session-compare' },
+          {
+            label: 'View wireframes',
+            href: '/products/track-tuner/session-compare/wireframes',
+          },
+        ],
+      },
+    ],
+    visualAssets: {
+      note:
+        'Screenshots use Trackday Tuner demo data from the shipped Session Comparison v1 flow. No measured result is claimed.',
+      items: [
+        {
+          label: 'Compare CTA',
+          src: trackTunerSessionDetailCompareCta,
+          alt: 'Trackday Tuner session detail page showing the free previous-session comparison and Compare Sessions CTA.',
+        },
+        {
+          label: 'Baseline picker',
+          src: trackTunerBaselinePicker,
+          alt: 'Trackday Tuner Session Comparison page showing the same-vehicle baseline picker with same-track sessions prioritized.',
+        },
+        {
+          label: 'Strength and metrics',
+          src: trackTunerStrengthLapMetrics,
+          alt: 'Trackday Tuner Session Comparison page showing the comparison strength banner and lap-summary metrics.',
+        },
+        {
+          label: 'Context flags',
+          src: trackTunerContextFlags,
+          alt: 'Trackday Tuner Session Comparison page showing context flags for track, conditions, tires, lap data, and notes.',
+        },
+        {
+          label: 'Setup deltas',
+          src: trackTunerSetupDeltas,
+          alt: 'Trackday Tuner Session Comparison page showing grouped setup deltas with changed fields shown by default.',
+        },
+      ],
+    },
+    updates: [
+      {
+        date: 'Merged',
+        tag: 'Update 17',
+        title: 'Provision the photo bucket from the repository',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/50',
+        body: 'Adding a bike with a photo failed on any freshly built database with Bucket not found: the storage bucket the garage form uploads to had only ever existed in the hosting dashboard, so a database built from the repository had no working garage. The bucket is now declared in the repository config, public to read and images only, with a migration adding policies so a rider can create, replace, and delete photos only inside their own folder. An end-to-end test proves it on a from-scratch stack, failing before and passing after, including a rider being refused when writing outside their own folder, and a unit guard pins the bucket and its owner-only policies. This was one of the prerequisites for opening signup.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 16',
+        title: 'Cover database functions that never decide who can run them',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/38',
+        body: 'A database function that runs with its owner’s privileges is callable by anyone until its own migration says otherwise, and nothing checked that. A test now reads the permissions on each of those functions and fails when one has never been granted or revoked, so a new one cannot ship quietly open to anyone holding the app’s public API key.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 15',
+        title: 'Build a fresh database from the repository',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/36',
+        body: 'The core tables were created by hand in the hosting dashboard and no migration ever created them, so a clean checkout could not start a working database and a fresh project answered every request with permission denied. Migrations now create the schema and grant the roles the app actually uses, so the database comes from the repository instead of from memory.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 14',
+        title: 'Compare same-day sessions logged without a start time',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/34',
+        body: 'Two sessions logged on the same day with Start Time left blank did not order correctly, so the second one could compare against the wrong session or show no comparison at all. The lookup now sorts by the same rule the rest of the app uses instead of leaning on a start time that may not be there, and a session that saved only a baseline row still renders its diff. An end-to-end test logs two same-day sessions with the field blank and checks what was actually written.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 13',
+        title: 'Stop primary calls to action rendering invisible',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/33',
+        body: 'The main call to action was white text on a white pill: a stylesheet rule set outside the app’s cascade layers was beating the one meant to color it. Every rule now sits in a declared layer, and a test fails the build if one escapes again.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 12',
+        title: 'Ship Session Comparison v1',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/16',
+        body: 'Added Session Comparison v1 for Pro users: choose a baseline session from the same vehicle, prioritize same-track comparisons, review strength labels, context flags, available lap-summary metrics, and grouped setup deltas. The comparison is rules-based, avoids causal claims, and keeps the free previous-session comparison intact.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 11',
+        title: 'Add public read-only demo mode',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/15',
+        body: 'Adds a Try Demo path that drops visitors into the real authenticated app UI without signing in or calling Supabase. Demo mode uses local typed sample data for a Yamaha R6, Texas tracks, and sample sessions, shows Pro-preview analytics and Race Engineer surfaces, and keeps every create, edit, delete, billing, export, and live AI action read-only.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 10',
+        title: 'Deduplicate repeated Race Engineer prompts',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/13',
+        body: 'Prevents riders from accidentally sending the same AI question over and over. If the same request comes in within five minutes, the app reuses the recent result instead of spending time and money on another answer.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 09',
+        title: 'Add ai_requests inspection script',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/12',
+        body: 'Adds a local way to review recent Race Engineer activity without digging through the database manually, making it easier to spot failed requests, refusals, and usage patterns while testing.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 08',
+        title: 'Add agent doc sync guardrails',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/11',
+        body: 'Adds guardrails so contributor and AI-agent instructions stay clean and consistent. This keeps the project easier to maintain as more automation and helper workflows get added.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 07',
+        title: 'Add privacy-safe AI request observability',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/10',
+        body: 'Makes Race Engineer activity easier to understand without storing sensitive prompt text. The app can now track patterns, refusals, and safety decisions while keeping request details privacy-safe.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 06',
+        title: 'Verify personal evidence against loaded context',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/9',
+        body: 'Stops the AI from acting like it knows personal riding history unless that session data is actually loaded. If the evidence is not available, the answer stays general or refuses the request.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 05',
+        title: 'Harden Race Engineer refusal handling',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/8',
+        body: 'Tightens the boundaries around what Race Engineer will answer. Off-topic, unsafe, or manipulative prompts now get a clear refusal instead of a fake setup recommendation.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 04',
+        title: 'Load local env in Playwright config',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/7',
+        body: 'Makes the browser test setup behave more like the real local app by loading the same environment settings. This reduces false test failures and makes the test workflow easier to run.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 03',
+        title: 'Add adaptive race engineer flows and session history UX',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/6',
+        body: 'Turns Race Engineer from a single advice box into a fuller workflow: day plans, recommendation feedback, session memory, environment details, settings, and cleaner navigation around past sessions.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 02',
+        title: 'Add Race Engineer AI assistant',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/5',
+        body: 'Ships the first Race Engineer assistant for Pro users, giving setup advice from saved session context and a small knowledge base while adding citations, safety rules, rate limits, and tests.',
+      },
+      {
+        date: 'Merged',
+        tag: 'Update 01',
+        title: 'Stabilize app wiring, lint config, and contributor docs',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/4',
+        body: 'Cleans up the app foundation before adding more AI work: navigation, auth, billing display, session comparison, environment helpers, contributor docs, automated checks, and test coverage.',
+      },
+    ],
+  },
+  /* The screenshots are the plugin built from its repository and run in a throwaway
+     Obsidian vault of made-up notes against a local Ollama model; every chat reply in
+     them is the model's real output. */
   {
     name: 'Dragonglass AI',
     slug: 'dragonglass',
@@ -1500,6 +921,7 @@ const allProducts = [
     status: 'active-build',
     year: '2026',
     accent: 'oklch(0.68 0.16 300)',
+    image: dragonglassVaultAnswer,
     repoUrl: 'https://github.com/codyjohnsontx/dragonglass',
     role: 'Full-stack product builder',
     stack: ['TypeScript', 'Obsidian API', 'Ollama', 'OpenAI', 'Anthropic', 'Gemini', 'Vitest'],
@@ -1520,7 +942,7 @@ const allProducts = [
       'Switching providers keeps the conversation, including earlier tool calls, and the next message goes to the new provider with the whole history.',
     ],
     mvpScope: [
-      'Five streaming provider integrations: Ollama, OpenAI, Anthropic, Gemini, and a custom OpenAI-compatible endpoint',
+      'Four streaming provider integrations, Ollama, OpenAI, Anthropic, and Gemini, plus support for any custom OpenAI-compatible endpoint',
       'Tool calling with shared conversation history across providers',
       'A cancellable agent loop with input validation and execution limits',
       'Read tools: list, read, search, and metadata with links and backlinks',
@@ -1531,9 +953,58 @@ const allProducts = [
     evidenceSignal:
       'Verified live against a local Ollama model, with every scenario in the README exercised in a real Obsidian instance on a disposable vault. The cloud wire formats are tested against shapes from the official API documentation, not live keys, and the README says so. Not yet in the community plugin directory; installed manually.',
     nextStep:
-      'Get it into the community plugin directory. After that the roadmap is the tools the vault still lacks: Canvas and Bases, folder, move, and rename operations, frontmatter-specific editing, and semantic search instead of substring matching.',
+      'Get it into the community plugin directory. After that the roadmap is the tools the vault still lacks: Canvas and Bases, folder, move, and rename operations, frontmatter-specific editing, and semantic search instead of keyword matching.',
+    visualAssets: {
+      note:
+        'Screenshots of the plugin built from its repository and running in Obsidian 1.14 on a demo vault of made-up notes, with a local Ollama model (qwen3:8b). The answers and the proposed edit are the model’s real output.',
+      items: [
+        {
+          label: 'Vault answer',
+          src: dragonglassVaultAnswer,
+          alt: 'Obsidian with the Dragonglass AI sidebar open beside a brewing log note: the user asks which V60 grind setting gave the best cup, the model calls search_notes for the brewing log, and answers that setting 20 on Oct 30 was best, with token usage under the reply.',
+        },
+        {
+          label: 'Edit review',
+          src: dragonglassEditReview,
+          alt: 'A Dragonglass AI proposal card in the Obsidian sidebar: an edit to Coffee/Pour-over recipe.md adding one line about grind setting 20, shown as a diff with one added line, marked awaiting review, with Approve and Reject buttons while the note itself is still unchanged.',
+        },
+        {
+          label: 'Settings',
+          src: dragonglassSettings,
+          alt: 'Dragonglass AI settings in Obsidian: a provider picker set to Ollama (local), the Ollama server URL, model, context window, and a let-thinking-models-think toggle, then the OpenAI section with an API key kept in Obsidian’s keychain.',
+        },
+      ],
+    },
     standaloneMockStatus: 'planned',
     updates: [
+      {
+        date: 'Nov 1, 2026',
+        tag: 'PR #18',
+        title: 'Made search follow the links of a note the question names',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/18',
+        body: 'Some answers sit one hop away: the question names a note, but what it asks about lives in a note that one links to. Search now returns at least 10 results, and when a result is the note the query names, it also lists the notes that note links to and reads them in full within half of the note-text budget. An all-words search now lists notes with every word first and fills the rest with notes that have some of them, and when that finds nothing inside the chosen folder it falls back to the whole vault.',
+      },
+      {
+        date: 'Oct 31, 2026',
+        tag: 'PR #17',
+        title: 'Stopped a guessed search folder from hiding the answer',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/17',
+        body: 'When the model narrows a search to the wrong folder, the answer used to stay hidden. A folder-restricted search with no match now returns results from the whole vault and says so, and one whose matches outside the folder rank higher names up to three of them first. The live agent runner can also record each round’s thinking, tool arguments, and result heads.',
+      },
+      {
+        date: 'Oct 31, 2026',
+        tag: 'PR #14',
+        title: 'Moved search onto an in-memory BM25 index with full note text in results',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/14',
+        body: 'Search now ranks on a BM25 index built in memory from the vault’s cached note text once Obsidian has loaded and kept current from vault events, instead of scanning every note on each call, with the matching rules carried over exactly. Results append the full text of the best matches within a token budget, a new setting beside the per-note character cap: 4,000 tokens by default and at most a quarter of the context window. Folder listings are capped at 500 entries, and a retrieval lab with a vault generator, a benchmark, and a live-run harness went in alongside.',
+      },
+      {
+        date: 'Oct 30, 2026',
+        tag: 'PR #13',
+        title: 'Made vault search match any word and rank by how many match',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/13',
+        body: 'Search required every word of the query, so the multi-word queries local models write returned one note or none. It now matches any word, dropping stopwords, and ranks by how many distinct words a note matches, then by a score for matches in its name, headings, and body. Each result shows the note name and path, the words it matched, and an excerpt around the densest match. Terms match at the start of a word, Chinese, Japanese, and Korean terms match anywhere, and asking for all words keeps the strict behavior.',
+      },
       {
         date: 'Oct 30, 2026',
         tag: 'PR #5',
@@ -1568,6 +1039,604 @@ const allProducts = [
         title: 'Shipped the MVP: Ollama and OpenAI chat with approval-gated note edits',
         url: 'https://github.com/codyjohnsontx/dragonglass/pull/1',
         body: 'The first vertical slice: a sidebar chat that streams from a local Ollama model or OpenAI with the user’s own key, read tools over the vault, and an edit flow in which the model proposes a find-and-replace, the diff is shown, and nothing is written until the user approves. Snapshots back every applied edit so it can be reverted.',
+      },
+    ],
+  },
+  {
+    name: 'draftSpace',
+    slug: 'draftspace',
+    repoUrl: 'https://github.com/codyjohnsontx/draftSpace',
+    tier: 'flagship',
+    featured: false,
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.66 0.16 265)',
+    role: 'Product Manager / Developer',
+    stack: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'three.js',
+      'Tailwind CSS',
+      'Zustand',
+      'IndexedDB',
+      'Cloudflare Workers',
+    ],
+    oneLiner:
+      'A system-design board you can tilt: flat it edits like any whiteboard, tilted the layers separate so a service reaching past its layer becomes a visible diagonal.',
+    audience:
+      'Engineers, product managers, and technical founders who sketch a system on a whiteboard and then have to explain which part talks to which.',
+    jtbd:
+      'When someone is designing or explaining a system, they need to see which connections cross a layer boundary without tracing every arrow by hand.',
+    problem:
+      'A whiteboard treats every box as equal. Architecture does not: data sits under services, services under clients. On a flat canvas that structure lives entirely in the arrows, so the one connection that skips a layer looks exactly like all the others.',
+    coreWorkflow: [
+      'Draw on an infinite canvas the way you would on any whiteboard: rectangles, ellipses, diamonds, selection, movement, resizing, clipboard, undo and redo, saved locally in the browser.',
+      'Give an element a node kind and a layer, data, services, or clients, and it renders as a datastore, queue, service, or decision instead of a plain box.',
+      'Wire two shapes together with the connector tool on the flat canvas: hovering shows the port a press would take, the edge routes live while you drag, and once it exists you can select it, restyle it, put arrowheads on either end, and label it. Routing is computed once as a pure function and drawn by both views, so the flat board and the tilted one cannot disagree.',
+      'Duplicate, copy, and paste a group and the connectors inside it come along, rebound to the copies and undone in one step. An edge with only one end in the selection is dropped rather than left pointing at the original.',
+      'Tilt the space and the tiers physically separate, so any connector crossing a layer reads as a diagonal.',
+      'Keep editing while tilted: select, drag on the tier plane with grid snapping, create connectors, delete. Every action runs through the same command store, so undo, autosave, and the live room work there too.',
+      'Open a temporary approval-based live room for cursors and shared edits when walking someone through the board.',
+    ],
+    mvpScope: [
+      'Local-first infinite canvas with pan, pointer-centered zoom, shape tools, selection, resize, clipboard, undo/redo, and IndexedDB persistence',
+      'Board schema v3 that adds connectors alongside elements and migrates v1 and v2 boards in place',
+      'Depth as the architectural tier: data at the bottom, services above, clients on top',
+      'One toggle between the 2D canvas and the 3D space over a single board document, with shared selection and a shared style inspector',
+      'Port-based connectors with orthogonal elbow routing, computed as pure functions and consumed by both renderers',
+      'Connector tool on the flat canvas with port snapping, a live routed preview, selection on the routed line, per-edge stroke and width, arrowheads at either end, and labels placed along the route',
+      'Duplicate, copy, and paste that carry the connectors inside a selection and rebind them to the copies',
+      'Node kit rendering datastores, queues, services, and decisions from the shared shape factory, still carrying user styling',
+      'Temporary approval-based live rooms for cursors and shared edits without uploading a durable copy of the board',
+    ],
+    evidenceSignal:
+      'The 3D view is a working prototype rather than a demo reel: it shares the board document, the selection, the style inspector, and the command store with the 2D canvas, so undo, autosave, and live collaboration work in it with no new plumbing. Connectors were deliberately kept outside the existing element type so the 21 places that consume that type did not have to change; they are now first-class on the flat canvas too, drawn with their own tool, selectable on the routed line, stylable, and carried through duplicate and paste. Covered by 219 unit tests and 69 end-to-end tests, including one that seeds an architecture board, toggles to 3D, drags a node, and asserts the move landed in storage and shows up unchanged in the 2D view. No users and no measured result yet.',
+    nextStep:
+      'Put the tilted view in front of people who actually draw architecture and find out whether the diagonal reads as "this crosses a layer" without being explained. Capture the flat board beside the separated tiers, since that side-by-side is the pitch. It is a working prototype, not a demo reel, but there are no users and no measured result yet.',
+    standaloneMockStatus: 'planned',
+    updates: [
+      {
+        date: 'Aug 14, 2026',
+        tag: 'PR #16',
+        title: 'Kept the selection when a duplicate is refused',
+        url: 'https://github.com/codyjohnsontx/draftSpace/pull/16',
+        body: 'Pressing duplicate on something the board would not copy cleared the selection anyway, so the shapes you were holding dropped out from under you and there was nothing left to try again on. The selection only changes now when copies actually came back. The same pass made the connector tool cheaper to hold armed, since it had been re-measuring the ports under the pointer on every move, and put the connector label limit in one place instead of three.',
+      },
+      {
+        date: 'Aug 10, 2026',
+        tag: 'PR #14',
+        title: 'Kept connectors attached through duplicate, copy, and paste',
+        url: 'https://github.com/codyjohnsontx/draftSpace/pull/14',
+        body: 'Copying a group of shapes left their connectors behind, so the copy arrived as loose boxes with the structure stripped out. A connector with both ends inside the selection now travels with it, rebound to the new shapes and applied as a single step, so one undo takes the shapes and the edges back together. An edge with only one end copied is dropped rather than left pointing at the original, and a pasted payload is checked entry by entry so a hand-edited one cannot alias two copies to the same shape or abort the rest of the paste.',
+      },
+      {
+        date: 'Aug 06, 2026',
+        tag: 'PR #13',
+        title: 'Made connectors usable on the flat canvas',
+        url: 'https://github.com/codyjohnsontx/draftSpace/pull/13',
+        body: 'Connectors existed on the board but the only way to make one was dragging a port in the tilted view, and once it existed you could not select it, delete it, or restyle it. The flat canvas now has a connector tool: hovering shows the port a press would take, the edge routes live while you drag, and a second edge between the same pair is refused. An edge is selected by its actual routed line rather than its bounding box, deleted as one undoable step, and given a stroke color and width, arrowheads at either end or both, and a label placed halfway along the route. Edges follow their shapes during a move or resize instead of snapping into place on release.',
+      },
+      {
+        date: 'Aug 02, 2026',
+        tag: 'PR #11',
+        title: 'Shipped the 3D space view',
+        url: 'https://github.com/codyjohnsontx/draftSpace/pull/11',
+        body: 'The same board document now opens as a flat whiteboard or as a tiered architecture diagram from one toggle. Depth is the architectural tier, data at the bottom, services above, clients on top, so tilting the space separates the layers and a connector that skips one becomes a visible diagonal. Board schema v3 adds connectors alongside elements and migrates v1 and v2 boards in place. Connectors live outside the existing element type on purpose, so the 21 consumers of that type were left alone, and one routing function feeds both renderers so the two views cannot drift. Editing in 3D dispatches through the existing command store, so undo, redo, autosave, and the live room work there without new plumbing.',
+      },
+    ],
+  },
+  {
+    name: 'OncoPath',
+    slug: 'oncopath',
+    tier: 'flagship',
+    featured: false,
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.6 0.17 300)',
+    image: oncopathHomeHero,
+    liveUrl: 'https://onco-path.vercel.app',
+    repoUrl: 'https://github.com/codyjohnsontx/ocnoPath',
+    role: 'Product Manager / Developer',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'ClinicalTrials.gov API', 'Groq/LLM', 'zod'],
+    oneLiner:
+      'A calmer path through cancer trials: plain-English explanations of public clinical trials, built to be checked, not trusted blindly.',
+    audience:
+      'Cancer patients and caregivers who want to walk into an oncology appointment with the right questions about clinical trials.',
+    jtbd:
+      'When a patient or caregiver finds a trial that might matter, they need to understand what it is, where it may or may not fit, and what to ask their care team, without the app pretending it can decide for them.',
+    problem:
+      'ClinicalTrials.gov records are public but written for researchers. Eligibility criteria, phases, and endpoints are hard for patients to parse, so relevant trials never make it into the appointment conversation.',
+    coreWorkflow: [
+      'Enter basic context only: cancer type, age group, and location. Never records or identifiers.',
+      'Search public ClinicalTrials.gov records and open a trial to read a plain-English explanation: why it may be relevant, possible eligibility concerns, what information is missing, and questions to ask the oncology team.',
+      'Explanations run behind a safety validator with a deterministic source-grounded fallback when the model is unavailable or its output fails checks.',
+      'Save trials to a printable doctor discussion sheet, stored in the browser only.',
+    ],
+    mvpScope: [
+      'ClinicalTrials.gov v2 API search with plain-English trial explanations',
+      'Safety validator with a deterministic source-grounded fallback',
+      'Printable doctor discussion sheet and saved searches in localStorage, so no PHI is collected',
+      'Deliberate non-goals: no diagnosis, no treatment advice, no eligibility confirmation, no enrollment recommendations',
+      'Faithfulness evaluation harness with a second-model judge and human calibration',
+    ],
+    evidenceSignal:
+      'An evaluation harness measures whether the AI explanations stay faithful to the source record. It surfaced a validator bug that rejected 100 percent of valid output, a warnings field the model used for unsourced clinical claims, and a self-grading bug in the judge. Human calibration then showed the judge is too lenient, so its 81 percent faithfulness score is reported but not trusted.',
+    nextStep:
+      'Tighten the judge and the generator so the model stops addressing the reader as if it knows their diagnosis, then re-run human calibration before trusting any faithfulness number.',
+    standaloneMockStatus: 'in-progress',
+    visualAssets: {
+      note:
+        'The app uses public ClinicalTrials.gov records and only the basic context a person chooses to share. Each trial gets explanation notes tied to the official record, and saved trials become a printable sheet to bring to an appointment. The eval output is from a real harness run; the faithfulness number it reports is not yet trusted.',
+      items: [
+        {
+          label: 'Trial results',
+          src: oncopathResults,
+          alt: 'OncoPath results page listing recruiting breast cancer trials from public ClinicalTrials.gov records.',
+        },
+        {
+          label: 'Explanation notes',
+          src: oncopathTrialExplanation,
+          alt: 'OncoPath trial detail page showing plain-English explanation notes generated from the official record.',
+        },
+        {
+          label: 'Discussion sheet',
+          src: oncopathDiscussionSheet,
+          alt: 'OncoPath printable doctor discussion sheet with saved trials, discussion points, and questions for the oncology team.',
+        },
+        {
+          label: 'Eval run output',
+          src: oncopathEvalTerminal,
+          alt: 'Terminal output from a real OncoPath eval harness run showing 12 of 12 model outputs with zero fallbacks.',
+        },
+      ],
+    },
+    updates: [
+      {
+        date: 'Live',
+        tag: 'Deploy',
+        title: 'Deployed OncoPath to production',
+        url: 'https://onco-path.vercel.app',
+        body: 'OncoPath is now live and free at onco-path.vercel.app, deployed on Vercel with the repo connected for automatic deploys. Anyone can search public ClinicalTrials.gov records, read plain-English explanation notes, and print a discussion sheet. No accounts, no PHI collected, and the eval faithfulness number is still reported but not trusted.',
+      },
+      {
+        date: 'Current',
+        tag: 'Eval',
+        title: 'Built an accuracy-evaluation harness and a faithfulness judge',
+        url: 'https://github.com/codyjohnsontx/ocnoPath',
+        body: 'Snapshotted about a dozen real trials as a reproducible test set, then measured the generator against it. Fixed a validator bug that silently rejected 100 percent of valid output (0 to 100 percent usable), removed a warnings field the model used for unsourced clinical claims, and fixed a self-grading bug in the judge (67 to 81 percent). Human calibration then revealed the judge is too lenient, so the faithfulness number is not trusted yet.',
+      },
+      {
+        date: 'Build',
+        tag: 'Prototype',
+        title: 'Working prototype of the trial explainer and discussion sheet',
+        url: 'https://github.com/codyjohnsontx/ocnoPath',
+        body: 'Runs locally, not yet deployed. Searches public ClinicalTrials.gov records, explains each trial in plain English behind a safety validator with a deterministic fallback, and saves trials to a printable doctor discussion sheet. Context stays in the browser, so the app collects no protected health information by design.',
+      },
+    ],
+  },
+  {
+    name: 'RideSense',
+    slug: 'ridesense',
+    repoUrl: 'https://github.com/codyjohnsontx/ridesense',
+    tier: 'flagship',
+    featured: false,
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.66 0.16 170)',
+    image: rideSense,
+    role: 'Product Manager / Developer',
+    stack: [
+      'Next.js',
+      'TypeScript',
+      'FastAPI',
+      'Supabase Postgres',
+      'Strava OAuth',
+      'TrainerRoad ingest',
+      'Grounded AI',
+    ],
+    oneLiner:
+      'Full-stack training analytics MVP that unifies TrainerRoad, Strava, and uploaded ride files into one canonical activity timeline with workload trends and grounded AI Q&A.',
+    audience:
+      'Enthusiast and competitive cyclists who use multiple platforms, log structured intervals, and want decision-support for the next training block.',
+    jtbd:
+      'After workouts accumulate across multiple tools, riders need one canonical view of their training history and evidence-bound answers that explain workload, consistency, fatigue, freshness, and trend changes from their own data.',
+    problem:
+      'Cyclists often split training history across TrainerRoad, Strava, head-unit exports, and manual files, making it hard to trust load trends, avoid duplicate activities, and understand what their recent work actually signals.',
+    coreWorkflow: [
+      'Connect Strava through OAuth, bring in TrainerRoad activity context, or upload GPX, TCX, and FIT ride files.',
+      'Normalize provider data into one activity pipeline, then merge overlapping efforts into a canonical timeline.',
+      'Apply deterministic analytics for weekly load, form, fatigue, freshness, category breakdowns, and trend detection.',
+      'Explore the dashboard through accessible charts with hover readouts, keyboard support, mobile interactions, and screen reader copy.',
+      'Ask grounded training questions over computed metrics, with fallback handling when AI parsing fails instead of breaking the experience.',
+    ],
+    mvpScope: [
+      'Next.js dashboard UI with FastAPI backend',
+      'Strava OAuth, sync hardening, and UTC-safe date range filtering',
+      'TrainerRoad, Strava, and uploaded file activity ingestion into a canonical timeline',
+      'Deterministic training analytics for workload trends, readiness signals, category breakdowns, and rolling date windows',
+      'Accessible dashboard visualizations with hover readouts, live metric explanations, keyboard support, and mobile behavior',
+      'Grounded AI Q&A with safer fallback behavior when model responses are malformed',
+      'Seeded demo workflow, README screenshots, custom logo, app icon, guided onboarding, and same-origin local API proxy',
+    ],
+    evidenceSignal:
+      'The MVP now demonstrates production-shaped product judgment across ingestion, deduplication, deterministic analytics, accessible visualization, AI guardrails, local development ergonomics, and public demo documentation.',
+    nextStep:
+      "Validate the seeded demo flow against real rider history, tighten TrainerRoad ingestion depth, and use the dashboard's load, form, fatigue, freshness, and grounded Q&A signals to drive the next round of user interviews.",
+    visualAssets: {
+      note: 'Public screenshots use seeded demo data, not private athlete data.',
+      items: [
+        {
+          label: 'Desktop dashboard',
+          src: rideSenseOverviewDesktop,
+          alt: 'RideSense desktop dashboard showing seeded demo training analytics.',
+        },
+        {
+          label: 'Mobile dashboard',
+          src: rideSenseOverviewMobile,
+          alt: 'RideSense mobile dashboard showing seeded demo training analytics.',
+        },
+      ],
+    },
+    standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #18',
+        title: 'Added README screenshots with seeded demo data',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/18',
+        body: 'Added desktop and mobile README screenshots captured from seeded demo data so GitHub visitors can immediately understand the dashboard experience without exposing private athlete data.',
+      },
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #17',
+        title: 'Made analytics load trend tests deterministic',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/17',
+        body: 'Fixed flaky analytics tests by making rolling date-window behavior deterministic around UTC midnight boundaries.',
+      },
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #16',
+        title: 'Added the RideSense app icon',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/16',
+        body: 'Added an app icon to give the product a more complete, installable product feel.',
+      },
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #15',
+        title: 'Hardened AI fallback behavior',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/15',
+        body: 'Added safer fallback behavior when AI response parsing fails so malformed model output does not break the grounded Q&A experience.',
+      },
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #14',
+        title: 'Added same-origin local API proxying',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/14',
+        body: 'Routed frontend API calls through the Next.js app to the FastAPI backend during local development, simplifying setup and avoiding client-side backend URL wiring.',
+      },
+      {
+        date: 'May 31, 2026',
+        tag: 'PR #13',
+        title: 'Added guided onboarding and clearer docs',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/13',
+        body: 'Added a guided onboarding experience and updated documentation so the product flow and local setup are easier to understand.',
+      },
+      {
+        date: 'May 09, 2026',
+        tag: 'PR #12',
+        title: 'Refactored the app shell and training analytics experience',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/12',
+        body: 'Refactored the app shell and analytics surface, polished mobile navigation accessibility, fixed active nav path matching, preserved accessible mobile dialog behavior, and hardened shell sync and resize behavior.',
+      },
+      {
+        date: 'May 02, 2026',
+        tag: 'PR #11',
+        title: 'Improved chart accessibility and metric explanations',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/11',
+        body: 'Added screen reader support for metric tooltip copy and improved chart explanations with directional context so dashboard metrics are easier to interpret.',
+      },
+      {
+        date: 'May 02, 2026',
+        tag: 'PR #10',
+        title: 'Added chart hover and live readout improvements',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/10',
+        body: 'Added chart hover readouts, improved mobile chart interactions, added live chart readouts, improved keyboard accessibility, and fixed stale heatmap hover behavior.',
+      },
+      {
+        date: 'Apr 29, 2026',
+        tag: 'PR #9',
+        title: 'Added the RideSense logo component',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/9',
+        body: 'Added a custom RideSense logo component to give the product stronger identity and polish inside the app.',
+      },
+      {
+        date: 'Apr 29, 2026',
+        tag: 'PR #8',
+        title: 'Hardened Strava OAuth sync and range filtering',
+        url: 'https://github.com/codyjohnsontx/ridesense/pull/8',
+        body: 'Hardened Strava sync behavior, improved activity analysis range filters, fixed UTC date boundary handling, and aligned range metadata with count behavior.',
+      },
+      {
+        date: 'Apr 28, 2026',
+        tag: 'PR #7',
+        title: 'Hardened Strava OAuth ahead of going live',
+        body: 'Stamped a 5-minute TTL onto the OAuth state token so a stolen redirect cannot be replayed later, taught sync_strava to mark the connection status="error" when refresh fails so the UI can prompt for a relink, and locked the behavior in with 6 new tests. Next: register the Strava app and run real activities through the canonical pipeline.',
+      },
+      {
+        date: 'Apr 28, 2026',
+        tag: 'PR #6',
+        title: 'GPX / TCX / FIT upload pipeline',
+        body: 'Built three parsers with defusedxml for XML formats and fitparse for FIT behind one EXTENSION_TO_PARSER dispatcher, using a SHA-256 content hash as the upsert identity so re-uploads are idempotent. Added a drag-and-drop card on the Connections page while TrainerRoad remains scaffolded.',
+      },
+      {
+        date: 'Apr 28, 2026',
+        tag: 'PR #5',
+        title: 'Replaced HMAC-only signing with real Fernet encryption',
+        body: 'The previous token wrapper was tamper-evident but plaintext-readable. Swapped to Fernet with the key derived from APP_SECRET_KEY, added a guard that refuses default or weak secrets outside development, and pinned the property that plaintext must not appear in ciphertext with a dedicated test.',
+      },
+      {
+        date: 'Apr 27, 2026',
+        tag: 'Note',
+        title: 'Audited the README against the implementation',
+        body: 'Three claims did not match the code: tokens were called encrypted, TrainerRoad was described as storing cookies only, and the AI was described as deterministic. Rewrote each to match what the code actually does.',
+      },
+    ],
+  },
+  {
+    name: 'Wattsmith',
+    slug: 'wattsmith',
+    repoUrl: 'https://github.com/codyjohnsontx/wattSmith',
+    tier: 'flagship',
+    featured: false,
+    status: 'active-build',
+    accent: 'oklch(0.64 0.15 110)',
+    image: wattsmithBuilderDashboard,
+    role: 'Product Manager / Developer',
+    stack: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+      'Vitest',
+    ],
+    oneLiner:
+      'Wattsmith is a local-first cycling training workspace for self-coached riders and coach-led athletes. It connects performance markers like FTP, form, fatigue, TSS, and VO2 progress with analytics, AI-assisted insight, and workout creation; the current builder supports reusable FTP-based blocks, load inspection, and verified .mrc/.erg exports.',
+    audience:
+      'Cyclists who train with FTP-based structured workouts and want to build reusable sessions before riding them in external training platforms.',
+    jtbd:
+      'When planning a structured ride, cyclists need to build intervals, understand watts and zones against their FTP, save the workout, and export a file that matches what the chart shows.',
+    problem:
+      'Cyclists can sketch a workout quickly, but turning that sketch into a reliable, reusable, and rideable file is harder when common warmups, intervals, recoveries, cooldowns, target types, repeats, profile assumptions, chart inspection, and export behavior are split across separate tools or hidden in file syntax.',
+    coreWorkflow: [
+      'Browse and search a grouped 60-block starter palette across warmup, endurance, tempo, sweet spot, threshold, VO2, anaerobic, recovery, cooldown, and general categories.',
+      'Drag warmups, endurance blocks, intervals, recovery steps, and cooldowns from the palette into explicit drop joints in the root workout or repeat children.',
+      'Create, edit, duplicate, delete, and insert custom reusable blocks while protected starter blocks remain deterministic.',
+      'Reorder existing workout blocks with drag handles, magnetic insertion previews, drag overlays, undo/redo, and button fallbacks.',
+      'Inspect the interactive power chart by hover, tap, or keyboard focus to compare watts, %FTP, zones, selected blocks, the FTP line, and the 0W baseline.',
+      'Review export readiness before downloading .mrc or .erg files so validation, FTP, timeline, targets, preview, filename, and range strategy are visible.',
+      'Export .mrc or .erg files whose generated timelines are checked against the source workout for durations, power targets, ramps, repeats, and cues.',
+    ],
+    mvpScope: [
+      'Tabbed workspace for Builder, Library, Profile, and Export',
+      'Manual block builder with add, delete, duplicate, reorder, repeat blocks, target ranges, ramps, single targets, and text cues',
+      '60 protected starter reusable blocks across Warmup, Endurance, Tempo, Sweet Spot, Threshold, VO2, Anaerobic, Recovery, Cooldown, and General',
+      'Grouped searchable reusable block palette with drag/drop insertion and button fallbacks',
+      'Custom reusable block management for creating, editing, duplicating, deleting, and inserting saved workout pieces',
+      'Explicit drop joints before and after root blocks and inside repeat children, with invalid nested placements blocked',
+      'Magnetic insertion previews, drag overlays, and drag handles for reordering existing workout blocks',
+      'Local workout library with starter templates, search, category filtering, duplicate, rename, delete, and load',
+      'Starter template preview modal with chart, metrics, profile warnings, training rationale, and citation links',
+      'Accessible modal behavior with focus trap, Escape close, focus restore, search labeling, and drop joint announcements',
+      'Collapsible block editing for workout blocks and nested repeat children',
+      'Local athlete profile for FTP/default assumptions and workout warnings',
+      'Interactive SVG power chart with hover/tap inspection, keyboard-accessible intervals, selected-block highlighting, zone bands, FTP line, 0W baseline, and watts/%FTP y-axis references',
+      'Export readiness checklist covering validation, FTP, timeline, target sanity, file preview, filename, and range export strategy',
+      'Validated .mrc and .erg exports with preview, range export strategy, and shared flattened workout data',
+      'Automated export verification that parses generated .mrc and .erg files back into workout timelines and checks durations, power targets, ramps, expanded repeats, and cue timestamps',
+      'Golden-file checks that keep committed sample exports byte-for-byte aligned with current exporter output',
+      'Workout metrics for duration, zone time, IF/TSS estimates, NP-style estimate, kJ, interval counts, and work-above-threshold style metrics',
+      'Cited workout rationale structure plus Vitest coverage for starter validation, export readiness, clone/rekey behavior, nested drag/drop helpers, validation, exports, export round-trip verification, zones, and science source resolution',
+    ],
+    evidenceSignal:
+      'PR #10 closed a stalled export-confidence milestone by replacing flaky third-party-app testing with automated in-repo verification: generated .mrc/.erg files are parsed back into workout timelines, checked against the source workout, and protected by golden-file tests.',
+    nextStep:
+      'Keep strengthening the manual builder before AI/RAG: clearer training metrics, deeper rationale coverage, profile-driven warnings, duration and difficulty filters, favorites, and stronger empty states. Optional third-party app acceptance checks can still be run in any ERG/MRC-capable tool, but export correctness is now verified in the codebase.',
+    standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'Jul 4, 2026',
+        tag: 'PR #10',
+        title: 'Wattsmith automated export verification',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/10',
+        body: 'Wattsmith exports cycling workouts as .mrc/.erg files for training apps, so those files have to be exactly right. I replaced a manual testing step that relied on a third-party desktop app with automated checks in the codebase. The tests read each exported file back into a workout timeline and confirm it matches the original: durations, power targets, ramps, repeats, and cues. Golden-file checks flag unintended export-format changes. Export correctness is now checked automatically on every change; third-party app acceptance remains a separate optional check. Test count moved from 84 to 119.',
+      },
+      {
+        date: 'Jun 29, 2026',
+        tag: 'PR #6',
+        title: 'Wattsmith reusable palette and drag/drop builder',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/6',
+        body: 'Expanded Wattsmith with a 60-block reusable starter palette, grouped search, custom reusable blocks, drag/drop insertion, explicit drop joints, magnetic insertion previews, and drag handles for reordering workout blocks. The workflow now supports composing structured FTP workouts from reusable pieces while preserving undo/redo behavior, button fallbacks, accessibility improvements, and export-safe workout data. No adoption, speed, retention, or revenue result is claimed.',
+      },
+      {
+        date: 'Jun 25, 2026',
+        tag: 'PR #4',
+        title: 'Wattsmith trust pass: template preview, collapsible editing, and export readiness',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/4',
+        body: 'Added a trust pass for the manual workout-building workflow: starter template previews with chart, metrics, profile warnings, rationale, and citations; collapsible editing for complex workout and repeat blocks; and an export readiness checklist for .mrc and .erg downloads. The goal was to help riders inspect structure, reduce editing noise, and catch export issues before using the file elsewhere. No AI/RAG release or measured usage result is claimed.',
+      },
+      {
+        date: 'Jun 22, 2026',
+        tag: 'PR #1',
+        title:
+          'Wattsmith v0.2: Manual workout builder, library, profile, chart inspection, and export upgrades',
+        url: 'https://github.com/codyjohnsontx/wattSmith/pull/1',
+        body: 'Expanded Wattsmith from a starter FTP-based workout MVP into a local-first manual cycling workout builder. The release adds the tabbed workspace, block editing, repeats, target ranges and ramps, a local library with templates, athlete profile assumptions, interactive chart inspection, workout metrics, cited rationale, validation, and .mrc/.erg export previews without claiming AI generation or production usage metrics.',
+      },
+    ],
+    visualAssets: {
+      note: 'Screenshots from the local demo builder. The current public images show the builder homescreen, workout library, reusable block palette, step editing, template preview, chart inspection, athlete profile, export flow, and mobile views; no measured usage result is implied.',
+      items: [
+        {
+          label: 'Template preview',
+          src: wattsmithTemplatePreview,
+          alt: 'Wattsmith starter template preview modal showing the workout chart, key metrics, profile fit note, training rationale, cautions, and citation links before loading a template.',
+        },
+        {
+          label: 'Collapsed editor',
+          src: wattsmithCollapsedEditor,
+          alt: 'Wattsmith builder with workout blocks collapsed so repeat structures show summary rows and expand controls instead of every nested interval input.',
+        },
+        {
+          label: 'Export readiness',
+          src: wattsmithExportReadiness,
+          alt: 'Wattsmith export tab showing the export readiness checklist, range export strategy, .mrc and .erg download controls, and file preview.',
+        },
+        {
+          label: 'Builder',
+          src: wattsmithBuilderDashboard,
+          alt: 'Wattsmith builder homescreen showing the workout preview chart, FTP controls, builder form, and workout summary for a structured FTP workout.',
+        },
+        {
+          label: 'Builder workspace',
+          src: wattsmithBuilderWorkspace,
+          alt: 'Wattsmith builder workspace showing workout name and description fields, reusable block search, starter block cards, and summary metrics.',
+        },
+        {
+          label: 'Reusable block palette',
+          src: wattsmithReusableBlockPalette,
+          alt: 'Wattsmith reusable block palette showing starter warmup blocks, workout metrics, time in zones, and workout rationale.',
+        },
+        {
+          label: 'Workout step editor',
+          src: wattsmithWorkoutStepEditor,
+          alt: 'Wattsmith workout step editor showing an editable warmup ramp, a nested repeat set, repeat children, and cited workout rationale.',
+        },
+        {
+          label: 'Chart inspection',
+          src: wattsmithChartTooltip,
+          alt: 'Interactive chart tooltip surfacing watts, %FTP, zone, and interval context for the hovered block.',
+        },
+        {
+          label: 'Library',
+          src: wattsmithLibrary,
+          alt: 'Local workout library with starter templates, search, category filters, and saved workouts ready to duplicate, rename, or load.',
+        },
+        {
+          label: 'Profile',
+          src: wattsmithProfile,
+          alt: 'Athlete profile tab where FTP and assumptions drive warnings, power targets, and workout metrics.',
+        },
+        {
+          label: 'Export preview',
+          src: wattsmithExport,
+          alt: 'Export preview showing a validated .mrc or .erg file that matches the visible chart and block structure.',
+        },
+        {
+          label: 'Mobile editor',
+          src: wattsmithMobileEditor,
+          alt: 'Mobile builder view of the same block editor adapted for narrow screens.',
+        },
+        {
+          label: 'Mobile chart',
+          src: wattsmithMobileChart,
+          alt: 'Mobile chart summary showing zone time, intensity, and interval structure at a glance.',
+        },
+      ],
+    },
+  },
+  {
+    name: 'windCast',
+    slug: 'windcast',
+    repoUrl: 'https://github.com/codyjohnsontx/windCast',
+    tier: 'flagship',
+    featured: false,
+    status: 'active-build',
+    year: '2026',
+    accent: 'oklch(0.7 0.15 235)',
+    image: windCastHero,
+    role: 'Product Manager / Developer',
+    stack: [
+      'React 18',
+      'TypeScript',
+      'Vite',
+      'Tailwind CSS',
+      'React Router',
+      'Leaflet + react-leaflet',
+      'leaflet-velocity',
+      'Open-Meteo API',
+      'Vitest',
+    ],
+    oneLiner:
+      'Session planner for wind sports with saved spots, scored forecast hours, and an animated wind map that answers one question: is it worth loading up gear today?',
+    audience:
+      'Recreational and intermediate kiteboarders, wing foilers, and downwind foilers who currently juggle 3+ weather sources to plan a single session.',
+    jtbd:
+      'When deciding whether to load gear and go, I want my saved spots scored against the next 48 hours of wind so I can pick a session window in seconds instead of cross-referencing forecasts.',
+    problem:
+      'Wind-sport athletes check multiple weather sources manually, then mentally map each forecast against per-spot rules (safe direction, ideal wind range, gust tolerance). The math is repetitive, error-prone, and often gets done in the parking lot. windCast encodes per-spot rules once and runs them against every forecast hour automatically.',
+    coreWorkflow: [
+      'Save your spots with per-location rules: ideal/unsafe wind directions, min/ideal/max wind speed, and sport type.',
+      'Open the dashboard. Every saved spot shows current wind, a session-score badge (fire / good / maybe / poor / sketchy), and the best upcoming window.',
+      'Tap a spot for the full 48-hour hourly forecast with per-hour scores and the reasoning behind each label.',
+      'Switch to the map for an animated wind-particle overlay, score-colored pins at each saved spot, and tap-anywhere ephemeral forecasts.',
+      'Swap forecast sources in Settings (mock for demos, Open-Meteo for real data). All providers are interface-compatible.',
+    ],
+    mvpScope: [
+      'Dashboard view sorted by current safety and confidence.',
+      'Per-spot rules engine and scoring (utils/sessionScore.ts) producing 5-label session quality with explainable reasons.',
+      'Interactive Leaflet map with animated wind-particle overlay and tap-to-forecast.',
+      'Spot CRUD with 48-hour hourly forecast detail.',
+      'Pluggable forecast-provider interface (mock + Open-Meteo) with response caching.',
+      'Unit toggles (mph / knots / m/s, F / C).',
+      'Local persistence with JSON import/export for spot backup.',
+    ],
+    evidenceSignal:
+      'Built end-to-end in roughly one day as a tightly-scoped MVP: real Open-Meteo integration, an explainable scoring engine, and an animated wind map that runs on mock data for offline demos. Codebase is test-covered (Vitest + RTL) and structured so future data sources (NOAA GFS for wind grids, NOAA CO-OPS for tides) drop in behind the existing provider interface.',
+    nextStep:
+      'Roadmap from the README: real tide data via NOAA CO-OPS, real wind grids via NOAA GFS through a serverless proxy, long-press to add spots on the map, PWA + offline cache, and push notifications for incoming "fire" windows. Explicitly out of scope: radar/satellite, accounts/auth, route planning, premium tiers.',
+    visualAssets: {
+      note: 'Screenshots use mock seed data, the same data the demo runs on offline.',
+      items: [
+        {
+          label: 'Dashboard',
+          src: windCastHero,
+          alt: 'windCast dashboard listing saved spots with session-score badges and current wind conditions.',
+        },
+        {
+          label: 'Wind map',
+          src: windCastMap,
+          alt: 'Leaflet map with animated wind-particle overlay and score-colored pins at saved spots.',
+        },
+        {
+          label: 'Spot forecast',
+          src: windCastSpotDetail,
+          alt: 'Spot detail page showing 48-hour hourly forecast with per-hour session scores and reasoning.',
+        },
+      ],
+    },
+    standaloneMockStatus: 'in-progress',
+    updates: [
+      {
+        date: 'Jun 02, 2026',
+        tag: 'PR #2',
+        title: 'Added forecast confidence by comparing model output to nearby observations',
+        url: 'https://github.com/codyjohnsontx/windCast/pull/2',
+        body: 'Each saved spot now compares its model forecast against the nearest weather station and surfaces whether the two agree. Added a layers drawer on the map, station and buoy markers from a mock observation provider, a timeline selector for the forecast hour, and decision summaries on the dashboard and spot detail.',
+      },
+      {
+        date: 'Jun 02, 2026',
+        tag: 'PR #1',
+        title: 'Swapped mock-only forecasts for the Open-Meteo provider and shipped spot CRUD',
+        url: 'https://github.com/codyjohnsontx/windCast/pull/1',
+        body: 'Replaced the mock-only forecast pipe with a real Open-Meteo provider behind the existing interface, added per-route error boundaries so a single forecast failure does not take down the dashboard, and built the spot CRUD that the scoring engine needs to do anything useful. Settings now exposes the forecast-source toggle, unit preferences (mph/knots/m/s), and JSON import/export for spot backup. Vitest suites were added for forms, hooks, and forecast utilities.',
+      },
+      {
+        date: 'Jun 01, 2026',
+        tag: 'Note',
+        title: 'Seeded the MVP in a day',
+        url: 'https://github.com/codyjohnsontx/windCast',
+        body: 'Initial commit shipped the dashboard, spot list, scoring engine (utils/sessionScore.ts), and a Leaflet map with an animated wind-particle overlay. Forecasts ran on mock data so the UX could be designed against the full data shape before any network call existed; the provider interface was in place from day one so real sources could slot in without component changes.',
       },
     ],
   },
@@ -1711,7 +1780,9 @@ const allProducts = [
 export { allProducts };
 
 export const products = allProducts.filter((product) => !product.archived);
-export const flagshipProducts = products.filter((product) => product.tier === 'flagship');
+export const flagshipProducts = products.filter(
+  (product) => product.tier === 'flagship' && product.featured !== false,
+);
 export const conceptProducts = products.filter((product) => product.tier === 'concept');
 
 export function getProductBySlug(slug) {

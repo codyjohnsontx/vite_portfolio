@@ -51,8 +51,13 @@ Two things those files will not tell you. Nothing currently renders `status` or
 component. So express lifecycle nuance ("prototype") in the copy rather than inventing a
 new status value, and treat `evidenceSignal` as an internal note whose text reaches no
 rendered surface, so editing it does not change the site. And a product with no screenshot
-should omit `image` and `visualAssets` rather than carry a placeholder path (Dragonglass AI
-is the current example).
+should omit `image` and `visualAssets` rather than carry a placeholder path.
+
+Only six products are featured, the resume's: Oasis Race Control, Attend, Diaz on Demand,
+the Diaz Martial Arts website, Trackday Tuner, and Dragonglass AI, in that order. The older
+builds carry `featured: false`, which keeps their pages and `/products` rows but drops them
+from `flagshipProducts` and so from every featured surface; read the comment above
+`allProducts` in `src/content/projects.js` before featuring or retiring one.
 
 `liveUrl` and `repoUrl` are both optional and both render in the product hero as
 `Live at <host> ↗` and `Source on GitHub ↗`; `repoUrl` also adds a `Source ↗` link to the
@@ -244,12 +249,12 @@ descriptions in `index.html`. Everything else in `src/content/profile.js` is dea
 `heroSupport` and `contactLinks` have a consumer, and `toolkit` lost its last one when Dev
 Mode was deleted. Nothing on the site renders a skills or strengths list at all.
 
-Three pieces of that story are deliberately absent rather than missing: the Texas Malibu
-role, the CTX Motoworks eBay liquidation bullet, and the HSNBA GIS, 19,000-record and
-65 / 95 percent claims, which the HSNBA repository cannot back and the resume dropped.
-`src/App.test.jsx` pins all of them out of the rendered output, and the first two out of
-the content modules as well, so a content pass that "restores" them from an older source
-fails the suite. The
+Five pieces of that story are deliberately absent rather than missing: the Texas Malibu
+role, the CTX Motoworks eBay liquidation bullet, the HSNBA GIS, 19,000-record and
+65 / 95 percent claims, which the HSNBA repository cannot back and the resume dropped, and
+the CTX $90,000 service revenue and Lambda Curry 10-25 percent retention figures, which the
+resume also dropped. `src/App.test.jsx` pins each of them out, so a content pass that
+"restores" one from an older source fails the suite. The
 HSNBA case study keeps its `hsnba-automation-and-gis` slug because the URL is public.
 
 The site publishes no resume. That is an owner decision from 2026-10-30 ("I don't need a
@@ -317,13 +322,15 @@ Three things the markup does not say out loud:
   it matches both lines and the whole headline is italic. Italic Source Serif 4 drops "g"
   0.26em below the baseline, which is why the hero is the one place on the site where a
   descender can reach the line beneath it.
-- Descenders are clipped in two places, not one: `.hero__line-mask` (0.09em of room) and
-  `.kt-word` in `signal.css` (0.1em), each with a `padding-bottom` / negative
-  `margin-bottom` pair that buys the room at no net layout cost. They land 0.2026em and
-  0.2126em below the baseline, so releasing either one alone moves the cut by ~1.6px and
-  looks like "clipping is not happening" - a false negative. The italic "g" needs 0.259em,
-  so it renders with a flat bottom; that is issue #64, filed rather than fixed because
-  `.kt-word` is shared by every split-text animation on the site.
+- Descenders are clipped in two places, not one: `.hero__line-mask` and, while motion is
+  allowed, the `.kt-word` each character sits in. Each buys room below the line with a
+  `padding-bottom` / negative `margin-bottom` pair at no net layout cost, and a box's cut
+  lands about 0.11em below the baseline plus its room. The italic "g" and "p" reach 0.259em,
+  so the hero gives both boxes 0.18em (`.hero__line .kt-word` overrides the shared 0.1em
+  only in the hero), and the hero rise starts at `yPercent: 128` so the taller mask still
+  hides each character at the first frame. Releasing either box alone hands the cut to the
+  other and looks like "clipping is not happening" - a false negative. jsdom cannot measure
+  glyphs, so check this in a browser at a desktop and a phone width, in both motion states.
 - `splitChars` only runs when motion is allowed. Under `prefers-reduced-motion` the per-char
   inline-blocks are absent, so the browser shapes the line normally and the glyphs sit
   slightly tighter than in the animated state. Measure hero type in both states; reduced

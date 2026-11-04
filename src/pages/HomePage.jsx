@@ -44,7 +44,7 @@ function Hero({ ready }) {
       chars.forEach((set, i) => {
         tl.from(
           set,
-          { yPercent: 118, duration: 1.35, stagger: 0.028 },
+          { yPercent: 128, duration: 1.35, stagger: 0.028 },
           i === 0 ? '-=0.75' : '-=1.18',
         );
       });
@@ -59,7 +59,7 @@ function Hero({ ready }) {
     <section className="hero" ref={rootRef} aria-labelledby="hero-title">
       {/* nav, not div: aria-label is ignored on a generic element */}
       <nav className="hero__rail" aria-label="Active builds">
-        {flagshipProducts.slice(0, 5).map((p) => (
+        {flagshipProducts.map((p) => (
           <Link
             key={p.slug}
             to={`/products/${p.slug}`}
@@ -304,7 +304,7 @@ export default function HomePage() {
             num="02"
             eyebrow="Active builds"
             title="Products I own end to end."
-            sub="Each one is live code with a real scope decision behind it. Open any row for the build log, the PM analysis, and what I would cut next."
+            sub="Each one is live code with a real scope decision behind it. Open any row for the build log, the decisions behind it, and what comes next."
           />
         </div>
         <WorkRows products={flagshipProducts} startIndex={1} />
