@@ -10,7 +10,7 @@ export const blogPosts = [
     date: 'July 2026',
     readingTime: '4 min read',
     intro:
-      'Attend is a dealership staff workspace: shared customer texting, follow-up tasks, service-lane status, and an AI ops brief per conversation. Two things I shipped recently were less about features and more about judgment calls, so I want to write them down. Neither has a measured result yet; both are decisions the product actually runs on.',
+      'Attend is a dealership staff workspace: shared customer texting, follow-up tasks, service-lane status, and an AI ops brief per conversation. Two things I shipped recently were less about features and more about judgment calls, so I want to write them down. Both are decisions the product actually runs on.',
     sections: [
       {
         heading: 'Letting anyone in, without letting anyone run up the bill',
@@ -31,7 +31,7 @@ export const blogPosts = [
       },
     ],
     closing:
-      'Neither of these is a feature a user would notice, and there is no metric attached to either one yet. But they are the kind of decision the product runs on: who is allowed to spend your money, and whether a green checkmark means what you think it means.',
+      'Neither of these is a feature a user would notice. But they are the kind of decision the product runs on: who is allowed to spend your money, and whether a green checkmark means what you think it means.',
   },
   {
     slug: 'is-an-ai-medical-summary-lying-to-you',

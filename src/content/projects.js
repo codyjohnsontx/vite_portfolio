@@ -1,4 +1,6 @@
-import diazMa from '../assets/diazma.png?shot';
+import diazOnDemandLibrary from '../assets/diaz-on-demand/diaz-on-demand-01-library.png?shot';
+import diazOnDemandShowcaseCourse from '../assets/diaz-on-demand/diaz-on-demand-02-showcase-course.png?shot';
+import diazOnDemandFreeLesson from '../assets/diaz-on-demand/diaz-on-demand-03-free-lesson.png?shot';
 import diazMartialArtsHome from '../assets/diaz-martial-arts/diaz-martial-arts-01-home.jpg?shot';
 import dragonglassVaultAnswer from '../assets/dragonglass/dragonglass-01-vault-answer.png?shot';
 import dragonglassEditReview from '../assets/dragonglass/dragonglass-02-edit-review.png?shot';
@@ -104,7 +106,7 @@ const allProducts = [
       'The live-timing board ranks who is fastest tonight with a gold-highlighted leader and a running gap to P1.',
       'Left alone, that board cycles every track on a timer, skips tracks with no laps yet, and holds the last standings it saw if the timing feed drops.',
       'When a driver beats their own best, the board fires a full-screen personal-best celebration with the new time.',
-      'On league night, weekly rounds roll into a monthly season, and drivers pull up full-field lap comparison on their phone after a race.',
+      'On league night the wall shows qualifying and then the live running order as each rig reports its race position, weekly rounds roll into a monthly season, and drivers pull up full-field lap comparison on their phone after a race.',
       'Staff run check-ins, rig assignments, the floor, and the season roll from a separate dashboard.',
     ],
     mvpScope: [
@@ -119,7 +121,7 @@ const allProducts = [
       'Every lap stamped at capture time with the assignment the rig knew was active when it was driven, so a lap driven with nobody checked in is kept as unattributed and a database constraint, not a query filter, keeps it off every leaderboard',
       'Unattended wall board that rotates through every track leaderboard on a timer, skips boards with no lap times instead of showing a blank screen, and recovers on its own when the timing feed comes back',
       'League night end to end: weekly rounds rolling into monthly seasons, driver participation, season standings, a league board for the wall, a staff control that closes one month and opens the next in a single transaction, and full-field expandable lap comparison sized for a phone',
-      'Scoring on the venue’s real rule, 5/4/3/2/1 for the top five and one point for anyone who turns up, with a database lock on season rolling',
+      'Scoring on the venue’s real rule, 5/4/3/2/1 for the top five and one point for anyone who turns up, placed by race finish when the round has a race and with one bonus point for the fastest qualifier, with a database lock on season rolling',
       'A rig monitor that reads each simulator’s heartbeat and runs about 20 alert rules against it, with Discord notifications when a problem starts and when it clears, AI-assisted diagnostics, and GitHub issue integration, so the venue can be troubleshot without anyone on site',
       'Integration tests that run check-in and lap ingestion against a real database, so the conflict, takeover, and duplicate-event paths are exercised rather than assumed, plus a concurrency test that fails without the season-rolling lock',
       '373 passing C# xUnit tests on the rig agent and 1,082 TypeScript tests on the web app, including database integration and failure-recovery scenarios',
@@ -127,7 +129,7 @@ const allProducts = [
     evidenceSignal:
       'These have been design, reliability, and unattended-operation cycles, not metrics cycles. The wall board runs in a shop for hours with nobody watching it, so recovering by itself is the requirement rather than a nice-to-have; it was verified against a production build in a real browser at 1920x1080, including killing the server mid-rotation to watch it come back. League night went from an idea customers kept asking about to something the venue can run on a Wednesday. The scoring scale first shipped as an invented placeholder, labelled as a guess, and was corrected only after asking the venue what they actually score. No engagement, retention, or conversion is claimed, and no measured result exists yet.',
     nextStep:
-      'Run a real league night at the venue and watch what staff still do by hand that the app should be doing. Capture the league standings on a phone. Keep the rig agent and the timing board resilient as more simulators come online. These have been design, reliability, and unattended-operation cycles rather than metrics cycles: no engagement, retention, or conversion is claimed, and no measured result exists yet.',
+      'Run a real league night at the venue and watch what staff still do by hand that the app should be doing. Capture the league standings on a phone. Keep the rig agent and the timing board resilient as more simulators come online.',
     standaloneMockStatus: 'in-progress',
     visualAssets: {
       note:
@@ -166,6 +168,20 @@ const allProducts = [
       ],
     },
     updates: [
+      {
+        date: 'Oct 03, 2026',
+        tag: 'PR #57',
+        title: 'Gave league night a live race board, and scored rounds by finish',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/57',
+        body: 'League night is open qualifying and then a race in one hosted iRacing session, and the app had only ever ranked fastest laps. Across four pull requests the rig agent now reports its own car’s live race position every 2.5 seconds while a session is running, the backend keeps one row per rig and serves a public live feed, and the wall’s league board gained two more screens: qualifying while tonight’s round is open, then the live running order whenever the feed sees a race with two or more rigs, with a pass flashing the row and the finishing order held for a minute after the chequered flag. Drivers get the same panel on /league on their phone. A raced round is now placed by finishing order on the existing points scale, the fastest valid qualifying lap earns one bonus point, and staff can correct the finishing order and mark DNFs before a round is frozen. Rounds with no race result score exactly as before.',
+      },
+      {
+        date: 'Oct 01, 2026',
+        tag: 'PR #49',
+        title: 'Built a rig monitor and a staff Rig health page so the venue can be troubleshot from anywhere',
+        url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/49',
+        body: 'A simulator that went quiet mid-shift used to be found by walking over to it. A server-side monitor now reads every rig’s heartbeat and runs about twenty rules against it, from a rig going silent or iRacing disconnecting with a driver seated to laps waiting in the queue, clock skew, an implausibly fast lap, or a driver moving rigs. Each alert posts to Discord once when it opens and once when it clears, a rule that keeps re-firing on the same rig is muted for an hour, urgent alerts get an AI diagnosis and a copy-paste handoff block, and a software-shaped fault files a GitHub issue that later alerts of the same rule comment on. The staff dashboard gained a Rig health page: one tile per rig, red and flashing when something is broken, green when a driver is signed in and running, yellow when free, with a live data-flow drawing of iRacing through the rig agent to the database and the TV board, an event-mode override, and a run-now button. Built across eight pull requests, #42 and #45 to #51, with unit and database integration tests for firing, holding, and recovering each alert.',
+      },
       {
         date: 'Sep 29, 2026',
         tag: 'PR #43',
@@ -276,7 +292,7 @@ const allProducts = [
       'Staff manages customer conversations from a shared inbox with linked vehicles, assignments, templates, internal notes, notifications, and SMS/MMS delivery status.',
       'Staff creates follow-up tasks, sends service updates, reassigns ownership, and handles opt-in or opt-out states without leaving the customer thread.',
       'A background pass writes an AI Ops Brief for every open conversation, so the inbox ranks by what those briefs found rather than by recency, and a line above the list reports how much of the queue is briefed and how old the newest brief is. Anyone can run a pass on demand, and a brief written before the latest messages is labelled as an earlier one.',
-      'Staff reads the brief for a thread, the summary, customer need, risk level, escalation recommendation, and suggested reply, then accepts, dismisses, copies the reply, or converts it into a note or follow-up. Every action stays a human decision.',
+      'Staff reads the brief for a thread, the summary, customer need, risk level, escalation recommendation, and suggested reply, then accepts, dismisses, copies the reply, or converts it into a note or follow-up. A person approves every brief before anything reaches a customer.',
       'Managers review Command Center metrics for unread conversations, overdue follow-ups, unassigned threads, failed messages, and department exceptions, plus AI Ops Analytics for how the team actually uses the briefs.',
     ],
     mvpScope: [
@@ -287,13 +303,14 @@ const allProducts = [
       'Ambient brief pass on a schedule and on demand, with the inbox ranked by brief risk, a coverage line over the list, and stale briefs labelled as earlier ones',
       'Deactivation and role changes that land on the next request instead of waiting for a session to expire',
       'Twilio SMS/MMS send and receive routes with webhook signature verification, opt-in/opt-out handling, and delivery failure alerts',
+      'SMS consent recorded as an append-only ledger, with every outbound text passing through one send gate that refuses without a current grant',
       'Production-ready deployment structure with Vercel, Neon Postgres, Prisma, and Auth.js',
       'Tests written against the behavior that would actually cost something: a revoked session losing access on the next request, the demo spend cap holding, message delivery, and role-based access to a conversation',
     ],
     evidenceSignal:
       'The current MVP includes secure staff login, role-based access, a shared inbox, customer profiles, follow-up tasks, Command Center metrics, Twilio SMS/MMS routes, webhook verification, opt-in/opt-out handling, delivery failure alerts, and production deployment structure. The AI Ops Brief is no longer something a manager asks for one thread at a time: a scheduled pass briefs the whole open queue through OpenAI Structured Outputs, the inbox ranks by what those briefs flagged, and coverage and brief age are stated above the list instead of assumed. Access control moved in the same direction, so a deactivated account is refused on its next request rather than holding a working session for up to thirty days. Product analytics events for AI insight generated, accepted, dismissed, reply copied, note created, and follow-up created are in place, with the PRD and event taxonomy checked into content/prds/ before any impact is claimed. It also ships a one-click demo anyone can open with no credentials, with each risk priced separately: the brief runs live under a soft daily cap (estimated ~$0.40/day worst case) and SMS is blocked in demo. No measured usage yet.',
     nextStep:
-      'Put the ranked inbox in front of a service advisor for a full shift and find out whether the briefs push the right thread to the top. The other half of that question is what an unhelpful brief costs now that nobody asked for it. The suggested-reply experiment still needs real usage behind it before any impact claim. Beyond that, expand Attend into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, CI/deployment automation, and integrations for payment, inventory, scheduling, and dealership management systems.',
+      'Put the ranked inbox in front of a service advisor for a full shift and find out whether the briefs push the right thread to the top. The other half of that question is what an unhelpful brief costs now that nobody asked for it. The suggested-reply experiment gets its impact number from real usage, which is the next thing to put behind it. Beyond that, expand Attend into a lightweight CRM and communication command center with deeper service-lane context, lead tracking, automated follow-up sequences, customer history, stronger reporting, and integrations for payment, inventory, scheduling, and dealership management systems.',
     visualAssets: {
       note: 'Screenshots from the seeded demo environment. The one-click demo login and the SMS-blocked composer are the live app in demo mode; the AI Ops Briefs shown carry the seeded demo content.',
       items: [
@@ -336,6 +353,13 @@ const allProducts = [
     },
     standaloneMockStatus: 'in-progress',
     updates: [
+      {
+        date: 'Oct 30, 2026',
+        tag: 'PR #43',
+        title: 'Sent every outbound text through one consent gate',
+        url: 'https://github.com/codyjohnsontx/ctxconnect/pull/43',
+        body: 'Consent used to be a flag on the customer record. It is now an append-only ledger: every grant and revocation is an event with its method, its evidence, who recorded it, and when, and the database refuses to update or delete one. The inbound webhook locks the customer row and dates each text from the database clock, so a STOP and an ordinary text arriving together land in a fixed order. This follow-up then made that ledger the only way out: one module holds the Twilio client, every outbound text passes through one gate that refuses a send with no consent, a revoked one, or a grant that has lapsed, with a quiet-hours window wired in, and the decision and the message write happen in one transaction under the customer’s row lock. A refused send is recorded in the audit log without the message body. The composer shows the gate’s own reason, when texting opens again, and what to do next, and a test fails the build if any other module imports Twilio. Consent is a hard rule enforced by plain code, with no model involved.',
+      },
       {
         date: 'Aug 14, 2026',
         tag: 'PR #19',
@@ -383,14 +407,14 @@ const allProducts = [
         tag: 'Build',
         title: 'Shipped a one-click demo with per-risk guardrails',
         url: 'https://github.com/codyjohnsontx/ctxconnect/commit/179b769',
-        body: 'Added a View demo button that signs visitors into a pre-set demo account with no credentials. I priced each risk separately: the AI ops brief still runs live but a soft daily cap, default 20 briefs per rolling 24 hours, keeps expected OpenAI spend to an estimated ~$0.40/day; real SMS sending is blocked in demo, because the risk there is compliance, not cost. A Cloudflare Turnstile check gates the demo and fails closed in production, a nightly Vercel cron resets the demo data, and I removed the demo credentials that used to be printed on the login page. No measured usage yet.',
+        body: 'Added a View demo button that signs visitors into a pre-set demo account with no credentials. I priced each risk separately: the AI ops brief still runs live but a soft daily cap, default 20 briefs per rolling 24 hours, keeps expected OpenAI spend to an estimated ~$0.40/day; real SMS sending is blocked in demo, because the risk there is compliance, not cost. A Cloudflare Turnstile check gates the demo and fails closed in production, a nightly Vercel cron resets the demo data, and I removed the demo credentials that used to be printed on the login page.',
       },
       {
         date: 'Jul 10, 2026',
         tag: 'PR #4',
         title: 'Added the AI Ops Brief, an OpenAI-backed inbox assistant',
         url: 'https://github.com/codyjohnsontx/ctxconnect/pull/4',
-        body: 'The GM can generate a structured brief for any conversation: summary, customer need, risk level with reasons, escalation recommendation, suggested next action, suggested reply, and suggested follow-up. Generation uses OpenAI Structured Outputs against a strict JSON schema so the brief renders the same fields every time, and every recommendation stays decision support that staff accept, dismiss, or convert into a note or follow-up.',
+        body: 'The GM can generate a structured brief for any conversation: summary, customer need, risk level with reasons, escalation recommendation, suggested next action, suggested reply, and suggested follow-up. Generation uses OpenAI Structured Outputs against a strict JSON schema so the brief renders the same fields every time, and staff accept, dismiss, or convert each recommendation into a note or follow-up, so nothing reaches a customer that a person did not send.',
       },
       {
         date: 'Jul 10, 2026',
@@ -427,10 +451,10 @@ const allProducts = [
     status: 'active-build',
     year: '2026',
     accent: 'oklch(0.62 0.18 240)',
-    image: diazMa,
+    image: diazOnDemandLibrary,
     liveUrl: 'https://diaz-on-demand-diaz-ondemand-web.vercel.app',
     repoUrl: 'https://github.com/codyjohnsontx/DiazOnDemand',
-    role: 'Product Manager / Developer',
+    role: 'Full-stack product builder',
     stack: [
       'React',
       'Next.js',
@@ -473,6 +497,27 @@ const allProducts = [
     nextStep:
       'Fill the catalogue and run real payments through the proven billing paths. Onboarding and retention patterns across affiliate school cohorts, and the broader multi-academy LMS controls, can only be validated once members are paying.',
     standaloneMockStatus: 'in-progress',
+    visualAssets: {
+      note:
+        'Screenshots from the live web app at diaz-on-demand-diaz-ondemand-web.vercel.app, signed out, captured at 1440 after the design-system restyle. The showcase track is the free course, and its three lessons carry a demo video.',
+      items: [
+        {
+          label: 'Library',
+          src: diazOnDemandLibrary,
+          alt: 'Diaz on Demand library: a Train On Demand heading with discipline filters for BJJ, Muay Thai, and Haganah, an Up next card for the Frame Fundamentals lesson with Open lesson and View course buttons, the free Haganah Essentials Demo Track under Showcase click-through, and the first BJJ Fundamentals courses marked Premium.',
+        },
+        {
+          label: 'Free showcase course',
+          src: diazOnDemandShowcaseCourse,
+          alt: 'Course page for the free Haganah Essentials Demo Track: Free course and Featured demo tags, three lessons of six to seven minutes in a Lesson breakdown list, an Up next card at zero percent progress with Start course and Open recommendation buttons, and topic tags.',
+        },
+        {
+          label: 'Free lesson',
+          src: diazOnDemandFreeLesson,
+          alt: 'Lesson page for Verbal Boundary and Ready Stance, tagged Free lesson and Demo video, with the demo video embed cued to play, the course’s three lessons listed beside it, a note that demo video progress is not time-synced, and Mark lesson complete and Save to favorites buttons.',
+        },
+      ],
+    },
     featurePresentations: [
       {
         slug: 'video-first',
@@ -490,6 +535,20 @@ const allProducts = [
       },
     ],
     updates: [
+      {
+        date: 'Nov 10, 2026',
+        tag: 'DiazOnDemand PR #52',
+        title: 'Restyled the web app on one token set and a shared component library',
+        url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/52',
+        body: 'Every colour, type size, spacing step, radius, shadow, and duration now lives in one named token block, and the Tailwind config replaces the default scales with those tokens, so a class off the system does not exist. A test compiles the stylesheet and fails on any arbitrary value, raw colour, gradient, or blur outside the token block. A small component library, buttons, chips, badges, cards, list rows, progress, and form fields, replaced the one-off components, and every member page and admin screen was rebuilt on it with a flat look: solid surfaces and borders, no gradients or glows, and the links moving into a bordered tab bar at phone width. The screenshots above are this build, live.',
+      },
+      {
+        date: 'Nov 09, 2026',
+        tag: 'DiazOnDemand PR #47',
+        title: 'Added an admin members screen, then serialized every access write behind it',
+        url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/47',
+        body: 'There was no screen anywhere to grant or revoke a member’s access by hand. Admins can now find a member, see why they lack access, with the refund, chargeback, expiry, or named admin and the date, and grant, revoke, or restore it, each committed in one transaction with an audit row recording who did it and why. An admin revocation lives in its own column, so no Stripe event clears it, and checkout refuses a revoked member. The follow-up, PR #50, closed the races the code review found between an admin change and a Stripe webhook for the same member: every access write now runs inside a transaction holding a per-member Postgres advisory lock, and the member page carries a fingerprint of the access it loaded, so a Revoke confirmed against stale state gets a 409 and a reload instead of silently overwriting a newer subscription. Database tests run each admin-versus-webhook race on separate connections. Both are merged and not yet in the production API.',
+      },
       {
         date: 'Aug 14, 2026',
         tag: 'DiazOnDemand PR #23',
@@ -530,7 +589,7 @@ const allProducts = [
         tag: 'DiazOnDemand PR #7',
         title: 'Made the Stripe billing lifecycle survive real customers',
         url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/7',
-        body: 'Four ways a member could end up on the wrong side of the paywall, all closed. A customer who cancelled and came back paid and received nothing. Refunds and chargebacks left access switched on. A member who won a chargeback dispute stayed locked out permanently. Two checkouts started at once could double-charge, so checkout now takes a durable reservation. Access granted by hand is protected from being overwritten by Stripe. Nobody has paid yet, so this is correctness work before launch rather than a fix to a live incident.',
+        body: 'Four ways a member could end up on the wrong side of the paywall, all closed. A customer who cancelled and came back paid and received nothing. Refunds and chargebacks left access switched on. A member who won a chargeback dispute stayed locked out permanently. Two checkouts started at once could double-charge, so checkout now takes a durable reservation. Access granted by hand is protected from being overwritten by Stripe. This is correctness work closed before the first real customer, rather than a fix after a live incident.',
       },
     ],
   },
@@ -663,14 +722,14 @@ const allProducts = [
         tag: 'PR #6',
         title: 'Split website docs and fixed Clerk auth routing',
         url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/6',
-        body: 'Documented the website as its own repo boundary, clarified where Diaz on Demand responsibility begins, and moved Clerk auth pages to App Router catch-all routes so path-based auth flows behave correctly.',
+        body: 'Documented the website as its own repo boundary, clarified where Diaz on Demand responsibility begins, and moved Clerk auth pages to App Router catch-all routes so path-based auth flows behave correctly. Clerk was later removed from this site in favour of a link to Diaz on Demand for member login.',
       },
       {
         date: 'Mar 14, 2026',
         tag: 'PR #5',
         title: 'Replaced pricing with announcements backed by Sanity CMS',
         url: 'https://github.com/codyjohnsontx/DiazMartialArts/pull/5',
-        body: 'Shifted the public site away from static pricing toward a Sanity-powered announcements page, updated the nav and sitemap, and added the studio configuration needed to manage fresh content without code changes.',
+        body: 'Shifted the public site away from static pricing toward a Sanity-powered announcements page, updated the nav and sitemap, and added the studio configuration needed to manage fresh content without code changes. Sanity was later retired in favour of content files in the repository.',
       },
       {
         date: 'Mar 13, 2026',
@@ -697,7 +756,7 @@ const allProducts = [
     image: trackTunerHomepage,
     liveUrl: 'https://trackday-tuner.vercel.app',
     repoUrl: 'https://github.com/codyjohnsontx/trackday_tuner',
-    role: 'Product Manager / Developer',
+    role: 'Full-stack product builder',
     stack: [
       'Next.js',
       'TypeScript',
@@ -708,6 +767,8 @@ const allProducts = [
       'OpenAI',
       'Embeddings',
       'RAG',
+      'Playwright',
+      'Sentry',
     ],
     oneLiner:
       'Motorsport setup logger that helps riders and drivers compare sessions, understand setup deltas, and make better trackside decisions without overreading weak data.',
@@ -736,11 +797,14 @@ const allProducts = [
       'Race Engineer retrieval built on OpenAI embeddings and cosine similarity over a prebuilt setup-knowledge index, filtered by vehicle type, capped at the closest four passages, with near-duplicates dropped above a similarity threshold',
       'Refusal guardrails so thin retrieved context yields no answer rather than a plausible one, with the scoring, vehicle filtering, and dedupe covered by unit tests instead of checked by eye',
       'A 33-case evaluation suite that runs the production prompt, retrieval, model call, and policy in CI and fails a pull request when any case regresses against the committed baseline',
+      'A service book per bike: due rules computed from readings, honest-history labels on every entry, receipt and photo attachments, read-only share links, PDF export, and handover to a buyer when the bike is sold',
+      'Production monitoring built against a real outage: handled errors reported to Sentry, a health endpoint probed every fifteen minutes, and a schema-contract check that fails before an unapplied migration loses a rider’s save',
+      'Playwright end-to-end suite on every pull request against a local Supabase, on the iPhone Safari and Android Chrome projects',
     ],
     evidenceSignal:
       'The product has moved beyond basic logging into a setup-learning loop: free users can compare against the previous session, while Pro users can choose a same-vehicle baseline and review deterministic comparison signals with context warnings instead of causal claims. That loop now holds for a real track day: two sessions logged on the same day with Start Time left blank compare in the order they were run, and the database the sessions live in builds from the repository rather than from a hosting dashboard.',
     nextStep:
-      'Validate whether Session Comparison v1 helps users return after repeat track days, then decide whether CSV import, richer telemetry summaries, saved takeaways, or coach-facing comparison workflows should come next.',
+      'Put the service book through a full season of real entries and see which due rules hold up. The phone app is the current build, with the mobile session sync endpoint and the framework-free rule modules as its seam into the website, and Session Comparison still has to show that it brings riders back after repeat track days.',
     standaloneMockStatus: 'in-progress',
     featurePresentations: [
       {
@@ -760,7 +824,7 @@ const allProducts = [
     ],
     visualAssets: {
       note:
-        'Screenshots use Trackday Tuner demo data from the shipped Session Comparison v1 flow. No measured result is claimed.',
+        'Screenshots use Trackday Tuner demo data from the shipped Session Comparison v1 flow.',
       items: [
         {
           label: 'Compare CTA',
@@ -791,119 +855,140 @@ const allProducts = [
     },
     updates: [
       {
-        date: 'Merged',
+        date: 'Oct 22, 2026',
+        tag: 'Update 20',
+        title: 'Run the Playwright suite on every pull request against a local Supabase',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/119',
+        body: 'The browser suite had only ever run by hand against hosted secrets. The CI job now starts a local Supabase stack, seeds the shared Pro account and the free-tier fixture with a script that refuses any non-loopback URL, builds the app, and runs the merge-blocking iPhone Safari and Android Chrome projects with the model endpoint pointed at a closed port, so no spec can reach OpenAI. The first run on GitHub exposed what the local runs had not: specs typing into inputs before React had hydrated, and two product bugs on WebKit, a hold-to-confirm button that shrank under the press and ended the hold, and demo service book labels that followed the viewer’s time zone. A follow-up moved the test step into Playwright’s official container, pinned to the locked Playwright version, so pull request runs download no browsers.',
+      },
+      {
+        date: 'Oct 20, 2026',
+        tag: 'Update 19',
+        title: 'Add a service book: due rules, receipts, share links, PDF export, and handover to a buyer',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/118',
+        body: 'A bike’s maintenance record now lives beside its sessions. Readings are the truth and logged sessions only estimate the gap since the last one, so each item’s due state across hours, distance, and days comes from pure, framework-free modules that the phone app can import too. Every entry carries an honest-history label, logged the day of service or back-filled weeks later, with edits counted from a revision table rather than a timestamp. Riders attach receipts, invoices, and photos, which the browser resizes and strips of EXIF data before upload; share a read-only copy by link, labelled in the owner’s time zone; and export the book as a PDF, with photos split one service year at a time when a book is large. Selling the bike hands the book over: a 14-day link, an accept that copies every live entry, reading, and session to the buyer in one transaction, and a Sold state that makes the seller’s copy read-only. Copied history reads as a previous owner’s, and anything a previous owner wrote is screened as third-party text before it reaches an AI prompt. Ten pull requests between #104 and #118, over one week.',
+      },
+      {
+        date: 'Sep 09, 2026',
+        tag: 'Update 18',
+        title: 'Add production monitoring built against the outage it was bought to catch',
+        url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/64',
+        body: 'Race Engineer had returned a 500 on every production call for roughly three months and emitted nothing: the route caught its own failure, returned a shaped error, and never logged. Installing Sentry as specified would have watched that in silence, because it only sees unhandled errors, and an error-rate alert would have stayed quiet too, because riders stopped calling a feature that never worked and the windows that mattered held one or two requests. So handled errors are reported explicitly from every catch block that swallows a failure, a health endpoint names which check broke, and a GitHub Actions schedule probes it every fifteen minutes. A follow-up added a schema-contract check after a save lost a rider’s typed notes to a database function missing from the schema cache, so an unapplied migration fails the health check before a rider finds it.',
+      },
+      {
+        date: 'Aug 25, 2026',
         tag: 'Update 17',
         title: 'Provision the photo bucket from the repository',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/50',
         body: 'Adding a bike with a photo failed on any freshly built database with Bucket not found: the storage bucket the garage form uploads to had only ever existed in the hosting dashboard, so a database built from the repository had no working garage. The bucket is now declared in the repository config, public to read and images only, with a migration adding policies so a rider can create, replace, and delete photos only inside their own folder. An end-to-end test proves it on a from-scratch stack, failing before and passing after, including a rider being refused when writing outside their own folder, and a unit guard pins the bucket and its owner-only policies. This was one of the prerequisites for opening signup.',
       },
       {
-        date: 'Merged',
+        date: 'Aug 05, 2026',
         tag: 'Update 16',
         title: 'Cover database functions that never decide who can run them',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/38',
         body: 'A database function that runs with its owner’s privileges is callable by anyone until its own migration says otherwise, and nothing checked that. A test now reads the permissions on each of those functions and fails when one has never been granted or revoked, so a new one cannot ship quietly open to anyone holding the app’s public API key.',
       },
       {
-        date: 'Merged',
+        date: 'Aug 04, 2026',
         tag: 'Update 15',
         title: 'Build a fresh database from the repository',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/36',
         body: 'The core tables were created by hand in the hosting dashboard and no migration ever created them, so a clean checkout could not start a working database and a fresh project answered every request with permission denied. Migrations now create the schema and grant the roles the app actually uses, so the database comes from the repository instead of from memory.',
       },
       {
-        date: 'Merged',
+        date: 'Aug 03, 2026',
         tag: 'Update 14',
         title: 'Compare same-day sessions logged without a start time',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/34',
         body: 'Two sessions logged on the same day with Start Time left blank did not order correctly, so the second one could compare against the wrong session or show no comparison at all. The lookup now sorts by the same rule the rest of the app uses instead of leaning on a start time that may not be there, and a session that saved only a baseline row still renders its diff. An end-to-end test logs two same-day sessions with the field blank and checks what was actually written.',
       },
       {
-        date: 'Merged',
+        date: 'Aug 03, 2026',
         tag: 'Update 13',
         title: 'Stop primary calls to action rendering invisible',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/33',
         body: 'The main call to action was white text on a white pill: a stylesheet rule set outside the app’s cascade layers was beating the one meant to color it. Every rule now sits in a declared layer, and a test fails the build if one escapes again.',
       },
       {
-        date: 'Merged',
+        date: 'Jun 26, 2026',
         tag: 'Update 12',
         title: 'Ship Session Comparison v1',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/16',
         body: 'Added Session Comparison v1 for Pro users: choose a baseline session from the same vehicle, prioritize same-track comparisons, review strength labels, context flags, available lap-summary metrics, and grouped setup deltas. The comparison is rules-based, avoids causal claims, and keeps the free previous-session comparison intact.',
       },
       {
-        date: 'Merged',
+        date: 'Jun 15, 2026',
         tag: 'Update 11',
         title: 'Add public read-only demo mode',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/15',
-        body: 'Adds a Try Demo path that drops visitors into the real authenticated app UI without signing in or calling Supabase. Demo mode uses local typed sample data for a Yamaha R6, Texas tracks, and sample sessions, shows Pro-preview analytics and Race Engineer surfaces, and keeps every create, edit, delete, billing, export, and live AI action read-only.',
+        body: 'Adds an Explore the demo path that drops visitors into the real authenticated app UI without signing in or calling Supabase. Demo mode uses local typed sample data for a Yamaha R6, Texas tracks, and sample sessions, shows Pro-preview analytics and Race Engineer surfaces, and keeps every create, edit, delete, billing, export, and live AI action read-only.',
       },
       {
-        date: 'Merged',
+        date: 'May 05, 2026',
         tag: 'Update 10',
         title: 'Deduplicate repeated Race Engineer prompts',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/13',
         body: 'Prevents riders from accidentally sending the same AI question over and over. If the same request comes in within five minutes, the app reuses the recent result instead of spending time and money on another answer.',
       },
       {
-        date: 'Merged',
+        date: 'Apr 25, 2026',
         tag: 'Update 09',
         title: 'Add ai_requests inspection script',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/12',
         body: 'Adds a local way to review recent Race Engineer activity without digging through the database manually, making it easier to spot failed requests, refusals, and usage patterns while testing.',
       },
       {
-        date: 'Merged',
+        date: 'Apr 25, 2026',
         tag: 'Update 08',
         title: 'Add agent doc sync guardrails',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/11',
         body: 'Adds guardrails so contributor and AI-agent instructions stay clean and consistent. This keeps the project easier to maintain as more automation and helper workflows get added.',
       },
       {
-        date: 'Merged',
+        date: 'Apr 24, 2026',
         tag: 'Update 07',
         title: 'Add privacy-safe AI request observability',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/10',
         body: 'Makes Race Engineer activity easier to understand without storing sensitive prompt text. The app can now track patterns, refusals, and safety decisions while keeping request details privacy-safe.',
       },
       {
-        date: 'Merged',
+        date: 'Apr 24, 2026',
         tag: 'Update 06',
         title: 'Verify personal evidence against loaded context',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/9',
         body: 'Stops the AI from acting like it knows personal riding history unless that session data is actually loaded. If the evidence is not available, the answer stays general or refuses the request.',
       },
       {
-        date: 'Merged',
+        date: 'Apr 24, 2026',
         tag: 'Update 05',
         title: 'Harden Race Engineer refusal handling',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/8',
         body: 'Tightens the boundaries around what Race Engineer will answer. Off-topic, unsafe, or manipulative prompts now get a clear refusal instead of a fake setup recommendation.',
       },
       {
-        date: 'Merged',
+        date: 'Apr 24, 2026',
         tag: 'Update 04',
         title: 'Load local env in Playwright config',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/7',
         body: 'Makes the browser test setup behave more like the real local app by loading the same environment settings. This reduces false test failures and makes the test workflow easier to run.',
       },
       {
-        date: 'Merged',
+        date: 'Apr 24, 2026',
         tag: 'Update 03',
         title: 'Add adaptive race engineer flows and session history UX',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/6',
         body: 'Turns Race Engineer from a single advice box into a fuller workflow: day plans, recommendation feedback, session memory, environment details, settings, and cleaner navigation around past sessions.',
       },
       {
-        date: 'Merged',
+        date: 'Apr 20, 2026',
         tag: 'Update 02',
         title: 'Add Race Engineer AI assistant',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/5',
         body: 'Ships the first Race Engineer assistant for Pro users, giving setup advice from saved session context and a small knowledge base while adding citations, safety rules, rate limits, and tests.',
       },
       {
-        date: 'Merged',
+        date: 'Apr 19, 2026',
         tag: 'Update 01',
         title: 'Stabilize app wiring, lint config, and contributor docs',
         url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/4',
@@ -936,8 +1021,8 @@ const allProducts = [
     coreWorkflow: [
       'The user picks a provider in the sidebar: local Ollama, OpenAI, Anthropic, or Gemini with their own key, or any OpenAI-compatible endpoint. Keys live in Obsidian’s keychain-backed secret storage, never in plugin files or notes.',
       'The active note and any selected text are attached to each message, with chips showing exactly what gets sent. When a cloud provider is active the sidebar says so.',
-      'The model streams a reply and can call tools: list, search, and read notes, and inspect properties, links, and backlinks. Tool calls, results, and token usage are shown per turn.',
-      'An edit request produces a proposal card with the diff. Approve applies it through the Vault API and takes a snapshot; Reject discards it; Revert restores the snapshot, and is refused if the note changed afterwards so later edits are never overwritten.',
+      'The model streams a reply and can call tools: list, search, and read notes, inspect properties, links, and backlinks, rank the notes related to one, and, with a Tavily key, search the web after the user approves each search. Tool calls, results, and token usage are shown per turn, and every answer lists the vault notes it cited.',
+      'An edit request produces a proposal card with the diff, and the same review covers a new note or folder, a move or rename, a property change, and a section rewritten by heading. Approve applies it through the Vault API and takes a snapshot; Reject discards it; Revert restores the snapshot, and is refused if the note changed afterwards so later edits are never overwritten.',
       'A note edited after a proposal was made marks the card stale and blocks approval until the change is undone or the model asks again.',
       'Switching providers keeps the conversation, including earlier tool calls, and the next message goes to the new provider with the whole history.',
     ],
@@ -945,15 +1030,16 @@ const allProducts = [
       'Four streaming provider integrations, Ollama, OpenAI, Anthropic, and Gemini, plus support for any custom OpenAI-compatible endpoint',
       'Tool calling with shared conversation history across providers',
       'A cancellable agent loop with input validation and execution limits',
-      'Read tools: list, read, search, and metadata with links and backlinks',
-      'Approval-based editing with diff review, rejection, revert, and stale-file detection',
+      'Read tools: list, read, search, metadata with links and backlinks, and related notes, plus web search and page reading through Tavily with each search approved first',
+      'Approval-based editing with diff review, rejection, revert, and stale-file detection, covering note edits and section rewrites, new notes and folders, moves and renames, and property changes',
+      'Vault citations under every answer, checked against what the tools actually showed the model',
       'Keychain-backed credential storage',
       'Unit tests plus adapter tests against a fake provider server',
     ],
     evidenceSignal:
       'Verified live against a local Ollama model, with every scenario in the README exercised in a real Obsidian instance on a disposable vault. The cloud wire formats are tested against shapes from the official API documentation, not live keys, and the README says so. Not yet in the community plugin directory; installed manually.',
     nextStep:
-      'Get it into the community plugin directory. After that the roadmap is the tools the vault still lacks: Canvas and Bases, folder, move, and rename operations, frontmatter-specific editing, and semantic search instead of keyword matching.',
+      'Get it into the community plugin directory. After that the roadmap is what the vault still lacks: Canvas and Bases, and semantic search instead of keyword matching.',
     visualAssets: {
       note:
         'Screenshots of the plugin built from its repository and running in Obsidian 1.14 on a demo vault of made-up notes, with a local Ollama model (qwen3:8b). The answers and the proposed edit are the model’s real output.',
@@ -977,6 +1063,27 @@ const allProducts = [
     },
     standaloneMockStatus: 'planned',
     updates: [
+      {
+        date: 'Nov 4, 2026',
+        tag: 'PR #27',
+        title: 'Proposed folders, note moves, property changes, and section rewrites through the same review',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/27',
+        body: 'Three more write tools, create a folder, move or rename a note, and set or remove frontmatter properties, plus a replace-section operation that rewrites one section matched by its exact heading, with a missing or ambiguous heading refused along with the headings the model can use. Each is a reviewed proposal in the turn’s batch, with its own freshness check at apply time. The cards show the property’s old and new values, a move’s from and to paths with the notes whose links will change, or the new folder. Approve all writes folders, then note contents, then moves; Undo all runs newest first, moving notes back and restoring properties, and leaves new folders in place.',
+      },
+      {
+        date: 'Nov 4, 2026',
+        tag: 'PR #22',
+        title: 'Searched the web through Tavily when the vault lacks an answer, one approval per search',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/22',
+        body: 'An optional internet fallback that works the same for every provider, local Ollama included. With a Tavily key in the keychain the model gets a web search tool and a page reader, and every search waits for an approval card in the chat where the words can be edited before it runs. Preferred sites are searched first and the search widens only when they return nothing, and one approval lets the model read up to three result pages. Pages are fetched with no credentials, local network addresses are refused, and the HTML is turned into length-capped plain text in-house with no new dependency. Web content is wrapped as untrusted data the model is told not to follow, answers cite numbered web markers that link to their pages, and Save to vault proposes a reviewed research note with the answer, its sources, and the date.',
+      },
+      {
+        date: 'Nov 4, 2026',
+        tag: 'PR #21',
+        title: 'Cited vault notes in answers and listed the sources under each reply',
+        url: 'https://github.com/codyjohnsontx/dragonglass/pull/21',
+        body: 'The model now marks each claim it takes from a note with that note’s link and words anything without a source as its own suggestion. The read tools report which notes they showed the model, and a checker reads the answer’s citations against that record, so each cited note is marked read, excerpt, unverified, or missing rather than taken on trust. A sources list under every answer shows the cited notes as working links, with a tag on any the model never actually read.',
+      },
       {
         date: 'Nov 1, 2026',
         tag: 'PR #18',
@@ -1093,7 +1200,7 @@ const allProducts = [
     evidenceSignal:
       'The 3D view is a working prototype rather than a demo reel: it shares the board document, the selection, the style inspector, and the command store with the 2D canvas, so undo, autosave, and live collaboration work in it with no new plumbing. Connectors were deliberately kept outside the existing element type so the 21 places that consume that type did not have to change; they are now first-class on the flat canvas too, drawn with their own tool, selectable on the routed line, stylable, and carried through duplicate and paste. Covered by 219 unit tests and 69 end-to-end tests, including one that seeds an architecture board, toggles to 3D, drags a node, and asserts the move landed in storage and shows up unchanged in the 2D view. No users and no measured result yet.',
     nextStep:
-      'Put the tilted view in front of people who actually draw architecture and find out whether the diagonal reads as "this crosses a layer" without being explained. Capture the flat board beside the separated tiers, since that side-by-side is the pitch. It is a working prototype, not a demo reel, but there are no users and no measured result yet.',
+      'Put the tilted view in front of people who actually draw architecture and find out whether the diagonal reads as "this crosses a layer" without being explained. Capture the flat board beside the separated tiers, since that side-by-side is the pitch.',
     standaloneMockStatus: 'planned',
     updates: [
       {
@@ -1211,7 +1318,7 @@ const allProducts = [
         tag: 'Prototype',
         title: 'Working prototype of the trial explainer and discussion sheet',
         url: 'https://github.com/codyjohnsontx/ocnoPath',
-        body: 'Runs locally, not yet deployed. Searches public ClinicalTrials.gov records, explains each trial in plain English behind a safety validator with a deterministic fallback, and saves trials to a printable doctor discussion sheet. Context stays in the browser, so the app collects no protected health information by design.',
+        body: 'The first working build, run locally before it was deployed. Searches public ClinicalTrials.gov records, explains each trial in plain English behind a safety validator with a deterministic fallback, and saves trials to a printable doctor discussion sheet. Context stays in the browser, so the app collects no protected health information by design.',
       },
     ],
   },
@@ -1456,14 +1563,14 @@ const allProducts = [
         tag: 'PR #6',
         title: 'Wattsmith reusable palette and drag/drop builder',
         url: 'https://github.com/codyjohnsontx/wattSmith/pull/6',
-        body: 'Expanded Wattsmith with a 60-block reusable starter palette, grouped search, custom reusable blocks, drag/drop insertion, explicit drop joints, magnetic insertion previews, and drag handles for reordering workout blocks. The workflow now supports composing structured FTP workouts from reusable pieces while preserving undo/redo behavior, button fallbacks, accessibility improvements, and export-safe workout data. No adoption, speed, retention, or revenue result is claimed.',
+        body: 'Expanded Wattsmith with a 60-block reusable starter palette, grouped search, custom reusable blocks, drag/drop insertion, explicit drop joints, magnetic insertion previews, and drag handles for reordering workout blocks. The workflow now supports composing structured FTP workouts from reusable pieces while preserving undo/redo behavior, button fallbacks, accessibility improvements, and export-safe workout data.',
       },
       {
         date: 'Jun 25, 2026',
         tag: 'PR #4',
         title: 'Wattsmith trust pass: template preview, collapsible editing, and export readiness',
         url: 'https://github.com/codyjohnsontx/wattSmith/pull/4',
-        body: 'Added a trust pass for the manual workout-building workflow: starter template previews with chart, metrics, profile warnings, rationale, and citations; collapsible editing for complex workout and repeat blocks; and an export readiness checklist for .mrc and .erg downloads. The goal was to help riders inspect structure, reduce editing noise, and catch export issues before using the file elsewhere. No AI/RAG release or measured usage result is claimed.',
+        body: 'Added a trust pass for the manual workout-building workflow: starter template previews with chart, metrics, profile warnings, rationale, and citations; collapsible editing for complex workout and repeat blocks; and an export readiness checklist for .mrc and .erg downloads. The goal was to help riders inspect structure, reduce editing noise, and catch export issues before using the file elsewhere.',
       },
       {
         date: 'Jun 22, 2026',
@@ -1471,11 +1578,11 @@ const allProducts = [
         title:
           'Wattsmith v0.2: Manual workout builder, library, profile, chart inspection, and export upgrades',
         url: 'https://github.com/codyjohnsontx/wattSmith/pull/1',
-        body: 'Expanded Wattsmith from a starter FTP-based workout MVP into a local-first manual cycling workout builder. The release adds the tabbed workspace, block editing, repeats, target ranges and ramps, a local library with templates, athlete profile assumptions, interactive chart inspection, workout metrics, cited rationale, validation, and .mrc/.erg export previews without claiming AI generation or production usage metrics.',
+        body: 'Expanded Wattsmith from a starter FTP-based workout MVP into a local-first manual cycling workout builder. The release adds the tabbed workspace, block editing, repeats, target ranges and ramps, a local library with templates, athlete profile assumptions, interactive chart inspection, workout metrics, cited rationale, validation, and .mrc/.erg export previews.',
       },
     ],
     visualAssets: {
-      note: 'Screenshots from the local demo builder. The current public images show the builder homescreen, workout library, reusable block palette, step editing, template preview, chart inspection, athlete profile, export flow, and mobile views; no measured usage result is implied.',
+      note: 'Screenshots from the local demo builder. The current public images show the builder homescreen, workout library, reusable block palette, step editing, template preview, chart inspection, athlete profile, export flow, and mobile views.',
       items: [
         {
           label: 'Template preview',
