@@ -276,7 +276,6 @@ export default function ProductDetailPage() {
                 href={p.architecture.src}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Open the architecture diagram full-size in a new tab"
                 style={{
                   display: 'block',
                   border: '1px solid var(--rule-2)',

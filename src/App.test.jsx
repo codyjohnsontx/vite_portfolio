@@ -1120,9 +1120,7 @@ describe('portfolio routes and metadata', () => {
     expect(drawing.getAttribute('width')).toBe('1710');
     expect(drawing.getAttribute('height')).toBe('908');
 
-    const link = within(section).getByRole('link', {
-      name: 'Open the architecture diagram full-size in a new tab',
-    });
+    const link = within(section).getByRole('link', { name: oasis.architecture.alt });
     expect(link.getAttribute('href')).toBe(drawing.getAttribute('src'));
     expect(link.getAttribute('target')).toBe('_blank');
     expect(link.getAttribute('rel')).toBe('noreferrer');
