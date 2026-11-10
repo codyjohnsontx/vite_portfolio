@@ -587,19 +587,16 @@
   .wf-page .wf-side {
     width: 80px;
   }
-  /* A sheet is a grid item, and a grid item's default min-width is its
-     content's, so the sidebar plus the chip row inside each artboard pushed
-     every column to 468px and the whole page panned sideways on a phone.
-     Let the sheet shrink to its column and let the artboard scroll inside
-     its own frame instead, keeping the drawing at its natural width so the
-     callout pins, placed in pixels over it, still land on their targets. */
-  .wf-page .sheet {
-    min-width: 0;
-  }
-  .wf-page .frame {
+  /* Each sheet keeps its natural width, the sidebar plus the chip row inside
+     its artboard, which is wider than a phone column. The board scrolls
+     sideways instead of the page, and because the callout pins are placed
+     in pixels on the sheet, scrolling the board carries them with the
+     drawing. The top padding keeps the first sheet's raised tab inside the
+     scroll box, the negative margin gives that room back, and the right and
+     bottom padding keep the sheet's offset shadow from being clipped. */
+  .wf-page .board {
     overflow-x: auto;
-  }
-  .wf-page .wf {
-    min-width: min-content;
+    margin-top: -20px;
+    padding: 20px 8px 8px 0;
   }
 }
