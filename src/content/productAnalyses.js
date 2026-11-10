@@ -316,10 +316,10 @@ export const productAnalyses = [
         decision: 'Deferred in favor of a browser-first and PWA-friendly footprint.',
       },
       {
-        initiative: 'AI + payments',
+        initiative: 'Payments',
         value: 'Low',
         effort: 'L',
-        decision: 'Cut from MVP because reliability and visibility mattered more than expansion features.',
+        decision: 'Deferred: reliability and visibility came first.',
       },
       {
         initiative: 'Mass texting',
