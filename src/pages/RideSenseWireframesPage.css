@@ -587,4 +587,16 @@
   .wf-page .wf-side {
     width: 80px;
   }
+  /* Each sheet keeps its natural width, the sidebar plus the chip row inside
+     its artboard, which is wider than a phone column. The board scrolls
+     sideways instead of the page, and because the callout pins are placed
+     in pixels on the sheet, scrolling the board carries them with the
+     drawing. The top padding keeps the first sheet's raised tab inside the
+     scroll box, the negative margin gives that room back, and the right and
+     bottom padding keep the sheet's offset shadow from being clipped. */
+  .wf-page .board {
+    overflow-x: auto;
+    margin-top: -20px;
+    padding: 20px 8px 8px 0;
+  }
 }

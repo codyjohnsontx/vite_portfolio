@@ -192,7 +192,7 @@ export const caseStudies = [
       outcomes: [
         'The site is live at https://www.diazmartialarts.com and the owner publishes through it.',
         'What a visitor sees now: one typeface, one red on a white page, the gym’s own photo, headings with nothing stacked around them, and a free-trial button first on the screen at every width.',
-        'I have no conversion numbers to report and will not invent any. The only numbers in this study are the ones measured in the browser and recorded in the commits.',
+        'The only numbers in this study are the ones measured in the browser and recorded in the commits.',
         'Source: https://github.com/codyjohnsontx/DiazMartialArts',
       ],
       lessons: [
@@ -244,12 +244,12 @@ export const caseStudies = [
         'I also had a third option: accept the rare loss and document it. It would have shipped that afternoon. I passed, because "rare" was doing a lot of work in that sentence. The failure needs a write to die partway through a save on the server\'s side, which hosted databases do now and then, and the phone retries every unanswered save from a paddock with one bar of signal. That retry is what turns a half-save into lost laps, and it\'s a lot closer to normal than "rare" makes it sound.',
       ],
       execution: [
-        'I made this call on September 27, 2026, in between keeping a live leaderboard running at an off-site sim racing event. The atomic save is in review now.',
-        "The retry code gets shorter instead of longer, since the cleanup delete and the repair path both disappear. And the website's own new-session form can move onto the same function later.",
+        'I made this call on September 27, 2026, in between keeping a live leaderboard running at an off-site sim racing event. The atomic save merged the next day, and the website’s own new-session form moved onto the same function a week later.',
+        "The retry code got shorter instead of longer, since the cleanup delete and the repair path both disappeared.",
       ],
       outcomes: [
         'What the change bought is a whole class of bug gone at once, instead of another repair loop where each fix waits for the review that finds what it broke.',
-        "The tests I actually care about come after it merges. Make the database fail right after the session row is written and check that nothing of that session survives. Then pull the phone's signal after a save that landed, at a real track, and watch the retry find it whole.",
+        "The first test I wanted shipped with it: make the database fail right after the session row is written and check that nothing of that session survives. The second needs a real track: pull the phone's signal after a save that landed and watch the retry find it whole.",
       ],
     },
   },
@@ -445,7 +445,7 @@ export const caseStudies = [
       goal:
         'Take the repetition off staff without taking the judgment away from them: automate the navigation and the writes, keep a person in the loop where a decision is needed, and make the scripts safe to run again after an interruption.',
       decisions: [
-        'Selenium against the real browser session, because the shelter had no API and needed something that could run on the existing setup immediately. The README says plainly that an API-based approach would be more robust in the long run; this project addressed the current need with the tools available.',
+        'Selenium against the real browser session, because the shelter had no API and needed something that could run on the existing setup immediately. An API would be the long-run approach if the vendor ever exposes one.',
         'Each script drives one of ShelterManager’s own maintenance reports rather than its own query, so the list of records to fix is always the application’s list, not a snapshot that could drift.',
         'State checks on the writes that would otherwise stack: the Offsite Adoption checkbox is only clicked if it is not already checked, the Feral and Working Cat flags are only added if missing, and a corrected movement no longer appears in the report. The movement type change and the image rename set their value outright, which is harmless to repeat because both set the same value every time.',
         'The image job stays interactive, prompting per image to rename, skip, or move on, because deciding whether a photo is an ID or an animal is a judgment call the script should not make alone.',
@@ -457,7 +457,7 @@ export const caseStudies = [
       execution: [
         'Built the two jobs in Python with Selenium and python-dotenv, each signing in, navigating the menus to its report, and working through the entries it lists.',
         'Logged sign-in, navigation, and every movement change with timestamps through Python’s logging module, so a run can be audited afterwards and a failure located.',
-        'Error handling is uneven by design, and the write-up says so: a failed movement type change or save is logged and the record is skipped; inside the flag step, a flag that cannot be selected is printed and the record is still saved, so it leaves the report with that flag missing; and a failure opening a record itself is logged and ends the run, so the next run starts from the report again.',
+        'Error handling is scoped per step, and the write-up says which: a failed movement type change or save is logged and the record is skipped; inside the flag step, a flag that cannot be selected is printed and the record is still saved, so it leaves the report with that flag missing; and a failure opening a record itself is logged and ends the run, so the next run starts from the report again.',
       ],
       outcomes: [
         'Both cleanup jobs run end to end against the live ShelterManager system, and the movement correction handles both record types including the follow-on animal flags.',

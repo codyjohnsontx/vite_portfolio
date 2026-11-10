@@ -465,21 +465,21 @@ describe('portfolio routes and metadata', () => {
   const NEWEST_UPDATES = [
     {
       slug: 'track-tuner',
-      meta: 'Merged · Update 17',
-      title: 'Provision the photo bucket from the repository',
-      url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/50',
+      meta: 'Oct 22, 2026 · Update 20',
+      title: 'Run the Playwright suite on every pull request against a local Supabase',
+      url: 'https://github.com/codyjohnsontx/trackday_tuner/pull/119',
     },
     {
       slug: 'oasis-race-control',
-      meta: 'Sep 29, 2026 · PR #43',
-      title: 'Ran the board at a two-day event for Cavender Cadillac of San Antonio',
-      url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/43',
+      meta: 'Oct 03, 2026 · PR #57',
+      title: 'Gave league night a live race board, and scored rounds by finish',
+      url: 'https://github.com/codyjohnsontx/oasisRaceControl/pull/57',
     },
     {
       slug: 'ctx-chat',
-      meta: 'Aug 14, 2026 · PR #19',
-      title: 'Made deactivating a staff account end their access',
-      url: 'https://github.com/codyjohnsontx/ctxconnect/pull/19',
+      meta: 'Oct 30, 2026 · PR #43',
+      title: 'Sent every outbound text through one consent gate',
+      url: 'https://github.com/codyjohnsontx/ctxconnect/pull/43',
     },
     {
       slug: 'draftspace',
@@ -489,9 +489,9 @@ describe('portfolio routes and metadata', () => {
     },
     {
       slug: 'diaz-on-demand',
-      meta: 'Aug 14, 2026 · DiazOnDemand PR #23',
-      title: 'Moved the mobile app to the Expo SDK the store actually ships',
-      url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/23',
+      meta: 'Nov 10, 2026 · DiazOnDemand PR #52',
+      title: 'Restyled the web app on one token set and a shared component library',
+      url: 'https://github.com/codyjohnsontx/DiazOnDemand/pull/52',
     },
   ];
 
@@ -519,7 +519,7 @@ describe('portfolio routes and metadata', () => {
     );
     expect(screen.getByText(/rules-based, avoids causal claims/i)).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Product screenshots' })).toBeTruthy();
-    expect(screen.getByText(/No measured result is claimed/i)).toBeTruthy();
+    expect(screen.queryByText(/No measured result is claimed/i)).toBeNull();
     expect(screen.getByText('Baseline picker')).toBeTruthy();
     expect(screen.getByText('Strength and metrics')).toBeTruthy();
     expect(screen.getByText('Context flags')).toBeTruthy();
@@ -833,7 +833,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getByRole('heading', { name: /Athlete profile warnings/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /AI\/RAG preparation/i })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /Later AI/i })).toBeTruthy();
-    expect(screen.getByText(/No measured result yet/)).toBeTruthy();
+    expect(screen.queryByText(/No measured result yet/)).toBeNull();
   });
 
   it('renders the OncoPath product page with the eval story and the repo link', () => {
@@ -886,7 +886,7 @@ describe('portfolio routes and metadata', () => {
     expect(screen.getAllByText(/67/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/n=6/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/sidesteps HIPAA by design/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/no revenue, no adoption or performance numbers/i)).toBeTruthy();
+    expect(screen.queryByText(/no revenue, no adoption or performance numbers/i)).toBeNull();
   });
 
   /* The "Why this matters" box on every analysis page. It shipped as
@@ -941,7 +941,7 @@ describe('portfolio routes and metadata', () => {
         ['Measurement', 'Measure whether the builder is useful'],
         [
           'Buyer',
-          'Early product validation is self-serve and utility-led; no paid conversion or production usage metric has been claimed yet.',
+          'Self-serve: the rider who builds the workout is the one who would pay for it.',
         ],
       ],
     },
@@ -952,7 +952,7 @@ describe('portfolio routes and metadata', () => {
         ['Measurement', 'Measured on the eval bench, not in production'],
         [
           'Mission',
-          'OncoPath is not built to make money and never will be. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live and free at onco-path.vercel.app, with no adoption or accuracy claims, and a faithfulness number that is reported but not yet validated.',
+          'OncoPath is free and will stay free. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live at onco-path.vercel.app, with a faithfulness number that is reported but not yet validated.',
         ],
       ],
     },
@@ -1418,7 +1418,10 @@ describe('portfolio routes and metadata', () => {
     // Claims that have to stay tied to the Diaz repository's own record.
     expect(page.getByText(/252 lines out and 105 in across 28 files/)).toBeTruthy();
     expect(page.getByText(/no less than 82 percent coverage/)).toBeTruthy();
-    expect(page.getByText(/I have no conversion numbers to report/)).toBeTruthy();
+    expect(page.queryByText(/no conversion numbers/i)).toBeNull();
+    expect(
+      page.getByText(/The only numbers in this study are the ones measured in the browser/),
+    ).toBeTruthy();
     expect(main.textContent).not.toContain('—');
     expect(
       page.getAllByRole('link', { name: /Diaz Martial Arts/i }).map((link) => link.getAttribute('href')),

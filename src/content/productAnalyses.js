@@ -275,7 +275,7 @@ export const productAnalyses = [
       cut: [
         'Native iOS and Android apps.',
         'Deep DMS or Lightspeed EVO integration.',
-        'Mass texting, AI features, payments, and full ecommerce integration.',
+        'Mass texting, payments, and full ecommerce integration.',
       ],
     },
     priorities: [
@@ -316,10 +316,10 @@ export const productAnalyses = [
         decision: 'Deferred in favor of a browser-first and PWA-friendly footprint.',
       },
       {
-        initiative: 'AI + payments',
+        initiative: 'Payments',
         value: 'Low',
         effort: 'L',
-        decision: 'Cut from MVP because reliability and visibility mattered more than expansion features.',
+        decision: 'Deferred: reliability and visibility came first.',
       },
       {
         initiative: 'Mass texting',
@@ -422,7 +422,6 @@ export const productAnalyses = [
       'Single-store rollout discipline makes it easier to validate dealership-specific workflow fit before taking on heavier integrations.',
     ],
     nextIterations: [
-      'Deploy a live internal environment with real Postgres and Twilio credentials.',
       'Add SLA tracking and escalation rules around unread and overdue conversations.',
       'Ship CSV import and cleaner customer record management.',
       'Integrate with the broader CTX dealership system and add a handoff path to the Shopify storefront.',
@@ -443,7 +442,7 @@ export const productAnalyses = [
       secondary:
         'Self-coached riders and technical athletes who want to understand interval structure, watts, zone distribution, and workout rationale before exporting.',
       buyer:
-        'Early product validation is self-serve and utility-led; no paid conversion or production usage metric has been claimed yet.',
+        'Self-serve: the rider who builds the workout is the one who would pay for it.',
     },
     currentWorkflow: [
       'A rider sketches workouts in notes, spreadsheets, platform builders, or file text and then manually checks whether duration, watts, and repeats make sense.',
@@ -499,7 +498,6 @@ export const productAnalyses = [
         'Claims that a specific third-party app accepts every exported file.',
         'TrainerRoad, Strava, Garmin, or TrainingPeaks sync.',
         'Accounts, cloud library sync, sharing, or coaching workflows.',
-        'Production usage, adoption, speed, retention, or revenue claims.',
       ],
     },
     priorities: [
@@ -684,11 +682,6 @@ export const productAnalyses = [
         detail:
           'Validate exported files against external riding workflows before claiming platform readiness.',
       },
-      {
-        label: 'No measured result yet',
-        detail:
-          'This release is product foundation and usability work; adoption, retention, and revenue are not claimed.',
-      },
     ],
     analyticsPlan: {
       events: [
@@ -741,7 +734,7 @@ export const productAnalyses = [
       ],
       observabilityLabel: 'Validation and evidence',
       observability:
-        'The product should track validation warnings, export attempts, file type, target strategy, palette use, drag/drop behavior, invalid drops, and chart inspection behavior before claiming usage impact. Export file-format correctness is now checked in-repo through automated round-trip and golden-file tests. No production adoption, speed, retention, revenue, or AI outcome metric exists yet.',
+        'The product should track validation warnings, export attempts, file type, target strategy, palette use, drag/drop behavior, invalid drops, and chart inspection behavior before claiming usage impact. Export file-format correctness is now checked in-repo through automated round-trip and golden-file tests.',
       dashboards: [
         'Builder completion funnel',
         'Export readiness pass, blocker, and warning rate',
@@ -909,7 +902,6 @@ export const productAnalyses = [
     nextIterations: [
       'Optional: run a one-time visual acceptance check in an ERG/MRC-capable app if app-specific confidence is needed.',
       'Add AI/RAG only after manual builder trust remains stable across templates, nested blocks, validation, and export.',
-      'Avoid claiming direct TrainerRoad, Strava, Garmin, or TrainingPeaks sync until an integration actually ships.',
     ],
   },
   {
@@ -928,7 +920,7 @@ export const productAnalyses = [
         'Caregivers and family members preparing questions and a printable discussion sheet for someone else’s oncology appointment.',
       buyerLabel: 'Mission',
       buyer:
-        'OncoPath is not built to make money and never will be. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live and free at onco-path.vercel.app, with no adoption or accuracy claims, and a faithfulness number that is reported but not yet validated.',
+        'OncoPath is free and will stay free. It exists to help people in one of the hardest moments of their lives use public information that already belongs to them. It is live at onco-path.vercel.app, with a faithfulness number that is reported but not yet validated.',
     },
     currentWorkflow: [
       'Patients and caregivers search Google and forums, then land on raw ClinicalTrials.gov pages written for researchers.',
@@ -1045,11 +1037,6 @@ export const productAnalyses = [
         detail:
           'Calibration showed the judge is systematically too lenient when the model addresses the reader directly, like "You have been diagnosed with X," when the source says nothing about the reader.',
       },
-      {
-        label: 'No product metrics',
-        detail:
-          'No revenue, no adoption or performance numbers, and none are claimed.',
-      },
     ],
     analyticsPlan: {
       events: [
@@ -1146,7 +1133,6 @@ export const productAnalyses = [
       'Tighten the generator so it never addresses the reader as if it knows their diagnosis.',
       'Tighten the judge on that same pattern and expand human calibration beyond the first small sample.',
       'Re-run calibration before quoting any faithfulness number.',
-      'Add product screenshots, and consider deployment only after the eval earns more trust.',
     ],
   },
 ];
