@@ -1101,6 +1101,49 @@ describe('portfolio routes and metadata', () => {
      testable here, so this pins the two things that are: every screenshot still reaches
      the page with alt text, and the retired CTX Chat product name stays off it. The
      ctxconnect URLs and the ctx-chat slug are public identifiers and deliberately stay. */
+  /* The Oasis page carries the owner's Excalidraw drawing of the system as one
+     static SVG, outside the screenshot gallery and its lightbox. The link opens
+     the file itself full-size in a new tab, so a phone reader can get past the
+     shrunken inline copy. The earlier dark architecture PNG described a previous
+     shape of the system and left the gallery with it, so the page never shows
+     two architectures that disagree. */
+  it('renders the Oasis architecture drawing with a full-size link and no second diagram', () => {
+    const oasis = products.find((product) => product.slug === 'oasis-race-control');
+    renderApp('/products/oasis-race-control');
+
+    const heading = screen.getByRole('heading', { name: 'Architecture', level: 2 });
+    const section = heading.closest('section');
+    const drawing = within(section).getByRole('img');
+    expect(drawing.getAttribute('alt')).toBe(oasis.architecture.alt);
+    expect(drawing.getAttribute('alt')).toMatch(/three tiers/i);
+    expect(drawing.getAttribute('src')).toMatch(/oasis-architecture.*\.svg$/);
+    expect(drawing.getAttribute('width')).toBe('1710');
+    expect(drawing.getAttribute('height')).toBe('908');
+
+    const link = within(section).getByRole('link', {
+      name: 'Open the architecture diagram full-size in a new tab',
+    });
+    expect(link.getAttribute('href')).toBe(drawing.getAttribute('src'));
+    expect(link.getAttribute('target')).toBe('_blank');
+    expect(link.getAttribute('rel')).toBe('noreferrer');
+    expect(within(section).getByText(oasis.architecture.caption)).toBeTruthy();
+    expect(section.querySelector('.eyebrow')).toBeNull();
+
+    const gallery = screen.getByRole('heading', { name: 'Product screenshots' }).closest('div');
+    expect(within(gallery).queryByLabelText('Zoom System architecture')).toBeNull();
+    expect(within(gallery).getAllByRole('img').length).toBe(oasis.visualAssets.items.length);
+    expect(screen.getAllByRole('heading', { name: 'Architecture' }).length).toBe(1);
+  });
+
+  it('draws the architecture section only for a product that carries one', () => {
+    expect(products.filter((product) => product.architecture).map((p) => p.slug)).toEqual([
+      'oasis-race-control',
+    ]);
+
+    renderApp('/products/track-tuner');
+    expect(screen.queryByRole('heading', { name: 'Architecture' })).toBeNull();
+  });
+
   it('renders the Attend screenshot gallery without the retired product name', () => {
     renderApp('/products/ctx-chat');
 

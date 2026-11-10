@@ -255,6 +255,67 @@ export default function ProductDetailPage() {
         </Reveal>
       ) : null}
 
+      {/* One drawing of the whole system, served as the static SVG it was exported
+          to. It is not a screenshot, so it sits outside the gallery and its lightbox:
+          the link opens the file itself in a new tab, where the browser shows it at
+          full size and the embedded handwriting still renders. On a phone the inline
+          copy is too small to read, which is what the link is for. The width and
+          height attributes hold the space before the file arrives. */}
+      {p.architecture ? (
+        <Reveal
+          as="section"
+          className="bay--tight"
+          style={{ borderBottom: '1px solid var(--rule)' }}
+        >
+          <div className="shell">
+            <h2 className="h2" style={{ margin: '0 0 24px' }}>
+              Architecture
+            </h2>
+            <figure style={{ margin: 0 }}>
+              <a
+                href={p.architecture.src}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open the architecture diagram full-size in a new tab"
+                style={{
+                  display: 'block',
+                  border: '1px solid var(--rule-2)',
+                  background: '#ffffff',
+                  cursor: 'zoom-in',
+                }}
+              >
+                <img
+                  src={p.architecture.src}
+                  alt={p.architecture.alt}
+                  width={p.architecture.width}
+                  height={p.architecture.height}
+                  loading="lazy"
+                  decoding="async"
+                  style={{ width: '100%', height: 'auto', display: 'block' }}
+                />
+              </a>
+              <figcaption
+                style={{
+                  marginTop: 12,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'baseline',
+                  flexWrap: 'wrap',
+                  gap: '4px 24px',
+                }}
+              >
+                <span className="body" style={{ color: 'var(--ink-2)' }}>
+                  {p.architecture.caption}
+                </span>
+                <span className="mono small uppercase" style={{ color: 'var(--ink-3)' }}>
+                  Opens full-size ↗
+                </span>
+              </figcaption>
+            </figure>
+          </div>
+        </Reveal>
+      ) : null}
+
       {p.featurePresentations?.length ? (
         <Reveal
           as="section"

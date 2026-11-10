@@ -48,7 +48,12 @@ import oasisCheckIn from '../assets/oasis-race-control/oasis-race-control-02-che
 import oasisTvBoard from '../assets/oasis-race-control/oasis-race-control-03-tv-board.png?shot';
 import oasisPersonalBest from '../assets/oasis-race-control/oasis-race-control-04-personal-best.png?shot';
 import oasisDriverPortal from '../assets/oasis-race-control/oasis-race-control-05-driver-portal.png?shot';
-import oasisArchitecture from '../assets/oasis-race-control/oasis-race-control-06-architecture.png?shot';
+/* Not a screenshot: the owner's Excalidraw drawing of the system, exported once as a
+   static SVG with its handwriting font embedded and a white background, so it renders the
+   same everywhere and opens full-size on its own. The editable scene sits beside it;
+   tools/excalidraw/README.md ("Redraw by hand") says how to re-export after an edit, with
+   Background on this time. A plain import, not `?shot`: the SVG is served as is. */
+import oasisArchitecture from '../assets/oasis-race-control/oasis-architecture.svg';
 
 /* Entry order is significant. This array flows into `flagshipProducts`, and every
    featured surface lists it in this order. The home hero rail in src/pages/HomePage.jsx
@@ -131,6 +136,15 @@ const allProducts = [
     nextStep:
       'Run a real league night at the venue and watch what staff still do by hand that the app should be doing. Capture the league standings on a phone. Keep the rig agent and the timing board resilient as more simulators come online.',
     standaloneMockStatus: 'in-progress',
+    architecture: {
+      src: oasisArchitecture,
+      width: 1710,
+      height: 908,
+      /* The drawing's own words, tier by tier, so the alt text cannot claim more than
+         the picture shows. */
+      alt: 'Hand-drawn diagram titled Oasis Race Control architecture: three tiers joined only by outbound HTTPS, the venue opens no inbound ports. Sim PC, one per rig, Windows: iRacing shared memory and session-info YAML read by the C# .NET 8 rig agent, which holds a LapDetector state machine, a SQLite outbox that stamps every lap with its rig assignment and deletes it only on a 2xx, and a WinForms walk-up sign-in with name and PIN. The agent posts batches of up to 100 laps with a bearer token, idempotent on event id, to Vercel, Next.js 16, React 19, TypeScript: POST /api/agent/events in five steps, rigFromBearer, zod parse, attributeLap, computeValidity and insert into laps, plus the read APIs and a rig monitor at /api/monitor/tick. Vercel talks over a pg pool to Neon Postgres: core tables, league night tables, and rules enforced in the database such as one open assignment per rig and unattributed laps marked invalid by a check constraint. Who reads it, all from the same queries: the /tv wall, /leaderboards, /league and /staff. cron-job.org calls the monitor tick every minute and alerts go to Discord and GitHub.',
+      caption: 'Three tiers joined only by outbound HTTPS, so the venue opens no inbound ports.',
+    },
     visualAssets: {
       note:
         'Screenshots from the live app at oasis-race-control.vercel.app, using seeded demo drivers and sample lap times. The live-timing board was captured mid-rotation at 1272x601, the resolution of the wall in the venue. The personal-best celebration is the real timing-board screen captured mid-celebration.',
@@ -159,11 +173,6 @@ const allProducts = [
           label: 'Driver portal',
           src: oasisDriverPortal,
           alt: 'Branded driver portal sign-in where a driver enters a display name and PIN to see tonight’s times, personal bests, and history.',
-        },
-        {
-          label: 'System architecture',
-          src: oasisArchitecture,
-          alt: 'System architecture diagram showing three tiers, the cloud with Vercel and Neon Postgres, the venue with sim PCs, the .NET rig agent, and the TV, and people on their own devices, connected only by outbound HTTPS.',
         },
       ],
     },
