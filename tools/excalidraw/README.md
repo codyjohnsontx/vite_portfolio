@@ -14,6 +14,12 @@ at 1100px and wider and a stacked one served below that:
 Each has its editable scene beside it as a `.excalidraw` file. The page title is
 part of every drawing.
 
+A third, the architecture drawing on `/products/oasis-race-control`, is drawn by
+hand with no Mermaid source and one layout only: `oasis-architecture.svg` and its
+scene in `src/assets/oasis-race-control/`. The product page serves it as is and
+links to the file full-size, so it is exported with a white background, unlike
+the other two.
+
 ## Change the words
 
 Each drawing's two layouts are generated from one Mermaid file here,
@@ -54,4 +60,7 @@ Open a `.excalidraw` file at https://excalidraw.com, edit, and save it back over
 the same file. Export image as SVG with Background off and Embed scene off over
 the matching `.svg`; Excalidraw embeds the handwriting font. A hand edit applies
 to that one layout only, so make it in both, and regenerating from the Mermaid
-source afterwards would overwrite it.
+source afterwards would overwrite it. The Oasis architecture drawing is the
+exception on both counts: export it with Background on, and if its `viewBox`
+changes, update the `width` and `height` on the `architecture` record in
+`src/content/projects.js` and the matching assertion in `src/App.test.jsx`.
