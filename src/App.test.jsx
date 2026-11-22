@@ -1097,10 +1097,6 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('link', { name: /Read product analysis/i })).toBeNull();
   });
 
-  /* The gallery images are captures of the renamed Attend app. Their pixels are not
-     testable here, so this pins the two things that are: every screenshot still reaches
-     the page with alt text, and the retired CTX Chat product name stays off it. The
-     ctxconnect URLs and the ctx-chat slug are public identifiers and deliberately stay. */
   /* The Oasis page carries the owner's Excalidraw drawing of the system as one
      static SVG, outside the screenshot gallery and its lightbox. The link opens
      the file itself full-size in a new tab, so a phone reader can get past the
@@ -1142,6 +1138,10 @@ describe('portfolio routes and metadata', () => {
     expect(screen.queryByRole('heading', { name: 'Architecture' })).toBeNull();
   });
 
+  /* The gallery images are captures of the renamed Attend app. Their pixels are not
+     testable here, so this pins the two things that are: every screenshot still reaches
+     the page with alt text, and the retired CTX Chat product name stays off it. The
+     ctxconnect URLs and the ctx-chat slug are public identifiers and deliberately stay. */
   it('renders the Attend screenshot gallery without the retired product name', () => {
     renderApp('/products/ctx-chat');
 

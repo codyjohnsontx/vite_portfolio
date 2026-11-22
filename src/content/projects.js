@@ -51,8 +51,8 @@ import oasisDriverPortal from '../assets/oasis-race-control/oasis-race-control-0
 /* Not a screenshot: the owner's Excalidraw drawing of the system, exported once as a
    static SVG with its handwriting font embedded and a white background, so it renders the
    same everywhere and opens full-size on its own. The editable scene sits beside it;
-   tools/excalidraw/README.md ("Redraw by hand") says how to re-export after an edit, with
-   Background on this time. A plain import, not `?shot`: the SVG is served as is. */
+   tools/excalidraw/README.md ("Redraw by hand") says how to re-export after an edit.
+   A plain import, not `?shot`: the SVG is served as is. */
 import oasisArchitecture from '../assets/oasis-race-control/oasis-architecture.svg';
 
 /* Entry order is significant. This array flows into `flagshipProducts`, and every
